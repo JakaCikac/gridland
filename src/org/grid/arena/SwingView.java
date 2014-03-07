@@ -33,6 +33,7 @@ public class SwingView extends JPanel implements ArenaView {
 	protected int cellBorder = 2;
 
 	protected Color borderColor = Color.DARK_GRAY;
+
 	
 	public static interface Palette {
 		
