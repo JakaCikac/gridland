@@ -69,9 +69,9 @@ public abstract class Agent {
 			protectedClassPrefixes.add("sun.");
 			protectedClassPrefixes.add("java.");
 			protectedClassPrefixes.add("javax.");
-			protectedClassPrefixes.add("fri.pipt.agent.Agent");
-			protectedClassPrefixes.add("fri.pipt.protocol");
-			protectedClassPrefixes.add("fri.pipt.arena");
+			protectedClassPrefixes.add("org.grid.agent.Agent");
+			protectedClassPrefixes.add("org.grid.protocol");
+			protectedClassPrefixes.add("org.grid.arena");
 		}
 
 		public Class<?> loadClass(String className)

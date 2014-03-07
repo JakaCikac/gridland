@@ -209,6 +209,7 @@ public class Game {
 
 		String fldPath = game.getProperty("gameplay.field", f.getAbsolutePath()
 				+ ".field");
+        System.out.println(fldPath);
 
 		File fldFile = new File(fldPath);
 

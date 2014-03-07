@@ -512,7 +512,7 @@ public class Main {
 	
 	public static void info(String format, Object ... objects) {
 		
-		//System.out.println(date.format(new Date()) + String.format(format, objects));
+		System.out.println(date.format(new Date()) + String.format(format, objects));
 		
 	}
 	
