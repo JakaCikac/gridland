@@ -37,10 +37,12 @@ public class SampleAgent extends Agent {
 		EXPLORE, SEEK, RETURN
 	}
 
-	//private static double TEST = Math.random();
-    //test commit
-	
-	private int x = 0;
+	/*
+    private static double TEST = Math.random();
+    test commit
+    */
+
+    private int x = 0;
 
 	private int y = 0;
 
