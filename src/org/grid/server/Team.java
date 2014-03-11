@@ -42,53 +42,20 @@ public class Team {
 		public TeamBody(int tile, Team team) {
 			super(tile);
 			this.team = team;
-			
-			
+
 		}
 		
 		public Team getTeam() {
 			return team;
 		}
 	}
-	
-	public static class Flag extends TeamBody {
 
-		private float weight;
-		
-		private Flag(int tile, Team team, float weight) {
-			super(tile, team);
-			this.weight = weight;
-		}
-		
-		public float getWeight() {
-			return weight;
-		}
-		
-	}
 
 	public static class Headquarters extends TeamBody {
 
 		public Headquarters(int tile, Team team) {
 			super(tile, team);
 		}
-
-		public void putFlag(Flag flag) {
-			
-			if (flag != null && flag.getTeam() == getTeam()) {
-				
-				if (getTeam().flags.contains(flag)) {
-				
-					getTeam().score++;
-					getTeam().scoreChange(getTeam().score);
-					getTeam().flags.remove(flag);
-					
-					Main.log("Team %s: %d flags collected", getTeam().getName(), getTeam().score);
-					
-				}
-			}
-			
-		}
-		
 	}
 	
 	private HashSet<Client> used = new HashSet<Client>();
@@ -98,9 +65,7 @@ public class Team {
 	private LinkedList<Agent> removed = new LinkedList<Agent>();
 	
 	private HashSet<Integer> allocatedIds = new HashSet<Integer>();
-	
-	private HashSet<Flag> flags = new HashSet<Flag>();
-	
+
 	private String name, passphrase;
 	
 	private Headquarters hq;
@@ -144,17 +109,7 @@ public class Team {
 		return name;
 		
 	}
-	
-	public Flag newFlag(float weight) {
-		
-		Flag f = new Flag(Arena.TILE_FLAG, this, weight);
-		
-		flags.add(f);
-		
-		return f;
-		
-	}
-	
+
 	public Agent newAgent() {
 		
 		synchronized (pool) {
@@ -256,11 +211,7 @@ public class Team {
 				BodyPosition pos = field.getPosition(a);
 				
 				field.removeBody(a);
-				
-				if (a.hasFlag() && pos != null) {
-					for (Flag flag : a.getFlags())
-						field.putBodyCloseTo(flag, new BodyPosition(pos.getX(), pos.getY()));
-				}
+
 			}
 
 			removed.clear();
@@ -324,10 +275,6 @@ public class Team {
 			return null;
 		}
 		
-	}
-	
-	public int getActiveFlagsCount() {
-		return flags.size();
 	}
 	
 	public String toString() {
