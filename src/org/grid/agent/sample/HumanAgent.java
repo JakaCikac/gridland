@@ -56,9 +56,8 @@ public class HumanAgent extends Agent {
 			return new Dimension(50, 100);
 		}
 		
-		public void update(Direction direction, boolean hasFlag) {
+		public void update(Direction direction) {
 			this.direction = direction;
-			this.hasFlag = hasFlag;
 			
 			repaint();
 		}
@@ -152,9 +151,9 @@ public class HumanAgent extends Agent {
 
 	@Override
 	public void state(int stamp, Neighborhood neighborhood,
-			Direction direction, boolean hasFlag) {
+			Direction direction) {
 		
-		side.update(direction, hasFlag);
+		side.update(direction);
 		view.update(neighborhood);
 		
 		window.pack();
