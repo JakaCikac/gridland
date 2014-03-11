@@ -266,7 +266,6 @@ public class Reaper extends Agent {
 			State state = buffer.poll();
 			if (state != null) {
 
-				hasFlag = state.hasFlag;
 
 				if (state.direction == Direction.NONE) {
 
@@ -301,11 +300,6 @@ public class Reaper extends Agent {
 					}
 
 					if (plan.isEmpty()) {
-
-						if (state.hasFlag) {
-							changeMode(Mode.RETURN);
-							map.recalculateCost(returnFormula);
-						}
 
 						List<Direction> directions = null;
 
