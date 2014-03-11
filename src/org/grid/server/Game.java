@@ -34,22 +34,11 @@ import org.grid.server.Dispatcher.Client;
 import org.grid.server.Field.BodyPosition;
 import org.grid.server.Field.Cell;
 import org.grid.server.Field.Wall;
-import org.grid.server.Team.Flag;
 import org.grid.server.Team.Headquarters;
 import org.grid.server.Team.TeamBody;
 
 
 public class Game {
-
-	/**
-	 * Game mode: - Unique: only one flag, positioned on the predetermined
-	 * position - Random: randomly positioned flags - Respawn: randomly
-	 * positioned flags that are respawned
-	 * 
-	 */
-	public enum FlagMode {
-		UNIQUE, RANDOM, RESPAWN
-	}
 
 	public static class MessageContainter {
 		
@@ -79,14 +68,8 @@ public class Game {
 		}
 		
 	}
-	
-	private FlagMode flagMode;
 
 	private int spawnFrequency = 10;
-
-	private int flagSpawnFrequency = 10;
-
-	private int flagPoolCount = 10;
 
 	private Field field;
 
@@ -96,8 +79,6 @@ public class Game {
 
 	private int neighborhoodSize = 10;
 
-	private float flagWeight = 0;
-	
 	private int messageSpeed = 10;
 	
 	private Properties properties = null;
@@ -160,12 +141,6 @@ public class Game {
 
 		game.gameSource = f;
 
-		game.flagMode = FlagMode.valueOf(game.properties.getProperty(
-				"gameplay.flags", "unique").toUpperCase());
-
-		if (game.flagMode == null)
-			game.flagMode = FlagMode.UNIQUE;
-
 		String tdbPath = game.getProperty("teams", null);
 
 		TeamDatabase database = null;
@@ -224,30 +199,9 @@ public class Game {
 		game.neighborhoodSize = game.getProperty("message.neighborhood", 5);
 
 		game.messageSpeed = game.getProperty("message.speed", 10);
-		
-		if (game.flagMode == FlagMode.RESPAWN) {
 
-			game.flagSpawnFrequency = game.getProperty(
-					"gameplay.flags.respawn", 30);
-
-			game.flagPoolCount = game.getProperty("gameplay.flags.pool", 10);
-
-		}
-
-		if (game.flagMode == FlagMode.RANDOM) {
-
-			game.flagPoolCount = game.getProperty("gameplay.flags.pool", 10);
-
-		}
-
-		game.flagWeight = Math.min(30, Math.max(0, game.getProperty("gameplay.flags.weight", 1f)));
-		
 		game.field = Field.loadFromFile(fldFile, game);
 
-		if (game.flagMode != FlagMode.UNIQUE) {
-			game.spawnNewFlags();
-		}
-		
 		return game;
 
 	}
@@ -297,15 +251,6 @@ public class Game {
 			spawnCounter = spawnFrequency;
 		}
 
-		if (flagMode == FlagMode.RESPAWN) {
-			// spawn new flags
-			flagSpawnCounter--;
-			if (flagSpawnCounter == 0) {
-				spawnNewFlags();
-				flagSpawnCounter = flagSpawnFrequency;
-			}
-		}
-
 		// remove dead agents
 		for (Team t : teams.values()) {
 			t.cleanup(field);
@@ -351,43 +296,6 @@ public class Game {
 
 	}
 
-	private void spawnNewFlags() {
-
-		int add = 0;
-
-		for (Team t : teams.values()) {
-
-			add += Math.max(0, flagPoolCount - t.getActiveFlagsCount());
-
-		}
-
-		if (add == 0)
-			return;
-
-		List<Cell> freeCells = field.listEmptyFields(true);
-
-		if (freeCells.size() < add)
-			return;
-
-		Vector<Flag> flags = new Vector<Flag>();
-
-		for (Team t : teams.values()) {
-
-			int nf = Math.max(0, flagPoolCount - t.getActiveFlagsCount());
-			for (int i = 0; i < nf; i++)
-				flags.add(t.newFlag(getFlagWeight()));
-		}
-
-		Collections.shuffle(flags);
-		Collections.shuffle(freeCells);
-
-		for (int i = 0; i < flags.size(); i++) {
-			field.putBody(flags.get(i), new BodyPosition(freeCells.get(i)
-					.getPosition(), 0, 0));
-		}
-
-	}
-
 	public Neighborhood scanNeighborhood(int size, Agent agent) {
 
 		Neighborhood n = new Neighborhood(size);
@@ -428,13 +336,6 @@ public class Game {
 										j,
 										t == agent.getTeam() ? Neighborhood.HEADQUARTERS
 												: Neighborhood.OTHER_HEADQUARTERS);
-						continue;
-					}
-
-					if (c.getBody() instanceof Flag) {
-						n.setCell(i, j,
-								t == agent.getTeam() ? Neighborhood.FLAG
-										: Neighborhood.OTHER_FLAG);
 						continue;
 					}
 
@@ -583,14 +484,6 @@ public class Game {
 		return getProperty("gameplay.speed", 10);
 	}
 
-	public FlagMode getFlagMode() {
-		return flagMode;
-	}
-
-	public float getFlagWeight() {
-		return flagWeight;
-	}
-	
 	public int getNeighborhoodSize() {
 		return neighborhoodSize;
 	}
