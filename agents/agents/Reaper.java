@@ -78,8 +78,6 @@ public class Reaper extends Agent {
 
 		int notified;
 
-		boolean hasFlag;
-
 		private Bounds bounds;
 
 		private Position origin, center;
@@ -104,7 +102,7 @@ public class Reaper extends Agent {
 		@Override
 		public String toString() {
 
-			return String.format("ID: %d, Flag: %b", id, hasFlag);
+			return String.format("ID: %d, Flag: %b", id);
 
 		}
 	}
@@ -207,12 +205,10 @@ public class Reaper extends Agent {
 
 		boolean hasFlag;
 
-		public State(int stamp, Neighborhood neighborhood, Direction direction,
-				boolean hasFlag) {
+		public State(int stamp, Neighborhood neighborhood, Direction direction) {
 			super();
 			this.neighborhood = neighborhood;
 			this.direction = direction;
-			this.hasFlag = hasFlag;
 		}
 
 	}
@@ -557,9 +553,9 @@ public class Reaper extends Agent {
 
 	@Override
 	public void state(int stamp, Neighborhood neighborhood,
-			Direction direction, boolean hasFlag) {
+			Direction direction) {
 
-		buffer.add(new State(stamp, neighborhood, direction, hasFlag));
+		buffer.add(new State(stamp, neighborhood, direction));
 
 	}
 
@@ -663,7 +659,7 @@ public class Reaper extends Agent {
 					data.map = false;
 				}
 
-				if (Math.abs(timestep - data.info) < 5 && !data.hasFlag && !data.map) {
+				if (Math.abs(timestep - data.info) < 5 && !data.map) {
 					sendMap(id);
 					data.map = true;
 				}
@@ -850,7 +846,6 @@ public class Reaper extends Agent {
 				synchronized (registry) {
 					if (registry.containsKey(from)) {
 						MemberData data = registry.get(from);
-						data.hasFlag = hasFlag;
 						data.bounds = bounds;
 						data.origin = origin;
 						data.center = center;
