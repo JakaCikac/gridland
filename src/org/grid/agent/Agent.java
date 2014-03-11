@@ -325,9 +325,7 @@ public abstract class Agent {
 													((StateMessage) msg)
 															.getNeighborhood(),
 													((StateMessage) msg)
-															.getDirection(),
-													((StateMessage) msg)
-															.hasFlag());
+															.getDirection());
 								}
 
 							} catch (Exception e) {
@@ -499,7 +497,7 @@ public abstract class Agent {
 	/**
 	 * Sends a scan request to the server. The server will respond with the
 	 * local state of the environment that will be returned to the agent using
-	 * the {@link #state(int, Neighborhood, Direction, boolean)} callback.
+	 * the {@link #state(int, Neighborhood, Direction)} callback.
 	 * 
 	 * @param stamp
 	 *            the stamp of the request
@@ -532,11 +530,9 @@ public abstract class Agent {
 	 *            the neighborhood information
 	 * @param direction
 	 *            the direction of the movement
-	 * @param hasFlag
-	 *            does this agent carry the flag of the team
 	 */
 	public abstract void state(int stamp, Neighborhood neighborhood,
-			Direction direction, boolean hasFlag);
+			Direction direction);
 
 	/**
 	 * The main method of the agent. Should loop while the agent is alive.
