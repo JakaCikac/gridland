@@ -27,7 +27,6 @@ import org.grid.server.Field.Body;
 import org.grid.server.Field.BodyPosition;
 import org.grid.server.Field.Cell;
 import org.grid.server.Game.MessageContainter;
-import org.grid.server.Team.Flag;
 import org.grid.server.Team.Headquarters;
 import org.grid.server.Team.TeamBody;
 
@@ -43,8 +42,6 @@ public class Agent extends TeamBody {
 	private Direction direction = Direction.NONE;
 
 	private boolean alive = true;
-
-	private Set<Flag> flags = new HashSet<Flag>();
 
 	private LinkedList<MessageContainter> messageQueue = new LinkedList<MessageContainter>();
 	
@@ -71,11 +68,7 @@ public class Agent extends TeamBody {
 				return false;
 
 			float weight = 1;
-			
-			for (Flag flag : flags) {
-				weight += flag.getWeight();
-			}
-			
+
 			float speed = 0.1f / weight;
 			
 			switch (direction) {
@@ -121,24 +114,15 @@ public class Agent extends TeamBody {
 				if (c != null) {
 
 					Body b = c.getBody();
-					if (b instanceof Flag) {
-						if (((Flag) b).getTeam() == getTeam()) {
 
-							arena.removeBody(b);
-
-							flags.add((Flag) b);
-
-							return true;
-						}
-					}
-					if (b instanceof Headquarters) {
+					/*if (b instanceof Headquarters) {
 						if (((Headquarters) b).getTeam() == getTeam()) {
 							for (Flag flag : flags)
 								((Headquarters) b).putFlag(flag);
 							
 							flags.clear();
 						}
-					}
+					} */
 					if (b instanceof Agent) {
 						((Agent) b).die();
 					}
@@ -181,17 +165,9 @@ public class Agent extends TeamBody {
 	public Direction getDirection() {
 		return direction;
 	}
-
-	public boolean hasFlag() {
-		return !flags.isEmpty();
-	}
-	
-	public Set<Flag> getFlags() {
-		return flags;
-	}
-	
+		
 	public int getTile() {
-		return flags.isEmpty() ? Arena.TILE_AGENT : Arena.TILE_AGENT_FLAG;
+		return  Arena.TILE_AGENT;
 	}
 
 	public void pushMessage(int to, byte[] message, int delay) {

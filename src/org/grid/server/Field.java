@@ -400,7 +400,7 @@ public class Field implements Arena {
 					Team team = teams.get(count);
 
 					arena.putBody(team.getHeadquarters(), new BodyPosition(hqs[i].getX(), hqs[i].getY()));
-										
+
 					count++;
 					
 					if (count >= teams.size())
