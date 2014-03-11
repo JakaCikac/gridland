@@ -36,7 +36,6 @@ import javax.imageio.ImageIO;
 
 import org.grid.arena.Arena;
 import org.grid.protocol.Position;
-import org.grid.server.Game.FlagMode;
 import org.grid.server.Team.TeamBody;
 
 
@@ -401,12 +400,7 @@ public class Field implements Arena {
 					Team team = teams.get(count);
 
 					arena.putBody(team.getHeadquarters(), new BodyPosition(hqs[i].getX(), hqs[i].getY()));
-					
-					if (game.getFlagMode() == FlagMode.UNIQUE) {
-						for (Position p : flags[i])
-						arena.putBody(team.newFlag(game.getFlagWeight()), new BodyPosition(p.getX(), p.getY()));
-					}
-					
+										
 					count++;
 					
 					if (count >= teams.size())
