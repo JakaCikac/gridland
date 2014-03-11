@@ -123,7 +123,7 @@ public class Dispatcher implements Runnable {
 					
 					Neighborhood n = game.scanNeighborhood(neighborhoodSize, getAgent());
 					
-					sendMessage(new Message.StateMessage(getAgent().getDirection(), n, agent.hasFlag()));
+					sendMessage(new Message.StateMessage(getAgent().getDirection(), n));
 					
 					return;
 				}
