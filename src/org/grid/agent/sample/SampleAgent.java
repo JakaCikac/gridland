@@ -28,7 +28,7 @@ import org.grid.protocol.Position;
 import org.grid.protocol.Message.Direction;
 
 
-// Run: java -cp bin fri.pipt.agent.Agent localhost fri.pipt.agent.sample.SampleAgent
+// Run: java -cp bin org.grid.agent.Agent localhost org.grid.agent.sample.SampleAgent
 
 @Membership(team="samples",passphrase="c66ddf4d73f77d52162cb3c2f9678074")
 public class SampleAgent extends Agent {
@@ -38,6 +38,7 @@ public class SampleAgent extends Agent {
 	}
 
 	//private static double TEST = Math.random();
+    //test commit
 	
 	private int x = 0;
 
