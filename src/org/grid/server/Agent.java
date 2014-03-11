@@ -165,7 +165,7 @@ public class Agent extends TeamBody {
 	public Direction getDirection() {
 		return direction;
 	}
-		
+
 	public int getTile() {
 		return  Arena.TILE_AGENT;
 	}

@@ -150,9 +150,7 @@ public abstract class Message implements Serializable {
 		private Direction direction;
 		
 		private Neighborhood neighborhood;
-		
-		private boolean hasFlag;
-		
+
 		private static final long serialVersionUID = 1L;
 		
 		public Direction getDirection() {
@@ -163,23 +161,14 @@ public abstract class Message implements Serializable {
 			this.direction = direction;			
 		}
 
-		public StateMessage(Direction direction, Neighborhood neighborhood, boolean hasFlag) {
+		public StateMessage(Direction direction, Neighborhood neighborhood) {
 			super();
 			this.direction = direction;
 			this.neighborhood = neighborhood;
-			this.hasFlag = hasFlag;
 		}
 
 		public Neighborhood getNeighborhood() {
 			return neighborhood;
-		}
-
-		public boolean hasFlag() {
-			return hasFlag;
-		}
-
-		public void setFlag(boolean hasFlag) {
-			this.hasFlag = hasFlag;
 		}
 
 	}
