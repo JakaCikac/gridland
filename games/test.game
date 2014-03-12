@@ -1,0 +1,10 @@
+gameplay.speed=10
+gameplay.field=/Users/nanorax/Documents/FRI/Diploma/Project Prometheus/implementacija/gridland/maps/beatle.png
+gameplay.agents=10
+gameplay.respawn=30
+gameplay.flags=random
+gameplay.flags.pool=5
+gameplay.flags.respawn=10
+gameplay.flags.weight=1
+team1=foo
+team2=bar
