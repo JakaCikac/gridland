@@ -37,11 +37,6 @@ public class SampleAgent extends Agent {
 		EXPLORE, SEEK, RETURN
 	}
 
-	/*
-    private static double TEST = Math.random();
-    test commit
-    */
-
     private int x = 0;
 
 	private int y = 0;
@@ -77,23 +72,20 @@ public class SampleAgent extends Agent {
 
 		String msg = new String(message);
 
-		System.out.format("Message recived from %d: %s\n", from, msg);
+		System.out.format("Message received from %d: %s\n", from, msg);
 
 	}
 
 	@Override
-	public void state(int stamp, Neighborhood neighborhood, Direction direction,
-			boolean hasFlag) {
+	public void state(int stamp, Neighborhood neighborhood, Direction direction) {
 
 		
 		synchronized (waitMutex) {
 			this.neighborhood = neighborhood;
 			this.direction = direction;
 
-			if (state != AgentState.RETURN && hasFlag)
-				state = AgentState.RETURN;
-
-			this.hasFlag = hasFlag;
+			if (state != AgentState.RETURN)
+				state = AgentState.EXPLORE;
 			
 			waitMutex.notify();
 		}
@@ -226,8 +218,6 @@ public class SampleAgent extends Agent {
 
 	private Direction direction;
 
-	private boolean hasFlag = false;
-	
 	private void scanAndWait() throws InterruptedException {
 
 		synchronized (waitMutex) {
@@ -242,17 +232,6 @@ public class SampleAgent extends Agent {
 		for (int i = -n.getSize(); i <= n.getSize(); i++) {
 
 			for (int j = -n.getSize(); j <= n.getSize(); j++) {
-
-				if (n.getCell(i, j) == Neighborhood.FLAG && !hasFlag) {
-
-					System.out.println("Found flag !!!");
-					
-					registry.put("flag", new Position(x + i, y + j));
-
-					state = AgentState.SEEK;
-
-					continue;
-				}
 
 				if (n.getCell(i, j) == Neighborhood.HEADQUARTERS) {
 
@@ -331,7 +310,7 @@ public class SampleAgent extends Agent {
 		
 		Arrays.sort(decisions);
 		
-		/*for (Decision d : decisions) 
+		/*for (Decision d : decisions)
 			System.out.println(d);*/
 		
 		return decisions[decisions.length - 1];
@@ -344,7 +323,7 @@ public class SampleAgent extends Agent {
 		case RETURN:
 			return n.getCell(x, y) == Neighborhood.EMPTY || n.getCell(x, y) == Neighborhood.HEADQUARTERS;
 		case SEEK:
-			return n.getCell(x, y) == Neighborhood.EMPTY || n.getCell(x, y) == Neighborhood.FLAG;
+			return n.getCell(x, y) == Neighborhood.EMPTY;
 		default:
 			return n.getCell(x, y) == Neighborhood.EMPTY;		
 		}
