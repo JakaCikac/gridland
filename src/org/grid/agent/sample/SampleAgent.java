@@ -85,7 +85,7 @@ public class SampleAgent extends Agent {
 			this.direction = direction;
 
 			if (state != AgentState.RETURN)
-				state = AgentState.EXPLORE;
+				state = AgentState.EXPLORE; //Changed this to explore from return
 			
 			waitMutex.notify();
 		}
