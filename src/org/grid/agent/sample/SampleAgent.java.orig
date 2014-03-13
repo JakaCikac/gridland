@@ -85,7 +85,11 @@ public class SampleAgent extends Agent {
 			this.direction = direction;
 
 			if (state != AgentState.RETURN)
+<<<<<<< HEAD
+				state = AgentState.EXPLORE; //lol
+=======
 				state = AgentState.EXPLORE;
+>>>>>>> 76058e44ce7ff973c7e83c3da508dd6213e5441a
 			
 			waitMutex.notify();
 		}
