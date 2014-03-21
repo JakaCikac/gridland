@@ -334,9 +334,9 @@ public class Main {
         System.setProperty("sun.java2d.opengl","True");
         // Log to console if opengl enabled
 		info("Java2D OpenGL acceleration "
-				+ (("true".equalsIgnoreCase(System
-						.getProperty("sun.java2d.opengl"))) ? "enabled"
-						: "not enabled"));
+                + (("true".equalsIgnoreCase(System
+                .getProperty("sun.java2d.opengl"))) ? "enabled"
+                : "not enabled"));
 
         // Load game properties from a game file, which is given as an argument
 		game = Game.loadFromFile(new File(args[0]));
@@ -506,7 +506,8 @@ public class Main {
 			String msg = String.format(format, objects);
 			
 			System.out.println(date.format(new Date()) + msg);
-		
+
+            // Check if log file exists and print to file
 			if (log != null) {
 				log.println(date.format(new Date()) + msg);
 				log.flush();

@@ -95,23 +95,6 @@ public class SwingView extends JPanel implements ArenaView {
 			new Color(0.32f, 0.32f, 0.32f), new Color(0.25f, 0.25f, 0.25f),
 			new Color(0.23f, 0.23f, 0.23f), new Color(0.25f, 0.25f, 0.25f), };
 
-	private Polygon flag;
-
-	public static Polygon getFlagGlyph(int cellSize) {
-
-		int polex = (int) (0.1 * cellSize);
-		
-		Polygon flag = new Polygon();
-		flag.addPoint((int) (0.1 * cellSize), (int) (0.6 * cellSize));
-		flag.addPoint((int) (0.9 * cellSize), (int) (0.3 * cellSize));
-		flag.addPoint(polex, (int) (0.1 * cellSize));
-		flag.addPoint(polex, (int) (0.9 * cellSize));
-		flag.addPoint(Math.max((int) (0.15 * cellSize), polex+1), (int) (0.9 * cellSize));
-		flag.addPoint(Math.max((int) (0.15 * cellSize), polex+1), (int) (0.6 * cellSize));
-		
-		return flag;
-	}
-
 	private Dimension size = new Dimension(100, 100);
 
 	private Arena view;
@@ -184,25 +167,10 @@ public class SwingView extends JPanel implements ArenaView {
 					drawBorderedCircle(g, i * cellSize + cellBorder + translateX, j * cellSize
 							+ cellBorder + translateY, cellSize - 2 * cellBorder);
 					break;
-					
-				case Arena.TILE_AGENT_FLAG:
-					drawBorderedCircle(g, i * cellSize + cellBorder + translateX, j * cellSize
-							+ cellBorder + translateY, cellSize - 2 * cellBorder);
-					g.setColor(color);
-					g.setXORMode(Color.WHITE);
-					flag.translate(i * cellSize + translateX, j * cellSize + translateY);
-					g.fillPolygon(flag);
-					flag.translate(-i * cellSize - translateX, -j * cellSize - translateY);
-					g.setPaintMode();
-					break;
-					
-					
+
 				case Arena.TILE_HEADQUARTERS:
 					drawBorderedSquare(g, i * cellSize + cellBorder + translateX, j * cellSize
 							+ cellBorder + translateY, cellSize - 2 * cellBorder);
-					break;
-				case Arena.TILE_FLAG:
-					drawBorderedPolygon(g, i * cellSize + translateX, j * cellSize + translateY, flag);
 					break;
 				}
 
@@ -294,7 +262,7 @@ public class SwingView extends JPanel implements ArenaView {
 		
 		this.cellBorder = Math.max(1, Math.round((float)this.cellSize * 0.1f));
 		
-		flag = getFlagGlyph(this.cellSize);
+		//flag = getFlagGlyph(this.cellSize);
 		
 		synchronized (this) {
 	

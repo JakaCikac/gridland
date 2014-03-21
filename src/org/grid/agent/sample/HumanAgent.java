@@ -28,8 +28,7 @@ public class HumanAgent extends Agent {
 	private SideView side = new SideView();
 	
 	protected static final int CELL_SIZE = 42;
-	
-	private Polygon flag = SwingView.getFlagGlyph(CELL_SIZE);
+
 
 	private class SideView extends JPanel {
 		
@@ -37,16 +36,10 @@ public class HumanAgent extends Agent {
 
 		private Direction direction = Direction.NONE;
 		
-		private boolean hasFlag = false;
-		
 		@Override
 		public void paint(Graphics g) {
 			super.paint(g);
-			
-			if (hasFlag) {
-				g.fillPolygon(flag);
-			}
-			
+
 			g.drawString(direction.toString(), 10, 70);
 					
 		}

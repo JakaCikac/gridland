@@ -42,8 +42,8 @@ import org.grid.protocol.Message.StateMessage;
  * used to launch the client and handles all low level protocol communication
  * and the lifecycle of the agent.
  * 
- * To run the sample agent type: java -cp bin/ fri.pipt.agent.Agent localhost
- * fri.pipt.agent.sample.SampleAgent
+ * To run the sample agent type: java -cp bin/ org.grid.agent.Agent localhost
+ * org.grid.agent.sample.SampleAgent
  * 
  * @author lukacu
  * @see SampleAgent
