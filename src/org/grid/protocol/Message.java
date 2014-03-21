@@ -33,12 +33,11 @@ public abstract class Message implements Serializable {
 
 		private static final long serialVersionUID = 1L;
 
-		public RegisterMessage(String team, String passphrase) {
+		public RegisterMessage(String team) {
 			this.team = team;
-			this.passphrase = passphrase;
 		}
 
-		private String team, passphrase;
+		private String team;
 
 		public String getTeam() {
 			return team;
@@ -48,14 +47,6 @@ public abstract class Message implements Serializable {
 			this.team = team;
 		}
 
-		public String getPassphrase() {
-			return passphrase;
-		}
-
-		public void setPassphrase(String passphrase) {
-			this.passphrase = passphrase;
-		}
-		
 	}
 	
 	public static class AcknowledgeMessage extends Message {

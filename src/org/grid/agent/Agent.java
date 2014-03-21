@@ -56,9 +56,7 @@ public abstract class Agent {
 	private static Vector<ClientProtocolSocket> clients = new Vector<ClientProtocolSocket>();
 
 	private static String teamOverride = null;
-	
-	private static String passphraseOverride = null;
-	
+
 	public static class ProxyClassLoader extends ClassLoader {
 		
 		private Set<String> protectedClassPrefixes = new HashSet<String>();
@@ -156,7 +154,6 @@ public abstract class Agent {
 			super(sck);
 
 			String team = "default";
-			String passphrase = "";
 			
 			if (teamOverride == null) {
 				
@@ -164,14 +161,12 @@ public abstract class Agent {
 	
 				if (m != null) {
 					team = m.team();
-					passphrase = m.passphrase();
 				}
 			} else {
 				team = teamOverride;
-				passphrase = passphraseOverride;
 			}
 
-			sendMessage(new Message.RegisterMessage(team, passphrase));
+			sendMessage(new Message.RegisterMessage(team));
 
 			this.name = name;
 
@@ -373,9 +368,6 @@ public abstract class Agent {
 		if (args.length > 3)
 			teamOverride = args[3];
 
-		if (args.length > 4)
-			passphraseOverride = args[4];
-		
 		for (int i = 0; i < count; i++) {
 			Socket socket = new Socket(args[0], 5000);
 			socket.setTcpNoDelay(true);

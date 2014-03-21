@@ -83,7 +83,7 @@ public class TeamDatabase {
 			
 			TeamData t = data.get(id);
 			
-			out.format("----- \nID: %s\nName: %s\nPassphrase: %s\n-----\n", t.getId(), t.getName());
+			out.format("----- \nID: %s\nName: %s\n-----\n", t.getId(), t.getName());
 			
 		}
 		

@@ -72,9 +72,7 @@ public class Team {
 	private Headquarters hq;
 	
 	private Color color;
-	
-	private int score = 0;
-	
+
 	public Team(String name, Color color) {
 		
 		this.name = name;
