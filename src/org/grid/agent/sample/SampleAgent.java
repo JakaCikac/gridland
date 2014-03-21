@@ -30,7 +30,7 @@ import org.grid.protocol.Message.Direction;
 
 // Run: java -cp bin org.grid.agent.Agent localhost org.grid.agent.sample.SampleAgent
 
-@Membership(team="samples",passphrase="c66ddf4d73f77d52162cb3c2f9678074")
+@Membership(team="samples")
 public class SampleAgent extends Agent {
 
 	private static enum AgentState {

@@ -34,7 +34,7 @@ import agents.LocalMap.Paths;
 
 //java -cp bin fri.pipt.agent.Agent localhost agents.Reaper
 
-@Membership(team = "reapers", passphrase = "360ebf43b02eca90c249302ea8a48af4")
+@Membership(team = "reapers")
 public class Reaper extends Agent {
 
 	private static enum Mode {

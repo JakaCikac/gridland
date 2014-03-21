@@ -18,7 +18,7 @@ import org.grid.protocol.Neighborhood;
 import org.grid.protocol.Message.Direction;
 
 
-@Membership(team="humans",passphrase="")
+@Membership(team="humans")
 public class HumanAgent extends Agent {
 
 	private JFrame window;

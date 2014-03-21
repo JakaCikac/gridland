@@ -48,7 +48,7 @@ import org.grid.protocol.Message.StateMessage;
  * @author lukacu
  * @see SampleAgent
  */
-@Membership(team="default",passphrase="")
+@Membership(team="default")
 public abstract class Agent {
 
 	private static Class<Agent> agentClassStatic = null;

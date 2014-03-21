@@ -3,9 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="f3f6e5c1-36d1-4bde-93db-26e0cc79e510" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/Agent.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/Agent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/protocol/Message.java" afterPath="$PROJECT_DIR$/src/org/grid/protocol/Message.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/server/Team.java" afterPath="$PROJECT_DIR$/src/org/grid/server/Team.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/server/TeamDatabase.java" afterPath="$PROJECT_DIR$/src/org/grid/server/TeamDatabase.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/sample/HumanAgent.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/sample/HumanAgent.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/Membership.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/Membership.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/agents/agents/Reaper.java" afterPath="$PROJECT_DIR$/agents/agents/Reaper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/sample/SampleAgent.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/sample/SampleAgent.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="gridland.iws" />
@@ -73,29 +74,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Team.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/grid/server/Team.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="192" column="16" selection-start="3692" selection-end="3692" vertical-scroll-proportion="0.0" vertical-offset="2223" max-vertical-offset="4575">
-              <folding>
-                <element signature="e#2190#2191#0" expanded="true" />
-                <element signature="e#2212#2213#0" expanded="true" />
-                <element signature="e#2241#2242#0" expanded="true" />
-                <element signature="e#2266#2267#0" expanded="true" />
-                <element signature="e#2295#2296#0" expanded="true" />
-                <element signature="e#2319#2320#0" expanded="true" />
-                <element signature="e#3440#3448#0" expanded="true" />
-                <element signature="e#3985#3992#0" expanded="true" />
-                <element signature="e#5113#5127#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="VisitMap.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/grid/server/VisitMap.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="153" column="8" selection-start="2938" selection-end="2938" vertical-scroll-proportion="0.0" vertical-offset="1717" max-vertical-offset="2595">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SampleAgent.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/SampleAgent.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="54" column="13" selection-start="1655" selection-end="1655" vertical-scroll-proportion="0.7826087" vertical-offset="0" max-vertical-offset="4695">
               <folding />
             </state>
           </provider>
@@ -128,10 +119,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Agent.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Agent.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/grid/agent/Agent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="356" column="34" selection-start="8181" selection-end="8181" vertical-scroll-proportion="0.38434783" vertical-offset="4534" max-vertical-offset="7995">
+            <state line="50" column="26" selection-start="1840" selection-end="1840" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7995">
               <folding />
             </state>
           </provider>
@@ -140,16 +131,25 @@
       <file leaf-file-name="Membership.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/grid/agent/Membership.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="0" selection-start="322" selection-end="322" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="285">
+            <state line="12" column="0" selection-start="298" selection-end="298" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TeamListener.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/grid/server/TeamListener.java">
+      <file leaf-file-name="Reaper.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/agents/agents/Reaper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="4" selection-start="1037" selection-end="1037" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270">
+            <state line="52" column="34" selection-start="1322" selection-end="1322" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="15495">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HumanAgent.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/HumanAgent.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="20" column="26" selection-start="509" selection-end="509" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2475">
               <folding />
             </state>
           </provider>
@@ -196,9 +196,6 @@
         <option value="$PROJECT_DIR$/src/org/grid/server/Game.java" />
         <option value="$PROJECT_DIR$/src/org/grid/server/Field.java" />
         <option value="$PROJECT_DIR$/src/org/grid/server/Agent.java" />
-        <option value="$PROJECT_DIR$/agents/agents/Reaper.java" />
-        <option value="$PROJECT_DIR$/src/org/grid/agent/sample/HumanAgent.java" />
-        <option value="$PROJECT_DIR$/src/org/grid/agent/sample/SampleAgent.java" />
         <option value="$PROJECT_DIR$/src/org/grid/server/Main.java" />
         <option value="$PROJECT_DIR$/games/test.game" />
         <option value="$PROJECT_DIR$/src/org/grid/server/StackLayout.java" />
@@ -209,6 +206,10 @@
         <option value="$PROJECT_DIR$/src/org/grid/server/TeamDatabase.java" />
         <option value="$PROJECT_DIR$/src/org/grid/protocol/Message.java" />
         <option value="$PROJECT_DIR$/src/org/grid/agent/Agent.java" />
+        <option value="$PROJECT_DIR$/src/org/grid/agent/Membership.java" />
+        <option value="$PROJECT_DIR$/agents/agents/Reaper.java" />
+        <option value="$PROJECT_DIR$/src/org/grid/agent/sample/HumanAgent.java" />
+        <option value="$PROJECT_DIR$/src/org/grid/agent/sample/SampleAgent.java" />
       </list>
     </option>
   </component>
@@ -353,6 +354,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="agent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gridland" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gridland" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="grid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="agent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sample" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -743,7 +770,7 @@
       <workItem from="1394734443406" duration="253000" />
       <workItem from="1394794393909" duration="1323000" />
       <workItem from="1395129975590" duration="378000" />
-      <workItem from="1395395485605" duration="4038000" />
+      <workItem from="1395395485605" duration="4225000" />
     </task>
     <task id="LOCAL-00001" summary="Test commit.">
       <created>1394200726993</created>
@@ -857,11 +884,15 @@
       <created>1395399065443</created>
       <updated>1395399065443</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Remove team passwords&#10;&#10;Remove team passwords from Team, TeamDatabase, Agent and Message.&#10;">
+      <created>1395399559801</created>
+      <updated>1395399559801</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27966000" />
+    <option name="totallyTimeSpent" value="28153000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -892,7 +923,7 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32888147" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289183" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286638" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -928,7 +959,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Test run (changed fri.pipt to org.grid in Agent)." />
     <MESSAGE value="Test commit for new branch.&#10;" />
     <MESSAGE value="Deleted - flags, name, color - from Team&#10;" />
     <MESSAGE value="Deleted - flags, hq - from Agent" />
@@ -953,7 +983,8 @@
     <MESSAGE value="Remove score changed, add some comments&#10;&#10;Remove method scoreChanged from Team and TeamListener. Also add some comments to Main and Dispatcher.&#10;" />
     <MESSAGE value="Remove score changed, add some comments&#10;&#10;Remove method scoreChanged from Team, TeamListener, ClientsPanel. Also add some comments to Main and Dispatcher.&#10;" />
     <MESSAGE value="Remove team passwords&#10;&#10;Remove team passwords from Team, TeamDatabase and Dispatcher.&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove team passwords&#10;&#10;Remove team passwords from Team, TeamDatabase and Dispatcher.&#10;" />
+    <MESSAGE value="Remove team passwords&#10;&#10;Remove team passwords from Team, TeamDatabase, Agent and Message.&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove team passwords&#10;&#10;Remove team passwords from Team, TeamDatabase, Agent and Message.&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1120,20 +1151,6 @@
         <state line="167" column="0" selection-start="3994" selection-end="3994" vertical-scroll-proportion="-0.45299146" vertical-offset="2139" max-vertical-offset="2490" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/agents/agents/Reaper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="213" column="5" selection-start="4194" selection-end="4194" vertical-scroll-proportion="-2.008547" vertical-offset="3195" max-vertical-offset="15495">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/SampleAgent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="92" column="0" selection-start="2488" selection-end="2488" vertical-scroll-proportion="-0.66543436" vertical-offset="1380" max-vertical-offset="4695">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore.orig">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="568">
@@ -1154,13 +1171,6 @@
       </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="54" selection-start="397" selection-end="397" vertical-scroll-proportion="-2.2592592" vertical-offset="119" max-vertical-offset="660">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/HumanAgent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="46" selection-start="1291" selection-end="1291" vertical-scroll-proportion="0.0" vertical-offset="870" max-vertical-offset="2475">
           <folding />
         </state>
       </provider>
@@ -1322,16 +1332,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/Membership.java">
+    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/Agent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="0" selection-start="322" selection-end="322" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="285">
+        <state line="50" column="26" selection-start="1840" selection-end="1840" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7995">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/Agent.java">
+    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/Membership.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="356" column="34" selection-start="8181" selection-end="8181" vertical-scroll-proportion="0.38434783" vertical-offset="4534" max-vertical-offset="7995">
+        <state line="12" column="0" selection-start="298" selection-end="298" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/agents/agents/Reaper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="52" column="34" selection-start="1322" selection-end="1322" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="15495">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/HumanAgent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="26" selection-start="509" selection-end="509" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2475">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/SampleAgent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="54" column="13" selection-start="1655" selection-end="1655" vertical-scroll-proportion="0.7826087" vertical-offset="0" max-vertical-offset="4695">
           <folding />
         </state>
       </provider>
