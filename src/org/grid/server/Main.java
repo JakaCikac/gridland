@@ -61,7 +61,7 @@ public class Main {
 
 	private static final String RELEASE = "0.9";
 
-	private static Game game;
+	private static Simulation simulation;
 
 	private static long renderTime = 0;
 
@@ -77,11 +77,11 @@ public class Main {
 
 	private static boolean running = false;
 
-	private static GameSwingView view = new GameSwingView();
+	private static SimulationSwingView view = new SimulationSwingView();
 
 	private static ClientsPanel clientsPanel = null;
 	
-	private static JLabel gameStepDisplay = new JLabel();
+	private static JLabel simulationStepDisplay = new JLabel();
 	
 	private static PrintWriter log;
 	
@@ -107,8 +107,8 @@ public class Main {
 		}
 	};
 
-	private static class GameSwingView extends SwingView implements
-			GameListener, SelectionObserver, MouseListener {
+	private static class SimulationSwingView extends SwingView implements
+			SimulationListener, SelectionObserver, MouseListener {
 
 		private static final long serialVersionUID = 1L;
 
@@ -129,12 +129,12 @@ public class Main {
 				this.sender = sender;
 				this.receiver = receiver;
 				this.length = length;
-				this.step = game.getStep();
+				this.step = simulation.getStep();
 			}
 
 		}
 
-		public GameSwingView() {
+		public SimulationSwingView() {
 			super(12);
 			addMouseListener(this);
 		}
@@ -151,7 +151,7 @@ public class Main {
 			paintObjects(g, view);
 
 			LinkedList<Message> active = new LinkedList<Message>();
-			int current = game.getStep();
+			int current = simulation.getStep();
 
 			synchronized (buffer) {
 
@@ -162,7 +162,7 @@ public class Main {
 				}
 			}
 
-			Field field = game.getField();
+			Field field = simulation.getField();
 
 			g.setColor(Color.YELLOW);
 
@@ -249,7 +249,7 @@ public class Main {
 			synchronized (this) {
 				if (client == null) {
 					if (visualization != null)
-						game.removeListener(visualization);
+						simulation.removeListener(visualization);
 					visualization = null;
 					setBasePallette(null);
 					return;
@@ -260,10 +260,10 @@ public class Main {
 				if (a == null)
 					return;
 
-				visualization = new VisitMap(game.getField(), history, a, game
+				visualization = new VisitMap(simulation.getField(), history, a, simulation
 						.getNeighborhoodSize());
 				setBasePallette((Palette) visualization);
-				game.addListener(visualization);
+				simulation.addListener(visualization);
 			}
 
 		}
@@ -285,7 +285,7 @@ public class Main {
 			
 			int y = e.getY() / cellSize;
 			
-			Field field = game.getField();
+			Field field = simulation.getField();
 			
 			Cell cell = field.getCell(x, y);
 			
@@ -322,11 +322,11 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		
-		info("Starting game server (release %s)", RELEASE);
+		info("Starting simulation server (release %s)", RELEASE);
 
-        // Warn and exit if no game file is provided as an argument
+        // Warn and exit if no simulation file is provided as an argument
 		if (args.length < 1) {
-			info("Please provide game description file location as an argument.");
+			info("Please provide simulation description file location as an argument.");
 			System.exit(1);
 		}
 
@@ -338,44 +338,44 @@ public class Main {
                 .getProperty("sun.java2d.opengl"))) ? "enabled"
                 : "not enabled"));
 
-        // Load game properties from a game file, which is given as an argument
-		game = Game.loadFromFile(new File(args[0]));
+        // Load simulation properties from a simulation file, which is given as an argument
+		simulation = Simulation.loadFromFile(new File(args[0]));
 
         // Create a log file with timestamp as name
 		try {
-			log = new PrintWriter(new File(logDate.format(new Date()) + "_" + game.getTitle() + ".log"));
+			log = new PrintWriter(new File(logDate.format(new Date()) + "_" + simulation.getTitle() + ".log"));
 			
 		} catch (Exception e) {}
 		
 		
-		Dispatcher dispatcher = new Dispatcher(PORT, game);
+		Dispatcher dispatcher = new Dispatcher(PORT, simulation);
 
-		final int gameSpeed = game.getSpeed();
+		final int simulationSpeed = simulation.getSpeed();
 
-		game.addListener(view);
-		game.addListener(history);
+		simulation.addListener(view);
+		simulation.addListener(history);
 		
 		(new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				int sleep = 1000 / gameSpeed;
+				int sleep = 1000 / simulationSpeed;
 				long start, used;
 				while (true) {
 
 					start = System.currentTimeMillis();
 
 					if (running)
-						game.step();
+						simulation.step();
 
-					view.update(game.getField());
+					view.update(simulation.getField());
 
 					used = System.currentTimeMillis() - start;
 
 					stepTime += used;
 					stepCount++;
 
-					if (game.getStep() % 100 == 0 && running) {
+					if (simulation.getStep() % 100 == 0 && running) {
 						long renderFPS, stepFPS;
 
 						synchronized (mutex) {
@@ -390,12 +390,12 @@ public class Main {
 						stepTime = 0;
 
 						info(
-										"Game step: %d (step: %d fps, render: %d fps)",
-										game.getStep(), stepFPS, renderFPS);
+										"Simulation step: %d (step: %d fps, render: %d fps)",
+										simulation.getStep(), stepFPS, renderFPS);
 					}
 
-					if (game.getStep() % 10 == 0) {
-						gameStepDisplay.setText(String.format("Step: %d", game.getStep()));
+					if (simulation.getStep() % 10 == 0) {
+						simulationStepDisplay.setText(String.format("Step: %d", simulation.getStep()));
 					}
 					
 					try {
@@ -413,7 +413,7 @@ public class Main {
 			}
 		})).start();
 
-		JFrame window = new JFrame("AgentField - " + game.getTitle());
+		JFrame window = new JFrame("AgentField - " + simulation.getTitle());
 
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -447,12 +447,12 @@ public class Main {
 		
 		status.add(zoom, BorderLayout.EAST);
 		
-		gameStepDisplay.setHorizontalAlignment(JLabel.CENTER);
-		status.add(gameStepDisplay, BorderLayout.CENTER);
+		simulationStepDisplay.setHorizontalAlignment(JLabel.CENTER);
+		status.add(simulationStepDisplay, BorderLayout.CENTER);
 		
 		left.add(status, BorderLayout.NORTH);
 
-		if (game.getTeams().size() > MAX_TEAMS_VERBOSE) {
+		if (simulation.getTeams().size() > MAX_TEAMS_VERBOSE) {
 			
 			log("Warning: too many teams, reducing the GUI");
 			
@@ -460,7 +460,7 @@ public class Main {
 			
 		} else {
 			
-			clientsPanel = new ClientsPanel(game, view);	
+			clientsPanel = new ClientsPanel(simulation, view);
 			window.getContentPane().add(
 					new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, left,
 							clientsPanel));

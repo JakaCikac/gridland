@@ -19,7 +19,7 @@ package org.grid.server;
 
 import org.grid.server.Field.BodyPosition;
 
-public interface GameListener {
+public interface SimulationListener {
 
 	public void message(Team team, int from, int to, int length);
 	

@@ -67,7 +67,7 @@ public class Dispatcher implements Runnable {
 				
 				if (message instanceof RegisterMessage) {
 
-					team = game.getTeam(((RegisterMessage) message).getTeam());
+					team = simulation.getTeam(((RegisterMessage) message).getTeam());
 	
 					if (team == null) {
 						
@@ -107,7 +107,7 @@ public class Dispatcher implements Runnable {
 					
 					scanMessages++;
 					
-					Neighborhood n = game.scanNeighborhood(neighborhoodSize, getAgent());
+					Neighborhood n = simulation.scanNeighborhood(neighborhoodSize, getAgent());
 					
 					sendMessage(new Message.StateMessage(getAgent().getDirection(), n));
 					
@@ -125,14 +125,14 @@ public class Dispatcher implements Runnable {
 						return;
 					}
 					
-					game.message(team, agent.getId(), to, ((SendMessage)message).getMessage());						
+					simulation.message(team, agent.getId(), to, ((SendMessage)message).getMessage());
 					
 					return;
 				}				
 
 				if (message instanceof MoveMessage) {
 										
-					game.move(team, agent.getId(), ((MoveMessage) message).getDirection());
+					simulation.move(team, agent.getId(), ((MoveMessage) message).getDirection());
 					
 					return;
 				}	
@@ -165,7 +165,7 @@ public class Dispatcher implements Runnable {
 			if (agent == null)
 				return;
 			
-			sendMessage(new Message.InitializeMessage(agent.getId(), maxMessageSize, game.getSpeed()));
+			sendMessage(new Message.InitializeMessage(agent.getId(), maxMessageSize, simulation.getSpeed()));
 			
 		}
 
@@ -264,21 +264,21 @@ public class Dispatcher implements Runnable {
 	
 	private ServerSocket socket;
 	
-	private Game game;
+	private Simulation simulation;
 	
 	private int maxMessageSize = 1024;
 	
 	private int neighborhoodSize = 5;	
 	
-	public Dispatcher(int port, Game game) throws IOException {
+	public Dispatcher(int port, Simulation simulation) throws IOException {
 
 		socket = new ServerSocket(port);
 		
-		this.game = game;
+		this.simulation = simulation;
 
-		this.maxMessageSize = game.getProperty("message.size", 256);
+		this.maxMessageSize = simulation.getProperty("message.size", 256);
 
-		this.neighborhoodSize = game.getNeighborhoodSize();
+		this.neighborhoodSize = simulation.getNeighborhoodSize();
 		
 	}
 

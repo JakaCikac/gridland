@@ -304,7 +304,7 @@ public class ClientsPanel extends JPanel {
 				System.out.println("Not correct client " + client + " "  + this.client);
 				return;
 			}
-			traffic.push((float)messages / game.getSpeed());
+			traffic.push((float)messages / simulation.getSpeed());
 		}
 
 		@Override
@@ -395,21 +395,21 @@ public class ClientsPanel extends JPanel {
 	
 	private SelectionObserver observer;
 	
-	private Game game;
+	private Simulation simulation;
 	
-	public ClientsPanel(Game game, SelectionObserver observer) {
+	public ClientsPanel(Simulation simulation, SelectionObserver observer) {
 		super(true);
 
-		this.game = game;
+		this.simulation = simulation;
 		
 		this.observer = observer;
 		
-		setLayout(new GridLayout(game.getTeams().size(), 1));
+		setLayout(new GridLayout(simulation.getTeams().size(), 1));
 		
 		selectedBackground = getBackground().brighter().brighter().brighter();
 		normalBackground = getBackground();
 		
-		for (Team t : game.getTeams()) {
+		for (Team t : simulation.getTeams()) {
 			
 			TeamPanel tp = new TeamPanel(t);
 			

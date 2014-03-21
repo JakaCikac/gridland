@@ -206,8 +206,8 @@ public abstract class Agent {
 						agent.maxMessageSize = ((Message.InitializeMessage) message)
 								.getMaxMessageSize();
 
-						agent.gameSpeed = ((Message.InitializeMessage) message)
-								.getGameSpeed();
+						agent.simulationSpeed = ((Message.InitializeMessage) message)
+								.getSimulationSpeed();
 
 						try {
 							agent.initialize();
@@ -415,7 +415,7 @@ public abstract class Agent {
 
 	private int maxMessageSize;
 
-	private int gameSpeed;
+	private int simulationSpeed;
 
 	private ClientProtocolSocket client;
 
@@ -431,7 +431,7 @@ public abstract class Agent {
 
 	/**
 	 * Send a message to another agent in the same team. Note that if distance
-	 * criteria apply in the game the agent may not receive the message if it is
+	 * criteria apply in the simulation the agent may not receive the message if it is
 	 * too far.
 	 * 
 	 * @param to
@@ -451,7 +451,7 @@ public abstract class Agent {
 
 	/**
 	 * Send a message to another agent in the same team. Note that if distance
-	 * criteria apply in the game the agent may not receive the message if it is
+	 * criteria apply in the simulation the agent may not receive the message if it is
 	 * too far.
 	 * 
 	 * @param to
@@ -556,7 +556,7 @@ public abstract class Agent {
 	 *         (approximately) <tt>1000 / speed</tt> milliseconds delay.
 	 */
 	public final int getSpeed() {
-		return gameSpeed;
+		return simulationSpeed;
 	}
 
 	/**

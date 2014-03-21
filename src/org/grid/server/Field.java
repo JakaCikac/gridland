@@ -350,7 +350,7 @@ public class Field implements Arena {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static Field loadFromFile(File f, Game game) throws IOException {
+	public static Field loadFromFile(File f, Simulation simulation) throws IOException {
 		
 		Dimension size = null;
 		
@@ -379,7 +379,7 @@ public class Field implements Arena {
 			
 		}
 		
-		List<Team> teams = game.getTeams();
+		List<Team> teams = simulation.getTeams();
 		
 		int count = 0;
 
@@ -389,7 +389,7 @@ public class Field implements Arena {
 		}
 		
 		if (hqcount < teams.size())
-			Main.log("Warning: this map does not contain enough positions for the number of teams declared in the current game!");
+			Main.log("Warning: this map does not contain enough positions for the number of teams declared in the current simulation!");
 
 		if (count > -1) {
 		

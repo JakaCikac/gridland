@@ -1,7 +1,7 @@
 Game creation
 ============
 
-Each game is defined as a set of properties, defined in a `.game`
+Each game is defined as a set of properties, defined in a `.sim`
 file that is actually an INI-like file.
 
 simulation options
@@ -49,5 +49,5 @@ color for all teams.
 Misc options
 -----------
 
- * `title` - the title of the game, visible in server window
+ * `title` - the title of the simulation, visible in server window
 

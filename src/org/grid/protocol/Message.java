@@ -64,7 +64,7 @@ public abstract class Message implements Serializable {
 
 		private int maxMessageSize;
 		
-		private int gameSpeed;
+		private int simulationSpeed;
 		
 		public int getId() {
 			return id;
@@ -82,19 +82,19 @@ public abstract class Message implements Serializable {
 			this.maxMessageSize = maxMessageSize;
 		}
 
-		public int getGameSpeed() {
-			return gameSpeed;
+		public int getSimulationSpeed() {
+			return simulationSpeed;
 		}
 
-		public void setGameSpeed(int gameSpeed) {
-			this.gameSpeed = gameSpeed;
+		public void setSimulationSpeed(int simulationSpeed) {
+			this.simulationSpeed = simulationSpeed;
 		}
 
-		public InitializeMessage(int id, int maxMessageSize, int gameSpeed) {
+		public InitializeMessage(int id, int maxMessageSize, int simulationSpeed) {
 			super();
 			this.id = id;
 			this.maxMessageSize = maxMessageSize;
-			this.gameSpeed = gameSpeed;
+			this.simulationSpeed = simulationSpeed;
 		}
 
 	}

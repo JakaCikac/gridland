@@ -26,7 +26,7 @@ import org.grid.protocol.Message.Direction;
 import org.grid.server.Field.Body;
 import org.grid.server.Field.BodyPosition;
 import org.grid.server.Field.Cell;
-import org.grid.server.Game.MessageContainter;
+import org.grid.server.Simulation.MessageContainter;
 import org.grid.server.Team.Headquarters;
 import org.grid.server.Team.TeamBody;
 

@@ -28,7 +28,7 @@ import org.grid.arena.Arena;
 import org.grid.server.Dispatcher.Client;
 import org.grid.server.Field.Body;
 import org.grid.server.Field.BodyPosition;
-import org.grid.server.Game.MessageContainter;
+import org.grid.server.Simulation.MessageContainter;
 
 
 public class Team {

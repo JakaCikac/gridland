@@ -38,7 +38,7 @@ import org.grid.server.Team.Headquarters;
 import org.grid.server.Team.TeamBody;
 
 
-public class Game {
+public class Simulation {
 
 	public static class MessageContainter {
 		
@@ -83,9 +83,9 @@ public class Game {
 	
 	private Properties properties = null;
 
-	private File gameSource;
+	private File simulationSource;
 
-	private Vector<GameListener> listeners = new Vector<GameListener>();
+	private Vector<SimulationListener> listeners = new Vector<SimulationListener>();
 
 	private static final Color[] colors = new Color[] { Color.red, Color.blue,
 			Color.green, Color.yellow, Color.pink, Color.orange, Color.black,
@@ -112,7 +112,7 @@ public class Game {
 				- bp2.getY()));
 	}
 
-	private Game() throws IOException {
+	private Simulation() throws IOException {
 
 	}
 
@@ -131,17 +131,17 @@ public class Game {
 
 	}
 
-	public static Game loadFromFile(File f) throws IOException {
+	public static Simulation loadFromFile(File f) throws IOException {
 
-		Game game = new Game();
+		Simulation simulation = new Simulation();
 
-		game.properties = new Properties();
+		simulation.properties = new Properties();
 
-		game.properties.load(new FileReader(f));
+		simulation.properties.load(new FileReader(f));
 
-		game.gameSource = f;
+		simulation.simulationSource = f;
 
-		String tdbPath = game.getProperty("teams", null);
+		String tdbPath = simulation.getProperty("teams", null);
 
 		TeamDatabase database = null;
 		
@@ -165,24 +165,24 @@ public class Game {
 
 			index++;
 
-			String id = game.properties.getProperty("team" + index);
+			String id = simulation.properties.getProperty("team" + index);
 
 			if (id == null)
 				break;
 
 			if (database == null) {
-				game.teams.put(id, new Team(id, colors[index - 1]));
+				simulation.teams.put(id, new Team(id, colors[index - 1]));
 			} else {
 				Team team = database.createTeam(id);
 				if (team == null) break;
-				game.teams.put(id, team);
+				simulation.teams.put(id, team);
 			}
 
 			Main.log("Registered team: " + id);
 
 		}
 
-		String fldPath = game.getProperty("simulation.field", f.getAbsolutePath()
+		String fldPath = simulation.getProperty("simulation.field", f.getAbsolutePath()
 				+ ".field");
         System.out.println(fldPath);
 
@@ -192,17 +192,17 @@ public class Game {
 			fldFile = new File(f.getParentFile(), fldPath);
 		}
 
-		game.spawnFrequency = game.getProperty("simulation.respawn", 30);
+		simulation.spawnFrequency = simulation.getProperty("simulation.respawn", 30);
 
-		game.maxAgentsPerTeam = game.getProperty("simulation.agents", 10);
+		simulation.maxAgentsPerTeam = simulation.getProperty("simulation.agents", 10);
 
-		game.neighborhoodSize = game.getProperty("message.neighborhood", 5);
+		simulation.neighborhoodSize = simulation.getProperty("message.neighborhood", 5);
 
-		game.messageSpeed = game.getProperty("message.speed", 10);
+		simulation.messageSpeed = simulation.getProperty("message.speed", 10);
 
-		game.field = Field.loadFromFile(fldFile, game);
+		simulation.field = Field.loadFromFile(fldFile, simulation);
 
-		return game;
+		return simulation;
 
 	}
 
@@ -227,7 +227,7 @@ public class Game {
 			for (Agent a : t.move(field)) {
 				
 				synchronized (listeners) {
-					for (GameListener l : listeners) {
+					for (SimulationListener l : listeners) {
 						try {
 							l.position(t, a.getId(), field.getPosition(a));
 						} catch (Exception e) {
@@ -394,7 +394,7 @@ public class Game {
 		String title = properties.getProperty("title");
 
 		if (title == null)
-			title = gameSource.getName();
+			title = simulationSource.getName();
 		
 		return title;
 	}
@@ -403,14 +403,14 @@ public class Game {
 		return step;
 	}
 
-	public void addListener(GameListener listener) {
+	public void addListener(SimulationListener listener) {
 		synchronized (listeners) {
 			listeners.add(listener);
 		}
 
 	}
 
-	public void removeListener(GameListener listener) {
+	public void removeListener(SimulationListener listener) {
 		synchronized (listeners) {
 			listeners.remove(listener);
 		}
@@ -442,7 +442,7 @@ public class Game {
 			return;
 
 		synchronized (listeners) {
-			for (GameListener l : listeners) {
+			for (SimulationListener l : listeners) {
 				try {
 					l.message(team, from, to, message.length);
 				} catch (Exception e) {
@@ -456,7 +456,7 @@ public class Game {
 	private void fireStepEvent() {
 		
 		synchronized (listeners) {
-			for (GameListener l : listeners) {
+			for (SimulationListener l : listeners) {
 				try {
 					l.step();
 				} catch (Exception e) {
