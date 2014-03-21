@@ -75,21 +75,7 @@ public class Dispatcher implements Runnable {
 						close();
 						return;
 					}
-	
-					if (team.getPassphrase() != null) {
-					
-						String passphrase = ((RegisterMessage) message).getPassphrase();
-						
-						if (passphrase == null) passphrase = "";
-						
-						if (!passphrase.equals(team.getPassphrase())) {
-							Main.log("Rejected client %s for team %s: invalid passphrase", this, ((RegisterMessage) message).getTeam());
-							close();
-							return;
-						}
-						
-					}
-					
+
 					Main.log("New client joined team " + team + ": " + this);
 					
 					team.addClient(this);

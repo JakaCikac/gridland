@@ -13,16 +13,15 @@ public class TeamDatabase {
 
 	public static class TeamData {
 		
-		private String id, name, passphrase;
+		private String id, name;
 		
 		private Color color;
 
-		protected TeamData(String id, String name, String passphrase,
+		protected TeamData(String id, String name,
 				Color color) {
 			super();
 			this.id = id;
 			this.name = name;
-			this.passphrase = passphrase;
 			this.color = color;
 		}
 
@@ -32,10 +31,6 @@ public class TeamDatabase {
 
 		public String getName() {
 			return name;
-		}
-
-		public String getPassphrase() {
-			return passphrase;
 		}
 
 		public Color getColor() {
@@ -60,10 +55,9 @@ public class TeamDatabase {
 			
 			String id = tokens.nextToken();
 			String name = tokens.nextToken();
-			String passphrase = tokens.nextToken();
 			Color color = Color.decode(tokens.nextToken());
 			
-			TeamData d = new TeamData(id, name, passphrase, color);
+			TeamData d = new TeamData(id, name, color);
 			
 			data.put(d.getId(), d);
 			
@@ -78,9 +72,7 @@ public class TeamDatabase {
 		if (d == null) return null;
 		
 		Team team = new Team(d.getId(), d.getColor());
-		
-		team.setPassphrase(d.getPassphrase());
-		
+
 		return team;
 		
 	}
@@ -91,7 +83,7 @@ public class TeamDatabase {
 			
 			TeamData t = data.get(id);
 			
-			out.format("----- \nID: %s\nName: %s\nPassphrase: %s\n-----\n", t.getId(), t.getName(), t.getPassphrase());
+			out.format("----- \nID: %s\nName: %s\nPassphrase: %s\n-----\n", t.getId(), t.getName());
 			
 		}
 		

@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f3f6e5c1-36d1-4bde-93db-26e0cc79e510" name="Default" comment="Remove score changed, add some comments&#10;&#10;Remove method scoreChanged from Team and TeamListener. Also add some comments to Main and Dispatcher.&#10;">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/server/ClientsPanel.java" afterPath="$PROJECT_DIR$/src/org/grid/server/ClientsPanel.java" />
+    <list default="true" id="f3f6e5c1-36d1-4bde-93db-26e0cc79e510" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/server/Dispatcher.java" afterPath="$PROJECT_DIR$/src/org/grid/server/Dispatcher.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/server/Main.java" afterPath="$PROJECT_DIR$/src/org/grid/server/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/server/StackLayout.java" afterPath="$PROJECT_DIR$/src/org/grid/server/StackLayout.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/server/Team.java" afterPath="$PROJECT_DIR$/src/org/grid/server/Team.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/server/TeamListener.java" afterPath="$PROJECT_DIR$/src/org/grid/server/TeamListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/games/test.game" afterPath="$PROJECT_DIR$/games/test.game" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/server/TeamDatabase.java" afterPath="$PROJECT_DIR$/src/org/grid/server/TeamDatabase.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="gridland.iws" />
@@ -76,11 +72,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Team.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Team.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/grid/server/Team.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="337" column="0" selection-start="6047" selection-end="6047" vertical-scroll-proportion="0.0" vertical-offset="3644" max-vertical-offset="4500">
-              <folding />
+            <state line="287" column="0" selection-start="5082" selection-end="5082" vertical-scroll-proportion="0.5510563" vertical-offset="3557" max-vertical-offset="4605">
+              <folding>
+                <element signature="e#2217#2218#0" expanded="true" />
+                <element signature="e#2239#2240#0" expanded="true" />
+                <element signature="e#2268#2269#0" expanded="true" />
+                <element signature="e#2293#2294#0" expanded="true" />
+                <element signature="e#2322#2323#0" expanded="true" />
+                <element signature="e#2346#2347#0" expanded="true" />
+                <element signature="e#3467#3475#0" expanded="true" />
+                <element signature="e#4012#4019#0" expanded="true" />
+                <element signature="e#5140#5154#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -88,16 +94,7 @@
       <file leaf-file-name="TeamListener.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/grid/server/TeamListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="1" selection-start="1039" selection-end="1039" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClientsPanel.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/org/grid/server/ClientsPanel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="197" column="56" selection-start="5014" selection-end="5014" vertical-scroll-proportion="1.0563381" vertical-offset="1740" max-vertical-offset="6525">
+            <state line="26" column="4" selection-start="1037" selection-end="1037" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270">
               <folding />
             </state>
           </provider>
@@ -106,9 +103,12 @@
       <file leaf-file-name="TeamDatabase.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/grid/server/TeamDatabase.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="62" column="29" selection-start="1238" selection-end="1238" vertical-scroll-proportion="0.0" vertical-offset="614" max-vertical-offset="1470">
+            <state line="23" column="29" selection-start="478" selection-end="478" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1410">
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#627#628#0" expanded="true" />
+                <element signature="e#648#649#0" expanded="true" />
+                <element signature="e#713#731#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -137,7 +137,6 @@
         <option value="$PROJECT_DIR$/doc/game.md" />
         <option value="$PROJECT_DIR$/doc/start.md" />
         <option value="$PROJECT_DIR$/src/org/grid/server/History.java" />
-        <option value="$PROJECT_DIR$/src/org/grid/server/TeamDatabase.java" />
         <option value="$PROJECT_DIR$/src/org/grid/arena/SwingView.java" />
         <option value="$PROJECT_DIR$/src/org/grid/server/Game.java" />
         <option value="$PROJECT_DIR$/src/org/grid/server/Field.java" />
@@ -148,12 +147,13 @@
         <option value="$PROJECT_DIR$/src/org/grid/agent/sample/HumanAgent.java" />
         <option value="$PROJECT_DIR$/src/org/grid/agent/sample/SampleAgent.java" />
         <option value="$PROJECT_DIR$/src/org/grid/server/Main.java" />
-        <option value="$PROJECT_DIR$/src/org/grid/server/Dispatcher.java" />
         <option value="$PROJECT_DIR$/games/test.game" />
         <option value="$PROJECT_DIR$/src/org/grid/server/StackLayout.java" />
-        <option value="$PROJECT_DIR$/src/org/grid/server/Team.java" />
         <option value="$PROJECT_DIR$/src/org/grid/server/TeamListener.java" />
         <option value="$PROJECT_DIR$/src/org/grid/server/ClientsPanel.java" />
+        <option value="$PROJECT_DIR$/src/org/grid/server/Dispatcher.java" />
+        <option value="$PROJECT_DIR$/src/org/grid/server/TeamDatabase.java" />
+        <option value="$PROJECT_DIR$/src/org/grid/server/Team.java" />
       </list>
     </option>
   </component>
@@ -381,7 +381,7 @@
     <property name="restartRequiresConfirmation" value="true" />
     <property name="dynamic.classpath" value="false" />
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Application.SampleAgent">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin" singleton="true">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
@@ -685,7 +685,7 @@
       <workItem from="1394734443406" duration="253000" />
       <workItem from="1394794393909" duration="1323000" />
       <workItem from="1395129975590" duration="378000" />
-      <workItem from="1395395485605" duration="2950000" />
+      <workItem from="1395395485605" duration="3525000" />
     </task>
     <task id="LOCAL-00001" summary="Test commit.">
       <created>1394200726993</created>
@@ -791,11 +791,15 @@
       <created>1394623830680</created>
       <updated>1394623830680</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Remove score changed, add some comments&#10;&#10;Remove method scoreChanged from Team, TeamListener, ClientsPanel. Also add some comments to Main and Dispatcher.&#10;">
+      <created>1395398478078</created>
+      <updated>1395398478078</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26878000" />
+    <option name="totallyTimeSpent" value="27453000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -819,10 +823,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1280" y="22" width="1280" height="1002" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35778782" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35746607" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32888147" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -833,7 +837,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32663316" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32663316" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32579187" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32579187" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32663316" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -841,7 +845,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25444266" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32579187" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32579187" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32956383" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -886,7 +890,8 @@
     <MESSAGE value="Test comment 2..&#10;" />
     <MESSAGE value="Test comment 3..&#10;" />
     <MESSAGE value="Remove score changed, add some comments&#10;&#10;Remove method scoreChanged from Team and TeamListener. Also add some comments to Main and Dispatcher.&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove score changed, add some comments&#10;&#10;Remove method scoreChanged from Team and TeamListener. Also add some comments to Main and Dispatcher.&#10;" />
+    <MESSAGE value="Remove score changed, add some comments&#10;&#10;Remove method scoreChanged from Team, TeamListener, ClientsPanel. Also add some comments to Main and Dispatcher.&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove score changed, add some comments&#10;&#10;Remove method scoreChanged from Team, TeamListener, ClientsPanel. Also add some comments to Main and Dispatcher.&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -906,14 +911,34 @@
     <entry file="file://$PROJECT_DIR$/src/org/grid/server/Team.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="41" column="19" selection-start="1381" selection-end="1381" vertical-scroll-proportion="0.0" vertical-offset="615" max-vertical-offset="5325">
-          <folding />
+          <folding>
+            <element signature="e#2217#2218#0" expanded="true" />
+            <element signature="e#2239#2240#0" expanded="true" />
+            <element signature="e#2268#2269#0" expanded="true" />
+            <element signature="e#2293#2294#0" expanded="true" />
+            <element signature="e#2322#2323#0" expanded="true" />
+            <element signature="e#2346#2347#0" expanded="true" />
+            <element signature="e#3467#3475#0" expanded="true" />
+            <element signature="e#4012#4019#0" expanded="true" />
+            <element signature="e#5140#5154#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/grid/server/Team.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="33" column="19" selection-start="1242" selection-end="1242" vertical-scroll-proportion="0.0" vertical-offset="495" max-vertical-offset="5325">
-          <folding />
+          <folding>
+            <element signature="e#2217#2218#0" expanded="true" />
+            <element signature="e#2239#2240#0" expanded="true" />
+            <element signature="e#2268#2269#0" expanded="true" />
+            <element signature="e#2293#2294#0" expanded="true" />
+            <element signature="e#2322#2323#0" expanded="true" />
+            <element signature="e#2346#2347#0" expanded="true" />
+            <element signature="e#3467#3475#0" expanded="true" />
+            <element signature="e#4012#4019#0" expanded="true" />
+            <element signature="e#5140#5154#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1162,13 +1187,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/Game.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="243" column="19" selection-start="5271" selection-end="5271" vertical-scroll-proportion="0.72887325" vertical-offset="2601" max-vertical-offset="6750">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/games/test.game">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="0" selection-start="262" selection-end="262" vertical-scroll-proportion="0.14018692" vertical-offset="0" max-vertical-offset="856">
@@ -1183,13 +1201,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/Dispatcher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="326" column="8" selection-start="6950" selection-end="6950" vertical-scroll-proportion="2.0320284" vertical-offset="2622" max-vertical-offset="4710">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/grid/server/Field.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="129" column="33" selection-start="3067" selection-end="3067" vertical-scroll-proportion="1.6014235" vertical-offset="0" max-vertical-offset="9615">
@@ -1197,33 +1208,69 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/TeamDatabase.java">
+    <entry file="file://$PROJECT_DIR$/src/org/grid/server/ClientsPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="29" selection-start="1238" selection-end="1238" vertical-scroll-proportion="0.0" vertical-offset="614" max-vertical-offset="1470">
+        <state line="188" column="27" selection-start="4815" selection-end="4815" vertical-scroll-proportion="4.0833335" vertical-offset="0" max-vertical-offset="6525">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/server/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="50" column="32" selection-start="1575" selection-end="1592" vertical-scroll-proportion="0.46692607" vertical-offset="0" max-vertical-offset="6750">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/server/Dispatcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="276" column="25" selection-start="5995" selection-end="5995" vertical-scroll-proportion="0.8918919" vertical-offset="3210" max-vertical-offset="4620">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#3639#3640#0" expanded="true" />
+            <element signature="e#3660#3661#0" expanded="true" />
+            <element signature="e#3687#3688#0" expanded="true" />
+            <element signature="e#3707#3708#0" expanded="true" />
+            <element signature="e#4576#4592#0" expanded="true" />
+            <element signature="e#5732#5740#0" expanded="true" />
+            <element signature="e#6187#6490#0" expanded="true" />
+            <element signature="e#6485#6486#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/Team.java">
+    <entry file="file://$PROJECT_DIR$/src/org/grid/server/TeamDatabase.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="337" column="0" selection-start="6047" selection-end="6047" vertical-scroll-proportion="0.0" vertical-offset="3644" max-vertical-offset="4500">
-          <folding />
+        <state line="23" column="29" selection-start="478" selection-end="478" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1410">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#627#628#0" expanded="true" />
+            <element signature="e#648#649#0" expanded="true" />
+            <element signature="e#713#731#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/grid/server/TeamListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="1" selection-start="1039" selection-end="1039" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270">
+        <state line="26" column="4" selection-start="1037" selection-end="1037" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/ClientsPanel.java">
+    <entry file="file://$PROJECT_DIR$/src/org/grid/server/Team.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="197" column="56" selection-start="5014" selection-end="5014" vertical-scroll-proportion="1.0563381" vertical-offset="1740" max-vertical-offset="6525">
-          <folding />
+        <state line="287" column="0" selection-start="5082" selection-end="5082" vertical-scroll-proportion="0.5510563" vertical-offset="3557" max-vertical-offset="4605">
+          <folding>
+            <element signature="e#2217#2218#0" expanded="true" />
+            <element signature="e#2239#2240#0" expanded="true" />
+            <element signature="e#2268#2269#0" expanded="true" />
+            <element signature="e#2293#2294#0" expanded="true" />
+            <element signature="e#2322#2323#0" expanded="true" />
+            <element signature="e#2346#2347#0" expanded="true" />
+            <element signature="e#3467#3475#0" expanded="true" />
+            <element signature="e#4012#4019#0" expanded="true" />
+            <element signature="e#5140#5154#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -67,7 +67,7 @@ public class Team {
 	
 	private HashSet<Integer> allocatedIds = new HashSet<Integer>();
 
-	private String name, passphrase;
+	private String name;
 	
 	private Headquarters hq;
 	
@@ -79,18 +79,9 @@ public class Team {
 		
 		this.name = name;
 		this.color = color;
-		this.passphrase = null;
 
 		hq = new Headquarters(Arena.TILE_HEADQUARTERS, this);
 
-	}
-	
-	public String getPassphrase() {
-		return passphrase;
-	}
-
-	public void setPassphrase(String passphrase) {
-		this.passphrase = passphrase;
 	}
 
 	public Headquarters getHeadquarters() {
