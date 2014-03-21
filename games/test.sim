@@ -1,9 +1,5 @@
 simulation.speed=10
-simulation.field=/Users/nanorax/Documents/FRI/Diploma/Project Prometheus/implementacija/gridland/maps/beatle.png
+simulation.field=/Users/nanorax/Documents/FRI/Diploma/Project Prometheus/implementacija/gridland/maps/maze.png
 simulation.agents=10
 simulation.respawn=30
-simulation.flags=random
-simulation.flags.pool=5
-simulation.flags.respawn=10
-simulation.flags.weight=1
 team1=explorers
