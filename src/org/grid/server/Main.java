@@ -324,18 +324,24 @@ public class Main {
 		
 		info("Starting game server (release %s)", RELEASE);
 
+        // Warn and exit if no game file is provided as an argument
 		if (args.length < 1) {
 			info("Please provide game description file location as an argument.");
 			System.exit(1);
 		}
 
+        // Enable opengl hardware acceleration
+        System.setProperty("sun.java2d.opengl","True");
+        // Log to console if opengl enabled
 		info("Java2D OpenGL acceleration "
 				+ (("true".equalsIgnoreCase(System
 						.getProperty("sun.java2d.opengl"))) ? "enabled"
 						: "not enabled"));
 
+        // Load game properties from a game file, which is given as an argument
 		game = Game.loadFromFile(new File(args[0]));
 
+        // Create a log file with timestamp as name
 		try {
 			log = new PrintWriter(new File(logDate.format(new Date()) + "_" + game.getTitle() + ".log"));
 			
@@ -347,7 +353,6 @@ public class Main {
 		final int gameSpeed = game.getSpeed();
 
 		game.addListener(view);
-
 		game.addListener(history);
 		
 		(new Thread(new Runnable() {

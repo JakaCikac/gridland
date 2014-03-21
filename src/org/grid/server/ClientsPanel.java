@@ -191,12 +191,6 @@ public class ClientsPanel extends JPanel {
 			clientPanel.revalidate();
 		}
 
-		@Override
-		public void scoreChange(Team team, int score) {
-			this.score.setText(score + "");
-		}
-
-
 	}
 	
 	private class ClientPanel extends JPanel implements ClientListener, Selectable {

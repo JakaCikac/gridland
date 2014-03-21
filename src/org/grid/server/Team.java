@@ -33,6 +33,7 @@ import org.grid.server.Game.MessageContainter;
 
 public class Team {
 
+    // 1 073 741 823
 	private static final int MAX_ID = (1 << 30) - 1;
 	
 	public static class TeamBody extends Body {
@@ -334,16 +335,5 @@ public class Team {
 			}
 		}
 	}
-	
-	private void scoreChange(int score) {
-		
-		synchronized (listeners) {
-			for (TeamListener l : listeners) {
-				try {
-					l.scoreChange(this, score);
-				} catch (Exception e) {e.printStackTrace();}
-				
-			}
-		}
-	}
+
 }

@@ -285,11 +285,11 @@ public class Dispatcher implements Runnable {
 	private int neighborhoodSize = 5;	
 	
 	public Dispatcher(int port, Game game) throws IOException {
-		
+
 		socket = new ServerSocket(port);
 		
 		this.game = game;
-		
+
 		this.maxMessageSize = game.getProperty("message.size", 256);
 
 		this.neighborhoodSize = game.getNeighborhoodSize();

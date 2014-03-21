@@ -21,8 +21,6 @@ import org.grid.server.Dispatcher.Client;
 
 public interface TeamListener {
 
-	public void scoreChange(Team team, int score);
-	
 	public void clientConnect(Team team, Client client);
 	
 	public void clientDisconnect(Team team, Client client);

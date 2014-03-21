@@ -7,4 +7,3 @@ gameplay.flags.pool=5
 gameplay.flags.respawn=10
 gameplay.flags.weight=1
 team1=foo
-team2=bar
