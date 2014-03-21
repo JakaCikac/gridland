@@ -211,8 +211,7 @@ public class LocalMap {
 			if (n == null)
 				return null;
 
-			if (n.body > 0 || n.body == Neighborhood.FLAG
-					|| n.body == Neighborhood.HEADQUARTERS)
+			if (n.body > 0 || n.body == Neighborhood.HEADQUARTERS)
 				return Color.BLUE;
 
 			return Color.RED;
@@ -278,9 +277,6 @@ public class LocalMap {
 			switch (n.body) {
 			case Neighborhood.EMPTY:
 				return n.timestep;
-			case Neighborhood.FLAG:
-				return n.timestep;
-			case Neighborhood.OTHER_FLAG:
 			case Neighborhood.OTHER_HEADQUARTERS:
 			case Neighborhood.OTHER:
 			case Neighborhood.HEADQUARTERS:
@@ -479,16 +475,8 @@ public class LocalMap {
 						chunk.set(c, MapChunk.WALL);
 						break;
 					}
-					case Neighborhood.FLAG: {
-						chunk.set(c, MapChunk.FLAG);
-						break;
-					}
 					case Neighborhood.HEADQUARTERS: {
 						chunk.set(c, MapChunk.HEADQUARTERS);
-						break;
-					}
-					case Neighborhood.OTHER_FLAG: {
-						chunk.set(c, MapChunk.OTHER_FLAG);
 						break;
 					}
 					case Neighborhood.OTHER_HEADQUARTERS: {
@@ -676,18 +664,9 @@ public class LocalMap {
 					changed |= put(i, j, chunk.timestep, Neighborhood.WALL, true);
 					break;
 				}
-				case MapChunk.FLAG: {
-					changed |= put(i, j, chunk.timestep, Neighborhood.FLAG, true);
-					break;
-				}
 				case MapChunk.HEADQUARTERS: {
 					changed |= put(i, j, chunk.timestep,
 							Neighborhood.HEADQUARTERS, true);
-					break;
-				}
-				case MapChunk.OTHER_FLAG: {
-					changed |= put(i, j, chunk.timestep,
-							Neighborhood.OTHER_FLAG, true);
 					break;
 				}
 				case MapChunk.OTHER_HEADQUARTERS: {

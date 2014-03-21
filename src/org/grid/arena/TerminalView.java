@@ -40,14 +40,8 @@ public class TerminalView implements ArenaView {
 				case Arena.TILE_AGENT: 
 					System.out.print('a');
 					continue;
-				case Arena.TILE_AGENT_FLAG: 
-					System.out.print((char)134);
-					continue;
 				case Arena.TILE_HEADQUARTERS: 
 					System.out.print('h');
-					continue;
-				case Arena.TILE_FLAG:
-					System.out.print('f');
 					continue;
 				}
 				

@@ -30,12 +30,8 @@ public class Neighborhood implements Serializable, Arena {
 	public static final int WALL = -1;
 	
 	public static final int HEADQUARTERS = -2;
-	
-	public static final int FLAG = -3;
-	
+
 	public static final int OTHER_HEADQUARTERS = -4;
-	
-	public static final int OTHER_FLAG = -5;
 	
 	public static final int OTHER = -6;
 	
@@ -96,7 +92,7 @@ public class Neighborhood implements Serializable, Arena {
 		
 		int b = getCell(x - size, y - size);
 		
-		if (b == HEADQUARTERS || b == FLAG || b > 0)
+		if (b == HEADQUARTERS || b > 0)
 			return TEAM_COLOR;
 		
 		return OTHER_COLOR;
@@ -112,9 +108,6 @@ public class Neighborhood implements Serializable, Arena {
 		
 		if (b == HEADQUARTERS || b == OTHER_HEADQUARTERS)
 			return Arena.TILE_HEADQUARTERS;
-
-		if (b == FLAG || b == OTHER_FLAG)
-			return Arena.TILE_FLAG;
 		
 		if (b > 0 || b == OTHER)
 			return Arena.TILE_AGENT;

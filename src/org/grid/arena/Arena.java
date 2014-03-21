@@ -33,9 +33,7 @@ public interface Arena {
 	public static final int TILE_WALL_9 = 2024 + 9;	
 	
 	public static final int TILE_HEADQUARTERS = 3024;
-	public static final int TILE_FLAG = 4024;
 	public static final int TILE_AGENT = 5024;
-	public static final int TILE_AGENT_FLAG = 5024 + 1;
 	
 	public int getWidth();
 	

@@ -72,11 +72,12 @@ public class SwingView extends JPanel implements ArenaView {
 	private static Palette grassPalette = new Palette() {
 		
 		private Color[] grassColors = new Color[] {
-			new Color(0.1f, 0.6f, 0.1f), new Color(0.12f, 0.61f, 0.1f),
-			new Color(0.11f, 0.6f, 0.11f), new Color(0.1f, 0.63f, 0.1f),
-			new Color(0.1f, 0.65f, 0.1f), new Color(0.13f, 0.62f, 0.1f),
-			new Color(0.12f, 0.61f, 0.1f), new Color(0.15f, 0.6f, 0.1f),
-			new Color(0.2f, 0.65f, 0.11f), new Color(0.12f, 0.63f, 0.12f), };
+			//new Color(0.1f, 0.6f, 0.1f), new Color(0.12f, 0.61f, 0.1f),
+			//new Color(0.11f, 0.6f, 0.11f), new Color(0.1f, 0.63f, 0.1f),
+			//new Color(0.1f, 0.65f, 0.1f), new Color(0.13f, 0.62f, 0.1f),
+			//new Color(0.12f, 0.61f, 0.1f), new Color(0.15f, 0.6f, 0.1f),
+			new Color(0.2f, 0.65f, 0.11f),
+            new Color(0.12f, 0.63f, 0.12f), };
 		
 		@Override
 		public Color getColor(int tile) {
@@ -93,7 +94,8 @@ public class SwingView extends JPanel implements ArenaView {
 			new Color(0.25f, 0.25f, 0.25f), new Color(0.4f, 0.4f, 0.4f),
 			new Color(0.3f, 0.3f, 0.3f), new Color(0.25f, 0.25f, 0.25f),
 			new Color(0.32f, 0.32f, 0.32f), new Color(0.25f, 0.25f, 0.25f),
-			new Color(0.23f, 0.23f, 0.23f), new Color(0.25f, 0.25f, 0.25f), };
+			new Color(0.23f, 0.23f, 0.23f),
+            new Color(0.25f, 0.25f, 0.25f), };
 
 	private Dimension size = new Dimension(100, 100);
 
@@ -147,8 +149,8 @@ public class SwingView extends JPanel implements ArenaView {
 					color = wallColors[body - Arena.TILE_WALL_0];
 					g.setColor(color);
 					g.fillRect(i * cellSize + cellBorder, j * cellSize
-							+ cellBorder, cellSize - 2 * cellBorder,
-							cellSize - 2 * cellBorder);
+                            + cellBorder, cellSize - 0 * cellBorder,
+                            cellSize - 0 * cellBorder);
 					continue;
 				}
 				
@@ -261,8 +263,6 @@ public class SwingView extends JPanel implements ArenaView {
 		this.cellSize = Math.min(64, Math.max(4, cellSize));
 		
 		this.cellBorder = Math.max(1, Math.round((float)this.cellSize * 0.1f));
-		
-		//flag = getFlagGlyph(this.cellSize);
 		
 		synchronized (this) {
 	
