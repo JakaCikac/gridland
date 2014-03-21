@@ -4,21 +4,21 @@ Game creation
 Each game is defined as a set of properties, defined in a `.game`
 file that is actually an INI-like file.
 
-Gameplay options
+simulation options
 --------------
 
- * `gameplay.speed` - The speed of the gameplay (optional, default 10)
- * `gameplay.field` - The map file to load (required), see maps.txt
- * `gameplay.agents` - The maximum number of agents per team (optional, default 10)
- * `gameplay.respawn` - The number of timesteps between respawn phases (optional, default 30)
- * `gameplay.flags` - The flags mode of the game (default unique):
+ * `simulation.speed` - The speed of the simulation (optional, default 10)
+ * `simulation.field` - The map file to load (required), see maps.txt
+ * `simulation.agents` - The maximum number of agents per team (optional, default 10)
+ * `simulation.respawn` - The number of timesteps between respawn phases (optional, default 30)
+ * `simulation.flags` - The flags mode of the game (default unique):
     * `unique` - The positions of the flags are acquired from the map file
     * `random` - Position flags randomly on the map
     * `respawn` - Position flags randomly on the map and add new flags to maintain a fixed pool of
        flags per team.
-  * `gameplay.flags.pool` - The number of flags for flag modes random and respawn
-  * `gameplay.flags.respawn` - The number of timesteps between respawn phases for flag mode respawn
-  * `gameplay.flags.weight` - The weight of a flag (each collected flag will cause the agent to move slower)
+  * `simulation.flags.pool` - The number of flags for flag modes random and respawn
+  * `simulation.flags.respawn` - The number of timesteps between respawn phases for flag mode respawn
+  * `simulation.flags.weight` - The weight of a flag (each collected flag will cause the agent to move slower)
 
 Protocol options
 --------------

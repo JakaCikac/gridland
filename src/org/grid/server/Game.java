@@ -182,7 +182,7 @@ public class Game {
 
 		}
 
-		String fldPath = game.getProperty("gameplay.field", f.getAbsolutePath()
+		String fldPath = game.getProperty("simulation.field", f.getAbsolutePath()
 				+ ".field");
         System.out.println(fldPath);
 
@@ -192,9 +192,9 @@ public class Game {
 			fldFile = new File(f.getParentFile(), fldPath);
 		}
 
-		game.spawnFrequency = game.getProperty("gameplay.respawn", 30);
+		game.spawnFrequency = game.getProperty("simulation.respawn", 30);
 
-		game.maxAgentsPerTeam = game.getProperty("gameplay.agents", 10);
+		game.maxAgentsPerTeam = game.getProperty("simulation.agents", 10);
 
 		game.neighborhoodSize = game.getProperty("message.neighborhood", 5);
 
@@ -213,8 +213,6 @@ public class Game {
 	}
 
 	private int spawnCounter = 1;
-
-	private int flagSpawnCounter = 1;
 
 	private int step = 0;
 
@@ -481,7 +479,7 @@ public class Game {
 	}
 
 	public int getSpeed() {
-		return getProperty("gameplay.speed", 10);
+		return getProperty("simulation.speed", 10);
 	}
 
 	public int getNeighborhoodSize() {
