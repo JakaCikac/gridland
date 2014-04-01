@@ -12,13 +12,13 @@ import java.util.StringTokenizer;
 public class TeamDatabase {
 
 	public static class TeamData {
-		
+
+        // give the team an id and a name
 		private String id, name;
-		
+		// select the color representing the team
 		private Color color;
 
-		protected TeamData(String id, String name,
-				Color color) {
+		protected TeamData(String id, String name, Color color) {
 			super();
 			this.id = id;
 			this.name = name;
@@ -40,7 +40,8 @@ public class TeamDatabase {
 	}
 	
 	private Hashtable<String, TeamData> data = new Hashtable<String, TeamData>();
-	
+
+    // Read team database from a file
 	public TeamDatabase(File file) throws IOException {
 		
 		BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -56,27 +57,33 @@ public class TeamDatabase {
 			String id = tokens.nextToken();
 			String name = tokens.nextToken();
 			Color color = Color.decode(tokens.nextToken());
-			
+
+            // create new team d
 			TeamData d = new TeamData(id, name, color);
-			
+            // add team to hashtable
 			data.put(d.getId(), d);
 			
 		}
 		
 	}
-	
-	public Team createTeam(String id) {
-		
-		TeamData d = data.get(id);
-		
-		if (d == null) return null;
-		
-		Team team = new Team(d.getId(), d.getColor());
 
+    /** Retrieve a team from the database, based on team id
+     ** and create it
+     **/
+	public Team createTeam(String id) {
+        // get team from hashtable
+		TeamData d = data.get(id);
+
+		// if team doesn't exist return null
+		if (d == null) return null;
+
+		// else create a team and return it
+		Team team = new Team(d.getId(), d.getColor());
 		return team;
 		
 	}
-	
+
+    // print out every team in database info
 	public void print(PrintStream out) {
 		
 		for (String id : data.keySet()) {

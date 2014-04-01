@@ -112,11 +112,7 @@ public class LocalMap {
 
 		public static final int HEADQUARTERS = 2;
 
-		public static final int FLAG = 3;
-
 		public static final int OTHER_HEADQUARTERS = 4;
-
-		public static final int OTHER_FLAG = 5;
 
 		public static final int UNKNOWN = 6;
 

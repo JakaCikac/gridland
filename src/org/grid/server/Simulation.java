@@ -43,7 +43,7 @@ public class Simulation {
 	public static class MessageContainter {
 		
 		private int to;
-		
+
 		private byte[] message;
 
 		private int delay;
@@ -69,6 +69,7 @@ public class Simulation {
 		
 	}
 
+    // default simulation parameters
 	private int spawnFrequency = 10;
 
 	private Field field;

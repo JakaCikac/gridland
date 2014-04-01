@@ -53,7 +53,7 @@ public class ProtocolSocket {
 	
 	private boolean running = true;
 	
-	private boolean debug = Boolean.getBoolean("fri.pipt.protocol.debug");
+	private boolean debug = Boolean.getBoolean("org.grid.protocol.debug");
 	
 	private ConcurrentLinkedQueue<Message> inQueue = new ConcurrentLinkedQueue<Message>();
 	
