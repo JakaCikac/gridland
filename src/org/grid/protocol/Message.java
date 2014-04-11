@@ -21,10 +21,15 @@ import java.io.Serializable;
 
 public abstract class Message implements Serializable {
 
+    // Four possible directions and none.
 	public static enum Direction {NONE, UP, DOWN, LEFT, RIGHT}
 	
 	private static final long serialVersionUID = 1L;
 
+    /** Retrieve message type (Message, RegisterMessage, AckMessage, InitMessage,
+     * TerminateMessage, ScanMessage, StateMessage, MoveMessage, SendMessage,
+     * ReceiveMessage
+    */
 	public String toString() {
 		return getClass().getSimpleName();
 	}
@@ -32,17 +37,17 @@ public abstract class Message implements Serializable {
 	public static class RegisterMessage extends Message {
 
 		private static final long serialVersionUID = 1L;
+        private String team;
 
-		public RegisterMessage(String team) {
+        // Register message to a team
+        public RegisterMessage(String team) {
 			this.team = team;
 		}
 
-		private String team;
-
+        // Get and set team name
 		public String getTeam() {
 			return team;
 		}
-
 		public void setTeam(String team) {
 			this.team = team;
 		}
@@ -54,49 +59,47 @@ public abstract class Message implements Serializable {
 		private static final long serialVersionUID = 1L;
 		
 	}
-	
-	
+
+    /**
+     * InitializeMessage
+     * id, maxMessageSize, simulationSpeed
+     */
 	public static class InitializeMessage extends Message {
 
 		private static final long serialVersionUID = 1L;
 		
 		private int id;
-
 		private int maxMessageSize;
-		
 		private int simulationSpeed;
-		
+
+        public InitializeMessage(int id, int maxMessageSize, int simulationSpeed) {
+            super();
+            this.id = id;
+            this.maxMessageSize = maxMessageSize;
+            this.simulationSpeed = simulationSpeed;
+        }
+
+        // Getters (Id, MaxMessageSize, SimulationSpeed)
 		public int getId() {
 			return id;
 		}
+        public int getMaxMessageSize() {
+            return maxMessageSize;
+        }
+        public int getSimulationSpeed() {
+            return simulationSpeed;
+        }
 
-		public void setId(int id) {
-			this.id = id;
-		}
-
-		public int getMaxMessageSize() {
-			return maxMessageSize;
-		}
-
-		public void setMaxMessageSize(int maxMessageSize) {
+        // Setters (Id, MaxMessageSize, SimulationSpeed)
+        public void setId(int id) {
+            this.id = id;
+        }
+        public void setMaxMessageSize(int maxMessageSize) {
 			this.maxMessageSize = maxMessageSize;
 		}
-
-		public int getSimulationSpeed() {
-			return simulationSpeed;
-		}
-
 		public void setSimulationSpeed(int simulationSpeed) {
 			this.simulationSpeed = simulationSpeed;
 		}
-
-		public InitializeMessage(int id, int maxMessageSize, int simulationSpeed) {
-			super();
-			this.id = id;
-			this.maxMessageSize = maxMessageSize;
-			this.simulationSpeed = simulationSpeed;
-		}
-
 	}
 	
 	public static class TerminateMessage extends Message {

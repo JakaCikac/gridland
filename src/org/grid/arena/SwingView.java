@@ -27,14 +27,15 @@ import javax.swing.JPanel;
 public class SwingView extends JPanel implements ArenaView {
 
 	private static final long serialVersionUID = 1L;
-
 	protected int cellSize = 24;
-
 	protected int cellBorder = 2;
-
 	protected Color borderColor = Color.DARK_GRAY;
 
-	
+    public SwingView() {
+        this(24);
+    }
+
+    // Interface class for Pallete
 	public static interface Palette {
 		
 		public Color getColor(int tile);
@@ -108,12 +109,6 @@ public class SwingView extends JPanel implements ArenaView {
 		setDoubleBuffered(true);
 
 		setCellSize(cellSize);
-	}
-	
-	public SwingView() {
-
-		this(24);
-
 	}
 
 	protected void paintBackground(Graphics g, Arena view) {
