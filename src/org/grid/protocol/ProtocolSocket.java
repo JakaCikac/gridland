@@ -42,21 +42,16 @@ public class ProtocolSocket {
 
 		}
 
-	
 	private ObjectInputStream in;
-	
 	private ObjectOutputStream out;
 	
 	private Thread inputThread;
-	
 	private Thread outputThread;
 	
 	private boolean running = true;
-	
 	private boolean debug = Boolean.getBoolean("org.grid.protocol.debug");
-	
+
 	private ConcurrentLinkedQueue<Message> inQueue = new ConcurrentLinkedQueue<Message>();
-	
 	private ConcurrentLinkedQueue<Message> outQueue = new ConcurrentLinkedQueue<Message>();
 	
 	private Socket socket;

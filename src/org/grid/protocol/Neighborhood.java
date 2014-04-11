@@ -26,25 +26,19 @@ import org.grid.arena.Arena;
 public class Neighborhood implements Serializable, Arena {
 	
 	public static final int EMPTY = 0;
-	
 	public static final int WALL = -1;
-	
 	public static final int HEADQUARTERS = -2;
-
 	public static final int OTHER_HEADQUARTERS = -4;
-	
 	public static final int OTHER = -6;
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private int size;
-	
 	private int[] grid;
-	
+
 	public Neighborhood(int size) {
 	
 		this.size = size;
-		
 		this.grid = new int[(size * 2 + 1) * (size * 2 + 1)];
 		
 	}
@@ -83,8 +77,7 @@ public class Neighborhood implements Serializable, Arena {
 		return 0;
 	}
 
-	private static transient final Color TEAM_COLOR = Color.BLUE.darker().darker(); 
-	
+	private static transient final Color TEAM_COLOR = Color.BLUE.darker().darker();
 	private static transient final Color OTHER_COLOR = Color.RED.brighter();
 	
 	@Override

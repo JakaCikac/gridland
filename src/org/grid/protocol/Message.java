@@ -51,9 +51,11 @@ public abstract class Message implements Serializable {
 		public void setTeam(String team) {
 			this.team = team;
 		}
-
 	}
-	
+
+    /**
+     * AcknowledgeMessage
+     */
 	public static class AcknowledgeMessage extends Message {
 
 		private static final long serialVersionUID = 1L;
@@ -62,7 +64,7 @@ public abstract class Message implements Serializable {
 
     /**
      * InitializeMessage
-     * id, maxMessageSize, simulationSpeed
+     * int id, int maxMessageSize, int simulationSpeed
      */
 	public static class InitializeMessage extends Message {
 
@@ -101,99 +103,110 @@ public abstract class Message implements Serializable {
 			this.simulationSpeed = simulationSpeed;
 		}
 	}
-	
+
+    /**
+     * TerminateMessage
+     */
 	public static class TerminateMessage extends Message {
 
 		private static final long serialVersionUID = 1L;
 		
 	}
 
+    /**
+     * ScanMessage
+     * int stamp
+     */
 	public static class ScanMessage extends Message {
 
 		private static final long serialVersionUID = 1L;
-		
+
+        private int stamp;
+
 		public ScanMessage(int stamp) {
 			super();
 			this.stamp = stamp;
 		}
-		
-		private int stamp;
-		
+
 		public int getStamp() {
 			return stamp;
 		}
-
 		public void setStamp(int stamp) {
 			this.stamp = stamp;
 		}
-		
 	}
-	
+
+    /**
+     * StateMessage
+     * int stamp, Direction direction, Neighbourhood neighborhood
+     * TODO: fix typo by Luka: correct neighbourhood..
+     */
 	public static class StateMessage extends Message {
 
+        private static final long serialVersionUID = 1L;
+
 		private int stamp;
-		
+        private Direction direction;
+        private Neighborhood neighborhood;
+
+        public StateMessage(Direction direction, Neighborhood neighborhood) {
+            super();
+            this.direction = direction;
+            this.neighborhood = neighborhood;
+        }
+
+        // Getters: stamp, direction, neighborhood
 		public int getStamp() {
 			return stamp;
 		}
+        public Direction getDirection() {
+            return direction;
+        }
+        public Neighborhood getNeighborhood() {
+            return neighborhood;
+        }
 
+        // Setters: stamp, direction
 		public void setStamp(int stamp) {
 			this.stamp = stamp;
 		}
-
-		private Direction direction;
-		
-		private Neighborhood neighborhood;
-
-		private static final long serialVersionUID = 1L;
-		
-		public Direction getDirection() {
-			return direction;
-		}
-
-		public void setDirection(Direction direction) {
-			this.direction = direction;			
-		}
-
-		public StateMessage(Direction direction, Neighborhood neighborhood) {
-			super();
-			this.direction = direction;
-			this.neighborhood = neighborhood;
-		}
-
-		public Neighborhood getNeighborhood() {
-			return neighborhood;
-		}
-
+        public void setDirection(Direction direction) {
+            this.direction = direction;
+        }
 	}
-	
+
+    /**
+     * MoveMessage
+     * Direction direction
+     */
 	public static class MoveMessage extends Message {
 
+        private static final long serialVersionUID = 1L;
+
 		private Direction direction;
-		
-		private static final long serialVersionUID = 1L;
+
+        public MoveMessage(Direction direction) {
+            super();
+            this.direction = direction;
+        }
 
 		public Direction getDirection() {
 			return direction;
 		}
-
 		public void setDirection(Direction direction) {
 			this.direction = direction;
 		}
-
-		public MoveMessage(Direction direction) {
-			super();
-			this.direction = direction;
-		}
-
 	}
-	
+
+    /**
+     * SendMessage
+     * int to, byte[] message
+     */
 	public static class SendMessage extends Message {
 
 		private static final long serialVersionUID = 1L;
 	
 		private int to;
-		
 		private byte[] message;
 
 		public SendMessage(int to, byte[] message) {
@@ -202,30 +215,33 @@ public abstract class Message implements Serializable {
 			this.message = message;
 		}
 
+        // Getters: to, message
 		public int getTo() {
 			return to;
 		}
-
-		public void setTo(int to) {
-			this.to = to;
-		}
-
 		public byte[] getMessage() {
 			return message;
 		}
 
+        // Setters: to, message
+        public void setTo(int to) {
+            this.to = to;
+        }
 		public void setMessage(byte[] message) {
 			this.message = message;
 		}
 		
 	}
-	
+
+    /**
+     * ReceiveMessage
+     * int from, byte[] message
+     */
 	public static class ReceiveMessage extends Message {
 
 		private static final long serialVersionUID = 1L;
 		
 		private int from;
-		
 		private byte[] message;
 
 		public ReceiveMessage(int from, byte[] message) {
@@ -234,22 +250,21 @@ public abstract class Message implements Serializable {
 			this.message = message;
 		}
 
+        // Getters: from, message
 		public int getFrom() {
 			return from;
 		}
-
-		public void setFrom(int from) {
-			this.from = from;
-		}
-
 		public byte[] getMessage() {
 			return message;
 		}
 
+        // Setters: message, from
 		public void setMessage(byte[] message) {
 			this.message = message;
 		}
-		
-		
+        public void setFrom(int from) {
+            this.from = from;
+        }
+
 	}
 }
