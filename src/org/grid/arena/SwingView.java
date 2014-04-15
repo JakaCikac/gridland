@@ -30,9 +30,16 @@ public class SwingView extends JPanel implements ArenaView {
 	protected int cellSize = 24;
 	protected int cellBorder = 2;
 	protected Color borderColor = Color.DARK_GRAY;
+    private Dimension size = new Dimension(100, 100);
+    private Arena view;
+    private Palette palette = null;
 
     public SwingView() {
         this(24);
+    }
+    public SwingView(int cellSize) {
+        setDoubleBuffered(true);
+        setCellSize(cellSize);
     }
 
     // Interface class for Pallete
@@ -45,11 +52,10 @@ public class SwingView extends JPanel implements ArenaView {
 	public static class HeatPalette implements Palette {
 		
 		private Color heatPalette[];
-		
+
 		public HeatPalette(int size) {
 			
 			heatPalette = new Color[size];
-			
 			heatPalette[0] = Color.black;
 
 			for (int i = 1; i < heatPalette.length; i++) {
@@ -98,25 +104,13 @@ public class SwingView extends JPanel implements ArenaView {
 			new Color(0.23f, 0.23f, 0.23f),
             new Color(0.25f, 0.25f, 0.25f), };
 
-	private Dimension size = new Dimension(100, 100);
 
-	private Arena view;
-	
-	private Palette palette = null;
-	
-	public SwingView(int cellSize) {
-
-		setDoubleBuffered(true);
-
-		setCellSize(cellSize);
-	}
 
 	protected void paintBackground(Graphics g, Arena view) {
 		
 		Palette p = palette == null ? grassPalette : palette;
 		
 		for (int j = 0; j < view.getHeight(); j++) {
-
 			for (int i = 0; i < view.getWidth(); i++) {
 
 				int base = view.getBaseTile(i, j);
@@ -133,13 +127,12 @@ public class SwingView extends JPanel implements ArenaView {
 	protected void paintObjects(Graphics g, Arena view) {
 		
 		Color color = null;
-
+        // Iterate through all tiles
 		for (int j = 0; j < view.getHeight(); j++) {
-
 			for (int i = 0; i < view.getWidth(); i++) {
-				
+				// Get tile at current position (i,j)
 				int body = view.getBodyTile(i, j);
-
+                // If current tile is a wall, fill it with wall rectangle
 				if (body >= Arena.TILE_WALL_0 && body <= Arena.TILE_WALL_9) {
 					color = wallColors[body - Arena.TILE_WALL_0];
 					g.setColor(color);

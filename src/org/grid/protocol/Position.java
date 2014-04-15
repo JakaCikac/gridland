@@ -19,19 +19,6 @@ public class Position implements Serializable {
 	private int x;
 	private int y;
 
-	public int getX() {
-		return x;
-	}
-    public int getY() {
-        return y;
-    }
-	public void setX(int x) {
-		this.x = x;
-	}
-	public void setY(int y) {
-		this.y = y;
-	}
-
 	public Position(int x, int y) {
 		super();
 		this.x = x;
@@ -44,7 +31,9 @@ public class Position implements Serializable {
 		this.y = p.y;
 	}
 
-    // Position scaled for factor factor
+    /**
+     * Position scaled for factor factor
+     */
 	public Position(Position p, int factor) {
 		super();
 		this.x = p.x * factor;
@@ -70,15 +59,34 @@ public class Position implements Serializable {
         return hash;
     }
 
-    // Calculate distance between two positions
+    /**
+     * Calculate distance between two positions
+     */
     public static int distance(Position p1, Position p2) {
 		return Math.max(Math.abs(p1.getX() - p2.getX()), Math.abs(p1.getY()
 				- p2.getY()));
     }
 
-    // Offset position for position points x and y
+    /**
+     * Offset position for position points x and y
+     */
     public void offset(Position p) {
     	x += p.x;
     	y += p.y;
+    }
+
+    // Getters
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
+    // Setters
+    public void setX(int x) {
+        this.x = x;
+    }
+    public void setY(int y) {
+        this.y = y;
     }
 }

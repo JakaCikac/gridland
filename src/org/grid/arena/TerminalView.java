@@ -21,37 +21,35 @@ public class TerminalView implements ArenaView {
 
 	@Override
 	public void update(Arena view) {
-		
 
 		System.out.println();
 		
 		for (int j = 0; j < view.getHeight(); j++) {
-		
 			for (int i = 0; i < view.getWidth(); i++) {
-				
+
+                // Get tile on position (i,j)
 				int body = view.getBodyTile(i, j);
 
+                // Print out symbol for Wall = #
 				if (body >= Arena.TILE_WALL_0 && body <= Arena.TILE_WALL_9) {
 					System.out.print('#');
 					continue;
 				}
 				
 				switch (body) {
-				case Arena.TILE_AGENT: 
-					System.out.print('a');
-					continue;
-				case Arena.TILE_HEADQUARTERS: 
-					System.out.print('h');
-					continue;
+                    // Print out symbol for Agent = a
+                    case Arena.TILE_AGENT:
+                        System.out.print('a');
+                        continue;
+                    // Print out symbol for headquarters = h
+                    case Arena.TILE_HEADQUARTERS:
+                        System.out.print('h');
+                        continue;
 				}
-				
 				System.out.print(' ');
 			}
-	
 			System.out.println();
 		}
-		
 		System.out.println();
 	}
-
 }

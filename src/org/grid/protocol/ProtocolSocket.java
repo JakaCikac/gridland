@@ -51,6 +51,7 @@ public class ProtocolSocket {
 	private boolean running = true;
 	private boolean debug = Boolean.getBoolean("org.grid.protocol.debug");
 
+    // thread safe FIFO queue
 	private ConcurrentLinkedQueue<Message> inQueue = new ConcurrentLinkedQueue<Message>();
 	private ConcurrentLinkedQueue<Message> outQueue = new ConcurrentLinkedQueue<Message>();
 	
@@ -147,7 +148,11 @@ public class ProtocolSocket {
 		});
 		outputThread.start();
 	}
-	
+
+    /**
+     * Receive a message (inQueue) and return it
+     * @return null if no message and return Message if there is a Message.
+     */
 	public Message receiveMessage() {
 		
 		synchronized (inQueue) {
@@ -160,7 +165,11 @@ public class ProtocolSocket {
 		}
 		
 	}
-	
+
+    /**
+     * Wait for a message (in inQueue), return a message upon receiving it.
+     * @return Message
+     */
 	public Message waitMessage() {
 		
 		synchronized (inQueue) {
@@ -176,22 +185,27 @@ public class ProtocolSocket {
 		}
 		
 	}
-	
-	public void sendMessage(Message msg) {
+
+    /**
+     * Send a message (add to outQueue) and notifyAll when done.
+     * @param message
+     */
+	public void sendMessage(Message message) {
 		
-		if (msg == null)
+		if (message == null)
 			return;
 			
 		synchronized (outQueue) {
 		
-			outQueue.add(msg);
-		
+			outQueue.add(message);
 			outQueue.notifyAll();
 			
 		}
-		
 	}
-	
+
+    /**
+     * Close queues and clear all messages.
+     */
 	public void close() {
 		
 		outQueue.clear();
@@ -212,26 +226,36 @@ public class ProtocolSocket {
 		} catch (NullPointerException e) {
 		}
 	}
-	
+
+    /**
+     * Receive (add a message to inQueue) and notifyAll when done.
+     * @param message
+     */
 	protected void handleMessage(Message message) {
 		
 		synchronized (inQueue) {
-			
 			inQueue.add(message);
 			inQueue.notifyAll();
-			
 		}
-		
 	}
-	
+
+    /**
+     * Empty method
+     */
 	protected void onTerminate() {
 		
 	}
-	
+
+    /**
+     * Returns the Remote internet address of the socket.
+     */
 	public InetAddress getRemoteAddress() {
 		return socket.getInetAddress();
 	}
-	
+
+    /**
+     * Returns the Remote port of the socket.
+     */
 	public int getRemotePort() {
 		return socket.getPort();
 	}
