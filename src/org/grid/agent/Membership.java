@@ -8,7 +8,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Membership {
-
+        // Determine which team the agent belong to.
 		String team();
-
 }

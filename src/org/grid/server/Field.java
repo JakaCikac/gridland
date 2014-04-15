@@ -556,7 +556,13 @@ public class Field implements Arena {
 	public CellIterator getCellIterator(int x, int y) {
 		return new CellIterator(x, y);
 	}
-	
+
+    /**
+     *
+     * @param body
+     * @param position
+     * @return
+     */
 	public boolean putBody(Body body, BodyPosition position) {
 		
 		Cell cell = getCell(position.getX(), position.getY());

@@ -33,14 +33,15 @@ import org.grid.server.Team.TeamBody;
 
 public class Agent extends TeamBody {
 
+    /**
+     * Agent can be Alive or Dead.
+     */
 	public static enum Status {
 		ALIVE, DEAD
 	}
 
 	private int id;
-
 	private Direction direction = Direction.NONE;
-
 	private boolean alive = true;
 
 	private LinkedList<MessageContainter> messageQueue = new LinkedList<MessageContainter>();
@@ -49,10 +50,6 @@ public class Agent extends TeamBody {
 
 		super(Arena.TILE_AGENT, team);
 		this.id = id;
-	}
-
-	public int getId() {
-		return id;
 	}
 
 	public boolean move(Field arena) {
@@ -68,7 +65,6 @@ public class Agent extends TeamBody {
 				return false;
 
 			float weight = 1;
-
 			float speed = 0.1f / weight;
 			
 			switch (direction) {
@@ -117,12 +113,12 @@ public class Agent extends TeamBody {
 
 					/*if (b instanceof Headquarters) {
 						if (((Headquarters) b).getTeam() == getTeam()) {
-							for (Flag flag : flags)
-								((Headquarters) b).putFlag(flag);
-							
-							flags.clear();
+						// Handle if instance is Headquarters
 						}
 					} */
+
+                    /// If agent crashes into another agent, kill the agent.
+                    // TODO: do you really want your agents to die?
 					if (b instanceof Agent) {
 						((Agent) b).die();
 					}
@@ -134,6 +130,10 @@ public class Agent extends TeamBody {
 
 	}
 
+    /**
+     * Set direction (Direction can either be UP, DOWN, LEFT, RIGHT).
+     * @param direction
+     */
 	public void setDirection(Direction direction) {
 
 		synchronized (this) {
@@ -147,25 +147,44 @@ public class Agent extends TeamBody {
 					|| (this.direction == Direction.RIGHT && direction == Direction.LEFT)) {
 				this.direction = direction;
 			}
-
 		}
-
 	}
 
+    /**
+     * Kill agent.
+     */
 	public void die() {
 		alive = false;
 	}
 
+    /**
+     * Return agent's id.
+     * @return id of the agent
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Check if agent is alive (true or false)
+     * @return alive - true or false
+     */
 	public boolean isAlive() {
-
 		return alive;
-
 	}
 
+    /**
+     * Get the direction in which the agent is currently moving in.
+     * @return Direction
+     */
 	public Direction getDirection() {
 		return direction;
 	}
 
+    /**
+     * Return the agent's Tile
+     * @return int
+     */
 	public int getTile() {
 		return  Arena.TILE_AGENT;
 	}
