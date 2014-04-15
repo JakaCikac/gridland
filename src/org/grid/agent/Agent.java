@@ -541,7 +541,7 @@ public abstract class Agent {
 	}
 
 	/**
-	 * Returns the id of the local agent
+	 * Returns the id of the local agent.
 	 * 
 	 * @return the id of the agent
 	 */

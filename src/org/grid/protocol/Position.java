@@ -19,12 +19,21 @@ public class Position implements Serializable {
 	private int x;
 	private int y;
 
+    /**
+     * Create position from int x and int y
+     * @param x
+     * @param y
+     */
 	public Position(int x, int y) {
 		super();
 		this.x = x;
 		this.y = y;
 	}
-	
+
+    /**
+     * Create position from Position p
+     * @param p
+     */
 	public Position(Position p) {
 		super();
 		this.x = p.x;
@@ -60,7 +69,10 @@ public class Position implements Serializable {
     }
 
     /**
-     * Calculate distance between two positions
+     * Calculate Manhattan distance between two positions.
+     * @param p1
+     * @param p2
+     * @return int distance
      */
     public static int distance(Position p1, Position p2) {
 		return Math.max(Math.abs(p1.getX() - p2.getX()), Math.abs(p1.getY()

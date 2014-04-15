@@ -36,6 +36,10 @@ public class Neighborhood implements Serializable, Arena {
 	private int size;
 	private int[] grid;
 
+    /**
+     * Initialize Neighborhood with size.
+     * @param size
+     */
 	public Neighborhood(int size) {
 	
 		this.size = size;
@@ -43,10 +47,20 @@ public class Neighborhood implements Serializable, Arena {
 		
 	}
 
+    /**
+     * Get the size of the Neibghourhood.
+     * @return size (int)
+     */
 	public int getSize() {
 		return size;
 	}
-	
+
+    /**
+     * Return cell at a specific location (x,y)
+     * @param x
+     * @param y
+     * @return Cell (int) at grid.
+     */
 	public int getCell(int x, int y) {
 	
 		if (x > size || x < -size || y > size || y < -size)
@@ -54,12 +68,17 @@ public class Neighborhood implements Serializable, Arena {
 		
 		x += size;
 		y += size;
-		
 
 		return grid[x + y * (2 * size + 1)]; 
 		
 	}
-	
+
+    /**
+     * Set cell (x,y) to value c.
+     * @param x
+     * @param y
+     * @param c
+     */
 	public void setCell(int x, int y, int c) {
 
 		if (x > size || x < -size || y > size || y < -size)
