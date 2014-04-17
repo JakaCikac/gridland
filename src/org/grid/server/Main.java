@@ -85,10 +85,10 @@ public class Main {
 	
 	private static PrintWriter log;
 	
-	private static final String[] ZOOM_LEVELS_TITLES = new String[] {"tiny", "small", "normal",
+	private static final String[] ZOOM_LEVELS_TITLES = new String[] {"nano", "micro", "mili", "tiny", "small", "normal",
 			"big", "huge" };
 
-	private static final int[] ZOOM_LEVELS = new int[] {6, 12, 16, 20, 24 };
+	private static final int[] ZOOM_LEVELS = new int[] {1, 2, 3, 6, 12, 16, 20, 24 };
 	
 	private static final int MAX_TEAMS_VERBOSE = 4;
 	

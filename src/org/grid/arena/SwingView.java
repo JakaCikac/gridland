@@ -248,7 +248,7 @@ public class SwingView extends JPanel implements ArenaView {
 
 	public void setCellSize(int cellSize) {
 		
-		this.cellSize = Math.min(64, Math.max(4, cellSize));
+		this.cellSize = Math.min(64, Math.max(1, cellSize));
 		
 		this.cellBorder = Math.max(1, Math.round((float)this.cellSize * 0.1f));
 		
