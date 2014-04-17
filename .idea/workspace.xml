@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3f6e5c1-36d1-4bde-93db-26e0cc79e510" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/maps/maze.png" afterPath="$PROJECT_DIR$/maps/maze.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/server/Field.java" afterPath="$PROJECT_DIR$/src/org/grid/server/Field.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/sample/SampleAgent.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/sample/SampleAgent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sims/test.sim" afterPath="$PROJECT_DIR$/sims/test.sim" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="gridland.iws" />
@@ -117,7 +113,7 @@
       <file leaf-file-name="SampleAgent.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/SampleAgent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="0" selection-start="1210" selection-end="1210" vertical-scroll-proportion="0.2892562" vertical-offset="0" max-vertical-offset="4650">
+            <state line="30" column="24" selection-start="1148" selection-end="1148" vertical-scroll-proportion="0.24793388" vertical-offset="0" max-vertical-offset="4650">
               <folding />
             </state>
           </provider>
@@ -791,7 +787,7 @@
       <workItem from="1397302288727" duration="509000" />
       <workItem from="1397557385366" duration="5451000" />
       <workItem from="1397641219517" duration="3598000" />
-      <workItem from="1397726350313" duration="4726000" />
+      <workItem from="1397726350313" duration="4951000" />
     </task>
     <task id="LOCAL-00001" summary="Test commit.">
       <created>1394200726993</created>
@@ -965,11 +961,15 @@
       <created>1397729612905</created>
       <updated>1397729612905</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="Commented print out in SampleAgent.">
+      <created>1397745271048</created>
+      <updated>1397745271048</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57924000" />
+    <option name="totallyTimeSpent" value="58149000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1036,7 +1036,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Deleted - flags  - from org.grid.agents.HumanAgent&#10;&#10;" />
     <MESSAGE value="Flags removed.&#10;" />
     <MESSAGE value="Test comment." />
     <MESSAGE value="Merge branch 'remove-flags' into removed-flags&#10;&#10;Conflicts:&#10;&#9;src/org/grid/agent/sample/SampleAgent.java&#10;" />
@@ -1061,7 +1060,8 @@
     <MESSAGE value="Comments, comments everywhere.. pt.5&#10;" />
     <MESSAGE value="Comments, comments everywhere.. pt.6&#10;" />
     <MESSAGE value="Add mili, micro and nano to ZOOM_LEVELS." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add mili, micro and nano to ZOOM_LEVELS." />
+    <MESSAGE value="Commented print out in SampleAgent." />
+    <option name="LAST_COMMIT_MESSAGE" value="Commented print out in SampleAgent." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1404,7 +1404,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/SampleAgent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="0" selection-start="1210" selection-end="1210" vertical-scroll-proportion="0.2892562" vertical-offset="0" max-vertical-offset="4650">
+        <state line="30" column="24" selection-start="1148" selection-end="1148" vertical-scroll-proportion="0.24793388" vertical-offset="0" max-vertical-offset="4650">
           <folding />
         </state>
       </provider>
