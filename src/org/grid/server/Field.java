@@ -46,7 +46,6 @@ public class Field implements Arena {
 		private static final long serialVersionUID = 1L;
 
 		private float offsetX;
-		
 		private float offsetY;
 		
 		public float getOffsetX() {

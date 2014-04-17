@@ -11,6 +11,9 @@ import java.util.StringTokenizer;
 
 public class TeamDatabase {
 
+    /**
+     * Team Data class - keeps id, name and color of the team.
+     */
 	public static class TeamData {
 
         // give the team an id and a name
@@ -36,7 +39,6 @@ public class TeamDatabase {
 		public Color getColor() {
 			return color;
 		}
-
 	}
 	
 	private Hashtable<String, TeamData> data = new Hashtable<String, TeamData>();
@@ -58,7 +60,7 @@ public class TeamDatabase {
 			String name = tokens.nextToken();
 			Color color = Color.decode(tokens.nextToken());
 
-            // create new team d
+            // create new team
 			TeamData d = new TeamData(id, name, color);
             // add team to hashtable
 			data.put(d.getId(), d);
@@ -68,8 +70,8 @@ public class TeamDatabase {
 	}
 
     /** Retrieve a team from the database, based on team id
-     ** and create it
-     **/
+     *  and create it
+     */
 	public Team createTeam(String id) {
         // get team from hashtable
 		TeamData d = data.get(id);

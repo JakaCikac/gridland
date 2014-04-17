@@ -19,10 +19,13 @@ package org.grid.server;
 
 import org.grid.server.Dispatcher.Client;
 
+/**
+ * Listen for clients connecting to a team or disconnecting from a team.
+ */
 public interface TeamListener {
 
 	public void clientConnect(Team team, Client client);
-	
+
 	public void clientDisconnect(Team team, Client client);
 	
 }

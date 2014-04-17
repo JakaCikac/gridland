@@ -138,8 +138,7 @@ public abstract class Message implements Serializable {
 
     /**
      * StateMessage
-     * int stamp, Direction direction, Neighbourhood neighborhood
-     * TODO: fix typo by Luka: correct neighbourhood..
+     * int stamp, Direction direction, Neighborhood neighborhood
      */
 	public static class StateMessage extends Message {
 

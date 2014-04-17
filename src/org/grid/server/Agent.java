@@ -117,8 +117,7 @@ public class Agent extends TeamBody {
 						}
 					} */
 
-                    /// If agent crashes into another agent, kill the agent.
-                    // TODO: do you really want your agents to die?
+                    // Hm
 					if (b instanceof Agent) {
 						((Agent) b).die();
 					}

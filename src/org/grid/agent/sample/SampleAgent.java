@@ -158,8 +158,6 @@ public class SampleAgent extends Agent {
 
 				analyzeNeighborhood(neighborhood);
 
-				//System.out.printf("%f %s\n", TEST, this.getClass().getClassLoader());
-				
 				System.out.printf("Current position: %d, %d, state: %s \n", x, y, state.toString());
 				
 				if (direction == Direction.NONE) {

@@ -56,20 +56,19 @@ public class ClientsPanel extends JPanel {
 		public void clientSelected(Client client);
 		
 	}
-	
+
 	private interface Selectable {
 		
 		public void select();
-		
 		public void deselect();
 		
 	}
 	
-	private static class ScrollabeListPanel extends JPanel implements Scrollable {
+	private static class ScrollableListPanel extends JPanel implements Scrollable {
 
 		private static final long serialVersionUID = 1L;
 
-		public ScrollabeListPanel() {
+		public ScrollableListPanel() {
 			super(new StackLayout(Orientation.VERTICAL));
 		}
 		
@@ -108,14 +107,11 @@ public class ClientsPanel extends JPanel {
 		
 		private Hashtable<Client, ClientPanel> clients = new Hashtable<Client, ClientPanel>();
 
-		private JPanel clientPanel = new ScrollabeListPanel();
-		
+		private JPanel clientPanel = new ScrollableListPanel();
+        private JPanel header = new JPanel();
 		private JLabel score = new JLabel("0");
-		
 		private JLabel title;
-		
-		private JPanel header = new JPanel();
-		
+
 		private Team team;
 		
 		public TeamPanel(Team team) {

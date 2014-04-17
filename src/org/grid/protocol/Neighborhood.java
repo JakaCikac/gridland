@@ -62,7 +62,8 @@ public class Neighborhood implements Serializable, Arena {
      * @return Cell (int) at grid.
      */
 	public int getCell(int x, int y) {
-	
+
+        // if the cell is outside the grid, return WALL
 		if (x > size || x < -size || y > size || y < -size)
 			return WALL;
 		

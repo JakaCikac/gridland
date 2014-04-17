@@ -36,23 +36,26 @@ import org.grid.protocol.Message.SendMessage;
 public class Dispatcher implements Runnable {
 
 	public static enum Status {UNKNOWN, REGISTERED, USED}
-	
+
+    /**
+     * Client class.
+     */
 	public class Client extends ProtocolSocket {
 
 		private Status status = Status.UNKNOWN;
-		
 		private Team team;
-		
 		private Agent agent = null;
-		
 		private int totalMessages = 0, scanMessages = 0, msgMessages = 0;
 		
-		public Client(Socket socket)
-				throws IOException {
+		public Client(Socket socket) throws IOException {
 			super(socket);
 			listeners = new Vector<ClientListener>();
 		}
-		
+
+        /**
+         * Handle incoming message to Client
+         * @param message
+         */
 		protected void handleMessage(Message message) {
 			
 			synchronized (this) {
@@ -61,92 +64,86 @@ public class Dispatcher implements Runnable {
 			
 			if (status == null)
 				status = Status.UNKNOWN;
-			
+
+            // If agent's status is unknown, the agents needs to be registered as a client.
 			switch (status) {
-			case UNKNOWN: {
-				
-				if (message instanceof RegisterMessage) {
 
-					team = simulation.getTeam(((RegisterMessage) message).getTeam());
-	
-					if (team == null) {
-						
-						Main.log("Unknown team: " + ((RegisterMessage) message).getTeam());
-						close();
-						return;
-					}
+                case UNKNOWN: {
+                    // check if message is a registration message
+                    if (message instanceof RegisterMessage) {
+                        // get team for the client from the register message
+                        team = simulation.getTeam(((RegisterMessage) message).getTeam());
+                        // in case there is no team specified, report and close
+                        if (team == null) {
+                            Main.log("Unknown team: " + ((RegisterMessage) message).getTeam());
+                            // close socket
+                            close();
+                            return;
+                        }
+                        // if all goes well add clien to team and set status to registered
+                        Main.log("New client joined team " + team + ": " + this);
+                        team.addClient(this);
+                        status = Status.REGISTERED;
+                        // send a message acknowledging all went well
+                        sendMessage(new Message.AcknowledgeMessage());
+                    }
+                    break;
+                }
+                // the agents needs to be acknowledged after registration
+                case REGISTERED: {
+                    // after acknowledging the agent set it's status to used
+                    if (agent != null && (message instanceof AcknowledgeMessage)) {
+                        status = Status.USED;
+                    }
+                    break;
+                }
+                case USED: {
 
-					Main.log("New client joined team " + team + ": " + this);
-					
-					team.addClient(this);
-					
-					status = Status.REGISTERED;
-					
-					sendMessage(new Message.AcknowledgeMessage());
-				
-				}
-				
-				break;
-			}
-			case REGISTERED: {
-				
-				if (agent != null && (message instanceof AcknowledgeMessage)) {
-					
-					status = Status.USED;
-					
-				}
-				
-				break;
-			}
-			case USED: {
-				
-				if (agent == null)
-					return;
-				
-				if (message instanceof ScanMessage) {
-					
-					scanMessages++;
-					
-					Neighborhood n = simulation.scanNeighborhood(neighborhoodSize, getAgent());
-					
-					sendMessage(new Message.StateMessage(getAgent().getDirection(), n));
-					
-					return;
-				}
-				
-				if (message instanceof SendMessage) {
-					
-					msgMessages++;
-					
-					int to = ((SendMessage) message).getTo();
-					
-					if (((SendMessage)message).getMessage() == null || ((SendMessage)message).getMessage().length > maxMessageSize) {
-						Main.log("Message from %d to %d rejected: too long", agent.getId(), to);
-						return;
-					}
-					
-					simulation.message(team, agent.getId(), to, ((SendMessage)message).getMessage());
-					
-					return;
-				}				
+                    if (agent == null)
+                        return;
 
-				if (message instanceof MoveMessage) {
-										
-					simulation.move(team, agent.getId(), ((MoveMessage) message).getDirection());
-					
-					return;
-				}	
-				
-			}
+                    if (message instanceof ScanMessage) {
+                        scanMessages++;
+                        // scan the surrounding neighborhood
+                        Neighborhood n = simulation.scanNeighborhood(neighborhoodSize, getAgent());
+                        // report agent's state by sending out a StateMessage
+                        sendMessage(new Message.StateMessage(getAgent().getDirection(), n));
+                        return;
+                    }
+
+                    if (message instanceof SendMessage) {
+
+                        msgMessages++;
+                        // who is the message going out to
+                        int to = ((SendMessage) message).getTo();
+                        // check if the message is valid
+                        if (((SendMessage)message).getMessage() == null || ((SendMessage)message).getMessage().length > maxMessageSize) {
+                            Main.log("Message from %d to %d rejected: too long", agent.getId(), to);
+                            return;
+                        }
+                        // TODO: after getting through Simulation class
+                        simulation.message(team, agent.getId(), to, ((SendMessage)message).getMessage());
+
+                        return;
+                    }
+
+                    if (message instanceof MoveMessage) {
+                        // get agents direction
+                        simulation.move(team, agent.getId(), ((MoveMessage) message).getDirection());
+
+                        return;
+                    }
+
+                }
 			}
 
 			
 		}
+
 
 		public Agent getAgent() {
 			return agent;
 		}
-
 		public Team getTeam() {
 			return team;
 		}
@@ -187,7 +184,11 @@ public class Dispatcher implements Runnable {
 			return getRemoteAddress() + ":" + getRemotePort(); 
 			
 		}
-		
+
+        /**
+         * Check the number of messages for a client and reset the counter.
+         * @return total number of messages for a client
+         */
 		public int queryMessageCounter() {
 			synchronized (this) {
 				int tmp = totalMessages;
@@ -263,21 +264,21 @@ public class Dispatcher implements Runnable {
 	private HashSet<Client> clients = new HashSet<Client>();
 	
 	private ServerSocket socket;
-	
 	private Simulation simulation;
-	
 	private int maxMessageSize = 1024;
-	
-	private int neighborhoodSize = 5;	
-	
+	private int neighborhoodSize = 5;
+
+    /**
+     * Dispatcher constructor.
+     * @param port
+     * @param simulation
+     * @throws IOException
+     */
 	public Dispatcher(int port, Simulation simulation) throws IOException {
 
 		socket = new ServerSocket(port);
-		
 		this.simulation = simulation;
-
 		this.maxMessageSize = simulation.getProperty("message.size", 256);
-
 		this.neighborhoodSize = simulation.getNeighborhoodSize();
 		
 	}
@@ -310,8 +311,7 @@ public class Dispatcher implements Runnable {
 		});
 		traffic.setDaemon(true);
 		traffic.start();
-		
-		
+
 		while (true) {
 			try {
 				Socket sck = socket.accept();
@@ -319,14 +319,11 @@ public class Dispatcher implements Runnable {
 				synchronized (clients) {
 					clients.add(new Client(sck));
 				}
-				
-				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		
-		
+
 		}
 	}
-	
+
 }
