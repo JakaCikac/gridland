@@ -386,7 +386,8 @@ public class Field implements Arena {
 		for (int i = 0; i < 25; i++) {
 			if (hqs[i] != null) hqcount++;
 		}
-		
+		//System.out.println("hqcount " + hqcount);
+        //System.out.println("teams size " + teams.size());
 		if (hqcount < teams.size())
 			Main.log("Warning: this map does not contain enough positions for the number of teams declared in the current simulation!");
 

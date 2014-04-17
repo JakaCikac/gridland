@@ -71,8 +71,7 @@ public class SampleAgent extends Agent {
 	public void receive(int from, byte[] message) {
 
 		String msg = new String(message);
-
-		System.out.format("Message received from %d: %s\n", from, msg);
+		//System.out.format("Message received from %d: %s\n", from, msg);
 
 	}
 
@@ -158,7 +157,7 @@ public class SampleAgent extends Agent {
 
 				analyzeNeighborhood(neighborhood);
 
-				System.out.printf("Current position: %d, %d, state: %s \n", x, y, state.toString());
+				//System.out.printf("Current position: %d, %d, state: %s \n", x, y, state.toString());
 				
 				if (direction == Direction.NONE) {
 
@@ -186,10 +185,10 @@ public class SampleAgent extends Agent {
 					
 					Decision d = updateDecisions(neighborhood, state);
 					
-					TerminalView view = new TerminalView();
-					view.update(neighborhood);
+					//TerminalView view = new TerminalView();
+					//view.update(neighborhood);
 					
-					System.out.printf("Best move: %s %.2f \n", d.getDirection().toString(), d.getWeight());
+					//System.out.printf("Best move: %s %.2f \n", d.getDirection().toString(), d.getWeight());
 					
 					if (d.getDirection() != Direction.NONE) 
 						move(d.getDirection());
