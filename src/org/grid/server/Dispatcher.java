@@ -252,11 +252,8 @@ public class Dispatcher implements Runnable {
 		}
 		
 		public void send(int from, byte[] message) {
-			
 			if (status != Status.USED) return;
-			
 			sendMessage(new Message.ReceiveMessage(from, message));
-			
 		}
 		
 	}
@@ -293,11 +290,9 @@ public class Dispatcher implements Runnable {
 				
 				while (true) {
 					synchronized (clients) {
-					
 						for (Client cl : clients) {
 							cl.traffic();
 						}
-						
 					}
 				
 					try {

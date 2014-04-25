@@ -58,33 +58,20 @@ import org.grid.server.Field.Cell;
 public class Main {
 
 	private static final int PORT = 5000;
-
 	private static final String RELEASE = "0.9";
-
 	private static Simulation simulation;
-
 	private static long renderTime = 0;
-
 	private static int renderCount = 0;
-
 	private static long stepTime = 0;
-
 	private static int stepCount = 0;
-
 	private static Object mutex = new Object();
-
 	private static History history = new History();
-
 	private static boolean running = false;
-
 	private static SimulationSwingView view = new SimulationSwingView();
-
 	private static ClientsPanel clientsPanel = null;
-	
 	private static JLabel simulationStepDisplay = new JLabel();
-	
 	private static PrintWriter log;
-	
+
 	private static final String[] ZOOM_LEVELS_TITLES = new String[] {"nano", "micro", "mili", "tiny", "small", "normal",
 			"big", "huge" };
 
@@ -111,17 +98,13 @@ public class Main {
 			SimulationListener, SelectionObserver, MouseListener {
 
 		private static final long serialVersionUID = 1L;
-
 		private static final int BUFFER_LIFE = 10;
-
 		private LinkedList<Message> buffer = new LinkedList<Message>();
-
 		private VisitMap visualization = null;
 
 		public class Message {
 
 			private int length, step;
-
 			private Agent sender, receiver;
 
 			public Message(Agent sender, Agent receiver, int length) {
@@ -131,7 +114,6 @@ public class Main {
 				this.length = length;
 				this.step = simulation.getStep();
 			}
-
 		}
 
 		public SimulationSwingView() {
@@ -196,7 +178,7 @@ public class Main {
 			}
 
 			if (visualization != null) {
-				
+
 				BodyPosition p = field.getPosition(visualization.getAgent());
 				
 				if (p != null) {
@@ -206,13 +188,9 @@ public class Main {
 					
 					g.drawOval(p.getX() * cellSize + translateX, p.getY() * cellSize
 							 + translateY, cellSize, cellSize);
-					
-					
 				}
-				
 			}
-			
-			
+
 			synchronized (buffer) {
 				buffer = active;
 			}
@@ -220,12 +198,9 @@ public class Main {
 			long used = System.currentTimeMillis() - start;
 
 			synchronized (mutex) {
-
 				renderTime += used;
 				renderCount++;
-
 			}
-
 		}
 
 		@Override
@@ -240,7 +215,6 @@ public class Main {
 				} catch (NullPointerException e) {
 				}
 			}
-
 		}
 
 		@Override
@@ -255,34 +229,31 @@ public class Main {
 					return;
 				}
 
+                // On selected client try to get agent
 				Agent a = client.getAgent();
 
 				if (a == null)
 					return;
-
+                // create new visited map for the selected agent, based on his history
 				visualization = new VisitMap(simulation.getField(), history, a, simulation
 						.getNeighborhoodSize());
 				setBasePallette((Palette) visualization);
 				simulation.addListener(visualization);
 			}
-
 		}
 
 		@Override
 		public void position(Team team, int id, BodyPosition p) {
-
 		}
 
 		@Override
 		public void step() {
-
 		}
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			
 			int x = e.getX() / cellSize;
-			
 			int y = e.getY() / cellSize;
 			
 			Field field = simulation.getField();
@@ -299,22 +270,16 @@ public class Main {
 					if (cl != null && Main.clientsPanel != null) {
 						Main.clientsPanel.select(cl);
 					}
-					
 				}
-				
 			}
-			
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent e) {}
-
 		@Override
 		public void mouseExited(MouseEvent e) {}
-
 		@Override
 		public void mousePressed(MouseEvent e) {}
-
 		@Override
 		public void mouseReleased(MouseEvent e) {}
 

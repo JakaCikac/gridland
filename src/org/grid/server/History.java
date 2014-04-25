@@ -43,7 +43,6 @@ public class History implements Serializable, SimulationListener {
 		public int getStep() {
 			return step;
 		}
-		
 	}
 	
 	protected class AgentHistory implements Serializable {
@@ -51,34 +50,24 @@ public class History implements Serializable, SimulationListener {
 		private static final long serialVersionUID = 1L;
 		
 		private Vector<HistoryPosition> history = new Vector<HistoryPosition>();
-		
 		private transient BodyPosition preprevious, previous;
-		
+
 		public void record(BodyPosition p) {
-			
+			// if position is null then add previous position
 			if (p == null) {
-				
 				history.add(new HistoryPosition(previous, step-1));
-				
 				return;
-				
 			}
-			
+			// if previous position is null then create current position and add to history
 			if (previous == null) {
-				
 				previous = new BodyPosition(p);
-				
 				history.add(new HistoryPosition(p, step));
-				
 				return;
 			}
-			
+			// set preprevious to previous and create new position for previous
 			if (preprevious == null) {
-				
 				preprevious = previous;
-				
 				previous = new BodyPosition(p);
-				
 				return;
 			}
 			
@@ -99,17 +88,13 @@ public class History implements Serializable, SimulationListener {
 					
 					if (!history.lastElement().equals(p))
 						history.add(new HistoryPosition(p, step));
-					
 				}
-				
 			}
 			
 			preprevious = previous;
 			previous = new BodyPosition(p);
-			
-			
 		}
-		
+
 	}
 	
 	protected class TeamHistory implements Serializable {
@@ -117,9 +102,7 @@ public class History implements Serializable, SimulationListener {
 		private static final long serialVersionUID = 1L;
 
 		private Hashtable<Integer, AgentHistory> agents = new Hashtable<Integer, AgentHistory>();
-		
 		private String teamName;
-		
 		private Color teamColor;
 		
 		public TeamHistory(String teamName, Color teamColor) {
@@ -171,8 +154,7 @@ public class History implements Serializable, SimulationListener {
 			
 			for (AgentHistory ah : th.agents.values()) 
 				size += ah.history.size();
-			
-			
+
 		}
 
 		return size;
@@ -194,6 +176,8 @@ public class History implements Serializable, SimulationListener {
 		return ah.history;
 		
 	}
+
+
 
 	@Override
 	public void message(Team team, int from, int to, int length) {

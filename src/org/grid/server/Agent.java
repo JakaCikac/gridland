@@ -17,17 +17,13 @@
  */
 package org.grid.server;
 
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Set;
 
 import org.grid.arena.Arena;
 import org.grid.protocol.Message.Direction;
 import org.grid.server.Field.Body;
 import org.grid.server.Field.BodyPosition;
 import org.grid.server.Field.Cell;
-import org.grid.server.Simulation.MessageContainter;
-import org.grid.server.Team.Headquarters;
 import org.grid.server.Team.TeamBody;
 
 
@@ -44,10 +40,10 @@ public class Agent extends TeamBody {
 	private Direction direction = Direction.NONE;
 	private boolean alive = true;
 
-	private LinkedList<MessageContainter> messageQueue = new LinkedList<MessageContainter>();
+    // Initialize agent's message queue
+	private LinkedList<Simulation.MessageContainer> messageQueue = new LinkedList<Simulation.MessageContainer>();
 	
 	public Agent(Team team, int id) {
-
 		super(Arena.TILE_AGENT, team);
 		this.id = id;
 	}
@@ -111,6 +107,10 @@ public class Agent extends TeamBody {
 
 					Body b = c.getBody();
 
+                    if (b instanceof Agent) {
+                        System.out.println("Ran into agent " + ((Agent) b).getId());
+                    }
+
 					/*if (b instanceof Headquarters) {
 						if (((Headquarters) b).getTeam() == getTeam()) {
 						// Handle if instance is Headquarters
@@ -118,11 +118,11 @@ public class Agent extends TeamBody {
 					} */
 
                     // Hm
-					if (b instanceof Agent) {
+				/*	if (b instanceof Agent) {
 						((Agent) b).die();
-					}
+					} */
 				}
-				die();
+				//die();
 			}
 		}
 		return true;
@@ -191,16 +191,16 @@ public class Agent extends TeamBody {
 	public void pushMessage(int to, byte[] message, int delay) {
 		
 		synchronized (messageQueue) {
-			messageQueue.add(new MessageContainter(to, message, delay));	
+			messageQueue.add(new Simulation.MessageContainer(to, message, delay));
 		}
 		
 	}
 	
-	public MessageContainter pullMessage() {
+	public Simulation.MessageContainer pullMessage() {
 		
 		synchronized (messageQueue) {
 		
-			MessageContainter m = messageQueue.peek();
+			Simulation.MessageContainer m = messageQueue.peek();
 			
 			if (m == null) return null;
 			

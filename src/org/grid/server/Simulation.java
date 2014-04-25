@@ -40,15 +40,13 @@ import org.grid.server.Team.TeamBody;
 
 public class Simulation {
 
-	public static class MessageContainter {
+	public static class MessageContainer {
 		
 		private int to;
-
 		private byte[] message;
-
 		private int delay;
 		
-		public MessageContainter(int to, byte[] message, int delay) {
+		public MessageContainer(int to, byte[] message, int delay) {
 			super();
 			this.to = to;
 			this.message = message;
@@ -71,19 +69,12 @@ public class Simulation {
 
     // default simulation parameters
 	private int spawnFrequency = 10;
-
 	private Field field;
-
 	private HashMap<String, Team> teams = new HashMap<String, Team>();
-
 	private int maxAgentsPerTeam = 10;
-
 	private int neighborhoodSize = 10;
-
 	private int messageSpeed = 10;
-	
 	private Properties properties = null;
-
 	private File simulationSource;
 
 	private Vector<SimulationListener> listeners = new Vector<SimulationListener>();
@@ -193,6 +184,7 @@ public class Simulation {
 			fldFile = new File(f.getParentFile(), fldPath);
 		}
 
+        // respawn frequency in steps?
 		simulation.spawnFrequency = simulation.getProperty("simulation.respawn", 30);
 
 		simulation.maxAgentsPerTeam = simulation.getProperty("simulation.agents", 10);

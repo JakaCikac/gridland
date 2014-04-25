@@ -27,9 +27,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 
-// Run: java -cp bin org.grid.agent.Agent localhost org.grid.agent.sample.SampleAgent
+// Run: java -cp bin org.grid.agent.Agent localhost org.grid.agent.sample.PackAgent
 
-@Membership(team="samples")
+@Membership(team="packs")
 public class PackAgent extends Agent {
 
 	private static enum AgentState {
@@ -37,17 +37,11 @@ public class PackAgent extends Agent {
 	}
 
     private int x = 0;
-
 	private int y = 0;
-
 	private HashMap<String, Position> registry = new HashMap<String, Position>();
-
 	private AgentState state = AgentState.EXPLORE;
-
 	private Decision left, right, up, down, still;
-	
 	private Decision[] decisions;
-	
 	private int sn = 1;
 	private long sx, sy;
 	
@@ -68,7 +62,7 @@ public class PackAgent extends Agent {
 
 	@Override
 	public void receive(int from, byte[] message) {
-
+        // TODO: update what you know about the world
 		String msg = new String(message);
 		//System.out.format("Message received from %d: %s\n", from, msg);
 
@@ -77,7 +71,6 @@ public class PackAgent extends Agent {
 	@Override
 	public void state(int stamp, Neighborhood neighborhood, Direction direction) {
 
-		
 		synchronized (waitMutex) {
 			this.neighborhood = neighborhood;
 			this.direction = direction;
@@ -99,17 +92,13 @@ public class PackAgent extends Agent {
 	protected static class Decision implements Comparable<Decision> {
 
 		private float weight;
-
 		private Direction direction;
-
 		public float getWeight() {
 			return weight;
 		}
-
 		public void setWeight(float weight) {
 			this.weight = weight;
 		}
-		
 		public void multiplyWeight(float f) {
 			this.weight *= f;
 		}
@@ -153,7 +142,6 @@ public class PackAgent extends Agent {
 			try {
 
 				scanAndWait();
-
 				analyzeNeighborhood(neighborhood);
 
 				//System.out.printf("Current position: %d, %d, state: %s \n", x, y, state.toString());
@@ -226,21 +214,20 @@ public class PackAgent extends Agent {
 	private void analyzeNeighborhood(Neighborhood n) {
 
 		for (int i = -n.getSize(); i <= n.getSize(); i++) {
-
 			for (int j = -n.getSize(); j <= n.getSize(); j++) {
 
+                // if cell is hq, put a mark in the registry
 				if (n.getCell(i, j) == Neighborhood.HEADQUARTERS) {
-
 					registry.put("hq", new Position(x + i, y + j));
-					
 					continue;
 				}
 
+                // if cell is occupied as an agent send a hello message
+                // TODO: send other message
 				if (n.getCell(i, j) > 0) {
 
 					if (! (i == 0 && j == 0) )
 						send(n.getCell(i, j), "Hello " + n.getCell(i, j) + "!");
-					
 					continue;
 				}
 				

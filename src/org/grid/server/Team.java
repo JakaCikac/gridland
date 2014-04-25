@@ -28,7 +28,6 @@ import org.grid.arena.Arena;
 import org.grid.server.Dispatcher.Client;
 import org.grid.server.Field.Body;
 import org.grid.server.Field.BodyPosition;
-import org.grid.server.Simulation.MessageContainter;
 
 
 public class Team {
@@ -237,7 +236,7 @@ public class Team {
 			for (Client c : used) {
 			
 				if (c.getAgent() != null) {
-					MessageContainter msg = c.getAgent().pullMessage();
+					Simulation.MessageContainer msg = c.getAgent().pullMessage();
 					if (msg != null) {
 						
 						Client cltto = findById(msg.getTo());

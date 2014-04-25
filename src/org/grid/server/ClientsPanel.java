@@ -109,7 +109,8 @@ public class ClientsPanel extends JPanel {
 
 		private JPanel clientPanel = new ScrollableListPanel();
         private JPanel header = new JPanel();
-		private JLabel score = new JLabel("0");
+		//private JLabel score = new JLabel("0");
+        private JButton history = new JButton("History");
 		private JLabel title;
 
 		private Team team;
@@ -135,19 +136,19 @@ public class ClientsPanel extends JPanel {
 			title.setFont(getFont().deriveFont(Font.BOLD, 14));
 			title.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
 			
-			score.setOpaque(false);
-			score.setForeground(color);
-			score.setFont(getFont().deriveFont(Font.BOLD, 14));
-			score.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
-			score.setHorizontalAlignment(JLabel.RIGHT);
+			//score.setOpaque(false);
+			//score.setForeground(color);
+			//score.setFont(getFont().deriveFont(Font.BOLD, 14));
+			//score.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
+			//score.setHorizontalAlignment(JLabel.RIGHT);
 			
 			header.add(title, BorderLayout.CENTER);
-			header.add(score, BorderLayout.EAST);
+			//header.add(score, BorderLayout.EAST);
+            header.add(history, BorderLayout.EAST);
 			
 			add(header, BorderLayout.NORTH);
 			add(new JScrollPane(clientPanel), BorderLayout.CENTER);
-			
-			
+
 			team.addListener(this);
 
 		}
@@ -194,13 +195,10 @@ public class ClientsPanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 		
 		Client client;
-		
 		JLabel clientInfo = new JLabel();
-		
 		JLabel agentInfo = new JLabel();
-		
 		JPanel buttons;
-		
+
 		JButton disconnect = new JButton(new AbstractAction("Disconnect") {
 			
 			private static final long serialVersionUID = 1L;
@@ -228,7 +226,7 @@ public class ClientsPanel extends JPanel {
 				
 			}
 		});
-		
+
 		TrafficMonitor traffic = new TrafficMonitor(20);
 		
 		private ClientPanel(Client cl) {
