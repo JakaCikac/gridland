@@ -56,12 +56,15 @@ public class History implements Serializable, SimulationListener {
 			// if position is null then add previous position
 			if (p == null) {
 				history.add(new HistoryPosition(previous, step-1));
-				return;
+                System.out.println("Added history (p null) " + p.toString());
+
+                return;
 			}
 			// if previous position is null then create current position and add to history
 			if (previous == null) {
 				previous = new BodyPosition(p);
 				history.add(new HistoryPosition(p, step));
+                System.out.println("Added history (previous null) " + p.toString());
 				return;
 			}
 			// set preprevious to previous and create new position for previous
@@ -81,8 +84,10 @@ public class History implements Serializable, SimulationListener {
 				Math.abs(pY - (float)previous.getY() - previous.getOffsetY()) > 0.00001f) {
 			
 				history.add(new HistoryPosition(previous, step-1));
-				
-			} else {
+                System.out.println("Added history (previous not null) " + p.toString());
+
+
+            } else {
 				
 				if (!p.hasOffset() && !history.isEmpty()) {
 					

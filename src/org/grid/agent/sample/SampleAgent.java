@@ -185,8 +185,8 @@ public class SampleAgent extends Agent {
 					
 					Decision d = updateDecisions(neighborhood, state);
 					
-					//TerminalView view = new TerminalView();
-					//view.update(neighborhood);
+					TerminalView view = new TerminalView();
+					view.update(neighborhood);
 					
 					//System.out.printf("Best move: %s %.2f \n", d.getDirection().toString(), d.getWeight());
 					

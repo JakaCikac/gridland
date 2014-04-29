@@ -50,6 +50,33 @@ public class ClientsPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private final Color selectedBackground, normalBackground;
+    private Hashtable<Team, TeamPanel> teams = new Hashtable<Team, TeamPanel>();
+    private SelectionObserver observer;
+    private Simulation simulation;
+
+    public ClientsPanel(Simulation simulation, SelectionObserver observer) {
+        super(true);
+
+        this.simulation = simulation;
+        this.observer = observer;
+
+        setLayout(new GridLayout(simulation.getTeams().size(), 1));
+
+        selectedBackground = getBackground().brighter().brighter().brighter();
+        normalBackground = getBackground();
+
+        for (Team t : simulation.getTeams()) {
+
+            TeamPanel tp = new TeamPanel(t);
+
+            add(tp);
+            teams.put(t, tp);
+
+        }
+
+        setMaximumSize(new Dimension(400, Integer.MAX_VALUE));
+        setMinimumSize(new Dimension(200, 200));
+    }
 	
 	public static interface SelectionObserver {
 		
@@ -110,7 +137,18 @@ public class ClientsPanel extends JPanel {
 		private JPanel clientPanel = new ScrollableListPanel();
         private JPanel header = new JPanel();
 		//private JLabel score = new JLabel("0");
-        private JButton history = new JButton("History");
+
+        // add team history button
+        private JButton history = new JButton(new AbstractAction("History") {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
 		private JLabel title;
 
 		private Team team;
@@ -384,39 +422,7 @@ public class ClientsPanel extends JPanel {
 			return new Dimension(3 * length, max);
 		}
 	}
-	
-	private Hashtable<Team, TeamPanel> teams = new Hashtable<Team, TeamPanel>();
-	
-	private SelectionObserver observer;
-	
-	private Simulation simulation;
-	
-	public ClientsPanel(Simulation simulation, SelectionObserver observer) {
-		super(true);
 
-		this.simulation = simulation;
-		
-		this.observer = observer;
-		
-		setLayout(new GridLayout(simulation.getTeams().size(), 1));
-		
-		selectedBackground = getBackground().brighter().brighter().brighter();
-		normalBackground = getBackground();
-		
-		for (Team t : simulation.getTeams()) {
-			
-			TeamPanel tp = new TeamPanel(t);
-			
-			add(tp);
-	
-			teams.put(t, tp);
-			
-		}
-		
-		setMaximumSize(new Dimension(400, Integer.MAX_VALUE));
-		setMinimumSize(new Dimension(200, 200));
-	}
-	
 	@Override
 	public Dimension getPreferredSize() {
 		return new Dimension(240, 200);

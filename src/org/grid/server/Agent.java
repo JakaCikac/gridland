@@ -108,7 +108,7 @@ public class Agent extends TeamBody {
 					Body b = c.getBody();
 
                     if (b instanceof Agent) {
-                        System.out.println("Ran into agent " + ((Agent) b).getId());
+                        //System.out.println("Ran into agent " + ((Agent) b).getId());
                     }
 
 					/*if (b instanceof Headquarters) {
