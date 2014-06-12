@@ -1,5 +1,5 @@
 simulation.speed=10
-simulation.field=/Users/nanorax/Documents/FRI/Diploma/Project Prometheus/implementacija/gridland/maps/box.png
+simulation.field=/Users/nanorax/Documents/FRI/Diploma/implementacija/gridland/maps/box.png
 simulation.agents=8
 simulation.respawn=30
 team1=explorers

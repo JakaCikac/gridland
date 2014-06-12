@@ -407,7 +407,8 @@ public class Main {
 			}
 		});
 
-		zoom.setSelectedIndex(1);
+        // Set the default zoom level
+		zoom.setSelectedIndex(4);
 		zoom.setEditable(false);
 		
 		status.add(zoom, BorderLayout.EAST);
@@ -449,6 +450,10 @@ public class Main {
 		if (r.height - ws.height < 100) {
 			ws.height = r.height - 100;
 		}
+
+        // TODO: change size, only for testing
+        ws.height = 550;
+        ws.width = 750;
 		
 		window.setSize(ws);
 		

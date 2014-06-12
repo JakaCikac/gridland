@@ -71,7 +71,7 @@ public class SampleAgent extends Agent {
 	public void receive(int from, byte[] message) {
 
 		String msg = new String(message);
-		//System.out.format("Message received from %d: %s\n", from, msg);
+		System.out.format("Message received from %d: %s\n", from, msg);
 
 	}
 
@@ -185,10 +185,10 @@ public class SampleAgent extends Agent {
 					
 					Decision d = updateDecisions(neighborhood, state);
 					
-					TerminalView view = new TerminalView();
-					view.update(neighborhood);
+					//TerminalView view = new TerminalView();
+					//view.update(neighborhood);
 					
-					//System.out.printf("Best move: %s %.2f \n", d.getDirection().toString(), d.getWeight());
+					System.out.printf("Best move: %s %.2f \n", d.getDirection().toString(), d.getWeight());
 					
 					if (d.getDirection() != Direction.NONE) 
 						move(d.getDirection());
@@ -224,107 +224,127 @@ public class SampleAgent extends Agent {
 
 	}
 
+    /**
+     * Check every tile in the Neighborhood and decide what to do
+     * for every discovered object
+     * @param n - Neighborhood
+     */
 	private void analyzeNeighborhood(Neighborhood n) {
+        Position p; // for later use
 
+        // Neighborhood size, prints out 11,5
+        //System.out.println("n width = " + n.getWidth() + ", n height = " + n.getSize());
+
+        // loop over whole Neighborhood n
 		for (int i = -n.getSize(); i <= n.getSize(); i++) {
-
 			for (int j = -n.getSize(); j <= n.getSize(); j++) {
 
+                // what to do if cell is HEADQUARTERS
 				if (n.getCell(i, j) == Neighborhood.HEADQUARTERS) {
-
+                    // put HEADQUARTERS into registry
 					registry.put("hq", new Position(x + i, y + j));
-					
 					continue;
 				}
 
 				if (n.getCell(i, j) > 0) {
-
-					if (! (i == 0 && j == 0) )
+					if (! (i == 0 && j == 0) ) {
+                        // n.getCell(i,j) should be me, the sending agent
+                        // broadcast my id to other agents
+                        // TODO: send new discovered area
 						send(n.getCell(i, j), "Hello " + n.getCell(i, j) + "!");
-					
+                        System.out.println("Sent out new message with me " + n.getCell(i, j));
+                    }
+
 					continue;
 				}
-				
+
 			}
-
 		}
-
 	}
 
 	private Decision updateDecisions(Neighborhood n, AgentState state) {
 		
 		still.setWeight(0.01f);
+        // Set all weights to 1 if move possible otherwise to 0
 		down.setWeight(canMove(n, 0, 1, state) ? 1 : 0);
 		up.setWeight(canMove(n, 0, -1, state) ? 1 : 0);
 		left.setWeight(canMove(n, -1, 0, state) ? 1 : 0);
 		right.setWeight(canMove(n, 1, 0, state) ? 1 : 0);
 		
 		switch (state) {
-		case EXPLORE:
-			
-			int cx = (int) (sx / sn);
-			int cy = (int) (sy / sn);
-			
-			//System.out.printf("%d %d %d %d %d\n", sx, sy, sn, cx, cy);
-			
-			//System.out.printf("%.2f\n", Math.log(Math.max(2, cy - y)));
-			
-			down.multiplyWeight((float)Math.log(Math.max(2, cy - y)) * random(0.7f, 1));
-			up.multiplyWeight((float)Math.log(Math.max(2, y - cy)) * random(0.7f, 1));
-			left.multiplyWeight((float)Math.log(Math.max(2, x - cx)) * random(0.7f, 1));
-			right.multiplyWeight((float)Math.log(Math.max(2, cx - x)) * random(0.7f, 1));
-			
-			break;
-		case RETURN: {
-			
-			Position p = registry.get("hq");
-			
-			if (p == null)
-				return updateDecisions(n, AgentState.EXPLORE);
-			
-			down.multiplyWeight(Math.max(0.2f, p.getY() - y));
-			up.multiplyWeight(Math.max(0.2f, y - p.getY()));
-			left.multiplyWeight(Math.max(0.2f, x - p.getX()));
-			right.multiplyWeight(Math.max(0.2f, p.getX() - x));
-			
-			break;
-		}
-		case SEEK: {
-			
-			Position p = registry.get("flag");
-			
-			if (p == null)
-				return updateDecisions(n, AgentState.EXPLORE);
-			
-			down.multiplyWeight(Math.max(0.2f, p.getY() - y));
-			up.multiplyWeight(Math.max(0.2f, y - p.getY()));
-			left.multiplyWeight(Math.max(0.2f, x - p.getX()));
-			right.multiplyWeight(Math.max(0.2f, p.getX() - x));
+            case EXPLORE:
 
-			break;
+                int cx = (int) (sx / sn);
+                int cy = (int) (sy / sn);
+
+                //System.out.printf("%d %d %d %d %d\n", sx, sy, sn, cx, cy);
+                //System.out.printf("%.2f\n", Math.log(Math.max(2, cy - y)));
+
+                down.multiplyWeight((float)Math.log(Math.max(2, cy - y)) * random(0.7f, 1));
+                up.multiplyWeight((float)Math.log(Math.max(2, y - cy)) * random(0.7f, 1));
+                left.multiplyWeight((float)Math.log(Math.max(2, x - cx)) * random(0.7f, 1));
+                right.multiplyWeight((float)Math.log(Math.max(2, cx - x)) * random(0.7f, 1));
+
+                break;
+            case RETURN: {
+                // return to hq
+                Position p = registry.get("hq");
+                // if objective doesn't exist (or not yet detected) put state back into explore
+                if (p == null)
+                    return updateDecisions(n, AgentState.EXPLORE);
+
+                down.multiplyWeight(Math.max(0.2f, p.getY() - y));
+                up.multiplyWeight(Math.max(0.2f, y - p.getY()));
+                left.multiplyWeight(Math.max(0.2f, x - p.getX()));
+                right.multiplyWeight(Math.max(0.2f, p.getX() - x));
+
+                break;
+            }
+            case SEEK: {
+                // set objective to flag
+                Position p = registry.get("flag");
+                // if objective doesn't exist (or not yet detected) put state back into explore
+                if (p == null)
+                    return updateDecisions(n, AgentState.EXPLORE);
+
+                down.multiplyWeight(Math.max(0.2f, p.getY() - y));
+                up.multiplyWeight(Math.max(0.2f, y - p.getY()));
+                left.multiplyWeight(Math.max(0.2f, x - p.getX()));
+                right.multiplyWeight(Math.max(0.2f, p.getX() - x));
+
+                break;
+            }
 		}
-		}
-		
+		// sort decisions
 		Arrays.sort(decisions);
-		
-		/*for (Decision d : decisions)
-			System.out.println(d);*/
-		
+		// return last decision
 		return decisions[decisions.length - 1];
 		
 	}
-	
+
+    /**
+     * Check if agent is able to move depending on agent's current state.
+     * Move is possible if Neighborhood is empty
+     * @param n - Neighborhood
+     * @param x - coordinate
+     * @param y - coordinate
+     * @param state - agent's current state
+     * @return true or false, true if move possible, false if not
+     */
 	private boolean canMove(Neighborhood n, int x, int y, AgentState state) {
 		
 		switch (state) {
-		case RETURN:
-			return n.getCell(x, y) == Neighborhood.EMPTY || n.getCell(x, y) == Neighborhood.HEADQUARTERS;
-		case SEEK:
-			return n.getCell(x, y) == Neighborhood.EMPTY;
-		default:
-			return n.getCell(x, y) == Neighborhood.EMPTY;		
+            // if agent is trying to return to hq, both empty and hq cells are valid moves
+            case RETURN:
+                return n.getCell(x, y) == Neighborhood.EMPTY || n.getCell(x, y) == Neighborhood.HEADQUARTERS;
+           // if agent is in seek mode, it can only move over empty cells
+            case SEEK:
+                return n.getCell(x, y) == Neighborhood.EMPTY;
+            // at default move is only possible if the cell is empty
+            default:
+                return n.getCell(x, y) == Neighborhood.EMPTY;
 		}
-		
+
 	}
 	
 	private static float random(float min, float max) {

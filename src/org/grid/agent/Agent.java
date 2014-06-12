@@ -38,11 +38,12 @@ import org.grid.protocol.Message.StateMessage;
 
 
 /**
- * The base class for all agents. This class also includes main method that is
- * used to launch the client and handles all low level protocol communication
- * and the lifecycle of the agent.
+ * The base class for all agents. This class also includes the main method that
+ * is used to launch the client and handles all low level protocol communication
+ * and also the lifecycle of the agent.
  * 
- * To run the sample agent type: java -cp bin/ org.grid.agent.Agent localhost
+ * To run the sample agent:
+ * java -cp bin/ org.grid.agent.Agent localhost
  * org.grid.agent.sample.SampleAgent
  * 
  * @author lukacu
@@ -52,18 +53,24 @@ import org.grid.protocol.Message.StateMessage;
 public abstract class Agent {
 
 	private static Class<Agent> agentClassStatic = null;
-
 	private static Vector<ClientProtocolSocket> clients = new Vector<ClientProtocolSocket>();
-
 	private static String teamOverride = null;
 
+    /**
+     *  The class loader is responsible for locating libraries, reading their contents,
+     *  and loading the classes contained within the libraries. This loading is typically
+     *  done "on demand", in that it does not occur until the
+     *  class is actually used by the program. User defined ClassLoader makes possible:
+     *  - allowing multiple namespaces to communicate
+     *  - to load or unload classes at runtime
+     */
 	public static class ProxyClassLoader extends ClassLoader {
 		
 		private Set<String> protectedClassPrefixes = new HashSet<String>();
+        private Hashtable<String, Class<?>> classes = new Hashtable<String, Class<?>>();
 		
 		public ProxyClassLoader() {
 			super(ProxyClassLoader.class.getClassLoader());
-			
 			protectedClassPrefixes.add("sun.");
 			protectedClassPrefixes.add("java.");
 			protectedClassPrefixes.add("javax.");
@@ -72,8 +79,7 @@ public abstract class Agent {
 			protectedClassPrefixes.add("org.grid.arena");
 		}
 
-		public Class<?> loadClass(String className)
-				throws ClassNotFoundException {
+		public Class<?> loadClass(String className) throws ClassNotFoundException {
 			return findClass(className);
 		}
 
@@ -93,8 +99,7 @@ public abstract class Agent {
 						return cls;	
 					}
 				}
-					
-				
+
 				String classResource = className.substring(className.lastIndexOf('.')+1) + ".class";
 
 				InputStream in = cls.getResourceAsStream(classResource);
@@ -117,11 +122,8 @@ public abstract class Agent {
 				return cl;
 
 			} catch (IOException e) {
-
 			} catch (NullPointerException e) {
-			
 			} catch (ClassNotFoundException e) {
-
 			}
 			/*
 			 * try { return findSystemClass(className); } catch (Exception e) {
@@ -129,25 +131,19 @@ public abstract class Agent {
 			 */
 			return null;
 		}
-
-		private Hashtable<String, Class<?>> classes = new Hashtable<String, Class<?>>();
 	}
 
+    // Define possible agent states
 	public static enum Status {
 		UNKNOWN, REGISTERED, INITIALIZED
 	}
 
-	private static class ClientProtocolSocket extends ProtocolSocket implements
-			Runnable {
+	private static class ClientProtocolSocket extends ProtocolSocket implements Runnable {
 
 		private ConcurrentLinkedQueue<Message> inbox = new ConcurrentLinkedQueue<Message>();
-
 		private Status status = Status.UNKNOWN;
-
 		private Agent agent = null;
-
 		private boolean terminated = false;
-
 		private String name;
 
 		public ClientProtocolSocket(Socket sck, String name) throws IOException {
@@ -167,7 +163,6 @@ public abstract class Agent {
 			}
 
 			sendMessage(new Message.RegisterMessage(team));
-
 			this.name = name;
 
 		}
@@ -192,22 +187,13 @@ public abstract class Agent {
 					try {
 
 						ProxyClassLoader loader = new ProxyClassLoader();
-
-						Class<Agent> agentClass = (Class<Agent>) loader
-								.loadClass(agentClassStatic.getCanonicalName());
+						Class<Agent> agentClass = (Class<Agent>) loader.loadClass(agentClassStatic.getCanonicalName());
 
 						Agent agent = agentClass.newInstance();
-
-						agent.id = ((Message.InitializeMessage) message)
-								.getId();
-
+						agent.id = ((Message.InitializeMessage) message).getId();
 						agent.client = this;
-
-						agent.maxMessageSize = ((Message.InitializeMessage) message)
-								.getMaxMessageSize();
-
-						agent.simulationSpeed = ((Message.InitializeMessage) message)
-								.getSimulationSpeed();
+						agent.maxMessageSize = ((Message.InitializeMessage) message).getMaxMessageSize();
+						agent.simulationSpeed = ((Message.InitializeMessage) message).getSimulationSpeed();
 
 						try {
 							agent.initialize();
@@ -218,50 +204,37 @@ public abstract class Agent {
 						sendMessage(new Message.AcknowledgeMessage());
 
 						status = Status.INITIALIZED;
-						
 						this.agent = agent;
 						
 					} catch (Throwable e) {
 						e.printStackTrace();
 					}
-
 				}
-
 				break;
 
 			case INITIALIZED:
 				if (message instanceof Message.StateMessage)
 					super.handleMessage(message);
 
-				if ((message instanceof Message.ReceiveMessage)
-						|| (message instanceof Message.StateMessage)) {
+				if ((message instanceof Message.ReceiveMessage)|| (message instanceof Message.StateMessage)) {
 
 					synchronized (inbox) {
-
 						inbox.add(message);
 						inbox.notifyAll();
-
 					}
-
 				}
 
 				if (message instanceof Message.TerminateMessage) {
-
 					try {
 						agent.terminate();
 					} catch (Throwable e) {
 						e.printStackTrace();
 					}
-
 					agent = null;
 					status = Status.REGISTERED;
-
 				}
-
 				break;
-
 			}
-
 		}
 
 		public boolean isAlive() {
@@ -272,8 +245,7 @@ public abstract class Agent {
 		protected void onTerminate() {
 			switch (status) {
 			case UNKNOWN:
-				System.out
-						.println("ERROR: Unable to connect. Did you set the membership information correctly?");
+				System.out.println("ERROR: Unable to connect. Did you set the membership information correctly?");
 				break;
 			case REGISTERED:
 				System.out.println("ERROR: Disconnected by server.");
@@ -314,20 +286,14 @@ public abstract class Agent {
 											.getFrom(), ((ReceiveMessage) msg)
 											.getMessage());
 								} else if (msg instanceof StateMessage) {
-									agent
-											.state(((StateMessage) msg)
-													.getStamp(),
-													((StateMessage) msg)
-															.getNeighborhood(),
-													((StateMessage) msg)
-															.getDirection());
+									agent.state(((StateMessage) msg).getStamp(),
+													((StateMessage) msg).getNeighborhood(),
+													((StateMessage) msg).getDirection());
 								}
-
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
 						}
-
 					}
 				}
 			});
@@ -372,8 +338,7 @@ public abstract class Agent {
 			Socket socket = new Socket(args[0], 5000);
 			socket.setTcpNoDelay(true);
 			
-			ClientProtocolSocket client = new ClientProtocolSocket(socket,
-					"Client " + i);
+			ClientProtocolSocket client = new ClientProtocolSocket(socket, "Client " + i);
 
 			try {
 				Thread.sleep(100);
@@ -388,13 +353,10 @@ public abstract class Agent {
 		}
 
 		while (true) {
-
 			boolean alive = false;
 
 			for (ClientProtocolSocket c : clients) {
-
 				alive |= !c.terminated;
-
 			}
 
 			if (!alive)
@@ -404,19 +366,13 @@ public abstract class Agent {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
 			}
-
 		}
-
 		System.exit(0);
-
 	}
 
 	private int id;
-
 	private int maxMessageSize;
-
 	private int simulationSpeed;
-
 	private ClientProtocolSocket client;
 
 	/**
