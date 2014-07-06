@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -235,17 +236,41 @@ public class Main {
 
                 // On selected client try to get agent
 				Agent a = client.getAgent();
-
-
 				if (a == null)
 					return;
+
                 // create new visited map for the selected agent, based on his history
 				visualization = new VisitMap(simulation.getField(), history, a, simulation
-						.getNeighborhoodSize());
+						.getNeighborhoodSize(), false); // false = single agent
 				setBasePallette((Palette) visualization);
 				simulation.addListener(visualization);
 			}
 		}
+
+        @Override
+        public void clientsSelected(ArrayList<Client> client) {
+
+            synchronized (this) {
+                if (client == null) {
+                    if (visualization != null)
+                        simulation.removeListener(visualization);
+                    visualization = null;
+                    setBasePallette(null);
+                    return;
+                }
+
+                // On selected client try to get (dummy) agent
+                Agent a = client.get(0).getAgent();
+                if (a == null)
+                    return;
+
+                // create new visited map for the selected agent, based on his history
+                visualization = new VisitMap(simulation.getField(), history, a, simulation
+                        .getNeighborhoodSize(), true); // true = whole team
+                setBasePallette((Palette) visualization);
+                simulation.addListener(visualization);
+            }
+        }
 
 		@Override
 		public void position(Team team, int id, BodyPosition p) {

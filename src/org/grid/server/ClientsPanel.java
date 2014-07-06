@@ -27,9 +27,7 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.swing.AbstractAction;
@@ -55,6 +53,7 @@ public class ClientsPanel extends JPanel {
     private SelectionObserver observer;
     private Simulation simulation;
     private boolean deselectAll = false;
+    private ArrayList<Client> clientList;
 
     public ClientsPanel(Simulation simulation, SelectionObserver observer) {
         super(true);
@@ -78,11 +77,14 @@ public class ClientsPanel extends JPanel {
 
         setMaximumSize(new Dimension(400, Integer.MAX_VALUE));
         setMinimumSize(new Dimension(200, 200));
+
+        clientList = new ArrayList<Client>();
     }
 	
 	public static interface SelectionObserver {
 		
 		public void clientSelected(Client client);
+        public void clientsSelected(ArrayList<Client> clientList);
 		
 	}
 
@@ -161,6 +163,8 @@ public class ClientsPanel extends JPanel {
                             ClientsPanel.this.selectAll(cl, false);
                         }
                     }
+                    if (ClientsPanel.this.observer != null)
+                        ClientsPanel.this.observer.clientsSelected(clientList);
                     ClientsPanel.this.deselectAll = true;
                 } else {
                     Set<Client> keySet = clients.keySet();
@@ -515,11 +519,14 @@ public class ClientsPanel extends JPanel {
 
         ClientPanel cp = tp.clients.get(client);
 
+        // If deselecting all agents..
         if (deselectAll) {
             selected = cp;
             selected.deselect();
             if (observer != null)
                 observer.clientSelected(null);
+            // Empty client list
+            clientList.clear();
             return;
         }
 
@@ -538,10 +545,8 @@ public class ClientsPanel extends JPanel {
             selected = cp;
             cp.select();
 
-            if (observer != null)
-                observer.clientSelected(cp.client);
-            // TODO: VisitMap must paint all the tiles of all agents..
-
+            // Add client to list, which gets forwarded to show team visit map
+            clientList.add(client);
         }
     }
 }

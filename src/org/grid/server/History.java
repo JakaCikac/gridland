@@ -173,13 +173,33 @@ public class History implements Serializable, SimulationListener {
 			return null;
 		
 		AgentHistory ah = th.agents.get(id);
-		
+
 		if (ah == null)
 			return null;
 		
 		return ah.history;
-		
 	}
+
+    public Iterable<HistoryPosition> getTeamHistory(Team team, int id) {
+
+        TeamHistory th = teams.get(team.getName());
+
+        if (th == null)
+            return null;
+
+        Vector<HistoryPosition> teamPoints = new Vector<HistoryPosition>();
+        for (AgentHistory pah : th.agents.values()) {
+            teamPoints = mergeVectors(teamPoints, pah.history);
+        }
+        return teamPoints;
+    }
+
+    static Vector<HistoryPosition> mergeVectors(Vector<HistoryPosition> Va, Vector<HistoryPosition> Vb) {
+        Vector<HistoryPosition> merge = new Vector<HistoryPosition>();
+        merge.addAll(Va);
+        merge.addAll(Vb);
+        return merge;
+    }
 
 	@Override
 	public void message(Team team, int from, int to, int length) {

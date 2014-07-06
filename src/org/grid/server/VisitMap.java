@@ -18,6 +18,7 @@ public class VisitMap implements Arena, Palette, SimulationListener {
     private Agent agent;
     private BodyPosition lastPosition = null;
     private int neighborhoodSize;
+    private boolean forTeam; // will we display history for the whole team
 
     // static class constructor
 	static {
@@ -38,17 +39,18 @@ public class VisitMap implements Arena, Palette, SimulationListener {
      * @param agent
      * @param neighborhoodSize
      */
-    public VisitMap(Field field, History history, Agent agent, int neighborhoodSize) {
+    public VisitMap(Field field, History history, Agent agent, int neighborhoodSize, boolean forTeam) {
         this.field = field;
         this.width = field.getWidth();
         this.height = field.getHeight();
         this.agent = agent;
+        this.forTeam = forTeam;
         this.cells = new int[width * height];
         Arrays.fill(cells, 0);
 
         this.neighborhoodSize = neighborhoodSize;
 
-        setFromHistory(history, agent.getTeam(), agent.getId());
+        setFromHistory(history, agent.getTeam(), agent.getId(), forTeam);
 
     }
 
@@ -65,12 +67,19 @@ public class VisitMap implements Arena, Palette, SimulationListener {
      * @param team - team which the agent belongs to
      * @param agent - agent for which we are displaying history
      */
-	private void setFromHistory(History history, Team team, int agent) {
+	private void setFromHistory(History history, Team team, int agent, boolean forTeam) {
 
         // first clear the array
 		clear();
+
 		// retrieve visited points recorded in agents history
-		Iterable<HistoryPosition> h = history.getAgentHistory(team, agent);
+        Iterable<HistoryPosition> h;
+        if (!forTeam) {
+            h = history.getAgentHistory(team, agent);
+        }
+        else  {
+            h = history.getTeamHistory(team, agent);
+        }
 		// if history can not be retrieved abort
 		if (h == null)
 			return;
