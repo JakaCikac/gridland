@@ -19,10 +19,14 @@ package org.grid.server;
 
 import java.awt.Color;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Set;
 import java.util.Vector;
 
 import org.grid.server.Field.BodyPosition;
+
+import javax.xml.bind.SchemaOutputResolver;
 
 
 public class History implements Serializable, SimulationListener {
@@ -143,7 +147,8 @@ public class History implements Serializable, SimulationListener {
 	}
 	
 	private Hashtable<String, TeamHistory> teams = new Hashtable<String, TeamHistory>();
-	
+
+    private int exploredPoints;
 	private transient int step = 0;
 	
 	public void step() {
@@ -180,6 +185,7 @@ public class History implements Serializable, SimulationListener {
 		return ah.history;
 	}
 
+
     public Iterable<HistoryPosition> getTeamHistory(Team team, int id) {
 
         TeamHistory th = teams.get(team.getName());
@@ -191,6 +197,12 @@ public class History implements Serializable, SimulationListener {
         for (AgentHistory pah : th.agents.values()) {
             teamPoints = mergeVectors(teamPoints, pah.history);
         }
+
+        // Print out a unique number of discovered points
+        Set<HistoryPosition> unique = new HashSet<HistoryPosition>();
+        unique.addAll(teamPoints);
+        exploredPoints = unique.size();
+        System.out.println("Discovered points: " + unique.size());
         return teamPoints;
     }
 
@@ -199,6 +211,11 @@ public class History implements Serializable, SimulationListener {
         merge.addAll(Va);
         merge.addAll(Vb);
         return merge;
+    }
+
+    //TODO: make'em show up as a label next to history
+    public int getExploredPoints() {
+        return exploredPoints;
     }
 
 	@Override

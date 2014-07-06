@@ -265,6 +265,7 @@ public class Main {
                     return;
 
                 // create new visited map for the selected agent, based on his history
+                // the agent a's history will be refreshed, so we need to send in a list
                 visualization = new VisitMap(simulation.getField(), history, a, simulation
                         .getNeighborhoodSize(), true); // true = whole team
                 setBasePallette((Palette) visualization);
