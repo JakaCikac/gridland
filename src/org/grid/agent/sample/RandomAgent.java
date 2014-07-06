@@ -45,6 +45,7 @@ public class RandomAgent extends Agent {
 	private Decision[] decisions;
 	private int sn = 1;
 	private long sx, sy;
+    private int sleepTime = 100;
 	
 	@Override
 	public void initialize() {
@@ -160,7 +161,7 @@ public class RandomAgent extends Agent {
 			}
 
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(sleepTime);
 			} catch (InterruptedException e) {
 			}
 
