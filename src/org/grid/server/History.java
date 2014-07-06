@@ -84,7 +84,6 @@ public class History implements Serializable, SimulationListener {
 				Math.abs(pY - (float)previous.getY() - previous.getOffsetY()) > 0.00001f) {
 			
 				history.add(new HistoryPosition(previous, step-1));
-                //System.out.println("Added history (previous not null) " + p.toString());
 
 
             } else {

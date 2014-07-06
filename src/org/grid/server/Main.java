@@ -236,6 +236,7 @@ public class Main {
                 // On selected client try to get agent
 				Agent a = client.getAgent();
 
+
 				if (a == null)
 					return;
                 // create new visited map for the selected agent, based on his history
@@ -457,8 +458,8 @@ public class Main {
 		}
 
         // TODO: change size, only for testing
-        ws.height = 550;
-        ws.width = 750;
+        ws.height = 850;
+        ws.width = 1250;
 		
 		window.setSize(ws);
 		

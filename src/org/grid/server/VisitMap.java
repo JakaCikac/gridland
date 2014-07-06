@@ -49,6 +49,7 @@ public class VisitMap implements Arena, Palette, SimulationListener {
         this.neighborhoodSize = neighborhoodSize;
 
         setFromHistory(history, agent.getTeam(), agent.getId());
+
     }
 
     /**
@@ -62,14 +63,15 @@ public class VisitMap implements Arena, Palette, SimulationListener {
      * Set
      * @param history - agent's history
      * @param team - team which the agent belongs to
-     * @param agent
+     * @param agent - agent for which we are displaying history
      */
 	private void setFromHistory(History history, Team team, int agent) {
-		
+
+        // first clear the array
 		clear();
-		// go through all visited points recorded in agents history
+		// retrieve visited points recorded in agents history
 		Iterable<HistoryPosition> h = history.getAgentHistory(team, agent);
-		
+		// if history can not be retrieved abort
 		if (h == null)
 			return;
 		

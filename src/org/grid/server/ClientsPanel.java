@@ -29,6 +29,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.swing.AbstractAction;
@@ -53,6 +54,7 @@ public class ClientsPanel extends JPanel {
     private Hashtable<Team, TeamPanel> teams = new Hashtable<Team, TeamPanel>();
     private SelectionObserver observer;
     private Simulation simulation;
+    private boolean deselectAll = false;
 
     public ClientsPanel(Simulation simulation, SelectionObserver observer) {
         super(true);
@@ -136,7 +138,8 @@ public class ClientsPanel extends JPanel {
 
 		private JPanel clientPanel = new ScrollableListPanel();
         private JPanel header = new JPanel();
-		//private JLabel score = new JLabel("0");
+        // TODO: make score show how many empty cells the team explored of the maximum
+		private JLabel score = new JLabel("0 / 0");
 
         // add team history button
         private JButton history = new JButton(new AbstractAction("History") {
@@ -146,6 +149,28 @@ public class ClientsPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                // get all clients
+                // for every client call cp.select
+                // this way you get the whole team history
+
+                // Get a set of all the keys contained in the Hashtable
+                if (!ClientsPanel.this.deselectAll) {
+                    Set<Client> keySet = clients.keySet();
+                    for (Client cl : keySet) {
+                        if (cl.getAgent() != null) {
+                            ClientsPanel.this.selectAll(cl, false);
+                        }
+                    }
+                    ClientsPanel.this.deselectAll = true;
+                } else {
+                    Set<Client> keySet = clients.keySet();
+                    for (Client cl : keySet) {
+                        if (cl.getAgent() != null) {
+                            ClientsPanel.this.selectAll(cl, true);
+                        }
+                    }
+                    ClientsPanel.this.deselectAll = false;
+                }
             }
         });
 
@@ -174,14 +199,14 @@ public class ClientsPanel extends JPanel {
 			title.setFont(getFont().deriveFont(Font.BOLD, 14));
 			title.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
 			
-			//score.setOpaque(false);
-			//score.setForeground(color);
-			//score.setFont(getFont().deriveFont(Font.BOLD, 14));
-			//score.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
-			//score.setHorizontalAlignment(JLabel.RIGHT);
+			score.setOpaque(false);
+			score.setForeground(color);
+			score.setFont(getFont().deriveFont(Font.BOLD, 14));
+			score.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
+			score.setHorizontalAlignment(JLabel.RIGHT);
 			
-			header.add(title, BorderLayout.CENTER);
-			//header.add(score, BorderLayout.EAST);
+			header.add(title, BorderLayout.WEST);
+			header.add(score, BorderLayout.CENTER);
             header.add(history, BorderLayout.EAST);
 			
 			add(header, BorderLayout.NORTH);
@@ -220,8 +245,7 @@ public class ClientsPanel extends JPanel {
 			if (panel != null) {
 				clientPanel.remove(panel);
 			}
-			
-			//revalidate();
+
 			clientPanel.repaint();
 			clientPanel.revalidate();
 		}
@@ -461,7 +485,7 @@ public class ClientsPanel extends JPanel {
 		} else {
 			if (selected != null) {
 				selected.deselect();
-			}
+			 }
 
 			selected = cp;
 			cp.select();
@@ -472,4 +496,52 @@ public class ClientsPanel extends JPanel {
 		}
 
 	}
+
+    public void selectAll(Client client, boolean deselectAll) {
+        if (client == null ) {
+            if (selected != null) {
+                selected.deselect();
+                selected = null;
+            }
+            if (observer != null)
+                observer.clientSelected(null);
+            return;
+        }
+
+        TeamPanel tp = teams.get(client.getTeam());
+
+        if (tp == null)
+            return;
+
+        ClientPanel cp = tp.clients.get(client);
+
+        if (deselectAll) {
+            selected = cp;
+            selected.deselect();
+            if (observer != null)
+                observer.clientSelected(null);
+            return;
+        }
+
+        if (cp == null) {
+            return;
+        }
+
+        if (selected != null && selected == cp) {
+            selected.deselect();
+            selected = null;
+
+            if (observer != null)
+                observer.clientSelected(null);
+        } else {
+
+            selected = cp;
+            cp.select();
+
+            if (observer != null)
+                observer.clientSelected(cp.client);
+            // TODO: VisitMap must paint all the tiles of all agents..
+
+        }
+    }
 }
