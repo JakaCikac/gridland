@@ -25,13 +25,14 @@ import org.grid.protocol.Position;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Random;
 
-
-// Run: java -cp bin org.grid.agent.Agent localhost org.grid.agent.sample.PackAgent
+// Run: java -cp bin org.grid.agent.Agent localhost org.grid.agent.sample.RandomAgent
 
 @Membership(team="packs")
-public class PackAgent extends Agent {
+public class RandomAgent extends Agent {
 
+    // Possible agent states
 	private static enum AgentState {
 		EXPLORE, SEEK, RETURN
 	}
@@ -48,24 +49,24 @@ public class PackAgent extends Agent {
 	@Override
 	public void initialize() {
 
-		left = new Decision(0, Direction.LEFT);
-		right = new Decision(0, Direction.RIGHT);
-		up = new Decision(0, Direction.UP);
-		down = new Decision(0, Direction.DOWN);
-		still = new Decision(0, Direction.NONE);
-		
+		left = new Decision(Direction.LEFT);
+		right = new Decision(Direction.RIGHT);
+		up = new Decision(Direction.UP);
+		down = new Decision(Direction.DOWN);
+		still = new Decision(Direction.NONE);
+
 		decisions = new Decision[] {
-			left, right, up, down, still	
+			left, right, up, down, still
 		};
-		
 	}
 
 	@Override
 	public void receive(int from, byte[] message) {
-        // TODO: update what you know about the world
+        /* In this method, the agent should receive information from other agents
+         * and update what it knows about the surrounding world.
+         */
 		String msg = new String(message);
 		//System.out.format("Message received from %d: %s\n", from, msg);
-
 	}
 
 	@Override
@@ -76,7 +77,7 @@ public class PackAgent extends Agent {
 			this.direction = direction;
 
 			if (state != AgentState.RETURN)
-				state = AgentState.EXPLORE; // Te
+				state = AgentState.EXPLORE;
 			
 			waitMutex.notify();
 		}
@@ -89,20 +90,10 @@ public class PackAgent extends Agent {
 
 	private Direction moving = Direction.DOWN;
 
-	protected static class Decision implements Comparable<Decision> {
+	protected static class Decision  {
 
-		private float weight;
 		private Direction direction;
-		public float getWeight() {
-			return weight;
-		}
-		public void setWeight(float weight) {
-			this.weight = weight;
-		}
-		public void multiplyWeight(float f) {
-			this.weight *= f;
-		}
-		
+
 		public Direction getDirection() {
 			return direction;
 		}
@@ -111,27 +102,15 @@ public class PackAgent extends Agent {
 			this.direction = direction;
 		}
 
-		public Decision(float weight, Direction direction) {
+		public Decision(Direction direction) {
 			super();
-			this.weight = weight;
 			this.direction = direction;
 		}
 
-		@Override
-		public int compareTo(Decision o) {
-			if (weight < o.weight)
-				return -1;
-
-			if (weight > o.weight)
-				return 1;
-
-			return 0;
-		}
-
 		public String toString() {
-			return String.format("%s (%.2f)", direction.toString(), weight);
+			return String.format("%s", direction.toString());
 		}
-		
+
 	}
 
 	@Override
@@ -144,8 +123,6 @@ public class PackAgent extends Agent {
 				scanAndWait();
 				analyzeNeighborhood(neighborhood);
 
-				//System.out.printf("Current position: %d, %d, state: %s \n", x, y, state.toString());
-				
 				if (direction == Direction.NONE) {
 
 					if (moving != Direction.NONE) {
@@ -167,16 +144,11 @@ public class PackAgent extends Agent {
 						sn++;
 						sx += x;
 						sy += y;
-						
 					}
-					
+
+                    // If obstacle or agent on path, change direction of movement
 					Decision d = updateDecisions(neighborhood, state);
-					
-					//TerminalView view = new TerminalView();
-					//view.update(neighborhood);
-					
-					//System.out.printf("Best move: %s %.2f \n", d.getDirection().toString(), d.getWeight());
-					
+
 					if (d.getDirection() != Direction.NONE) 
 						move(d.getDirection());
 
@@ -197,18 +169,17 @@ public class PackAgent extends Agent {
 	}
 
 	private Object waitMutex = new Object();
-
 	private Neighborhood neighborhood;
-
 	private Direction direction;
 
+    /* Send a scan request to the server. The server will respond with the
+     * local state of the environment that will be returned to the agent using
+     * the state(int, Neighborhood, Direction)} callback. */
 	private void scanAndWait() throws InterruptedException {
-
 		synchronized (waitMutex) {
 			scan(0);
 			waitMutex.wait();
 		}
-
 	}
 
 	private void analyzeNeighborhood(Neighborhood n) {
@@ -227,96 +198,58 @@ public class PackAgent extends Agent {
 				if (n.getCell(i, j) > 0) {
 
 					if (! (i == 0 && j == 0) )
-						send(n.getCell(i, j), "Hello " + n.getCell(i, j) + "!");
+						//send(n.getCell(i, j), "Hello " + n.getCell(i, j) + "!");
 					continue;
 				}
-				
 			}
-
 		}
-
 	}
 
 	private Decision updateDecisions(Neighborhood n, AgentState state) {
-		
-		still.setWeight(0.01f);
-		down.setWeight(canMove(n, 0, 1, state) ? 1 : 0);
-		up.setWeight(canMove(n, 0, -1, state) ? 1 : 0);
-		left.setWeight(canMove(n, -1, 0, state) ? 1 : 0);
-		right.setWeight(canMove(n, 1, 0, state) ? 1 : 0);
-		
-		switch (state) {
-		case EXPLORE:
-			
-			int cx = (int) (sx / sn);
-			int cy = (int) (sy / sn);
-			
-			//System.out.printf("%d %d %d %d %d\n", sx, sy, sn, cx, cy);
-			
-			//System.out.printf("%.2f\n", Math.log(Math.max(2, cy - y)));
-			
-			down.multiplyWeight((float)Math.log(Math.max(2, cy - y)) * random(0.7f, 1));
-			up.multiplyWeight((float)Math.log(Math.max(2, y - cy)) * random(0.7f, 1));
-			left.multiplyWeight((float)Math.log(Math.max(2, x - cx)) * random(0.7f, 1));
-			right.multiplyWeight((float)Math.log(Math.max(2, cx - x)) * random(0.7f, 1));
-			
-			break;
-		case RETURN: {
-			
-			Position p = registry.get("hq");
-			
-			if (p == null)
-				return updateDecisions(n, AgentState.EXPLORE);
-			
-			down.multiplyWeight(Math.max(0.2f, p.getY() - y));
-			up.multiplyWeight(Math.max(0.2f, y - p.getY()));
-			left.multiplyWeight(Math.max(0.2f, x - p.getX()));
-			right.multiplyWeight(Math.max(0.2f, p.getX() - x));
-			
-			break;
-		}
-		case SEEK: {
-			
-			Position p = registry.get("flag");
-			
-			if (p == null)
-				return updateDecisions(n, AgentState.EXPLORE);
-			
-			down.multiplyWeight(Math.max(0.2f, p.getY() - y));
-			up.multiplyWeight(Math.max(0.2f, y - p.getY()));
-			left.multiplyWeight(Math.max(0.2f, x - p.getX()));
-			right.multiplyWeight(Math.max(0.2f, p.getX() - x));
 
-			break;
-		}
-		}
-		
-		Arrays.sort(decisions);
-		
-		/*for (Decision d : decisions)
-			System.out.println(d);*/
-		
-		return decisions[decisions.length - 1];
-		
+        // Check which ways the agent can move.
+        boolean up = canMove(n, 0, -1);
+        boolean down = canMove(n, 0, 1);
+        boolean left =  canMove(n, -1, 0);
+        boolean right = canMove(n, 1, 0);
+        boolean moves[] = {up, down, left, right};
+
+        // Randomly shuffle possible moves.
+        shuffleArray(decisions);
+
+        // Check which moves are available against the shuffled array
+        // then choose the move first possible move from the array.
+        for (int i = 0; i < decisions.length; i++) {
+            if ( decisions[i].getDirection().toString().equals("UP") && moves[0]) {
+                return decisions[i];
+            } else if (decisions[i].getDirection().toString().equals("DOWN") && moves[1]) {
+                return decisions[i];
+            } else if (decisions[i].getDirection().toString().equals("LEFT") && moves[2]) {
+                return  decisions[i];
+            } else if (decisions[i].getDirection().toString().equals("RIGHT") && moves[3]) {
+                return decisions[i];
+            }
+        }
+        // if no other move is available, stand still for a round
+        return still;
 	}
+
+    // Implementing Fisher–Yates shuffle
+    static void shuffleArray(Decision[] ar)
+    {
+        Random rnd = new Random();
+        for (int i = ar.length - 1; i > 0; i--)
+        {
+            int index = rnd.nextInt(i + 1);
+            // Simple swap
+            Decision a = ar[index];
+            ar[index] = ar[i];
+            ar[i] = a;
+        }
+    }
 	
-	private boolean canMove(Neighborhood n, int x, int y, AgentState state) {
-		
-		switch (state) {
-		case RETURN:
-			return n.getCell(x, y) == Neighborhood.EMPTY || n.getCell(x, y) == Neighborhood.HEADQUARTERS;
-		case SEEK:
+	private boolean canMove(Neighborhood n, int x, int y) {
 			return n.getCell(x, y) == Neighborhood.EMPTY;
-		default:
-			return n.getCell(x, y) == Neighborhood.EMPTY;		
-		}
-		
 	}
-	
-	private static float random(float min, float max) {
-		
-		return (float) (Math.random() * (max - min)) + min;
-		
-	}
-	
+
 }

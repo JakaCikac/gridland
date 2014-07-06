@@ -182,8 +182,6 @@ public class History implements Serializable, SimulationListener {
 		
 	}
 
-
-
 	@Override
 	public void message(Team team, int from, int to, int length) {
 

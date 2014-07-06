@@ -184,6 +184,7 @@ public class SampleAgent extends Agent {
 					}
 					
 					Decision d = updateDecisions(neighborhood, state);
+
 					
 					//TerminalView view = new TerminalView();
 					//view.update(neighborhood);
