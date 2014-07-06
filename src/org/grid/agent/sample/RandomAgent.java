@@ -234,7 +234,7 @@ public class RandomAgent extends Agent {
         return still;
 	}
 
-    // Implementing Fisher–Yates shuffle
+    // Implementing FisherYates shuffle
     static void shuffleArray(Decision[] ar)
     {
         Random rnd = new Random();
@@ -249,6 +249,7 @@ public class RandomAgent extends Agent {
     }
 	
 	private boolean canMove(Neighborhood n, int x, int y) {
+
 			return n.getCell(x, y) == Neighborhood.EMPTY;
 	}
 

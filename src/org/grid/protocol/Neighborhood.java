@@ -22,7 +22,7 @@ import java.io.Serializable;
 
 import org.grid.arena.Arena;
 
-
+/* Area around the agent, limited by parameter neighborhood.size */
 public class Neighborhood implements Serializable, Arena {
 	
 	public static final int EMPTY = 0;

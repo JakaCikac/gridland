@@ -35,6 +35,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -71,6 +72,7 @@ public class Main {
 	private static ClientsPanel clientsPanel = null;
 	private static JLabel simulationStepDisplay = new JLabel();
 	private static PrintWriter log;
+    private static List emptyFieldsList;
 
 	private static final String[] ZOOM_LEVELS_TITLES = new String[] {"nano", "micro", "mili", "tiny", "small", "normal",
 			"big", "huge" };
@@ -145,6 +147,8 @@ public class Main {
 			}
 
 			Field field = simulation.getField();
+
+
 
 			g.setColor(Color.YELLOW);
 
@@ -305,6 +309,7 @@ public class Main {
 
         // Load simulation properties from a simulation file, which is given as an argument
 		simulation = Simulation.loadFromFile(new File(args[0]));
+        emptyFieldsList = simulation.getField().listEmptyFields(true);
 
         // Create a log file with timestamp as name
 		try {
