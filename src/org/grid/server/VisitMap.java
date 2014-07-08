@@ -104,8 +104,9 @@ public class VisitMap implements Arena, Palette, SimulationListener {
 	@Override
 	public void position(Team team, int id, BodyPosition p) {
 		
-		if (agent.getId() != id)
-			return;
+		//if (agent.getId() != id)
+		//	return;
+        // if empty set, refresh for all of them, else refresh for agents in set
 		
 		if (lastPosition == null || !p.equals(lastPosition)) {
 

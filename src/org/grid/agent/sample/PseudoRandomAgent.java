@@ -23,14 +23,13 @@ import org.grid.protocol.Message.Direction;
 import org.grid.protocol.Neighborhood;
 import org.grid.protocol.Position;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
 // Run: java -cp bin org.grid.agent.Agent localhost org.grid.agent.sample.RandomAgent
 
 @Membership(team="packs")
-public class RandomAgent extends Agent {
+public class PseudoRandomAgent extends Agent {
 
     // Possible agent states
 	private static enum AgentState {
@@ -195,9 +194,9 @@ public class RandomAgent extends Agent {
 				}
 
                 // if cell is occupied as an agent send a hello message
+                // TODO: send other message
 				if (n.getCell(i, j) > 0) {
 
-                    // For RANDOM agent, we don't need to send messages.
 					if (! (i == 0 && j == 0) )
 						//send(n.getCell(i, j), "Hello " + n.getCell(i, j) + "!");
 					continue;
@@ -231,11 +230,11 @@ public class RandomAgent extends Agent {
                 return decisions[i];
             }
         }
-        // if no other move is available, stand still for the current move
+        // if no other move is available, stand still for a round
         return still;
 	}
 
-    //FisherYates shuffle for random array shuffle
+    // Implementing FisherYates shuffle
     static void shuffleArray(Decision[] ar)
     {
         Random rnd = new Random();

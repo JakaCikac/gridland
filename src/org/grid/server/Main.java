@@ -38,15 +38,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
+import javax.swing.*;
 
 import org.grid.arena.Arena;
 import org.grid.arena.SwingView;
@@ -247,6 +239,11 @@ public class Main {
 			}
 		}
 
+        /**
+         * Takes an arrayList of clients and creates a visuzalization
+         * of history for all the clients in the list (usually a team).
+         * @param client
+         */
         @Override
         public void clientsSelected(ArrayList<Client> client) {
 
@@ -259,7 +256,15 @@ public class Main {
                     return;
                 }
 
+
+                if (!(client.size() > 0)) {
+                    // If there are no active clients, do nothing
+                    System.out.println("No active clients.");
+                    return;
+                }
                 // On selected client try to get (dummy) agent
+                // this agent will be selected and it's history refreshed
+                // TODO: refresh history for all agents
                 Agent a = client.get(0).getAgent();
                 if (a == null)
                     return;
