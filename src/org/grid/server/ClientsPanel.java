@@ -80,6 +80,11 @@ public class ClientsPanel extends JPanel {
 
         clientList = new ArrayList<Client>();
     }
+
+    // todo: update!!!
+    public JLabel getLabel(){
+        return ((TeamPanel)this.getComponent(0)).score;
+    }
 	
 	public static interface SelectionObserver {
 		
@@ -140,6 +145,7 @@ public class ClientsPanel extends JPanel {
 
 		private JPanel clientPanel = new ScrollableListPanel();
         private JPanel header = new JPanel();
+
         // TODO: make score show how many empty cells the team explored of the maximum
 		private JLabel score = new JLabel("0 / 0");
 

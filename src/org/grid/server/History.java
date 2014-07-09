@@ -185,7 +185,6 @@ public class History implements Serializable, SimulationListener {
 		return ah.history;
 	}
 
-
     public Iterable<HistoryPosition> getTeamHistory(Team team) {
 
         TeamHistory th = teams.get(team.getName());
@@ -197,12 +196,8 @@ public class History implements Serializable, SimulationListener {
         for (AgentHistory pah : th.agents.values()) {
             teamPoints = mergeVectors(teamPoints, pah.history);
         }
-
         // Print out a unique number of discovered points
-        Set<HistoryPosition> unique = new HashSet<HistoryPosition>();
-        unique.addAll(teamPoints);
-        exploredPoints = unique.size();
-        System.out.println("Discovered points: " + unique.size());
+       // System.out.println("Discovered points: " + unique.size());
         return teamPoints;
     }
 
@@ -213,7 +208,6 @@ public class History implements Serializable, SimulationListener {
         return merge;
     }
 
-    //TODO: make'em show up as a label next to history
     public int getExploredPoints() {
         return exploredPoints;
     }
@@ -233,5 +227,9 @@ public class History implements Serializable, SimulationListener {
 		}
 		
 		h.record(id, p);
+        getTeamHistory(team);
+        //TODO: Explored points get recorded here
+        //System.out.println("EXP POints:" + exploredPoints);
+
 	}
 }

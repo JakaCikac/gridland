@@ -39,6 +39,7 @@ import javax.swing.*;
 
 import org.grid.agent.sample.RandomAgent;
 import org.grid.arena.Arena;
+import org.grid.server.History.HistoryPosition;
 import org.grid.arena.SwingView;
 import org.grid.server.ClientsPanel.SelectionObserver;
 import org.grid.server.Dispatcher.Client;
@@ -185,7 +186,16 @@ public class Main {
 					g.drawOval(p.getX() * cellSize + translateX, p.getY() * cellSize
 							 + translateY, cellSize, cellSize);
 				}
-			}
+
+                 Iterable<HistoryPosition> teamPoints = history.getTeamHistory(visualization.getAgent().getTeam());
+                 Set< HistoryPosition> unique = new HashSet<HistoryPosition>();
+                 for (HistoryPosition hp : teamPoints) {
+                     unique.add(hp);
+                 }
+                 int exploredPoints = unique.size();
+                 clientsPanel.getLabel().setText(String.valueOf(exploredPoints));
+                 System.out.println("refreshed: "+exploredPoints);
+             }
 
 			synchronized (buffer) {
 				buffer = active;
@@ -196,8 +206,9 @@ public class Main {
 			synchronized (mutex) {
 				renderTime += used;
 				renderCount++;
-			}
+            }
 		}
+
 
 		@Override
 		public void message(Team team, int from, int to, int length) {
@@ -271,6 +282,9 @@ public class Main {
                         .getNeighborhoodSize(), true); // true = whole team
                 setBasePallette((Palette) visualization);
                 simulation.addListener(visualization);
+
+                // TODO: empty field count
+              // System.out.println("Empty tiles: " + simulation.getField().listEmptyFields(true).size());
             }
         }
 
@@ -372,6 +386,7 @@ public class Main {
 
 					stepTime += used;
 					stepCount++;
+
 
 					if (simulation.getStep() % 400 == 0 && running) {
 						long renderFPS, stepFPS;
