@@ -2,5 +2,5 @@ simulation.speed=100
 message.speed=20
 simulation.field=/Users/nanorax/Documents/FRI/Diploma/implementacija/gridland/maps/beatle.png
 simulation.agents=100
-simulation.respawn=5
+simulation.respawn=20
 team1=explorers

@@ -186,7 +186,7 @@ public class History implements Serializable, SimulationListener {
 	}
 
 
-    public Iterable<HistoryPosition> getTeamHistory(Team team, int id) {
+    public Iterable<HistoryPosition> getTeamHistory(Team team) {
 
         TeamHistory th = teams.get(team.getName());
 
@@ -224,7 +224,7 @@ public class History implements Serializable, SimulationListener {
 	}
 
 	@Override
-	public void position(Team team, int id, BodyPosition p) {
+	public void position(Team team, Set<Dispatcher.Client> agentSet, int id, BodyPosition p) {
 		TeamHistory h = teams.get(team.getName());
 		
 		if (h == null) {

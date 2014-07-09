@@ -21,12 +21,7 @@ import java.awt.Color;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Properties;
-import java.util.Vector;
+import java.util.*;
 
 import org.grid.protocol.Neighborhood;
 import org.grid.protocol.Message.Direction;
@@ -215,23 +210,27 @@ public class Simulation {
 
 		fireStepEvent();
 		
-		// handle moves and collisions
-		for (Team t : teams.values()) {
+
+        Set<Client> agentSet = new HashSet<Client>();
+        /* Inserting an empty set because of parameter requirements.
+         * The actual id gets checked against in another set containing agents in
+         * the position listener.
+         */
+
+        // handle moves and collisions
+        for (Team t : teams.values()) {
 			for (Agent a : t.move(field)) {
-				
 				synchronized (listeners) {
 					for (SimulationListener l : listeners) {
 						try {
-							l.position(t, a.getId(), field.getPosition(a));
+							l.position(t, agentSet, a.getId(), field.getPosition(a));
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
 
 					}
 				}
-				
 			}
-			
 			t.dispatch();
 		}
 

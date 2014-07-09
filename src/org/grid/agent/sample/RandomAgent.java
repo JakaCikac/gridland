@@ -57,7 +57,7 @@ public class RandomAgent extends Agent {
 		still = new Decision(Direction.NONE);
 
 		decisions = new Decision[] {
-			left, right, up, down, still
+			left, right, up, down
 		};
 	}
 
@@ -226,7 +226,7 @@ public class RandomAgent extends Agent {
             } else if (decisions[i].getDirection().toString().equals("DOWN") && moves[1]) {
                 return decisions[i];
             } else if (decisions[i].getDirection().toString().equals("LEFT") && moves[2]) {
-                return  decisions[i];
+                return decisions[i];
             } else if (decisions[i].getDirection().toString().equals("RIGHT") && moves[3]) {
                 return decisions[i];
             }

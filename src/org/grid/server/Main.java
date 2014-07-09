@@ -33,13 +33,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.*;
 
+import org.grid.agent.sample.RandomAgent;
 import org.grid.arena.Arena;
 import org.grid.arena.SwingView;
 import org.grid.server.ClientsPanel.SelectionObserver;
@@ -174,7 +172,8 @@ public class Main {
 
 			}
 
-			if (visualization != null) {
+            // TODO : Uncomment!
+			 if (visualization != null) {
 
 				BodyPosition p = field.getPosition(visualization.getAgent());
 				
@@ -217,7 +216,7 @@ public class Main {
 		@Override
 		public void clientSelected(Client client) {
 
-			synchronized (this) {
+			 synchronized (this) {
 				if (client == null) {
 					if (visualization != null)
 						simulation.removeListener(visualization);
@@ -226,13 +225,15 @@ public class Main {
 					return;
 				}
 
+                Set<Client> agentSet = new HashSet<Client>();
+                agentSet.add(client);
                 // On selected client try to get agent
 				Agent a = client.getAgent();
 				if (a == null)
 					return;
 
                 // create new visited map for the selected agent, based on his history
-				visualization = new VisitMap(simulation.getField(), history, a, simulation
+				visualization = new VisitMap(simulation.getField(), history, agentSet, simulation
 						.getNeighborhoodSize(), false); // false = single agent
 				setBasePallette((Palette) visualization);
 				simulation.addListener(visualization);
@@ -256,22 +257,17 @@ public class Main {
                     return;
                 }
 
-
                 if (!(client.size() > 0)) {
                     // If there are no active clients, do nothing
                     System.out.println("No active clients.");
                     return;
                 }
-                // On selected client try to get (dummy) agent
-                // this agent will be selected and it's history refreshed
-                // TODO: refresh history for all agents
-                Agent a = client.get(0).getAgent();
-                if (a == null)
-                    return;
+
+                Set<Client> agentSet = new HashSet<Client>(client);
 
                 // create new visited map for the selected agent, based on his history
                 // the agent a's history will be refreshed, so we need to send in a list
-                visualization = new VisitMap(simulation.getField(), history, a, simulation
+                visualization = new VisitMap(simulation.getField(), history, agentSet, simulation
                         .getNeighborhoodSize(), true); // true = whole team
                 setBasePallette((Palette) visualization);
                 simulation.addListener(visualization);
@@ -279,7 +275,7 @@ public class Main {
         }
 
 		@Override
-		public void position(Team team, int id, BodyPosition p) {
+		public void position(Team team, Set<Client> agentSet, int id, BodyPosition p) {
 		}
 
 		@Override
@@ -377,7 +373,7 @@ public class Main {
 					stepTime += used;
 					stepCount++;
 
-					if (simulation.getStep() % 100 == 0 && running) {
+					if (simulation.getStep() % 400 == 0 && running) {
 						long renderFPS, stepFPS;
 
 						synchronized (mutex) {

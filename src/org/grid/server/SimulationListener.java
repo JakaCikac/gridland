@@ -19,11 +19,13 @@ package org.grid.server;
 
 import org.grid.server.Field.BodyPosition;
 
+import java.util.Set;
+
 public interface SimulationListener {
 
 	public void message(Team team, int from, int to, int length);
 	
-	public void position(Team team, int id, BodyPosition p);
+	public void position(Team team, Set<Dispatcher.Client> agentSet, int id, BodyPosition p);
 	
 	public void step();
 	

@@ -2,6 +2,7 @@ package org.grid.server;
 
 import java.awt.Color;
 import java.util.Arrays;
+import java.util.Set;
 
 import org.grid.arena.Arena;
 import org.grid.arena.SwingView.Palette;
@@ -16,6 +17,7 @@ public class VisitMap implements Arena, Palette, SimulationListener {
     private int width, height;
     private Field field;
     private Agent agent;
+    private Set<Dispatcher.Client> agentSet;
     private BodyPosition lastPosition = null;
     private int neighborhoodSize;
     private boolean forTeam; // will we display history for the whole team
@@ -36,21 +38,22 @@ public class VisitMap implements Arena, Palette, SimulationListener {
      * VisitMap constructor.
      * @param field
      * @param history
-     * @param agent
+     * @param agentSet
      * @param neighborhoodSize
      */
-    public VisitMap(Field field, History history, Agent agent, int neighborhoodSize, boolean forTeam) {
+    public VisitMap(Field field, History history, Set<Dispatcher.Client> agentSet, int neighborhoodSize, boolean forTeam) {
         this.field = field;
         this.width = field.getWidth();
         this.height = field.getHeight();
-        this.agent = agent;
+        this.agentSet = agentSet;
         this.forTeam = forTeam;
         this.cells = new int[width * height];
         Arrays.fill(cells, 0);
 
         this.neighborhoodSize = neighborhoodSize;
 
-        setFromHistory(history, agent.getTeam(), agent.getId(), forTeam);
+        agent = agentSet.iterator().next().getAgent();
+        setFromHistory(history, agentSet.iterator().next().getTeam(), agentSet, forTeam);
 
     }
 
@@ -65,21 +68,21 @@ public class VisitMap implements Arena, Palette, SimulationListener {
      * Set
      * @param history - agent's history
      * @param team - team which the agent belongs to
-     * @param agent - agent for which we are displaying history
+     * @param agentSet - agents for which we are displaying history
      */
-	private void setFromHistory(History history, Team team, int agent, boolean forTeam) {
+	private void setFromHistory(History history, Team team, Set<Dispatcher.Client> agentSet, boolean forTeam) {
 
         // first clear the array
 		clear();
-
-		// retrieve visited points recorded in agents history
-        Iterable<HistoryPosition> h;
-        if (!forTeam) {
-            h = history.getAgentHistory(team, agent);
-        }
-        else  {
-            h = history.getTeamHistory(team, agent);
-        }
+        int agent;
+        // retrieve visited points recorded in agents history
+        Iterable<HistoryPosition> h = null;
+        if (agentSet.size() == 1) {
+              agent = agentSet.iterator().next().getAgent().getId();
+              h = history.getAgentHistory(team, agent);
+        } else if (agentSet.size() > 1) {
+              h = history.getTeamHistory(team);
+        } else System.out.println("Error: No agents in agent set.");
 		// if history can not be retrieved abort
 		if (h == null)
 			return;
@@ -102,18 +105,21 @@ public class VisitMap implements Arena, Palette, SimulationListener {
 	}
 
 	@Override
-	public void position(Team team, int id, BodyPosition p) {
-		
-		//if (agent.getId() != id)
-		//	return;
-        // if empty set, refresh for all of them, else refresh for agents in set
-		
-		if (lastPosition == null || !p.equals(lastPosition)) {
+	public void position(Team team, Set<Dispatcher.Client> agentSet, int id, BodyPosition p) {
+        //Check if the requested refreshing agent is contained in the set.
+        // If yes, refresh histroy and repaint.
+        for(Dispatcher.Client c : this.agentSet) {
+            if (c.getAgent().getId() == id) {
+                if (lastPosition == null || !p.equals(lastPosition)) {
 
-			cells[p.getY() * width + p.getX()]++;
-			markNeighborhood(p.getX(), p.getY());
-		}
-		lastPosition = p;
+                    cells[p.getY() * width + p.getX()]++;
+                    markNeighborhood(p.getX(), p.getY());
+                }
+                lastPosition = p;
+                return;
+            }
+        }
+
 	}
 
     /**
@@ -142,6 +148,7 @@ public class VisitMap implements Arena, Palette, SimulationListener {
 	public void step() {
 	}
 	
+
 	public Agent getAgent() {
 		return agent;
 	}
