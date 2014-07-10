@@ -51,7 +51,6 @@ public class Agent extends TeamBody {
 	public boolean move(Field arena) {
 
 		synchronized (this) {
-
 			if (!isAlive())
 				return false;
 

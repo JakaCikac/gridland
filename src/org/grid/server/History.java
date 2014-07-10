@@ -196,8 +196,6 @@ public class History implements Serializable, SimulationListener {
         for (AgentHistory pah : th.agents.values()) {
             teamPoints = mergeVectors(teamPoints, pah.history);
         }
-        // Print out a unique number of discovered points
-       // System.out.println("Discovered points: " + unique.size());
         return teamPoints;
     }
 

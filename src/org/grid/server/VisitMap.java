@@ -107,7 +107,7 @@ public class VisitMap implements Arena, Palette, SimulationListener {
 	@Override
 	public void position(Team team, Set<Dispatcher.Client> agentSet, int id, BodyPosition p) {
         //Check if the requested refreshing agent is contained in the set.
-        // If yes, refresh histroy and repaint.
+        // If yes, refresh history and repaint.
         boolean discoveredCell = false;
         for(Dispatcher.Client c : this.agentSet) {
             if (c.getAgent().getId() == id) {

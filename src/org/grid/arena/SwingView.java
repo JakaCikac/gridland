@@ -156,7 +156,7 @@ public class SwingView extends JPanel implements ArenaView {
 				case Arena.TILE_AGENT:
 					drawBorderedCircle(g, i * cellSize + cellBorder + translateX, j * cellSize
 							+ cellBorder + translateY, cellSize - 2 * cellBorder);
-					break;
+                    break;
 
 				case Arena.TILE_HEADQUARTERS:
 					drawBorderedSquare(g, i * cellSize + cellBorder + translateX, j * cellSize

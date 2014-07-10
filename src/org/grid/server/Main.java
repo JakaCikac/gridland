@@ -99,8 +99,6 @@ public class Main {
 
             setEnabled(false);
             playpause.setEnabled(true);
-
-            //putValue(AbstractAction.NAME, running ? "Pause" : "Play");
         }
     };
 
@@ -111,6 +109,7 @@ public class Main {
 		private static final int BUFFER_LIFE = 10;
 		private LinkedList<Message> buffer = new LinkedList<Message>();
 		private VisitMap visualization = null;
+        private Team tempTeam = null;
 
         public class Message {
 
@@ -132,15 +131,20 @@ public class Main {
 		}
 
         @Override
-        public void discoveredPoints(History history, VisitMap visualization, ClientsPanel clientsPanel) {
+        public void discoveredPoints() {
             // TODO: move to separate class or put into main refresh method
-            Iterable<HistoryPosition> teamPoints = history.getTeamHistory(visualization.getAgent().getTeam());
+            Iterable<HistoryPosition> teamPoints = history.getTeamHistory(tempTeam);//visualization.getAgent().getTeam());
             Set< HistoryPosition> unique = new HashSet<HistoryPosition>();
             for (HistoryPosition hp : teamPoints) {
                 unique.add(hp);
             }
             int exploredPoints = unique.size();
-            clientsPanel.getExploredPointsLabel().setText(String.valueOf(exploredPoints));
+            clientsPanel.getExploredPointsLabel().setText(String.valueOf(exploredPoints) + "/" + simulation.getField().listEmptyFields(true).size() );
+        }
+
+        @Override
+        public void stopSimulation() {
+
         }
 
 		@Override
@@ -153,6 +157,8 @@ public class Main {
 			paintBackground(g, visualization == null ? view : visualization);
 
 			paintObjects(g, view);
+            // refresh discovered points
+
 
 			LinkedList<Message> active = new LinkedList<Message>();
 			int current = simulation.getStep();
@@ -214,8 +220,8 @@ public class Main {
 							 + translateY, cellSize, cellSize);
 				}
 
-                 // refresh discovered points
-                 discoveredPoints(history, visualization, clientsPanel);
+
+
              }
 
 			synchronized (buffer) {
@@ -229,7 +235,6 @@ public class Main {
 				renderCount++;
             }
 		}
-
 
 		@Override
 		public void message(Team team, int from, int to, int length) {
@@ -311,6 +316,11 @@ public class Main {
 
 		@Override
 		public void position(Team team, Set<Client> agentSet, int id, BodyPosition p) {
+                // Borrow a temporary team from the team panel callback
+                tempTeam = team;
+                // Call the discovered points to refresh the explored counter
+                if ( tempTeam != null)
+                    discoveredPoints();
 		}
 
 		@Override
@@ -407,7 +417,6 @@ public class Main {
 
 					stepTime += used;
 					stepCount++;
-
 
 					if (simulation.getStep() % 400 == 0 && running) {
 						long renderFPS, stepFPS;
