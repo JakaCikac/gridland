@@ -75,13 +75,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="History.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="History.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/grid/server/History.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="202" column="50" selection-start="5284" selection-end="5284" vertical-scroll-proportion="0.6631737" vertical-offset="2122" max-vertical-offset="3090">
+            <state line="202" column="50" selection-start="5284" selection-end="5284" vertical-scroll-proportion="0.0" vertical-offset="2122" max-vertical-offset="3090">
               <folding>
                 <element signature="e#5284#5301#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RandomAgent.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/RandomAgent.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="124" column="0" selection-start="3174" selection-end="3174" vertical-scroll-proportion="0.0" vertical-offset="1218" max-vertical-offset="3510">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -102,15 +111,33 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Main.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Agent.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/grid/agent/Agent.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="306" column="0" selection-start="8297" selection-end="8297" vertical-scroll-proportion="0.0" vertical-offset="3783" max-vertical-offset="7335">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Main.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/grid/server/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="136" column="74" selection-start="4382" selection-end="4382" vertical-scroll-proportion="-13.846154" vertical-offset="1050" max-vertical-offset="7890">
+            <state line="326" column="9" selection-start="9984" selection-end="9984" vertical-scroll-proportion="0.7442623" vertical-offset="3806" max-vertical-offset="7965">
               <folding>
                 <element signature="e#4362#4379#0" expanded="true" />
                 <element signature="e#5067#5076#0" expanded="true" />
                 <element signature="e#7455#7463#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Simulation.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/grid/server/Simulation.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="225" column="85" selection-start="5514" selection-end="5514" vertical-scroll-proportion="0.0" vertical-offset="2388" max-vertical-offset="6615">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -853,7 +880,7 @@
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="org.grid.agent.Agent" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="localhost org.grid.agent.sample.RandomAgent 55 explorers" />
+      <option name="PROGRAM_PARAMETERS" value="localhost org.grid.agent.sample.RandomAgent 10 explorers" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
@@ -961,7 +988,7 @@
       <workItem from="1404672463600" duration="3000" />
       <workItem from="1404726617781" duration="6641000" />
       <workItem from="1404828660290" duration="17737000" />
-      <workItem from="1404980805092" duration="16963000" />
+      <workItem from="1404980805092" duration="17247000" />
     </task>
     <task id="LOCAL-00001" summary="Test commit.">
       <created>1394200726993</created>
@@ -1215,11 +1242,15 @@
       <created>1405003831934</created>
       <updated>1405003831934</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="Explored count now working from Main but.. it's not performancey and not nice.&#10;">
+      <created>1405004548734</created>
+      <updated>1405004548735</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="143554000" />
+    <option name="totallyTimeSpent" value="143838000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1255,18 +1286,18 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959612" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39819458" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29268292" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32520324" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32956383" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32579187" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.54471546" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32532534" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32520324" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32956383" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2257721" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29268292" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29268292" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32956383" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1286,7 +1317,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Comments, comments everywhere.. pt.2&#10;" />
     <MESSAGE value="Comments, comments everywhere.. pt.3&#10;" />
     <MESSAGE value="Comments, comments everywhere.. pt.4&#10;" />
     <MESSAGE value="Comments, comments everywhere.. pt.5&#10;" />
@@ -1311,7 +1341,8 @@
     <MESSAGE value="Abandoned the idea of a better counter. Doesn't work." />
     <MESSAGE value="Adding the pause button, to pause the simulation.&#10;&#10;todo: Fix the layout of the buttons.." />
     <MESSAGE value="Explored count now working from Main but.. it's not performancey and not nice." />
-    <option name="LAST_COMMIT_MESSAGE" value="Explored count now working from Main but.. it's not performancey and not nice." />
+    <MESSAGE value="Explored count now working from Main but.. it's not performancey and not nice.&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Explored count now working from Main but.. it's not performancey and not nice.&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1925,13 +1956,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/Agent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="325" column="0" selection-start="8639" selection-end="8639" vertical-scroll-proportion="0.0" vertical-offset="341" max-vertical-offset="7335">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/grid/arena/TerminalView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="19" column="13" selection-start="859" selection-end="859" vertical-scroll-proportion="0.06736527" vertical-offset="0" max-vertical-offset="668">
@@ -1949,13 +1973,6 @@
     <entry file="file://$PROJECT_DIR$/src/org/grid/arena/ArenaView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="19" column="17" selection-start="863" selection-end="863" vertical-scroll-proportion="0.06736527" vertical-offset="0" max-vertical-offset="668">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/Simulation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="216" column="43" selection-start="5232" selection-end="5232" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6810">
           <folding />
         </state>
       </provider>
@@ -2104,29 +2121,43 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/server/History.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="202" column="50" selection-start="5284" selection-end="5284" vertical-scroll-proportion="0.0" vertical-offset="2122" max-vertical-offset="3090">
+          <folding>
+            <element signature="e#5284#5301#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/RandomAgent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="204" column="13" selection-start="5084" selection-end="5084" vertical-scroll-proportion="0.9161677" vertical-offset="2028" max-vertical-offset="3510">
+        <state line="124" column="0" selection-start="3174" selection-end="3174" vertical-scroll-proportion="0.0" vertical-offset="1218" max-vertical-offset="3510">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/Agent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="306" column="0" selection-start="8297" selection-end="8297" vertical-scroll-proportion="0.0" vertical-offset="3783" max-vertical-offset="7335">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/server/Simulation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="225" column="85" selection-start="5514" selection-end="5514" vertical-scroll-proportion="0.0" vertical-offset="2388" max-vertical-offset="6615">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/grid/server/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="136" column="74" selection-start="4382" selection-end="4382" vertical-scroll-proportion="-13.846154" vertical-offset="1050" max-vertical-offset="7890">
+        <state line="326" column="9" selection-start="9984" selection-end="9984" vertical-scroll-proportion="0.7442623" vertical-offset="3806" max-vertical-offset="7965">
           <folding>
             <element signature="e#4362#4379#0" expanded="true" />
             <element signature="e#5067#5076#0" expanded="true" />
             <element signature="e#7455#7463#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/History.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="202" column="50" selection-start="5284" selection-end="5284" vertical-scroll-proportion="0.6631737" vertical-offset="2122" max-vertical-offset="3090">
-          <folding>
-            <element signature="e#5284#5301#0" expanded="true" />
           </folding>
         </state>
       </provider>

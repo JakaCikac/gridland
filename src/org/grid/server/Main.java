@@ -318,7 +318,12 @@ public class Main {
                 tempTeam = team;
                 // Call the discovered points to refresh the explored counter
                 if ( tempTeam != null)
+                    try {
+                        //todo: zakaj null ob zagonu?
                     discoveredPoints();
+                    } catch (Exception e) {
+
+                    }
 		}
 
 		@Override
