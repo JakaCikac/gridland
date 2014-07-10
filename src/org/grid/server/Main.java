@@ -82,10 +82,27 @@ public class Main {
 			running = !running;
 
 			setEnabled(false);
+            pause.setEnabled(true);
 			
 			//putValue(AbstractAction.NAME, running ? "Pause" : "Play");
 		}
 	};
+
+    private static Action pause = new AbstractAction("Pause") {
+
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+
+            running = false;
+
+            setEnabled(false);
+            playpause.setEnabled(true);
+
+            //putValue(AbstractAction.NAME, running ? "Pause" : "Play");
+        }
+    };
 
 	private static class SimulationSwingView extends SwingView implements
 			SimulationListener, SelectionObserver, MouseListener, CounterListener {
@@ -440,7 +457,9 @@ public class Main {
 
 		JPanel status = new JPanel(new BorderLayout());
 
-		status.add(new JButton(playpause), BorderLayout.WEST);
+		status.add(new JButton(playpause), BorderLayout.BEFORE_FIRST_LINE);
+        pause.setEnabled(false);
+        status.add(new JButton(pause), BorderLayout.WEST);
 
 		final JComboBox zoom = new JComboBox(ZOOM_LEVELS_TITLES);
 
