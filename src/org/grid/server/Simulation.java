@@ -213,8 +213,8 @@ public class Simulation {
 
         Set<Client> agentSet = new HashSet<Client>();
         /* Inserting an empty set because of parameter requirements.
-         * The actual id gets checked against in another set containing agents in
-         * the position listener.
+         * The actual id gets checked against another set containing agents in
+         * the position listener (VisitMap).
          */
 
         // handle moves and collisions
@@ -320,11 +320,7 @@ public class Simulation {
 					Team t = ((TeamBody) c.getBody()).getTeam();
 
 					if (c.getBody() instanceof Headquarters) {
-						n
-								.setCell(
-										i,
-										j,
-										t == agent.getTeam() ? Neighborhood.HEADQUARTERS
+						n.setCell(i, j, t == agent.getTeam() ? Neighborhood.HEADQUARTERS
 												: Neighborhood.OTHER_HEADQUARTERS);
 						continue;
 					}

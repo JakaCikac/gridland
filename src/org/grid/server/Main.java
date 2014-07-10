@@ -37,7 +37,6 @@ import java.util.*;
 
 import javax.swing.*;
 
-import org.grid.agent.sample.RandomAgent;
 import org.grid.arena.Arena;
 import org.grid.server.History.HistoryPosition;
 import org.grid.arena.SwingView;
@@ -173,7 +172,6 @@ public class Main {
 
 			}
 
-            // TODO : Uncomment!
 			 if (visualization != null) {
 
 				BodyPosition p = field.getPosition(visualization.getAgent());
@@ -187,14 +185,15 @@ public class Main {
 							 + translateY, cellSize, cellSize);
 				}
 
+                 // TODO: move to separate class or put into main refresh method
                  Iterable<HistoryPosition> teamPoints = history.getTeamHistory(visualization.getAgent().getTeam());
                  Set< HistoryPosition> unique = new HashSet<HistoryPosition>();
                  for (HistoryPosition hp : teamPoints) {
                      unique.add(hp);
                  }
                  int exploredPoints = unique.size();
-                 clientsPanel.getLabel().setText(String.valueOf(exploredPoints));
-                 System.out.println("refreshed: "+exploredPoints);
+                 clientsPanel.getExploredPointsLabel().setText(String.valueOf(exploredPoints));
+
              }
 
 			synchronized (buffer) {

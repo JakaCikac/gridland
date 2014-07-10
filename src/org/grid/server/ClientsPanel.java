@@ -81,8 +81,7 @@ public class ClientsPanel extends JPanel {
         clientList = new ArrayList<Client>();
     }
 
-    // todo: update!!!
-    public JLabel getLabel(){
+    public JLabel getExploredPointsLabel(){
         return ((TeamPanel)this.getComponent(0)).score;
     }
 	
