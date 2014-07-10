@@ -21,6 +21,7 @@ public class VisitMap implements Arena, Palette, SimulationListener {
     private BodyPosition lastPosition = null;
     private int neighborhoodSize;
     private boolean forTeam; // will we display history for the whole team
+    private static int exploredCells;
 
     // static class constructor
 	static {
@@ -88,14 +89,16 @@ public class VisitMap implements Arena, Palette, SimulationListener {
 			return;
 		
 		lastPosition = null;
-		
+
+        boolean discoveredCell = false;
 		for (HistoryPosition p : h) {
 			if (lastPosition == null || !p.equals(lastPosition)) {
                 // fill array with points
 				cells[p.getY() * width + p.getX()]++;
+                System.out.println("cell value: " + cells[p.getY() * width + p.getX()]);
                 // mark points in neighborhood
-				markNeighborhood(p.getX(), p.getY());
-			}
+                discoveredCell = markNeighborhood(p.getX(), p.getY());
+            }
 			lastPosition = p;
 		}
 	}
@@ -108,18 +111,23 @@ public class VisitMap implements Arena, Palette, SimulationListener {
 	public void position(Team team, Set<Dispatcher.Client> agentSet, int id, BodyPosition p) {
         //Check if the requested refreshing agent is contained in the set.
         // If yes, refresh histroy and repaint.
+        exploredCells = checkDiscoveredMap();
+        boolean discoveredCell = false;
         for(Dispatcher.Client c : this.agentSet) {
             if (c.getAgent().getId() == id) {
                 if (lastPosition == null || !p.equals(lastPosition)) {
 
                     cells[p.getY() * width + p.getX()]++;
-                    markNeighborhood(p.getX(), p.getY());
+                    discoveredCell = markNeighborhood(p.getX(), p.getY());
                 }
                 lastPosition = p;
+                if (discoveredCell) {
+                    // call listener to refresh discovered cells
+                    System.out.println("New cells discovered. " + exploredCells);
+                }
                 return;
             }
         }
-
 	}
 
     /**
@@ -127,22 +135,39 @@ public class VisitMap implements Arena, Palette, SimulationListener {
      * @param x
      * @param y
      */
-	private void markNeighborhood(int x, int y) {
+	private boolean markNeighborhood(int x, int y) {
 		
 		int sX = Math.max(0, x - neighborhoodSize);
 		int eX = Math.min(width-1, x + neighborhoodSize);
 		int sY = Math.max(0, y - neighborhoodSize);
-		int eY = Math.min(height-1, y + neighborhoodSize);		
+		int eY = Math.min(height-1, y + neighborhoodSize);
+
+        boolean discoveredCell = false;
 		
 		for (int j = sY; j <= eY; j++) {
 			for (int i = sX; i <= eX; i++) {
 				
-				if (cells[j * width + i] == 0)
+				if (cells[j * width + i] == 0) {
 					cells[j * width + i] = 1;
+                    discoveredCell = true;
+                    if (cells[j * width + i] > 1)
+                        exploredCells++;
+                }
 			}
 		}
-	
+        return discoveredCell;
 	}
+
+    private int checkDiscoveredMap() {
+        int emptyCounter = 0;
+        int discoveredCounter = 0;
+
+        for (int i = 0; i < cells.length; i++) {
+            if (cells[i] == 0) emptyCounter++;
+            else if (cells[i] == 1) discoveredCounter++;
+        }
+        return discoveredCounter;
+    }
 	
 	@Override
 	public void step() {

@@ -170,6 +170,7 @@ public class ClientsPanel extends JPanel {
                     }
                     if (ClientsPanel.this.observer != null)
                         ClientsPanel.this.observer.clientsSelected(clientList);
+
                     ClientsPanel.this.deselectAll = true;
                 } else {
                     Set<Client> keySet = clients.keySet();
@@ -180,6 +181,7 @@ public class ClientsPanel extends JPanel {
                     }
                     ClientsPanel.this.deselectAll = false;
                 }
+                System.out.println("deselect " + deselectAll);
             }
         });
 
@@ -518,7 +520,6 @@ public class ClientsPanel extends JPanel {
         }
 
         TeamPanel tp = teams.get(client.getTeam());
-
         if (tp == null)
             return;
 
@@ -528,6 +529,7 @@ public class ClientsPanel extends JPanel {
         if (deselectAll) {
             selected = cp;
             selected.deselect();
+            selected = null;
             if (observer != null)
                 observer.clientSelected(null);
             // Empty client list
@@ -542,14 +544,12 @@ public class ClientsPanel extends JPanel {
         if (selected != null && selected == cp) {
             selected.deselect();
             selected = null;
-
             if (observer != null)
                 observer.clientSelected(null);
         } else {
 
             selected = cp;
             cp.select();
-
             // Add client to list, which gets forwarded to show team visit map
             clientList.add(client);
         }
