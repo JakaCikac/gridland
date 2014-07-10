@@ -181,7 +181,6 @@ public class ClientsPanel extends JPanel {
                     }
                     ClientsPanel.this.deselectAll = false;
                 }
-                System.out.println("deselect " + deselectAll);
             }
         });
 
