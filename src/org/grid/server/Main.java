@@ -88,14 +88,14 @@ public class Main {
 	};
 
 	private static class SimulationSwingView extends SwingView implements
-			SimulationListener, SelectionObserver, MouseListener {
+			SimulationListener, SelectionObserver, MouseListener, CounterListener {
 
 		private static final long serialVersionUID = 1L;
 		private static final int BUFFER_LIFE = 10;
 		private LinkedList<Message> buffer = new LinkedList<Message>();
 		private VisitMap visualization = null;
 
-		public class Message {
+        public class Message {
 
 			private int length, step;
 			private Agent sender, receiver;
@@ -113,6 +113,18 @@ public class Main {
 			super(12);
 			addMouseListener(this);
 		}
+
+        @Override
+        public void discoveredPoints(History history, VisitMap visualization, ClientsPanel clientsPanel) {
+            // TODO: move to separate class or put into main refresh method
+            Iterable<HistoryPosition> teamPoints = history.getTeamHistory(visualization.getAgent().getTeam());
+            Set< HistoryPosition> unique = new HashSet<HistoryPosition>();
+            for (HistoryPosition hp : teamPoints) {
+                unique.add(hp);
+            }
+            int exploredPoints = unique.size();
+            clientsPanel.getExploredPointsLabel().setText(String.valueOf(exploredPoints));
+        }
 
 		@Override
 		public void paint(Graphics g) {
@@ -185,15 +197,8 @@ public class Main {
 							 + translateY, cellSize, cellSize);
 				}
 
-                 // TODO: move to separate class or put into main refresh method
-                 Iterable<HistoryPosition> teamPoints = history.getTeamHistory(visualization.getAgent().getTeam());
-                 Set< HistoryPosition> unique = new HashSet<HistoryPosition>();
-                 for (HistoryPosition hp : teamPoints) {
-                     unique.add(hp);
-                 }
-                 int exploredPoints = unique.size();
-                 clientsPanel.getExploredPointsLabel().setText(String.valueOf(exploredPoints));
-
+                 // refresh discovered points
+                 discoveredPoints(history, visualization, clientsPanel);
              }
 
 			synchronized (buffer) {
@@ -401,9 +406,7 @@ public class Main {
 						stepCount = 0;
 						stepTime = 0;
 
-						info(
-										"Simulation step: %d (step: %d fps, render: %d fps)",
-										simulation.getStep(), stepFPS, renderFPS);
+						info("Simulation step: %d (step: %d fps, render: %d fps)", simulation.getStep(), stepFPS, renderFPS);
 					}
 
 					if (simulation.getStep() % 10 == 0) {

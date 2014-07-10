@@ -7,6 +7,6 @@ import java.util.Set;
  */
 public interface CounterListener {
 
-    public void discoveredPoints(Set<History.HistoryPosition> unique);
+    public void discoveredPoints(History history, VisitMap visualization, ClientsPanel clientsPanel);
 
 }
