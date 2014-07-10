@@ -135,7 +135,7 @@ public class Main {
             // TODO: move to separate class or put into main refresh method
             Iterable<HistoryPosition> teamPoints = history.getTeamHistory(tempTeam);//visualization.getAgent().getTeam());
             Set< HistoryPosition> unique = new HashSet<HistoryPosition>();
-            for (HistoryPosition hp : teamPoints) {
+             for (HistoryPosition hp : teamPoints) {
                 unique.add(hp);
             }
             int exploredPoints = unique.size();
@@ -219,8 +219,6 @@ public class Main {
 					g.drawOval(p.getX() * cellSize + translateX, p.getY() * cellSize
 							 + translateY, cellSize, cellSize);
 				}
-
-
 
              }
 
