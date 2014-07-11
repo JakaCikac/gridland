@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f3f6e5c1-36d1-4bde-93db-26e0cc79e510" name="Default" comment="Working on faster explored count.">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/server/History.java" afterPath="$PROJECT_DIR$/src/org/grid/server/History.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/server/Main.java" afterPath="$PROJECT_DIR$/src/org/grid/server/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/sample/RandomAgent.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/sample/RandomAgent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sims/test.sim" afterPath="$PROJECT_DIR$/sims/test.sim" />
+    <list default="true" id="f3f6e5c1-36d1-4bde-93db-26e0cc79e510" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="gridland.iws" />
@@ -957,7 +952,7 @@
       <workItem from="1405088290319" duration="2438000" />
       <workItem from="1405090833666" duration="709000" />
       <workItem from="1405091554832" duration="723000" />
-      <workItem from="1405092361557" duration="1003000" />
+      <workItem from="1405092361557" duration="1136000" />
     </task>
     <task id="LOCAL-00001" summary="Test commit.">
       <created>1394200726993</created>
@@ -1223,11 +1218,15 @@
       <created>1405077815096</created>
       <updated>1405077815097</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="Fast explored count, but works only for ALL agents, not separately for teams of agents.&#10; &#10; It counts all discovered points for all agents not dependend on teams. Works really fast, because displaying a count for one team used addAll for merging sets, which used 60% of all compute power.">
+      <created>1405093501886</created>
+      <updated>1405093501887</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="158160000" />
+    <option name="totallyTimeSpent" value="158293000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1298,7 +1297,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Comments, comments everywhere.. pt.4&#10;" />
     <MESSAGE value="Comments, comments everywhere.. pt.5&#10;" />
     <MESSAGE value="Comments, comments everywhere.. pt.6&#10;" />
     <MESSAGE value="Add mili, micro and nano to ZOOM_LEVELS." />
@@ -1323,7 +1321,8 @@
     <MESSAGE value="Explored count now working from Main but.. it's not performancey and not nice." />
     <MESSAGE value="Explored count now working from Main but.. it's not performancey and not nice.&#10;" />
     <MESSAGE value="Working on faster explored count." />
-    <option name="LAST_COMMIT_MESSAGE" value="Working on faster explored count." />
+    <MESSAGE value="Fast explored count, but works only for ALL agents, not separately for teams of agents.&#10; &#10; It counts all discovered points for all agents not dependend on teams. Works really fast, because displaying a count for one team used addAll for merging sets, which used 60% of all compute power." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fast explored count, but works only for ALL agents, not separately for teams of agents.&#10; &#10; It counts all discovered points for all agents not dependend on teams. Works really fast, because displaying a count for one team used addAll for merging sets, which used 60% of all compute power." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1409,6 +1408,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1430,6 +1430,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2025,6 +2026,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.1002994" vertical-offset="75" max-vertical-offset="3525">
           <caret line="77" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
