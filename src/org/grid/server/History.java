@@ -32,10 +32,12 @@ import javax.xml.bind.SchemaOutputResolver;
 public class History implements Serializable, SimulationListener {
 
 	private static final long serialVersionUID = -3631531900582757001L;
+    private Set<HistoryPosition> quickSet = new HashSet<HistoryPosition>();
 
 	public static class HistoryPosition extends BodyPosition {
 
 		private static final long serialVersionUID = 1L;
+
 
 		private int step;
 		
@@ -55,13 +57,14 @@ public class History implements Serializable, SimulationListener {
 		
 		private Vector<HistoryPosition> history = new Vector<HistoryPosition>();
 		private transient BodyPosition preprevious, previous;
-        private Set<HistoryPosition> quickSet = new HashSet<HistoryPosition>();
+
 
 		public void record(BodyPosition p) {
 			// if position is null then add previous position
 			if (p == null) {
 				history.add(new HistoryPosition(previous, step-1));
-                quickSet.add(new HistoryPosition(previous, step-1));
+                History.this.quickSet.add(new HistoryPosition(previous, step-1));
+
 
                 return;
 			}
@@ -69,7 +72,7 @@ public class History implements Serializable, SimulationListener {
 			if (previous == null) {
 				previous = new BodyPosition(p);
 				history.add(new HistoryPosition(p, step));
-                quickSet.add(new HistoryPosition(p,step));
+                History.this.quickSet.add(new HistoryPosition(p,step));
 
 				return;
 			}
@@ -90,7 +93,7 @@ public class History implements Serializable, SimulationListener {
 				Math.abs(pY - (float)previous.getY() - previous.getOffsetY()) > 0.00001f) {
 			
 				history.add(new HistoryPosition(previous, step-1));
-                quickSet.add(new HistoryPosition(previous, step-1));
+                History.this.quickSet.add(new HistoryPosition(previous, step-1));
 
 
             } else {
@@ -99,7 +102,7 @@ public class History implements Serializable, SimulationListener {
 					
 					if (!history.lastElement().equals(p)) {
 						history.add(new HistoryPosition(p, step));
-                        quickSet.add(new HistoryPosition(p, step));
+                        History.this.quickSet.add(new HistoryPosition(p, step));
                     }
 				}
 			}
@@ -219,17 +222,17 @@ public class History implements Serializable, SimulationListener {
         return merge;
     }
 
-    public int getTeamExploredCount(Team team) {
+    public int getExploredCount(Team team) {
         TeamHistory th = teams.get(team.getName());
 
         if (th == null)
             return 0;
 
-        Set<HistoryPosition> teamTotalSet = new HashSet<HistoryPosition>();
-        for (AgentHistory pah : th.agents.values()) {
-            teamTotalSet.addAll(pah.getQuickSet());
-        }
-        return teamTotalSet.size();
+        //Set<HistoryPosition> teamTotalSet = new HashSet<HistoryPosition>();
+        //for (AgentHistory pah : th.agents.values()) {
+        //    teamTotalSet.addAll(pah.getQuickSet());
+        //}
+        return History.this.quickSet.size();//teamTotalSet.size();
 
     }
 

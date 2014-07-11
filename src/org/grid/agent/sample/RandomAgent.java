@@ -49,7 +49,6 @@ public class RandomAgent extends Agent {
 	
 	@Override
 	public void initialize() {
-
 		left = new Decision(Direction.LEFT);
 		right = new Decision(Direction.RIGHT);
 		up = new Decision(Direction.UP);

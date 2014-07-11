@@ -38,7 +38,6 @@ import java.util.*;
 import javax.swing.*;
 
 import org.grid.arena.Arena;
-import org.grid.server.History.HistoryPosition;
 import org.grid.arena.SwingView;
 import org.grid.server.ClientsPanel.SelectionObserver;
 import org.grid.server.Dispatcher.Client;
@@ -133,7 +132,7 @@ public class Main {
 
         @Override
         public void discoveredPoints() {
-            int exploredPoints = history.getTeamExploredCount(tempTeam);
+            int exploredPoints = history.getExploredCount(tempTeam);
 
             if (clientsPanel != null && initialEmptyFields > -1)
             clientsPanel.getExploredPointsLabel().setText(String.valueOf(exploredPoints) + "/" + initialEmptyFields );
