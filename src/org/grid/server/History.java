@@ -249,7 +249,5 @@ public class History implements Serializable, SimulationListener {
 		}
 		
 		h.record(id, p);
-        getTeamHistory(team);
-
 	}
 }

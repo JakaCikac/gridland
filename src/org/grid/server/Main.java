@@ -133,16 +133,11 @@ public class Main {
 
         @Override
         public void discoveredPoints() {
-            // TODO: move to separate class or put into main refresh method
-            //Iterable<HistoryPosition> teamPoints = history.getTeamHistory(tempTeam);//visualization.getAgent().getTeam())
             int exploredPoints = history.getTeamExploredCount(tempTeam);
-            /* Set< HistoryPosition> unique = new HashSet<HistoryPosition>();
-             for (HistoryPosition hp : teamPoints) {
-                unique.add(hp);
-            }
-            int exploredPoints = unique.size(); */
+
             if (clientsPanel != null && initialEmptyFields > -1)
             clientsPanel.getExploredPointsLabel().setText(String.valueOf(exploredPoints) + "/" + initialEmptyFields );
+
         }
 
         @Override
@@ -447,7 +442,8 @@ public class Main {
 						if (used < sleep)
 							Thread.sleep(sleep - used);
 						else {
-							info("Warning: low frame rate");
+                            // todo: uncomment warning for low frame rate
+							//info("Warning: low frame rate");
 						}
 					} catch (InterruptedException e) {
 						e.printStackTrace();

@@ -142,17 +142,6 @@ public class VisitMap implements Arena, Palette, SimulationListener {
 			}
 		}
 	}
-
-    private int checkDiscoveredMap() {
-        int emptyCounter = 0;
-        int discoveredCounter = 0;
-
-        for (int i = 0; i < cells.length; i++) {
-            if (cells[i] == 0) emptyCounter++;
-            else if (cells[i] >= 1) discoveredCounter++;
-        }
-        return discoveredCounter;
-    }
 	
 	@Override
 	public void step() {
