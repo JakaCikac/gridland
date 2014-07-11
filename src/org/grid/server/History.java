@@ -57,7 +57,9 @@ public class History implements Serializable, SimulationListener {
 		
 		private Vector<HistoryPosition> history = new Vector<HistoryPosition>();
 		private transient BodyPosition preprevious, previous;
-
+        private Set<HistoryPosition> agentQuickSet = new HashSet<HistoryPosition>();
+        // In case you need to display history by teams (SLOW), you need to add
+        // history position points to agentQuickSet under history.add stuff.
 
 		public void record(BodyPosition p) {
 			// if position is null then add previous position
@@ -111,12 +113,8 @@ public class History implements Serializable, SimulationListener {
 			previous = new BodyPosition(p);
 		}
 
-        public Set<HistoryPosition> getQuickSet() {
-            return quickSet;
-        }
-
-        public int getQuickSetSize() {
-            return quickSet.size();
+        public Set<HistoryPosition> getAgentQuickSet() {
+            return agentQuickSet;
         }
 
 	}
@@ -222,18 +220,21 @@ public class History implements Serializable, SimulationListener {
         return merge;
     }
 
-    public int getExploredCount(Team team) {
+    public int getExploredCount() {
+        return History.this.quickSet.size();
+    }
+
+    public int getTeamExploredCount(Team team) {
         TeamHistory th = teams.get(team.getName());
 
         if (th == null)
             return 0;
 
-        //Set<HistoryPosition> teamTotalSet = new HashSet<HistoryPosition>();
-        //for (AgentHistory pah : th.agents.values()) {
-        //    teamTotalSet.addAll(pah.getQuickSet());
-        //}
-        return History.this.quickSet.size();//teamTotalSet.size();
-
+        Set<HistoryPosition> teamTotalSet = new HashSet<HistoryPosition>();
+        for (AgentHistory pah : th.agents.values()) {
+            teamTotalSet.addAll(pah.getAgentQuickSet());
+        }
+        return teamTotalSet.size();
     }
 
 

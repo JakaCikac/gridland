@@ -132,7 +132,7 @@ public class Main {
 
         @Override
         public void discoveredPoints() {
-            int exploredPoints = history.getExploredCount(tempTeam);
+            int exploredPoints = history.getExploredCount();
 
             if (clientsPanel != null && initialEmptyFields > -1)
             clientsPanel.getExploredPointsLabel().setText(String.valueOf(exploredPoints) + "/" + initialEmptyFields );
