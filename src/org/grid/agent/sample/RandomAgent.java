@@ -185,30 +185,35 @@ public class RandomAgent extends Agent {
 
 	private void analyzeNeighborhood(Neighborhood n) {
 
-		for (int i = -n.getSize(); i <= n.getSize(); i++) {
-			for (int j = -n.getSize(); j <= n.getSize(); j++) {
+        if (n != null) {
+            for (int i = -n.getSize(); i <= n.getSize(); i++) {
+                for (int j = -n.getSize(); j <= n.getSize(); j++) {
 
-                // if cell is hq, put a mark in the registry
-				if (n.getCell(i, j) == Neighborhood.HEADQUARTERS) {
-					registry.put("hq", new Position(x + i, y + j));
-					continue;
-				}
+                    // if cell is hq, put a mark in the registry
+                    if (n.getCell(i, j) == Neighborhood.HEADQUARTERS) {
+                        registry.put("hq", new Position(x + i, y + j));
+                        continue;
+                    }
 
-                // if cell is occupied as an agent send a hello message
-				if (n.getCell(i, j) > 0) {
+                    // if cell is occupied as an agent send a hello message
+                    if (n.getCell(i, j) > 0) {
 
-                    // For RANDOM agent, we don't need to send messages.
-					if (! (i == 0 && j == 0) )
-						//send(n.getCell(i, j), "Hello " + n.getCell(i, j) + "!");
-					continue;
-				}
-			}
-		}
+                        // For RANDOM agent, we don't need to send messages.
+                        if (! (i == 0 && j == 0) )
+                            //send(n.getCell(i, j), "Hello " + n.getCell(i, j) + "!");
+                        continue;
+                    }
+                }
+            }
+         }
 	}
 
 	private Decision updateDecisions(Neighborhood n, AgentState state) {
 
         // Check which ways the agent can move.
+        if (n == null)
+            return still;
+
         boolean up = canMove(n, 0, -1);
         boolean down = canMove(n, 0, 1);
         boolean left =  canMove(n, -1, 0);

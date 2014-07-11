@@ -699,4 +699,21 @@ public class Field implements Arena {
 		
 		return list;
 	}
+
+    public int getEmptyCellCount() {
+
+        int emptyCount = 0;
+
+        for (int j = 0; j < height; j++) {
+            for (int i = 0; i < width; i++) {
+                Cell c = cells[j * width + i];
+
+                if (!c.isEmpty()) continue;
+                 emptyCount++;
+
+                }
+            }
+    return emptyCount;
+    }
+
 }

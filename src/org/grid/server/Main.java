@@ -64,6 +64,7 @@ public class Main {
 	private static JLabel simulationStepDisplay = new JLabel();
 	private static PrintWriter log;
     private static List emptyFieldsList;
+    private static int initialEmptyFields = 0;
 
 	private static final String[] ZOOM_LEVELS_TITLES = new String[] {"nano", "micro", "mili", "tiny", "small", "normal",
 			"big", "huge" };
@@ -133,13 +134,15 @@ public class Main {
         @Override
         public void discoveredPoints() {
             // TODO: move to separate class or put into main refresh method
-            Iterable<HistoryPosition> teamPoints = history.getTeamHistory(tempTeam);//visualization.getAgent().getTeam());
-            Set< HistoryPosition> unique = new HashSet<HistoryPosition>();
+            //Iterable<HistoryPosition> teamPoints = history.getTeamHistory(tempTeam);//visualization.getAgent().getTeam())
+            int exploredPoints = history.getTeamExploredCount(tempTeam);
+            /* Set< HistoryPosition> unique = new HashSet<HistoryPosition>();
              for (HistoryPosition hp : teamPoints) {
                 unique.add(hp);
             }
-            int exploredPoints = unique.size();
-            clientsPanel.getExploredPointsLabel().setText(String.valueOf(exploredPoints) + "/" + simulation.getField().listEmptyFields(true).size() );
+            int exploredPoints = unique.size(); */
+            if (clientsPanel != null && initialEmptyFields > -1)
+            clientsPanel.getExploredPointsLabel().setText(String.valueOf(exploredPoints) + "/" + initialEmptyFields );
         }
 
         @Override
@@ -306,9 +309,6 @@ public class Main {
                         .getNeighborhoodSize(), true); // true = whole team
                 setBasePallette((Palette) visualization);
                 simulation.addListener(visualization);
-
-                // TODO: empty field count
-              // System.out.println("Empty tiles: " + simulation.getField().listEmptyFields(true).size());
             }
         }
 
@@ -385,7 +385,8 @@ public class Main {
 
         // Load simulation properties from a simulation file, which is given as an argument
 		simulation = Simulation.loadFromFile(new File(args[0]));
-        emptyFieldsList = simulation.getField().listEmptyFields(true);
+        initialEmptyFields = simulation.getField().getEmptyCellCount();
+
 
         // Create a log file with timestamp as name
 		try {

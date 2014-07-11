@@ -55,12 +55,13 @@ public class History implements Serializable, SimulationListener {
 		
 		private Vector<HistoryPosition> history = new Vector<HistoryPosition>();
 		private transient BodyPosition preprevious, previous;
+        private Set<HistoryPosition> quickSet = new HashSet<HistoryPosition>();
 
 		public void record(BodyPosition p) {
 			// if position is null then add previous position
 			if (p == null) {
 				history.add(new HistoryPosition(previous, step-1));
-                //System.out.println("Added history (p null) " + p.toString());
+                quickSet.add(new HistoryPosition(previous, step-1));
 
                 return;
 			}
@@ -68,7 +69,8 @@ public class History implements Serializable, SimulationListener {
 			if (previous == null) {
 				previous = new BodyPosition(p);
 				history.add(new HistoryPosition(p, step));
-                //System.out.println("Added history (previous null) " + p.toString());
+                quickSet.add(new HistoryPosition(p,step));
+
 				return;
 			}
 			// set preprevious to previous and create new position for previous
@@ -88,20 +90,31 @@ public class History implements Serializable, SimulationListener {
 				Math.abs(pY - (float)previous.getY() - previous.getOffsetY()) > 0.00001f) {
 			
 				history.add(new HistoryPosition(previous, step-1));
+                quickSet.add(new HistoryPosition(previous, step-1));
 
 
             } else {
 				
 				if (!p.hasOffset() && !history.isEmpty()) {
 					
-					if (!history.lastElement().equals(p))
+					if (!history.lastElement().equals(p)) {
 						history.add(new HistoryPosition(p, step));
+                        quickSet.add(new HistoryPosition(p, step));
+                    }
 				}
 			}
 			
 			preprevious = previous;
 			previous = new BodyPosition(p);
 		}
+
+        public Set<HistoryPosition> getQuickSet() {
+            return quickSet;
+        }
+
+        public int getQuickSetSize() {
+            return quickSet.size();
+        }
 
 	}
 	
@@ -110,6 +123,7 @@ public class History implements Serializable, SimulationListener {
 		private static final long serialVersionUID = 1L;
 
 		private Hashtable<Integer, AgentHistory> agents = new Hashtable<Integer, AgentHistory>();
+
 		private String teamName;
 		private Color teamColor;
 		
@@ -148,7 +162,6 @@ public class History implements Serializable, SimulationListener {
 	
 	private Hashtable<String, TeamHistory> teams = new Hashtable<String, TeamHistory>();
 
-    private int exploredPoints;
 	private transient int step = 0;
 	
 	public void step() {
@@ -206,9 +219,20 @@ public class History implements Serializable, SimulationListener {
         return merge;
     }
 
-    public int getExploredPoints() {
-        return exploredPoints;
+    public int getTeamExploredCount(Team team) {
+        TeamHistory th = teams.get(team.getName());
+
+        if (th == null)
+            return 0;
+
+        Set<HistoryPosition> teamTotalSet = new HashSet<HistoryPosition>();
+        for (AgentHistory pah : th.agents.values()) {
+            teamTotalSet.addAll(pah.getQuickSet());
+        }
+        return teamTotalSet.size();
+
     }
+
 
 	@Override
 	public void message(Team team, int from, int to, int length) {
@@ -226,8 +250,6 @@ public class History implements Serializable, SimulationListener {
 		
 		h.record(id, p);
         getTeamHistory(team);
-        //TODO: Explored points get recorded here
-        //System.out.println("EXP POints:" + exploredPoints);
 
 	}
 }

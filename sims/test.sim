@@ -1,4 +1,4 @@
-simulation.speed=50
+simulation.speed=100
 message.speed=20
 simulation.field=/Users/nanorax/Documents/FRI/Diploma/implementacija/gridland/maps/beatle.png
 simulation.agents=100
