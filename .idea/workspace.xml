@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3f6e5c1-36d1-4bde-93db-26e0cc79e510" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sims/test_mini.sim" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/server/Main.java" afterPath="$PROJECT_DIR$/src/org/grid/server/Main.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="gridland.iws" />
@@ -64,8 +66,9 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <ui_properties converted="true" />
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" converted="true" />
     <breakpoint_rules converted="true" />
+    <ui_properties converted="true" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
@@ -73,48 +76,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="History.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/org/grid/server/History.java">
+      <file leaf-file-name="SampleAgent.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/SampleAgent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.4489572" vertical-offset="0" max-vertical-offset="3375">
-              <caret line="119" column="9" selection-start-line="119" selection-start-column="9" selection-end-line="119" selection-end-column="9" />
-              <folding>
-                <element signature="e#1283#1300#0" expanded="true" />
-                <element signature="e#1749#1766#0" expanded="true" />
-                <element signature="e#3842#3865#0" expanded="true" />
-                <element signature="e#4557#4578#0" expanded="true" />
-                <element signature="e#5346#5363#0" expanded="true" />
-                <element signature="e#5685#5702#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="VisitMap.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/grid/server/VisitMap.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1455" max-vertical-offset="3075">
-              <caret line="97" column="13" selection-start-line="97" selection-start-column="13" selection-end-line="97" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Field.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/grid/server/Field.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="10680" max-vertical-offset="10875">
-              <caret line="712" column="0" selection-start-line="712" selection-start-column="0" selection-end-line="712" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Main.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/grid/server/Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2010" max-vertical-offset="8655">
-              <caret line="134" column="44" selection-start-line="134" selection-start-column="44" selection-end-line="134" selection-end-column="44" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="3568" max-vertical-offset="4905">
+              <caret line="283" column="43" selection-start-line="283" selection-start-column="43" selection-end-line="283" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -123,56 +89,92 @@
       <file leaf-file-name="RandomAgent.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/RandomAgent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="750" max-vertical-offset="3990">
-              <caret line="50" column="30" selection-start-line="50" selection-start-column="30" selection-end-line="50" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2743" max-vertical-offset="3540">
+              <caret line="252" column="9" selection-start-line="252" selection-start-column="9" selection-end-line="252" selection-end-column="9" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test.sim" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sims/test.sim">
+      <file leaf-file-name="SwingView.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/grid/arena/SwingView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="165">
-              <caret line="0" column="20" selection-start-line="0" selection-start-column="20" selection-end-line="0" selection-end-column="20" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3750">
+              <caret line="238" column="29" selection-start-line="238" selection-start-column="29" selection-end-line="238" selection-end-column="29" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="beatle.png" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/maps/beatle.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
+      <file leaf-file-name="ArenaView.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/grid/arena/ArenaView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
+              <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Arena.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/grid/arena/Arena.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="36" max-vertical-offset="630">
+              <caret line="21" column="17" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Field.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/grid/server/Field.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="9960">
+              <caret line="49" column="8" selection-start-line="49" selection-start-column="8" selection-end-line="49" selection-end-column="8" />
+              <folding />
+            </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="Simulation.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/grid/server/Simulation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="3375" max-vertical-offset="7230">
-              <caret line="225" column="85" selection-start-line="225" selection-start-column="85" selection-end-line="225" selection-end-column="85" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="4673" max-vertical-offset="6615">
+              <caret line="398" column="5" selection-start-line="398" selection-start-column="5" selection-end-line="398" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClientsPanel.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/grid/server/ClientsPanel.java">
+      <file leaf-file-name="test_mini.sim" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/sims/test_mini.sim">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2295" max-vertical-offset="8430">
-              <caret line="153" column="60" selection-start-line="153" selection-start-column="60" selection-end-line="153" selection-end-column="60" />
+            <state vertical-scroll-proportion="0.09715026" vertical-offset="0" max-vertical-offset="772">
+              <caret line="5" column="15" selection-start-line="5" selection-start-column="15" selection-end-line="5" selection-end-column="15" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ExploredCounter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/grid/server/ExploredCounter.java">
+      <file leaf-file-name="PseudoRandomAgent.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/PseudoRandomAgent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="645">
-              <caret line="28" column="33" selection-start-line="28" selection-start-column="33" selection-end-line="28" selection-end-column="33" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3495">
+              <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Main.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/grid/server/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1140" max-vertical-offset="8220">
+              <caret line="155" column="9" selection-start-line="155" selection-start-column="9" selection-end-line="155" selection-end-column="9" />
+              <folding>
+                <element signature="e#14145#14370#0" expanded="true" />
+                <element signature="e#14365#14366#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -188,7 +190,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="BetterCounter" />
+        <entry key="$PROJECT_DIR$" value="pack_agent" />
       </map>
     </option>
   </component>
@@ -217,27 +219,22 @@
         <option value="$PROJECT_DIR$/src/org/grid/protocol/Message.java" />
         <option value="$PROJECT_DIR$/src/org/grid/server/TeamListener.java" />
         <option value="$PROJECT_DIR$/src/org/grid/server/TeamDatabase.java" />
+        <option value="$PROJECT_DIR$/src/org/grid/arena/SwingView.java" />
+        <option value="$PROJECT_DIR$/src/org/grid/server/Field.java" />
+        <option value="$PROJECT_DIR$/src/org/grid/server/Dispatcher.java" />
+        <option value="$PROJECT_DIR$/src/org/grid/server/Agent.java" />
+        <option value="$PROJECT_DIR$/src/org/grid/agent/Agent.java" />
         <option value="$PROJECT_DIR$/src/org/grid/agent/sample/SampleAgent.java" />
         <option value="$PROJECT_DIR$/src/org/grid/agent/sample/PackAgent.java" />
-        <option value="$PROJECT_DIR$/src/org/grid/protocol/Neighborhood.java" />
-        <option value="$PROJECT_DIR$/src/org/grid/agent/sample/PseudoRandomAgent.java" />
-        <option value="$PROJECT_DIR$/src/org/grid/server/SimulationListener.java" />
-        <option value="$PROJECT_DIR$/src/org/grid/agent/Agent.java" />
-        <option value="$PROJECT_DIR$/src/org/grid/server/Dispatcher.java" />
-        <option value="$PROJECT_DIR$/src/org/grid/server/CellCounter.java" />
-        <option value="$PROJECT_DIR$/src/org/grid/server/IRecalculateCallback.java" />
         <option value="$PROJECT_DIR$/src/org/grid/server/Simulation.java" />
+        <option value="$PROJECT_DIR$/src/org/grid/protocol/Neighborhood.java" />
         <option value="$PROJECT_DIR$/src/org/grid/server/ClientsPanel.java" />
-        <option value="$PROJECT_DIR$/src/org/grid/arena/SwingView.java" />
-        <option value="$PROJECT_DIR$/src/org/grid/server/Agent.java" />
-        <option value="$PROJECT_DIR$/src/org/grid/server/CounterListener.java" />
-        <option value="$PROJECT_DIR$/src/org/grid/server/ExploredCounter.java" />
-        <option value="$PROJECT_DIR$/src/org/grid/server/Field.java" />
         <option value="$PROJECT_DIR$/src/org/grid/server/VisitMap.java" />
-        <option value="$PROJECT_DIR$/src/org/grid/server/Main.java" />
-        <option value="$PROJECT_DIR$/sims/test.sim" />
         <option value="$PROJECT_DIR$/src/org/grid/agent/sample/RandomAgent.java" />
+        <option value="$PROJECT_DIR$/sims/test.sim" />
         <option value="$PROJECT_DIR$/src/org/grid/server/History.java" />
+        <option value="$PROJECT_DIR$/src/org/grid/server/Main.java" />
+        <option value="$PROJECT_DIR$/sims/test_mini.sim" />
       </list>
     </option>
   </component>
@@ -246,36 +243,8 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="22" />
-    <option name="width" value="1613" />
-    <option name="height" value="1380" />
-  </component>
-  <component name="ProjectInspectionProfilesVisibleTreeState">
-    <entry key="Project Default">
-      <profile-state>
-        <expanded-state>
-          <State>
-            <id />
-          </State>
-          <State>
-            <id>Android Lint</id>
-          </State>
-          <State>
-            <id>Assignment issues</id>
-          </State>
-          <State>
-            <id>Memory issues</id>
-          </State>
-          <State>
-            <id>Performance issues</id>
-          </State>
-        </expanded-state>
-        <selected-state>
-          <State>
-            <id>Abstraction issues</id>
-          </State>
-        </selected-state>
-      </profile-state>
-    </entry>
+    <option name="width" value="1920" />
+    <option name="height" value="1115" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -305,8 +274,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -314,14 +281,6 @@
               <option name="myItemId" value="gridland" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="&lt; 1.7 &gt;" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -329,64 +288,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="&lt; 1.7 &gt;" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rt.jar" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
               <option name="myItemId" value="gridland" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="&lt; 1.7 &gt;" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rt.jar" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="javax" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gridland" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="&lt; 1.7 &gt;" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rt.jar" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="javax" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="imageio" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -396,29 +299,19 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="gridland" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gridland" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gridland" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="grid" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="server" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -428,15 +321,19 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="gridland" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="grid" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="protocol" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -446,19 +343,41 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="gridland" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="grid" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="arena" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gridland" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gridland" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="grid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="agent" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -468,23 +387,23 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="gridland" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="grid" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="agent" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="sample" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -494,11 +413,11 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="gridland" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="sims" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -508,15 +427,35 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="gridland" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="maps" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gridland" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gridland" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="agents" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="agents" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -550,10 +489,9 @@
     <property name="recentsLimit" value="5" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="dynamic.classpath" value="false" />
-    <property name="last_opened_file_path" value="/Applications/jprofiler8/bin/macos/jprofiler.sh" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
-    <property name="SearchEverywhereHistory" value="" />
     <property name="options.lastSelected" value="preferences.pluginManager" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
@@ -562,6 +500,9 @@
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="org.grid.agent.sample" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sims" />
     </key>
   </component>
   <component name="RunManager" selected="Application.RandomAgent">
@@ -785,7 +726,7 @@
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="org.grid.server.Main" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="&quot;sims/test.sim&quot;" />
+      <option name="PROGRAM_PARAMETERS" value="&quot;sims/test_mini.sim&quot;" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
@@ -800,13 +741,9 @@
         <option name="TRANSPORT" value="0" />
         <option name="LOCAL" value="true" />
       </RunnerSettings>
-      <RunnerSettings RunnerId="JProfiler">
-        <option name="WINDOW" value="false" />
-      </RunnerSettings>
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Cover" />
       <ConfigurationWrapper RunnerId="Debug" />
-      <ConfigurationWrapper RunnerId="JProfiler" />
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
@@ -848,7 +785,7 @@
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="org.grid.agent.Agent" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="localhost org.grid.agent.sample.RandomAgent 40 explorers" />
+      <option name="PROGRAM_PARAMETERS" value="localhost org.grid.agent.sample.RandomAgent 55 explorers" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
@@ -862,36 +799,16 @@
         <option name="TRANSPORT" value="0" />
         <option name="LOCAL" value="true" />
       </RunnerSettings>
-      <RunnerSettings RunnerId="JProfiler">
-        <option name="WINDOW" value="true" />
-      </RunnerSettings>
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Debug" />
-      <ConfigurationWrapper RunnerId="JProfiler" />
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <configuration default="false" name="PseudoRandomAgent" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" value="org.grid.agent.Agent" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="localhost org.grid.agent.sample.PseudoRandomAgent 10 explorers" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="gridland" />
-      <envs />
-      <method />
-    </configuration>
-    <list size="5">
+    <list size="4">
       <item index="0" class="java.lang.String" itemvalue="Application.Main" />
       <item index="1" class="java.lang.String" itemvalue="Application.SampleAgent" />
       <item index="2" class="java.lang.String" itemvalue="Application.HumanAgent" />
       <item index="3" class="java.lang.String" itemvalue="Application.RandomAgent" />
-      <item index="4" class="java.lang.String" itemvalue="Application.PseudoRandomAgent" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -904,8 +821,22 @@
       <AnalysisUIOptions />
     </option>
   </component>
-  <component name="SvnConfiguration" myUseAcceleration="nothing">
-    <configuration />
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false" SSL_PROTOCOLS="sslv3">
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
+    <option name="LAST_MERGED_REVISION" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
+    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <option name="FORCE_UPDATE" value="false" />
+    <option name="IGNORE_EXTERNALS" value="false" />
+    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -943,16 +874,9 @@
       <workItem from="1404636034406" duration="3879000" />
       <workItem from="1404641720140" duration="918000" />
       <workItem from="1404643827962" duration="13909000" />
-      <workItem from="1404672463600" duration="3000" />
-      <workItem from="1404726617781" duration="6641000" />
-      <workItem from="1404828660290" duration="17737000" />
-      <workItem from="1404980805092" duration="25164000" />
-      <workItem from="1405080006833" duration="875000" />
-      <workItem from="1405080907132" duration="657000" />
-      <workItem from="1405088290319" duration="2438000" />
-      <workItem from="1405090833666" duration="709000" />
-      <workItem from="1405091554832" duration="723000" />
-      <workItem from="1405092361557" duration="1136000" />
+      <workItem from="1404672463600" duration="46000" />
+      <workItem from="1405152898751" duration="2023000" />
+      <workItem from="1405187886848" duration="1949000" />
     </task>
     <task id="LOCAL-00001" summary="Test commit.">
       <created>1394200726993</created>
@@ -1170,63 +1094,15 @@
       <created>1404660972327</created>
       <updated>1404660972328</updated>
     </task>
-    <task id="LOCAL-00055" summary="Refreshing history for ALL (without selection) agents.">
-      <created>1404814546710</created>
-      <updated>1404814546710</updated>
+    <task id="LOCAL-00055" summary="Printing out how many cells are already discovered by the team.">
+      <created>1404672496619</created>
+      <updated>1404672496620</updated>
     </task>
-    <task id="LOCAL-00056" summary="Refreshing history for selected agents.&#10;&#10;Also increased respawn to 20 in test.sim, to prevent agents getting stuck on spawn.&#10;">
-      <created>1404906447307</created>
-      <updated>1404906447307</updated>
-    </task>
-    <task id="LOCAL-00057" summary="Explored cells count displayed when in history mode.&#10;&#10;TODO: Figure out where the refreshing part needs to happen, so it refreshes even when you are not in history mode. Also display total empty field count.">
-      <created>1404914934540</created>
-      <updated>1404914934541</updated>
-    </task>
-    <task id="LOCAL-00058" summary="ExploredCounter class (draft)">
-      <created>1404980955615</created>
-      <updated>1404980955615</updated>
-    </task>
-    <task id="LOCAL-00059" summary="ExploredCounter class (draft)&#10;">
-      <created>1404985172359</created>
-      <updated>1404985172360</updated>
-    </task>
-    <task id="LOCAL-00060" summary="Fixed selecting all agents (or a single agent) with history.">
-      <created>1404993071419</created>
-      <updated>1404993071421</updated>
-    </task>
-    <task id="LOCAL-00061" summary="Abandoned the idea of a better counter. Doesn't work.">
-      <created>1404996451164</created>
-      <updated>1404996451165</updated>
-    </task>
-    <task id="LOCAL-00062" summary="Adding the pause button, to pause the simulation.&#10;&#10;todo: Fix the layout of the buttons..">
-      <created>1404997221757</created>
-      <updated>1404997221757</updated>
-    </task>
-    <task id="LOCAL-00063" summary="Explored count now working from Main but.. it's not performancey and not nice.">
-      <created>1405003831934</created>
-      <updated>1405003831934</updated>
-    </task>
-    <task id="LOCAL-00064" summary="Explored count now working from Main but.. it's not performancey and not nice.&#10;">
-      <created>1405004548734</created>
-      <updated>1405004548735</updated>
-    </task>
-    <task id="LOCAL-00065" summary="Explored count now working from Main but.. it's not performancey and not nice.&#10;">
-      <created>1405004847270</created>
-      <updated>1405004847270</updated>
-    </task>
-    <task id="LOCAL-00066" summary="Working on faster explored count.">
-      <created>1405077815096</created>
-      <updated>1405077815097</updated>
-    </task>
-    <task id="LOCAL-00067" summary="Fast explored count, but works only for ALL agents, not separately for teams of agents.&#10; &#10; It counts all discovered points for all agents not dependend on teams. Works really fast, because displaying a count for one team used addAll for merging sets, which used 60% of all compute power.">
-      <created>1405093501886</created>
-      <updated>1405093501887</updated>
-    </task>
-    <option name="localTasksCounter" value="68" />
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="158293000" />
+    <option name="totallyTimeSpent" value="106228000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1249,37 +1125,36 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1613" height="1380" extended-state="0" />
+    <frame x="0" y="22" width="1920" height="1115" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3495935" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3540622" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32888147" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20661986" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32956383" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959612" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39819458" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.266209" sideWeight="0.50092995" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17452358" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32956383" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32579187" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.54385966" sideWeight="0.49907005" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32520324" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.54764295" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32532534" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32956383" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="JProfiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942164" sideWeight="0.499666" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32920024" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.266209" sideWeight="0.49907005" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31789136" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17452358" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32956383" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20528455" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.398374" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39865997" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1297,6 +1172,17 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
+    <MESSAGE value="Remove team passwords&#10;&#10;Remove team passwords from Reaper, Human Agent, Sample Agent, Membership and Agent.&#10;" />
+    <MESSAGE value="Remove remaining flags code&#10;&#10;Removed some left-over code for flags under HumanAgent, Agent, SwingView." />
+    <MESSAGE value="Replace gameplay with simulation&#10;&#10;Replace gameplay in game.md, test.game and Game." />
+    <MESSAGE value="Replace &quot;game&quot; with &quot;simulation&quot;&#10;&#10;Replace game with simulation in all files, where it appeard. Also replace Game with Simulation. Rename Game.java to Simulation.java and GameListener.java to SimulationListener.java. Instead of a game-file now there is a simulation file stored in &quot;.sim&quot; instead of &quot;.game&quot;.&#10;" />
+    <MESSAGE value="Change test.sim map and remove flags params&#10;&#10;Change map in test.sim and remove parameters for flags. Same with simulation.md." />
+    <MESSAGE value="Drop Agent Reaper and further removal of flags..&#10;&#10;Remove flags from UI.&#10;" />
+    <MESSAGE value="Add some comments to certain parts of code.&#10;" />
+    <MESSAGE value="Comments, comments everywhere.." />
+    <MESSAGE value="Comments, comments everywhere.. pt.2&#10;" />
+    <MESSAGE value="Comments, comments everywhere.. pt.3&#10;" />
+    <MESSAGE value="Comments, comments everywhere.. pt.4&#10;" />
     <MESSAGE value="Comments, comments everywhere.. pt.5&#10;" />
     <MESSAGE value="Comments, comments everywhere.. pt.6&#10;" />
     <MESSAGE value="Add mili, micro and nano to ZOOM_LEVELS." />
@@ -1310,19 +1196,8 @@
     <MESSAGE value="Select and deselect all Client JPanels with &quot;History&quot; button. (Just GUI side).&#10;&#10;Bug: If trying to deselect just one agent, when all of them are selected, the first &quot;deselect click&quot; will not deselect the clicked JPanel but rather the last one in the list to get selected. The next deselect click will deselect (or select) the correct agent." />
     <MESSAGE value="Team history working but isn't refreshing yet for the whole team. Just the last selected agent." />
     <MESSAGE value="Changed random agent sleep time from 1000 to 100 milliseconds." />
-    <MESSAGE value="Refreshing history for ALL (without selection) agents." />
-    <MESSAGE value="Refreshing history for selected agents.&#10;&#10;Also increased respawn to 20 in test.sim, to prevent agents getting stuck on spawn.&#10;" />
-    <MESSAGE value="Explored cells count displayed when in history mode.&#10;&#10;TODO: Figure out where the refreshing part needs to happen, so it refreshes even when you are not in history mode. Also display total empty field count." />
-    <MESSAGE value="ExploredCounter class (draft)" />
-    <MESSAGE value="ExploredCounter class (draft)&#10;" />
-    <MESSAGE value="Fixed selecting all agents (or a single agent) with history." />
-    <MESSAGE value="Abandoned the idea of a better counter. Doesn't work." />
-    <MESSAGE value="Adding the pause button, to pause the simulation.&#10;&#10;todo: Fix the layout of the buttons.." />
-    <MESSAGE value="Explored count now working from Main but.. it's not performancey and not nice." />
-    <MESSAGE value="Explored count now working from Main but.. it's not performancey and not nice.&#10;" />
-    <MESSAGE value="Working on faster explored count." />
-    <MESSAGE value="Fast explored count, but works only for ALL agents, not separately for teams of agents.&#10; &#10; It counts all discovered points for all agents not dependend on teams. Works really fast, because displaying a count for one team used addAll for merging sets, which used 60% of all compute power." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fast explored count, but works only for ALL agents, not separately for teams of agents.&#10; &#10; It counts all discovered points for all agents not dependend on teams. Works really fast, because displaying a count for one team used addAll for merging sets, which used 60% of all compute power." />
+    <MESSAGE value="Printing out how many cells are already discovered by the team." />
+    <option name="LAST_COMMIT_MESSAGE" value="Printing out how many cells are already discovered by the team." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1334,680 +1209,12 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2025" max-vertical-offset="8670">
-          <caret line="135" column="48" selection-start-line="135" selection-start-column="48" selection-end-line="135" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/RandomAgent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3225" max-vertical-offset="4005">
-          <caret line="215" column="0" selection-start-line="215" selection-start-column="0" selection-end-line="215" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sims/test.sim">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="165">
-          <caret line="5" column="15" selection-start-line="5" selection-start-column="15" selection-end-line="5" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/Simulation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3375" max-vertical-offset="7230">
-          <caret line="225" column="85" selection-start-line="225" selection-start-column="85" selection-end-line="225" selection-end-column="85" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/ClientsPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2295" max-vertical-offset="8430">
-          <caret line="153" column="60" selection-start-line="153" selection-start-column="60" selection-end-line="153" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/CounterListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="345">
-          <caret line="12" column="33" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/ExploredCounter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="645">
-          <caret line="28" column="33" selection-start-line="28" selection-start-column="33" selection-end-line="28" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/ExploredCounter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="645">
-          <caret line="28" column="33" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/protocol/ProtocolSocket.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/SampleAgent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/arena/Arena.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/agents/agents/LocalMap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/maps/rabbithole.png">
+    <entry file="file://$PROJECT_DIR$/maps/cave.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/LICENSE.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/protocol/Position.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/HumanAgent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.1612903" vertical-offset="630" max-vertical-offset="2370">
-          <caret line="21" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/TeamListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2580645" vertical-offset="0" max-vertical-offset="465">
-          <caret line="24" column="17" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/maps/autolab.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gridland.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="300">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/StackLayout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33233532" vertical-offset="78" max-vertical-offset="4965">
-          <caret line="49" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="uml://JAVA/org.grid">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>JAVA</ID>
-          <OriginalElement>org.grid</OriginalElement>
-          <nodes>
-            <node x="666.1392045454543" y="180.0">org.grid.server.History</node>
-            <node x="2124.917045454545" y="90.0">org.grid.arena.TerminalView</node>
-            <node x="1904.0212121212119" y="90.0">org.grid.server.Main</node>
-            <node x="1367.0" y="880.0">org.grid.protocol.Message.StateMessage</node>
-            <node x="689.0" y="730.0">org.grid.protocol.Message</node>
-            <node x="934.0" y="880.0">org.grid.protocol.Message.Direction</node>
-            <node x="2004.9170454545451" y="90.0">org.grid.arena.SwingView</node>
-            <node x="367.5" y="1035.0">org.grid.server.StackLayout.Orientation</node>
-            <node x="1163.0212121212119" y="90.0">org.grid.server.ClientListener</node>
-            <node x="1561.289772727272" y="180.0">org.grid.server.ClientsPanel.ClientPanel</node>
-            <node x="2009.3337121212119" y="180.0">org.grid.arena.SwingView.Palette</node>
-            <node x="1737.0212121212119" y="90.0">org.grid.server.ClientsPanel.SelectionObserver</node>
-            <node x="871.021212121212" y="90.0">org.grid.server.SimulationListener</node>
-            <node x="604.0" y="880.0">org.grid.protocol.Message.AcknowledgeMessage</node>
-            <node x="718.0" y="655.0">org.grid.agent.Agent.ProxyClassLoader</node>
-            <node x="463.0" y="880.0">org.grid.protocol.Message.MoveMessage</node>
-            <node x="22.625" y="575.0">org.grid.server.Dispatcher</node>
-            <node x="767.1410984848487" y="260.0">org.grid.server.History.AgentHistory</node>
-            <node x="201.9999999999999" y="180.0">org.grid.server.Field.Body</node>
-            <node x="1046.0" y="880.0">org.grid.protocol.Message.RegisterMessage</node>
-            <node x="0.0" y="655.0">org.grid.server.Dispatcher.Status</node>
-            <node x="191.86799242424217" y="260.0">org.grid.server.Field.Wall</node>
-            <node x="208.5" y="1035.0">org.grid.server.TeamDatabase.TeamData</node>
-            <node x="684.8090277777778" y="575.0">org.grid.agent.Agent</node>
-            <node x="176.61799242424217" y="90.0">org.grid.server.Field</node>
-            <node x="238.0" y="575.0">org.grid.protocol.ProtocolSocket</node>
-            <node x="625.0" y="655.0">org.grid.agent.Agent.Status</node>
-            <node x="352.9929924242422" y="0.0">org.grid.arena.Arena</node>
-            <node x="451.7429924242422" y="180.0">org.grid.server.Field.BodyPosition</node>
-            <node x="495.4929924242422" y="90.0">org.grid.protocol.Position</node>
-            <node x="1205.0" y="880.0">org.grid.protocol.Message.InitializeMessage</node>
-            <node x="1619.0212121212119" y="90.0">org.grid.server.ClientsPanel.Selectable</node>
-            <node x="351.8679924242422" y="340.0">org.grid.server.Team.Headquarters</node>
-            <node x="184.0" y="655.0">org.grid.protocol.ProtocolSocket.AppendableObjectOutputStream</node>
-            <node x="1503.5763257575754" y="0.0">org.grid.server.ClientsPanel</node>
-            <node x="259.8679924242422" y="420.0">org.grid.server.Agent.Status</node>
-            <node x="326.0" y="880.0">org.grid.protocol.Message.ScanMessage</node>
-            <node x="440.0" y="655.0">org.grid.agent.Agent.ClientProtocolSocket</node>
-            <node x="883.0" y="655.0">org.grid.agent.sample</node>
-            <node x="796.0" y="880.0">org.grid.protocol.Message.SendMessage</node>
-            <node x="271.8679924242422" y="260.0">org.grid.server.Team.TeamBody</node>
-            <node x="365.0" y="955.0">org.grid.server.StackLayout</node>
-            <node x="362.12310606060544" y="180.0">org.grid.server.Team</node>
-            <node x="1448.0212121212119" y="90.0">org.grid.server.ClientsPanel.ScrollableListPanel</node>
-            <node x="155.0" y="880.0">org.grid.protocol.Message.TerminateMessage</node>
-            <node x="194.0" y="955.0">org.grid.server.TeamDatabase</node>
-            <node x="765.7465277777778" y="495.0">org.grid.agent.Membership</node>
-            <node x="1304.0212121212119" y="90.0">org.grid.server.ClientsPanel.TrafficMonitor</node>
-            <node x="2043.224431818182" y="0.0">org.grid.arena.ArenaView</node>
-            <node x="1777.849431818182" y="180.0">org.grid.server.Main.SimulationSwingView</node>
-            <node x="627.4929924242422" y="260.0">org.grid.server.History.TeamHistory</node>
-            <node x="77.99999999999989" y="180.0">org.grid.server.Field.CellIterator</node>
-            <node x="308.3749999999999" y="90.0">org.grid.protocol.Neighborhood</node>
-            <node x="260.8679924242422" y="340.0">org.grid.server.Agent</node>
-            <node x="476.4929924242422" y="260.0">org.grid.server.History.HistoryPosition</node>
-            <node x="93.0" y="655.0">org.grid.server.Dispatcher.Client</node>
-            <node x="2060.724431818182" y="260.0">org.grid.arena.SwingView.HeatPalette</node>
-            <node x="904.1410984848487" y="260.0">org.grid.server.VisitMap</node>
-            <node x="1042.021212121212" y="90.0">org.grid.server.ClientsPanel.TeamPanel</node>
-            <node x="0.0" y="1035.0">org.grid.server.Simulation.MessageContainer</node>
-            <node x="0.0" y="180.0">org.grid.server.Field.Cell</node>
-            <node x="1835.958333333333" y="260.0">org.grid.server.Main.SimulationSwingView.Message</node>
-            <node x="1008.271212121212" y="0.0">org.grid.server.TeamListener</node>
-            <node x="24.0" y="955.0">org.grid.server.Simulation</node>
-            <node x="0.0" y="880.0">org.grid.protocol.Message.ReceiveMessage</node>
-          </nodes>
-          <notes />
-          <edges>
-            <edge source="org.grid.agent.sample" target="org.grid.agent.Agent">
-              <point x="-33.5" y="-15.0" />
-              <point x="916.5" y="625.0" />
-              <point x="746.9340277777778" y="625.0" />
-              <point x="26.625" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.Main.SimulationSwingView.Message" target="org.grid.server.Main.SimulationSwingView">
-              <point x="0.0" y="-15.0" />
-              <point x="1879.958333333333" y="230.0" />
-              <point x="1861.349431818182" y="230.0" />
-              <point x="0.0" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.Field.Wall" target="org.grid.server.Field">
-              <point x="15.0" y="-15.0" />
-              <point x="236.86799242424217" y="240.0" />
-              <point x="284.02499999999986" y="240.0" />
-              <point x="284.02499999999986" y="150.0" />
-              <point x="221.41799242424213" y="150.0" />
-              <point x="12.799999999999955" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.Agent" target="org.grid.server.Team.TeamBody">
-              <point x="0.0" y="-15.0" />
-              <point x="-24.5" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.Field.CellIterator" target="org.grid.server.Field">
-              <point x="0.0" y="-15.0" />
-              <point x="129.9999999999999" y="160.0" />
-              <point x="195.81799242424222" y="160.0" />
-              <point x="-12.8" y="15.0" />
-            </edge>
-            <edge source="org.grid.agent.sample" target="org.grid.agent.Membership">
-              <point x="33.5" y="-15.0" />
-              <point x="983.5" y="550.0" />
-              <point x="848.9965277777778" y="550.0" />
-              <point x="27.75" y="15.0" />
-            </edge>
-            <edge source="org.grid.agent.Agent.ClientProtocolSocket" target="org.grid.agent.Agent">
-              <point x="41.25" y="-15.0" />
-              <point x="563.75" y="625.0" />
-              <point x="693.6840277777778" y="625.0" />
-              <point x="-26.625" y="15.0" />
-            </edge>
-            <edge source="org.grid.arena.SwingView.HeatPalette" target="org.grid.arena.SwingView.Palette">
-              <point x="-26.25" y="-15.0" />
-              <point x="2086.974431818182" y="240.0" />
-              <point x="2066.3337121212116" y="240.0" />
-              <point x="19.0" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.Field.BodyPosition" target="org.grid.protocol.Position">
-              <point x="28.75" y="-15.0" />
-              <point x="0.0" y="15.0" />
-            </edge>
-            <edge source="org.grid.arena.SwingView" target="org.grid.arena.ArenaView">
-              <point x="0.0" y="-15.0" />
-              <point x="2054.917045454545" y="70.0" />
-              <point x="2067.974431818182" y="70.0" />
-              <point x="-24.75" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.Field.Body" target="org.grid.server.Field">
-              <point x="0.0" y="-15.0" />
-              <point x="233.9999999999999" y="160.0" />
-              <point x="208.61799242424217" y="160.0" />
-              <point x="0.0" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.Main.SimulationSwingView" target="org.grid.server.SimulationListener">
-              <point x="-62.625" y="-15.0" />
-              <point x="1798.724431818182" y="140.0" />
-              <point x="996.8545454545454" y="140.0" />
-              <point x="50.33333333333334" y="15.0" />
-            </edge>
-            <edge source="org.grid.arena.SwingView.Palette" target="org.grid.arena.SwingView">
-              <point x="0.0" y="-15.0" />
-              <point x="2047.3337121212119" y="160.0" />
-              <point x="2054.917045454545" y="160.0" />
-              <point x="7.105427357601002E-15" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.TeamDatabase.TeamData" target="org.grid.server.TeamDatabase">
-              <point x="0.0" y="-15.0" />
-              <point x="0.0" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.Main.SimulationSwingView" target="org.grid.arena.SwingView">
-              <point x="62.625" y="-15.0" />
-              <point x="1923.974431818182" y="160.0" />
-              <point x="2021.5837121212119" y="160.0" />
-              <point x="-33.333333333333336" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.ClientsPanel.Selectable" target="org.grid.server.ClientsPanel">
-              <point x="0.0" y="-15.0" />
-              <point x="1667.5212121212119" y="70.0" />
-              <point x="1568.3263257575754" y="70.0" />
-              <point x="9.25" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.ClientsPanel.TeamPanel" target="org.grid.server.TeamListener">
-              <point x="-25.25" y="-15.0" />
-              <point x="0.0" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.Team.TeamBody" target="org.grid.server.Team">
-              <point x="24.5" y="-15.0" />
-              <point x="345.3679924242422" y="240.0" />
-              <point x="379.12310606060544" y="240.0" />
-              <point x="-17.0" y="15.0" />
-            </edge>
-            <edge source="org.grid.agent.Agent" target="org.grid.agent.Membership">
-              <point x="0.0" y="-15.0" />
-              <point x="720.3090277777778" y="550.0" />
-              <point x="793.4965277777778" y="550.0" />
-              <point x="-27.75" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.Team.TeamBody" target="org.grid.server.Field.Body">
-              <point x="-24.5" y="-15.0" />
-              <point x="296.3679924242422" y="230.0" />
-              <point x="249.9999999999999" y="230.0" />
-              <point x="16.0" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.Dispatcher.Status" target="org.grid.server.Dispatcher">
-              <point x="0.0" y="-15.0" />
-              <point x="36.5" y="635.0" />
-              <point x="48.125" y="635.0" />
-              <point x="-25.5" y="15.0" />
-            </edge>
-            <edge source="org.grid.agent.Agent.ProxyClassLoader" target="org.grid.agent.Agent">
-              <point x="0.0" y="-15.0" />
-              <point x="790.5" y="635.0" />
-              <point x="729.1840277777778" y="635.0" />
-              <point x="8.875" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.Team.Headquarters" target="org.grid.server.Team.TeamBody">
-              <point x="-29.5" y="-15.0" />
-              <point x="381.3679924242422" y="315.0" />
-              <point x="345.3679924242422" y="315.0" />
-              <point x="24.5" y="15.0" />
-            </edge>
-            <edge source="org.grid.protocol.Message.InitializeMessage" target="org.grid.protocol.Message">
-              <point x="-35.5" y="-15.0" />
-              <point x="1240.5" y="810.0" />
-              <point x="760.7894736842105" y="810.0" />
-              <point x="27.78947368421055" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.History.HistoryPosition" target="org.grid.server.Field.BodyPosition">
-              <point x="-32.75" y="-15.0" />
-              <point x="0.0" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.Simulation.MessageContainer" target="org.grid.server.Simulation">
-              <point x="0.0" y="-15.0" />
-              <point x="0.0" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.Agent.Status" target="org.grid.server.Agent">
-              <point x="0.0" y="-15.0" />
-              <point x="0.0" y="15.0" />
-            </edge>
-            <edge source="org.grid.protocol.Message.Direction" target="org.grid.protocol.Message">
-              <point x="0.0" y="-15.0" />
-              <point x="980.0" y="840.0" />
-              <point x="746.8947368421053" y="840.0" />
-              <point x="13.894736842105274" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.Dispatcher.Client" target="org.grid.protocol.ProtocolSocket">
-              <point x="17.75" y="-15.0" />
-              <point x="146.25" y="635.0" />
-              <point x="259.3333333333333" y="635.0" />
-              <point x="-42.666666666666664" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.Field.Wall" target="org.grid.server.Field.Body">
-              <point x="-15.0" y="-15.0" />
-              <point x="206.86799242424217" y="240.0" />
-              <point x="217.9999999999999" y="240.0" />
-              <point x="-16.0" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.Team.Headquarters" target="org.grid.server.Team">
-              <point x="29.5" y="-15.0" />
-              <point x="440.3679924242422" y="240.0" />
-              <point x="413.12310606060544" y="240.0" />
-              <point x="17.0" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.ClientsPanel.ClientPanel" target="org.grid.server.ClientListener">
-              <point x="-34.66666666666666" y="-15.0" />
-              <point x="1578.6231060606056" y="160.0" />
-              <point x="1223.5212121212119" y="160.0" />
-              <point x="0.0" y="15.0" />
-            </edge>
-            <edge source="org.grid.protocol.Message.SendMessage" target="org.grid.protocol.Message">
-              <point x="29.5" y="-15.0" />
-              <point x="884.5" y="850.0" />
-              <point x="742.2631578947369" y="850.0" />
-              <point x="9.26315789473685" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.ClientsPanel.ScrollableListPanel" target="org.grid.server.ClientsPanel">
-              <point x="0.0" y="-15.0" />
-              <point x="1523.5212121212119" y="70.0" />
-              <point x="1549.8263257575754" y="70.0" />
-              <point x="-9.25" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.History.HistoryPosition" target="org.grid.server.History">
-              <point x="32.75" y="-15.0" />
-              <point x="574.7429924242422" y="240.0" />
-              <point x="679.4725378787875" y="240.0" />
-              <point x="-26.666666666666668" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.VisitMap" target="org.grid.arena.Arena">
-              <point x="-29.33333333333333" y="-15.0" />
-              <point x="918.8077651515154" y="230.0" />
-              <point x="799.771212121212" y="230.0" />
-              <point x="799.771212121212" y="70.0" />
-              <point x="411.32632575757555" y="70.0" />
-              <point x="23.33333333333337" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.Dispatcher.Client" target="org.grid.server.Dispatcher">
-              <point x="-17.75" y="-15.0" />
-              <point x="110.75" y="635.0" />
-              <point x="99.125" y="635.0" />
-              <point x="25.5" y="15.0" />
-            </edge>
-            <edge source="org.grid.protocol.Message.MoveMessage" target="org.grid.protocol.Message">
-              <point x="30.25" y="-15.0" />
-              <point x="553.75" y="850.0" />
-              <point x="723.7368421052631" y="850.0" />
-              <point x="-9.26315789473685" y="15.0" />
-            </edge>
-            <edge source="org.grid.protocol.Message.ReceiveMessage" target="org.grid.protocol.Message">
-              <point x="33.75" y="-15.0" />
-              <point x="101.25" y="790.0" />
-              <point x="695.9473684210526" y="790.0" />
-              <point x="-37.05263157894737" y="15.0" />
-            </edge>
-            <edge source="org.grid.protocol.Message.ScanMessage" target="org.grid.protocol.Message">
-              <point x="29.25" y="-15.0" />
-              <point x="413.75" y="830.0" />
-              <point x="714.4736842105264" y="830.0" />
-              <point x="-18.52631578947369" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.History.TeamHistory" target="org.grid.server.History">
-              <point x="0.0" y="-15.0" />
-              <point x="684.4929924242422" y="240.0" />
-              <point x="706.1392045454543" y="240.0" />
-              <point x="0.0" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.Field.BodyPosition" target="org.grid.server.Field">
-              <point x="-28.75" y="-15.0" />
-              <point x="480.4929924242422" y="140.0" />
-              <point x="234.2179924242422" y="140.0" />
-              <point x="25.599999999999994" y="15.0" />
-            </edge>
-            <edge source="org.grid.protocol.Neighborhood" target="org.grid.arena.Arena">
-              <point x="0.0" y="-15.0" />
-              <point x="370.3749999999999" y="70.0" />
-              <point x="387.9929924242422" y="70.0" />
-              <point x="0.0" y="15.0" />
-            </edge>
-            <edge source="org.grid.protocol.Message.TerminateMessage" target="org.grid.protocol.Message">
-              <point x="-37.75" y="-15.0" />
-              <point x="192.75" y="800.0" />
-              <point x="700.578947368421" y="800.0" />
-              <point x="-32.42105263157895" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.Main.SimulationSwingView" target="org.grid.server.ClientsPanel.SelectionObserver">
-              <point x="-20.875" y="-15.0" />
-              <point x="1840.474431818182" y="160.0" />
-              <point x="1810.5212121212119" y="160.0" />
-              <point x="0.0" y="15.0" />
-            </edge>
-            <edge source="org.grid.agent.Agent.Status" target="org.grid.agent.Agent">
-              <point x="0.0" y="-15.0" />
-              <point x="661.5" y="635.0" />
-              <point x="711.4340277777778" y="635.0" />
-              <point x="-8.875" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.ClientsPanel.TeamPanel" target="org.grid.server.ClientsPanel">
-              <point x="25.25" y="-15.0" />
-              <point x="1117.771212121212" y="50.0" />
-              <point x="1512.8263257575754" y="50.0" />
-              <point x="-46.25" y="15.0" />
-            </edge>
-            <edge source="org.grid.protocol.Message.AcknowledgeMessage" target="org.grid.protocol.Message">
-              <point x="43.0" y="-15.0" />
-              <point x="0.0" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.ClientsPanel.SelectionObserver" target="org.grid.server.ClientsPanel">
-              <point x="0.0" y="-15.0" />
-              <point x="1810.5212121212119" y="50.0" />
-              <point x="1605.3263257575754" y="50.0" />
-              <point x="46.25" y="15.0" />
-            </edge>
-            <edge source="org.grid.protocol.ProtocolSocket.AppendableObjectOutputStream" target="org.grid.protocol.ProtocolSocket">
-              <point x="0.0" y="-15.0" />
-              <point x="-7.105427357601002E-15" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.History.AgentHistory" target="org.grid.server.History">
-              <point x="0.0" y="-15.0" />
-              <point x="825.6410984848487" y="240.0" />
-              <point x="732.805871212121" y="240.0" />
-              <point x="26.66666666666667" y="15.0" />
-            </edge>
-            <edge source="org.grid.arena.TerminalView" target="org.grid.arena.ArenaView">
-              <point x="0.0" y="-15.0" />
-              <point x="2183.917045454545" y="70.0" />
-              <point x="2117.474431818182" y="70.0" />
-              <point x="24.75" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.ClientsPanel.ClientPanel" target="org.grid.server.ClientsPanel.Selectable">
-              <point x="7.105427357601002E-15" y="-15.0" />
-              <point x="1613.289772727272" y="150.0" />
-              <point x="1667.5212121212119" y="150.0" />
-              <point x="0.0" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.VisitMap" target="org.grid.arena.SwingView.Palette">
-              <point x="29.333333333333332" y="-15.0" />
-              <point x="977.4744318181821" y="240.0" />
-              <point x="2028.3337121212119" y="240.0" />
-              <point x="-19.0" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.Field" target="org.grid.arena.Arena">
-              <point x="0.0" y="-15.0" />
-              <point x="208.61799242424217" y="70.0" />
-              <point x="364.6596590909088" y="70.0" />
-              <point x="-23.333333333333332" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.Field.Cell" target="org.grid.server.Field">
-              <point x="0.0" y="-15.0" />
-              <point x="29.0" y="150.0" />
-              <point x="183.01799242424215" y="150.0" />
-              <point x="-25.6" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.Main.SimulationSwingView" target="org.grid.server.Main">
-              <point x="20.875" y="-15.0" />
-              <point x="1882.224431818182" y="150.0" />
-              <point x="1936.0212121212119" y="150.0" />
-              <point x="0.0" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.VisitMap" target="org.grid.server.SimulationListener">
-              <point x="0.0" y="-15.0" />
-              <point x="948.1410984848487" y="240.0" />
-              <point x="946.521212121212" y="240.0" />
-              <point x="0.0" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.History" target="org.grid.server.SimulationListener">
-              <point x="0.0" y="-15.0" />
-              <point x="706.1392045454543" y="160.0" />
-              <point x="896.1878787878786" y="160.0" />
-              <point x="-50.333333333333336" y="15.0" />
-            </edge>
-            <edge source="org.grid.protocol.Message.StateMessage" target="org.grid.protocol.Message">
-              <point x="-29.75" y="-15.0" />
-              <point x="1396.75" y="790.0" />
-              <point x="770.0526315789474" y="790.0" />
-              <point x="37.0526315789474" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.StackLayout.Orientation" target="org.grid.server.StackLayout">
-              <point x="0.0" y="-15.0" />
-              <point x="0.0" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.ClientsPanel.TrafficMonitor" target="org.grid.server.ClientsPanel">
-              <point x="0.0" y="-15.0" />
-              <point x="1366.0212121212119" y="60.0" />
-              <point x="1531.3263257575754" y="60.0" />
-              <point x="-27.75" y="15.0" />
-            </edge>
-            <edge source="org.grid.arena.SwingView.HeatPalette" target="org.grid.arena.SwingView">
-              <point x="26.25" y="-15.0" />
-              <point x="2139.474431818182" y="240.0" />
-              <point x="2116.474431818182" y="240.0" />
-              <point x="2116.474431818182" y="160.0" />
-              <point x="2088.2503787878786" y="160.0" />
-              <point x="33.33333333333337" y="15.0" />
-            </edge>
-            <edge source="org.grid.protocol.Message.RegisterMessage" target="org.grid.protocol.Message">
-              <point x="-34.75" y="-15.0" />
-              <point x="1080.75" y="830.0" />
-              <point x="751.5263157894738" y="830.0" />
-              <point x="18.5263157894737" y="15.0" />
-            </edge>
-            <edge source="org.grid.agent.Agent.ClientProtocolSocket" target="org.grid.protocol.ProtocolSocket">
-              <point x="-41.25" y="-15.0" />
-              <point x="481.25" y="635.0" />
-              <point x="344.66666666666663" y="635.0" />
-              <point x="42.66666666666666" y="15.0" />
-            </edge>
-            <edge source="org.grid.server.ClientsPanel.ClientPanel" target="org.grid.server.ClientsPanel">
-              <point x="34.66666666666663" y="-15.0" />
-              <point x="1647.9564393939386" y="160.0" />
-              <point x="1726.5212121212119" y="160.0" />
-              <point x="1726.5212121212119" y="60.0" />
-              <point x="1586.8263257575754" y="60.0" />
-              <point x="27.75" y="15.0" />
-            </edge>
-          </edges>
-          <settings layout="Hierarchic Group" zoom="0.6694290976058932" x="1076.0" y="791.0" />
-          <SelectedNodes />
-          <Categories>
-            <Category>Inner Classes</Category>
-          </Categories>
-          <SCOPE>All</SCOPE>
-          <VISIBILITY>private</VISIBILITY>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/protocol/Neighborhood.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="648" max-vertical-offset="2265">
-          <caret line="67" column="23" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/ClientListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270">
-          <caret line="27" column="1" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/arena/TerminalView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.06736527" vertical-offset="0" max-vertical-offset="668">
-          <caret line="19" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/arena/ArenaView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.06736527" vertical-offset="0" max-vertical-offset="668">
-          <caret line="19" column="17" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/SimulationListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="570">
-          <caret line="27" column="16" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/Team.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4545">
-          <caret line="37" column="24" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/maps/windmill.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/maps/wall.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/maps/temptation.png">
+    <entry file="file://$PROJECT_DIR$/maps/crossroads.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
@@ -2017,17 +1224,9 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/maps/small.png">
+    <entry file="file://$PROJECT_DIR$/maps/temptation.png">
       <provider selected="true" editor-type-id="images">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/PseudoRandomAgent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.1002994" vertical-offset="75" max-vertical-offset="3525">
-          <caret line="77" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/maps/test1.png">
@@ -2035,78 +1234,34 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/Agent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3783" max-vertical-offset="7335">
-          <caret line="306" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
+    <entry file="file://$PROJECT_DIR$/maps/small.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/CounterListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="345">
-          <caret line="12" column="33" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
-        </state>
+    <entry file="file://$PROJECT_DIR$/maps/parallel.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/arena/SwingView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.6272454" vertical-offset="390" max-vertical-offset="3780">
-          <caret line="164" column="17" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
+    <entry file="file://$PROJECT_DIR$/maps/obstacles.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/Agent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.1452096" vertical-offset="1200" max-vertical-offset="2835">
-          <caret line="52" column="29" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
+    <entry file="file://$PROJECT_DIR$/maps/minima.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/Dispatcher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.1676646" vertical-offset="0" max-vertical-offset="4380">
-          <caret line="81" column="25" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
+    <entry file="file://$PROJECT_DIR$/maps/honeypot.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_60.jdk/Contents/Home/src.zip!/javax/imageio/ImageIO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38965952" vertical-offset="17751" max-vertical-offset="22935">
-          <caret line="1300" column="0" selection-start-line="1300" selection-start-column="0" selection-end-line="1300" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/VisitMap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="720" max-vertical-offset="2670">
-          <caret line="97" column="13" selection-start-line="97" selection-start-column="13" selection-end-line="97" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/Field.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="10680" max-vertical-offset="10875">
-          <caret line="712" column="0" selection-start-line="712" selection-start-column="0" selection-end-line="712" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2010" max-vertical-offset="8655">
-          <caret line="134" column="44" selection-start-line="134" selection-start-column="44" selection-end-line="134" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sims/test.sim">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="165">
-          <caret line="0" column="20" selection-start-line="0" selection-start-column="20" selection-end-line="0" selection-end-column="20" />
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/maps/autolab.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/maps/beatle.png">
@@ -2114,50 +1269,308 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/Simulation.java">
+    <entry file="file://$PROJECT_DIR$/src/org/grid/server/TeamListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3375" max-vertical-offset="7230">
-          <caret line="225" column="85" selection-start-line="225" selection-start-column="85" selection-end-line="225" selection-end-column="85" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="315">
+          <caret line="24" column="17" selection-start-line="24" selection-start-column="17" selection-end-line="24" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/protocol/Neighborhood.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2295">
+          <caret line="24" column="67" selection-start-line="24" selection-start-column="67" selection-end-line="24" selection-end-column="67" />
+          <folding>
+            <element signature="e#0#3317#0" expanded="true" />
+            <element signature="e#1658#1659#0" expanded="true" />
+            <element signature="e#1676#1677#0" expanded="true" />
+            <element signature="e#2382#2383#0" expanded="true" />
+            <element signature="e#2397#2398#0" expanded="true" />
+            <element signature="e#3084#3085#0" expanded="true" />
+            <element signature="e#3108#3109#0" expanded="true" />
+            <element signature="e#3145#3146#0" expanded="true" />
+            <element signature="e#3169#3170#0" expanded="true" />
+            <element signature="e#3226#3227#0" expanded="true" />
+            <element signature="e#3241#3242#0" expanded="true" />
+            <element signature="e#3298#3299#0" expanded="true" />
+            <element signature="e#3313#3314#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/protocol/ProtocolSocket.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1035" max-vertical-offset="3480">
+          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/server/StackLayout.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5849057" vertical-offset="0" max-vertical-offset="4905">
+          <caret line="60" column="36" selection-start-line="60" selection-start-column="36" selection-end-line="60" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/arena/TerminalView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.20754717" vertical-offset="0" max-vertical-offset="795">
+          <caret line="27" column="4" selection-start-line="27" selection-start-column="4" selection-end-line="27" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/HumanAgent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5471698" vertical-offset="0" max-vertical-offset="2340">
+          <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27806386" vertical-offset="0" max-vertical-offset="971">
+          <caret line="18" column="12" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gridland.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.20082389" vertical-offset="0" max-vertical-offset="971">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/agents/agents/LocalMap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09816754" vertical-offset="0" max-vertical-offset="11625">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/maps/rabbithole.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/server/SimulationListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="300">
+          <caret line="21" column="17" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/rt.jar!/com/apple/laf/AquaUtils.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="497" max-vertical-offset="2145">
+          <caret line="46" column="16" selection-start-line="46" selection-start-column="16" selection-end-line="46" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/rt.jar!/com/apple/laf/AquaPanelUI.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="285">
+          <caret line="13" column="22" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/rt.jar!/sun/java2d/SunGraphics2D.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3362" max-vertical-offset="5115">
+          <caret line="237" column="16" selection-start-line="237" selection-start-column="16" selection-end-line="237" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/server/Agent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1880" max-vertical-offset="2850">
+          <caret line="163" column="0" selection-start-line="163" selection-start-column="0" selection-end-line="163" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/server/Team.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="995" max-vertical-offset="4695">
+          <caret line="97" column="0" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/rt.jar!/com/apple/laf/AquaButtonUI.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1001" max-vertical-offset="1560">
+          <caret line="97" column="20" selection-start-line="97" selection-start-column="20" selection-end-line="97" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/jre/lib/rt.jar!/com/apple/laf/AquaImageFactory.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31993008" vertical-offset="1002" max-vertical-offset="2580">
+          <caret line="80" column="19" selection-start-line="80" selection-start-column="19" selection-end-line="80" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/server/Dispatcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1580" max-vertical-offset="4440">
+          <caret line="147" column="0" selection-start-line="147" selection-start-column="0" selection-end-line="147" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LICENSE.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7665">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/protocol/Position.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.5849056" vertical-offset="0" max-vertical-offset="1440">
+          <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/Agent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.28176102" vertical-offset="4276" max-vertical-offset="7245">
+          <caret line="343" column="23" selection-start-line="343" selection-start-column="23" selection-end-line="343" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/server/ClientListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270">
+          <caret line="21" column="17" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/src.zip!/java/util/ArrayList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="8750" max-vertical-offset="16695">
+          <caret line="634" column="0" selection-start-line="634" selection-start-column="0" selection-end-line="634" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/server/History.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2398" max-vertical-offset="3390">
+          <caret line="204" column="0" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/grid/server/ClientsPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2295" max-vertical-offset="8430">
-          <caret line="153" column="60" selection-start-line="153" selection-start-column="60" selection-end-line="153" selection-end-column="60" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="6510" max-vertical-offset="8430">
+          <caret line="434" column="16" selection-start-line="434" selection-start-column="16" selection-end-line="434" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/ExploredCounter.java">
+    <entry file="file://$PROJECT_DIR$/sims/test.sim">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="645">
-          <caret line="28" column="33" selection-start-line="28" selection-start-column="33" selection-end-line="28" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="795">
+          <caret line="0" column="20" selection-start-line="0" selection-start-column="20" selection-end-line="0" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/maps/maze.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/server/VisitMap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2670">
+          <caret line="36" column="7" selection-start-line="36" selection-start-column="7" selection-end-line="36" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/PseudoRandomAgent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3495">
+          <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/SampleAgent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2573" max-vertical-offset="4905">
+          <caret line="283" column="43" selection-start-line="283" selection-start-column="43" selection-end-line="283" selection-end-column="43" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/RandomAgent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="3540">
-          <caret line="50" column="30" selection-start-line="50" selection-start-column="30" selection-end-line="50" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2743" max-vertical-offset="3540">
+          <caret line="252" column="9" selection-start-line="252" selection-start-column="9" selection-end-line="252" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/server/History.java">
+    <entry file="file://$PROJECT_DIR$/src/org/grid/arena/SwingView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.4489572" vertical-offset="0" max-vertical-offset="3375">
-          <caret line="119" column="9" selection-start-line="119" selection-start-column="9" selection-end-line="119" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2758" max-vertical-offset="3750">
+          <caret line="238" column="29" selection-start-line="238" selection-start-column="29" selection-end-line="238" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/arena/ArenaView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
+          <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/arena/Arena.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="36" max-vertical-offset="630">
+          <caret line="21" column="17" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/server/Field.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="9960">
+          <caret line="49" column="8" selection-start-line="49" selection-start-column="8" selection-end-line="49" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/server/Simulation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="4673" max-vertical-offset="6615">
+          <caret line="398" column="5" selection-start-line="398" selection-start-column="5" selection-end-line="398" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/server/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1140" max-vertical-offset="8220">
+          <caret line="155" column="9" selection-start-line="155" selection-start-column="9" selection-end-line="155" selection-end-column="9" />
           <folding>
-            <element signature="e#1283#1300#0" expanded="true" />
-            <element signature="e#1749#1766#0" expanded="true" />
-            <element signature="e#3842#3865#0" expanded="true" />
-            <element signature="e#4557#4578#0" expanded="true" />
-            <element signature="e#5346#5363#0" expanded="true" />
-            <element signature="e#5685#5702#0" expanded="true" />
+            <element signature="e#14145#14370#0" expanded="true" />
+            <element signature="e#14365#14366#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sims/test_mini.sim">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09715026" vertical-offset="0" max-vertical-offset="772">
+          <caret line="5" column="15" selection-start-line="5" selection-start-column="15" selection-end-line="5" selection-end-column="15" />
+          <folding />
         </state>
       </provider>
     </entry>

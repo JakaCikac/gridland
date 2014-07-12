@@ -134,9 +134,25 @@ public class Main {
         public void discoveredPoints() {
             int exploredPoints = history.getExploredCount();
 
-            if (clientsPanel != null && initialEmptyFields > -1)
-            clientsPanel.getExploredPointsLabel().setText(String.valueOf(exploredPoints) + "/" + initialEmptyFields );
+            if (clientsPanel != null && initialEmptyFields > -1) {
+                // refresh counter of explored points
+                clientsPanel.getExploredPointsLabel().setText(String.valueOf(exploredPoints) + "/" + initialEmptyFields);
+                // check if explred == all and stop simulation, call export data for analysis
+                if (exploredPoints == initialEmptyFields && running) {
+                    running = false;
+                    playpause.setEnabled(false);
+                    pause.setEnabled(false);
+                    // call export method
+                    JOptionPane.showMessageDialog(null, "Exploration goal achieved! 100% explored!");
+                    exportHistoryToLog();
 
+                }
+            }
+
+        }
+
+        public void exportHistoryToLog() {
+            // TODO: export all agent history, steps required, num of agents, initial empty field size, map name, etc..
         }
 
         @Override
@@ -539,9 +555,9 @@ public class Main {
 		(new Thread(dispatcher)).start();
 		
 		log("Server ready.");
-		
+
 	}
-	
+
 	private static DateFormat logDate = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 	
 	private static DateFormat date = new SimpleDateFormat("[hh:mm:ss] ");
