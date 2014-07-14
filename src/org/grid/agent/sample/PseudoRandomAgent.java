@@ -45,6 +45,7 @@ public class PseudoRandomAgent extends Agent {
 	private int sn = 1;
 	private long sx, sy;
     private int sleepTime = 100;
+    private Decision previousDecision = null;
 	
 	@Override
 	public void initialize() {
@@ -214,19 +215,63 @@ public class PseudoRandomAgent extends Agent {
         boolean right = canMove(n, 1, 0);
         boolean moves[] = {up, down, left, right};
 
+        // if agent can move in the same direction as before continue moving in that direction
+        if ( previousDecision != null)
+            if (previousDecision == this.left && left) {
+                return this.left;
+            } else if (previousDecision == this.right && right) {
+                return this.right;
+            } else if (previousDecision == this.up && up) {
+                return this.up;
+            } else if (previousDecision == this.down && down) {
+                return this.down;
+            }
+
+        // if not possible to move in the same direction
+        // choose randomly but exclude the previous direction unless it is the only possible move
+
+        // map moves indexes with decisions
+        int previousMoveIndex = -1;
+        if (previousDecision == this.left) {
+            previousMoveIndex = 2;
+        } else if (previousDecision == this.right) {
+            previousMoveIndex = 3;
+        } else if (previousDecision == this.up) {
+            previousMoveIndex = 0;
+        } else if (previousDecision == this.down) {
+            previousMoveIndex = 1;
+        }
+
+        // first, check if previous decision is the only possible one
+        int validMoveCounter = 0;
+        for (int j = 0; j < moves.length; j++) {
+            if (moves[j]) {
+                validMoveCounter++;
+            }
+        }
+        // if only one move is possible and canMove for previous decision is true,
+        // the only possible move is the previous decision
+        if (previousMoveIndex != -1 && validMoveCounter == 1 && moves[previousMoveIndex]) {
+            return previousDecision;
+        }
+
+        // otherwise, exclude previous decision from random choice
         // Randomly shuffle possible moves.
         shuffleArray(decisions);
-
         // Check which moves are available against the shuffled array
         // then choose the move first possible move from the array.
         for (int i = 0; i < decisions.length; i++) {
-            if ( decisions[i].getDirection().toString().equals("UP") && moves[0]) {
+            if ( decisions[i].getDirection().toString().equals("UP") && moves[0] && previousDecision != this.up) {
+                previousDecision = decisions[i];
                 return decisions[i];
-            } else if (decisions[i].getDirection().toString().equals("DOWN") && moves[1]) {
+            } else if (decisions[i].getDirection().toString().equals("DOWN") && moves[1] && previousDecision != this.down) {
+                previousDecision = decisions[i];
                 return decisions[i];
-            } else if (decisions[i].getDirection().toString().equals("LEFT") && moves[2]) {
+            } else if (decisions[i].getDirection().toString().equals("LEFT") && moves[2] && previousDecision != this.left) {
+                previousDecision = decisions[i];
                 return  decisions[i];
-            } else if (decisions[i].getDirection().toString().equals("RIGHT") && moves[3]) {
+            } else if (decisions[i].getDirection().toString().equals("RIGHT") && moves[3] && previousDecision != this.right) {
+                previousDecision = decisions[i];
                 return decisions[i];
             }
         }
