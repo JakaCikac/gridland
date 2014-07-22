@@ -136,7 +136,11 @@ public class Main {
 
             if (clientsPanel != null && initialEmptyFields > -1) {
                 // refresh counter of explored points
-                clientsPanel.getExploredPointsLabel().setText(String.valueOf(exploredPoints) + "/" + initialEmptyFields);
+                //clientsPanel.getExploredPointsLabel().setText(String.valueOf(exploredPoints) + "/" + initialEmptyFields);
+                // percent of coverage
+
+                double coverage = (float)exploredPoints / initialEmptyFields * 100.0f;
+                clientsPanel.getExploredPointsLabel().setText(String.format("%.2f", coverage) + "%");
                 // check if explred == all and stop simulation, call export data for analysis
                 if (exploredPoints == initialEmptyFields && running) {
                     running = false;

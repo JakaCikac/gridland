@@ -17,6 +17,7 @@
  */
 package org.grid.agent.sample;
 
+import com.javafx.tools.doclets.formats.html.SourceToHTMLConverter;
 import org.grid.agent.Agent;
 import org.grid.agent.Membership;
 import org.grid.protocol.Message.Direction;
@@ -46,6 +47,9 @@ public class PseudoRandomAgent extends Agent {
 	private long sx, sy;
     private int sleepTime = 100;
     private Decision previousDecision = null;
+    private int randomCounter = 0;
+    private int minRandomStep = 50;
+    private int maxRandomStep = 120;
 	
 	@Override
 	public void initialize() {
@@ -64,7 +68,7 @@ public class PseudoRandomAgent extends Agent {
 	@Override
 	public void receive(int from, byte[] message) {
         /* In this method, the agent should receive information from other agents
-         * and update what it knows about the surrounding world.
+         * and upda te what it knows about the surrounding world.
          */
 		String msg = new String(message);
 		//System.out.format("Message received from %d: %s\n", from, msg);
@@ -215,15 +219,26 @@ public class PseudoRandomAgent extends Agent {
         boolean right = canMove(n, 1, 0);
         boolean moves[] = {up, down, left, right};
 
+        Random rand = new Random();
+        int randomInt = rand.nextInt(maxRandomStep) + minRandomStep;
+        if (randomCounter > randomInt) {
+            previousDecision = null;
+            randomCounter = 0;
+        }
+
         // if agent can move in the same direction as before continue moving in that direction
         if ( previousDecision != null)
             if (previousDecision == this.left && left) {
+                randomCounter++;
                 return this.left;
             } else if (previousDecision == this.right && right) {
+                randomCounter++;
                 return this.right;
             } else if (previousDecision == this.up && up) {
+                randomCounter++;
                 return this.up;
             } else if (previousDecision == this.down && down) {
+                randomCounter++;
                 return this.down;
             }
 
@@ -249,10 +264,38 @@ public class PseudoRandomAgent extends Agent {
                 validMoveCounter++;
             }
         }
-        // if only one move is possible and canMove for previous decision is true,
-        // the only possible move is the previous decision
-        if (previousMoveIndex != -1 && validMoveCounter == 1 && moves[previousMoveIndex]) {
-            return previousDecision;
+
+        int lookupIndex = 0;
+        if (previousDecision != null ) {
+            if (previousDecision.toString().equals("UP"))
+                lookupIndex = 1;
+            else if (previousDecision.toString().equals("DOWN"))
+                lookupIndex = 0;
+            else if (previousDecision.toString().equals("LEFT"))
+                lookupIndex = 3;
+            else if (previousDecision.toString().equals("RIGHT"))
+                lookupIndex = 2;
+        }
+
+        // if only one move is possible and canMove for opposite of previous decision is true,
+        // the only possible move is the opposite of the previous decision
+        if (previousMoveIndex != -1 && validMoveCounter == 1 && moves[lookupIndex]) {
+            if (previousDecision.toString().equals("UP")) {
+                randomCounter++;
+                return this.down;
+            }
+            else if (previousDecision.toString().equals("DOWN")) {
+                randomCounter++;
+                return this.up;
+            }
+            else if (previousDecision.toString().equals("LEFT")) {
+                randomCounter++;
+                return this.right;
+            }
+            else if (previousDecision.toString().equals("RIGHT")) {
+                randomCounter++;
+                return this.left;
+            }
         }
 
         // otherwise, exclude previous decision from random choice
@@ -260,21 +303,47 @@ public class PseudoRandomAgent extends Agent {
         shuffleArray(decisions);
         // Check which moves are available against the shuffled array
         // then choose the move first possible move from the array.
-        for (int i = 0; i < decisions.length; i++) {
-            if ( decisions[i].getDirection().toString().equals("UP") && moves[0] && previousDecision != this.up) {
-                previousDecision = decisions[i];
-                return decisions[i];
-            } else if (decisions[i].getDirection().toString().equals("DOWN") && moves[1] && previousDecision != this.down) {
-                previousDecision = decisions[i];
-                return decisions[i];
-            } else if (decisions[i].getDirection().toString().equals("LEFT") && moves[2] && previousDecision != this.left) {
-                previousDecision = decisions[i];
-                return  decisions[i];
-            } else if (decisions[i].getDirection().toString().equals("RIGHT") && moves[3] && previousDecision != this.right) {
-                previousDecision = decisions[i];
-                return decisions[i];
+        if (previousDecision != null) {
+            for (int i = 0; i < decisions.length; i++) {
+                if ( decisions[i].getDirection().toString().equals("UP") && moves[0] && !previousDecision.getDirection().toString().equals("DOWN")) {
+                    previousDecision = decisions[i];
+                    randomCounter++;
+                    return decisions[i];
+                } else if (decisions[i].getDirection().toString().equals("DOWN") && moves[1] && !previousDecision.getDirection().toString().equals("UP")) {
+                    previousDecision = decisions[i];
+                    randomCounter++;
+                    return decisions[i];
+                } else if (decisions[i].getDirection().toString().equals("LEFT") && moves[2] && !previousDecision.getDirection().toString().equals("RIGHT")) {
+                    previousDecision = decisions[i];
+                    randomCounter++;
+                    return  decisions[i];
+                } else if (decisions[i].getDirection().toString().equals("RIGHT") && moves[3] && !previousDecision.getDirection().toString().equals("LEFT")) {
+                    previousDecision = decisions[i];
+                    randomCounter++;
+                    return decisions[i];
+                }
             }
-        }
+        } else
+            for (int i = 0; i < decisions.length; i++) {
+                if ( decisions[i].getDirection().toString().equals("UP") && moves[0]) {
+                    previousDecision = decisions[i];
+                    randomCounter++;
+                    return decisions[i];
+                } else if (decisions[i].getDirection().toString().equals("DOWN") && moves[1] ) {
+                    previousDecision = decisions[i];
+                    randomCounter++;
+                    return decisions[i];
+                } else if (decisions[i].getDirection().toString().equals("LEFT") && moves[2] ) {
+                    previousDecision = decisions[i];
+                    randomCounter++;
+                    return  decisions[i];
+                } else if (decisions[i].getDirection().toString().equals("RIGHT") && moves[3] ) {
+                    previousDecision = decisions[i];
+                    randomCounter++;
+                    return decisions[i];
+                }
+            }
+
         // if no other move is available, stand still for a round
         return still;
 	}
@@ -294,8 +363,9 @@ public class PseudoRandomAgent extends Agent {
     }
 	
 	private boolean canMove(Neighborhood n, int x, int y) {
-
+        // return empty for available tiles
 			return n.getCell(x, y) == Neighborhood.EMPTY;
+
 	}
 
 }
