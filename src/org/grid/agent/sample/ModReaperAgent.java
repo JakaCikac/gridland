@@ -1,50 +1,30 @@
 package org.grid.agent.sample;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.Vector;
-import java.util.concurrent.ConcurrentLinkedQueue;
-
-import javax.swing.JFrame;
-
 import org.grid.agent.Agent;
+import org.grid.agent.sample.LocalMap.*;
 import org.grid.arena.SwingView;
-import org.grid.protocol.Message;
+import org.grid.protocol.Message.Direction;
 import org.grid.protocol.Neighborhood;
 import org.grid.protocol.Position;
-import org.grid.protocol.Message.Direction;
 
-import org.grid.agent.sample.LocalMap.Bounds;
-import org.grid.agent.sample.LocalMap.CostFormula;
-import org.grid.agent.sample.LocalMap.Filter;
-import org.grid.agent.sample.LocalMap.LocalMapArena;
-import org.grid.agent.sample.LocalMap.MapChunk;
-import org.grid.agent.sample.LocalMap.Node;
-import org.grid.agent.sample.LocalMap.Paths;
+import javax.swing.*;
+import java.io.*;
+import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
-//java -cp bin org.grid.agent.sample.Agent localhost ReaperAgent
+//java -cp bin org.grid.agent.sample.Agent localhost ModReaperAgent
 
-public class ReaperAgent extends Agent {
+public class ModReaperAgent extends Agent {
 
     private static enum Mode {
-        EXPLORE, SURVEIL, SEEK, RETURN, ATTACK, FOLLOW, CLEAR
+        EXPLORE, SEEK, SURVEIL, RETURN, CLEAR
     }
 
     private static Filter flagFilter = new Filter() {
 
         @Override
         public boolean filter(Node n) {
-            return n.getBody() == 4;
+            return n.getBody() == 0;
             //todo: namesto flag filter?..//Neighborhood.FLAG;
         }
 
@@ -61,7 +41,6 @@ public class ReaperAgent extends Agent {
             this.from = from;
             this.message = message;
         }
-
     }
 
     private static class MemberData {
@@ -112,31 +91,25 @@ public class ReaperAgent extends Agent {
     private static class UnknownAreaFilter implements Filter {
 
         private Bounds known;
-
         private Position center;
-
         private int radius;
 
         public UnknownAreaFilter(Bounds known, Position center) {
             this.known = known;
-
             this.center = center;
-
-            radius = Math.min(known.getRight() - known.getLeft(), known
-                    .getBottom()
-                    - known.getTop());
+            radius = Math.min(known.getRight() - known.getLeft(), known.getBottom() - known.getTop());
         }
 
         @Override
         public boolean filter(Node n) {
 
-            if (n.getPosition().getX() % 3 != 0
-                    || n.getPosition().getY() % 3 != 0)
+            // Check if field is a flag, if not return false
+            if (n.getPosition().getX() % 3 != 0 || n.getPosition().getY() % 3 != 0)
                 return false;
-
+            //
             if (!known.inside(n.getPosition()))
                 return true;
-
+            //
             if (Position.distance(center, n.getPosition()) > radius)
                 return true;
 
@@ -204,8 +177,7 @@ public class ReaperAgent extends Agent {
 
         boolean hasFlag;
 
-        public State(int stamp, Neighborhood neighborhood, Direction direction,
-                     boolean hasFlag) {
+        public State(int stamp, Neighborhood neighborhood, Direction direction, boolean hasFlag) {
             super();
             this.neighborhood = neighborhood;
             this.direction = direction;
@@ -229,19 +201,16 @@ public class ReaperAgent extends Agent {
     @Override
     public void initialize() {
 
+        // 6 = scope of the arena
         arena = map.getArena(6);
 
         if (System.getProperty("reaper") != null) {
             view = new SwingView(24);
 
             view.setBasePallette(new SwingView.HeatPalette(32));
-
             window = new JFrame("Agent " + getId());
-
             window.setContentPane(view);
-
             window.setSize(view.getPreferredSize(arena));
-
             window.setVisible(true);
 
         }
@@ -250,6 +219,7 @@ public class ReaperAgent extends Agent {
     @Override
     public void receive(int from, byte[] message) {
 
+        // add new message to concurrent linked queue
         inbox.add(new Message(from, message));
 
     }
@@ -268,14 +238,14 @@ public class ReaperAgent extends Agent {
         scan(0);
 
         while (isAlive()) {
-
             State state = buffer.poll();
-            if (state != null) {
 
+            if (state != null) {
+                System.out.println("State is not null");
                 hasFlag = state.hasFlag;
 
                 if (state.direction == Direction.NONE) {
-
+                    System.out.println("Direction = none");
                     sleepcount = 0;
 
                     Set<Position> moveable = analyzeNeighborhood(state.neighborhood);
@@ -294,9 +264,7 @@ public class ReaperAgent extends Agent {
                     while (!inbox.isEmpty()) {
                         Message m = inbox.poll();
 
-                        replanMap &=
-                                parse(m.from, m.message,
-                                        state.neighborhood);
+                        replanMap &=parse(m.from, m.message,state.neighborhood);
                     }
 
                     if (view != null)
@@ -319,25 +287,20 @@ public class ReaperAgent extends Agent {
 
                         while (directions == null) {
 
+                            System.out.println(mode);
                             switch (mode) {
                                 case EXPLORE: {
 
                                     if (stohastic(0.9)) {
-                                        List<Node> candidates = map
-                                                .filter(flagFilter);
+                                        List<Node> candidates = map.filter(flagFilter);
 
                                         directions = paths.shortestPathTo(candidates);
-
+                                        System.out.println("getting candidates");
+                                        System.out.println(directions);
                                         if (directions != null) {
                                             changeMode(Mode.SEEK);
                                             break;
                                         }
-                                    }
-
-                                    if (!enemies.isEmpty() && stohastic(0.2)) {
-                                        changeMode(Mode.ATTACK);
-                                        patience = 10;
-                                        break;
                                     }
 
                                     List<Node> candidates = map.filter(LocalMap.BORDER_FILTER);
@@ -357,24 +320,14 @@ public class ReaperAgent extends Agent {
                                 case SURVEIL: {
 
                                     if (stohastic(0.9)) {
-                                        List<Node> candidates = map
-                                                .filter(flagFilter);
+                                        List<Node> candidates = map.filter(flagFilter);
 
-                                        directions = paths
-                                                .shortestPathTo(candidates);
+                                        directions = paths.shortestPathTo(candidates);
 
                                         if (directions != null) {
                                             changeMode(Mode.SEEK);
                                             break;
                                         }
-                                    }
-
-                                    if (!enemies.isEmpty() && stohastic(0.05)) {
-
-                                        changeMode(Mode.ATTACK);
-                                        patience = 30;
-                                        break;
-
                                     }
 
                                     List<Node> candidates = map.getOldestNodes(10);
@@ -406,72 +359,12 @@ public class ReaperAgent extends Agent {
 
                                     break;
                                 }
-                                case FOLLOW: {
 
-                                    if (parent > 0) {
-
-                                        MemberData parendData = registry
-                                                .get(parent);
-
-                                        if (!checkParent(state.neighborhood)) {
-                                            changeMode(Mode.EXPLORE);
-                                            parent = -1;
-                                            continue;
-                                        }
-
-                                        if (!enemies.isEmpty()) {
-
-                                            changeMode(Mode.ATTACK);
-                                            patience = 30;
-                                            continue;
-
-                                        }
-
-                                        List<Node> candidates = map
-                                                .filter(new DistanceFilter(
-                                                        parendData.getPosition(),
-                                                        2, 2));
-
-                                        directions = paths
-                                                .shortestPathTo(candidates);
-
-                                        if (directions == null) {
-                                            changeMode(Mode.EXPLORE);
-                                            parent = -1;
-                                            continue;
-                                        }
-                                    }
-
-                                    break;
-                                }
-                                case ATTACK: {
-
-                                    patience--;
-
-                                    if (patience < 0) {
-                                        patience = 0;
-                                        changeMode(Mode.EXPLORE);
-                                        continue;
-                                    }
-
-                                    directions = paths
-                                            .shortestPathTo(filterEnemies(moveable,
-                                                    state.neighborhood));
-
-                                    if (directions == null) {
-                                        changeMode(Mode.EXPLORE);
-                                        continue;
-                                    }
-
-                                    break;
-                                }
                                 case CLEAR: {
 
-                                    List<Node> candidates = map
-                                            .filter(new DistanceFilter(
-                                                    position,
-                                                    state.neighborhood.getSize() - 1,
-                                                    state.neighborhood.getSize() + 1));
+                                    List<Node> candidates = map.filter(new DistanceFilter(position,
+                                            state.neighborhood.getSize() - 1,
+                                            state.neighborhood.getSize() + 1));
 
                                     directions = paths.shortestPathTo(candidates);
 
@@ -485,12 +378,10 @@ public class ReaperAgent extends Agent {
 
                             // cannot move anywhere ...
                             if (directions == null) {
-                                // if (directions == null) {
                                 // otherwise just hold still for a timestep
                                 directions = new Vector<Direction>();
                                 for (int i = 0; i < 5; i++)
                                     directions.add(Direction.NONE);
-                                // }
                             }
                         }
 
@@ -501,7 +392,7 @@ public class ReaperAgent extends Agent {
                     if (!plan.isEmpty()) {
 
                         Direction d = plan.poll();
-                        // debug("Next move: %s", d);
+                        debug("Next move: %s", d);
 
                         timestep++;
 
@@ -767,9 +658,6 @@ public class ReaperAgent extends Agent {
                 }
 
             } else if (n.getCell(i, j) == Neighborhood.OTHER) {
-
-                if (mode != Mode.ATTACK) {
-
                     // map.addModifier(x+i-1, y+j-1); map.addModifier(x+i,
                     // y+j-1); map.addModifier(x+i+1, y+j-1);
                     // map.addModifier(x+i-1, y+j);
@@ -777,10 +665,7 @@ public class ReaperAgent extends Agent {
                     // map.addModifier(x+i+1, y+j);
                     // map.addModifier(x+i-1, y+j+1); map.addModifier(x+i,
                     // y+j+1); map.addModifier(x+i+1, y+j+1);
-                }
-
             }
-
         }
 
         return replan;
@@ -849,20 +734,6 @@ public class ReaperAgent extends Agent {
                             debug("New info: %s", data);
                         }
 
-                    }
-
-                    if (hasFlag) {
-
-                        if ((mode == Mode.EXPLORE || mode == Mode.SURVEIL)) {
-
-                            if (filterTeam(moveable, neighborhood).size() < 3) {
-
-                                parent = from;
-                                changeMode(Mode.FOLLOW);
-
-                                return true;
-                            }
-                        }
                     }
 
                     break;

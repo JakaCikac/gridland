@@ -68,7 +68,7 @@ public class PseudoRandomAgent extends Agent {
 	@Override
 	public void receive(int from, byte[] message) {
         /* In this method, the agent should receive information from other agents
-         * and upda te what it knows about the surrounding world.
+         * and update what it knows about the surrounding world.
          */
 		String msg = new String(message);
 		//System.out.format("Message received from %d: %s\n", from, msg);
