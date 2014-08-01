@@ -604,8 +604,7 @@ public class LocalMap {
         modifiers.clear();
     }
 
-    public boolean update(Neighborhood neighborhood, Position anchor,
-                          int timestep) {
+    public boolean update(Neighborhood neighborhood, Position anchor, int timestep) {
 
         Node n = nodes.get(anchor);
 
@@ -620,7 +619,6 @@ public class LocalMap {
         boolean changed = false;
 
         for (int i = -neighborhood.getSize(); i <= neighborhood.getSize(); i++) {
-
             for (int j = -neighborhood.getSize(); j <= neighborhood.getSize(); j++) {
 
                 if ((i == 0 && j == 0)) {

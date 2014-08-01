@@ -16,24 +16,26 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class ModReaperAgent extends Agent {
 
+    // define agent modes
     private static enum Mode {
         EXPLORE, SEEK, SURVEIL, RETURN, CLEAR
     }
 
-    private static Filter flagFilter = new Filter() {
-
+    // define what the agent is looking for
+    private static Filter goalFilter = new Filter() {
         @Override
         public boolean filter(Node n) {
-            return n.getBody() == 0;
-            //todo: namesto flag filter?..//Neighborhood.FLAG;
+            /* EMPTY = 0; WALL = 1; HEADQUARTERS = 2;
+            OTHER_HEADQUARTERS = 4;  UNKNOWN = 6; */
+            return n.getBody() == 2;
+            // apparently works best in this example, if set to 2
         }
-
     };
 
+    // define agent message class
     private static class Message {
 
         int from;
-
         byte[] message;
 
         protected Message(int from, byte[] message) {
@@ -45,6 +47,7 @@ public class ModReaperAgent extends Agent {
 
     private static class MemberData {
 
+            // agent id
             private int id;
 
             private int info;
@@ -56,8 +59,6 @@ public class ModReaperAgent extends Agent {
             private Position position;
 
             int notified;
-
-            boolean hasFlag;
 
             private Bounds bounds;
 
@@ -83,15 +84,16 @@ public class ModReaperAgent extends Agent {
             @Override
             public String toString() {
 
-                return String.format("ID: %d, Flag: %b", id, hasFlag);
+                return String.format("ID: %d, Flag: %b", id);
 
             }
     }
 
+    /* check area for unknown nodes  */
     private static class UnknownAreaFilter implements Filter {
 
-        private Bounds known;
-        private Position center;
+        private Bounds known;    // bounds of the area
+        private Position center; // center position in the area
         private int radius;
 
         public UnknownAreaFilter(Bounds known, Position center) {
@@ -102,9 +104,8 @@ public class ModReaperAgent extends Agent {
 
         @Override
         public boolean filter(Node n) {
-
             // Check if field is a flag, if not return false
-            if (n.getPosition().getX() % 3 != 0 || n.getPosition().getY() % 3 != 0)
+            if (n.getPosition().getX() % 2 != 0 || n.getPosition().getY() % 2 != 0)
                 return false;
             //
             if (!known.inside(n.getPosition()))
@@ -167,21 +168,16 @@ public class ModReaperAgent extends Agent {
 
     private int timestep = 1;
 
-    private boolean hasFlag = false;
-
     private static class State {
 
         Neighborhood neighborhood;
 
         Direction direction;
 
-        boolean hasFlag;
-
-        public State(int stamp, Neighborhood neighborhood, Direction direction, boolean hasFlag) {
+        public State(int stamp, Neighborhood neighborhood, Direction direction) {
             super();
             this.neighborhood = neighborhood;
             this.direction = direction;
-            this.hasFlag = hasFlag;
         }
 
     }
@@ -227,13 +223,14 @@ public class ModReaperAgent extends Agent {
     @Override
     public void state(int stamp, Neighborhood neighborhood, Direction direction) {
 
+        buffer.add(new State(stamp, neighborhood, direction));
+
     }
 
     @Override
     public void run() {
 
-        int sleeptime = Math.max(5, (1000 / getSpeed()) / 2);
-        int sleepcount = 0;
+        int sleeptime = 100;
 
         scan(0);
 
@@ -241,25 +238,20 @@ public class ModReaperAgent extends Agent {
             State state = buffer.poll();
 
             if (state != null) {
-                System.out.println("State is not null");
-                hasFlag = state.hasFlag;
 
-                if (state.direction == Direction.NONE) {
-                    System.out.println("Direction = none");
-                    sleepcount = 0;
+                if (state.direction == Direction.NONE && state.direction != null) {
 
-                    Set<Position> moveable = analyzeNeighborhood(state.neighborhood);
+                    // find movable fields
+                    Set<Position> movable = analyzeNeighborhood(state.neighborhood);
+                    System.out.println("movable size : " + movable.size());
+                    // update local map
+                    boolean replanMap = map.update(state.neighborhood, position, timestep);
 
-                    boolean replanMap = map.update(state.neighborhood,
-                            position, timestep);
+                    registerMoveable(movable, state.neighborhood);
 
-                    registerMoveable(moveable, state.neighborhood);
+                    boolean replanAgents = blockMoveable(movable, state.neighborhood);
 
-                    boolean replanAgents = blockMoveable(moveable,
-                            state.neighborhood);
-
-                    Set<Node> enemies = filterEnemies(moveable,
-                            state.neighborhood);
+                    Set<Node> enemies = filterEnemies(movable, state.neighborhood);
 
                     while (!inbox.isEmpty()) {
                         Message m = inbox.poll();
@@ -276,27 +268,20 @@ public class ModReaperAgent extends Agent {
 
                     if (plan.isEmpty()) {
 
-                        if (state.hasFlag) {
-                            changeMode(Mode.RETURN);
-                            map.recalculateCost(returnFormula);
-                        }
-
                         List<Direction> directions = null;
 
                         Paths paths = map.findShortestPaths(position);
 
                         while (directions == null) {
 
-                            System.out.println(mode);
                             switch (mode) {
                                 case EXPLORE: {
 
                                     if (stohastic(0.9)) {
-                                        List<Node> candidates = map.filter(flagFilter);
+                                        List<Node> candidates = map.filter(goalFilter);
 
                                         directions = paths.shortestPathTo(candidates);
-                                        System.out.println("getting candidates");
-                                        System.out.println(directions);
+
                                         if (directions != null) {
                                             changeMode(Mode.SEEK);
                                             break;
@@ -320,7 +305,7 @@ public class ModReaperAgent extends Agent {
                                 case SURVEIL: {
 
                                     if (stohastic(0.9)) {
-                                        List<Node> candidates = map.filter(flagFilter);
+                                        List<Node> candidates = map.filter(goalFilter);
 
                                         directions = paths.shortestPathTo(candidates);
 
@@ -338,7 +323,7 @@ public class ModReaperAgent extends Agent {
                                 }
                                 case SEEK: {
 
-                                    List<Node> candidates = map.filter(flagFilter);
+                                    List<Node> candidates = map.filter(goalFilter);
 
                                     directions = paths.shortestPathTo(candidates);
 
@@ -349,14 +334,12 @@ public class ModReaperAgent extends Agent {
 
                                     break;
                                 }
+                                // return to headquarters
                                 case RETURN: {
-
+                                    // get hq position, get node and then shortest path
                                     Position p = origin;
-
                                     Node n = map.get(p.getX(), p.getY());
-
                                     directions = paths.shortestPathTo(n);
-
                                     break;
                                 }
 
@@ -389,10 +372,11 @@ public class ModReaperAgent extends Agent {
 
                     }
 
+                    // if plan is not empty, pick up the next move
                     if (!plan.isEmpty()) {
 
                         Direction d = plan.poll();
-                        debug("Next move: %s", d);
+                        //debug("Next move: %s", d);
 
                         timestep++;
 
@@ -411,11 +395,8 @@ public class ModReaperAgent extends Agent {
 
                         arena.setOrigin(position.getX(), position.getY());
 
-                        if (detectLock()
-                                && (mode == Mode.EXPLORE || mode == Mode.SURVEIL)) {
-
+                        if (detectLock() && (mode == Mode.EXPLORE || mode == Mode.SURVEIL)) {
                             changeMode(Mode.CLEAR);
-
                         }
 
                         scan(0);
@@ -427,12 +408,8 @@ public class ModReaperAgent extends Agent {
 
             }
 
-            sleepcount++;
-            if (sleepcount > 2)
-                sleeptime++;
-
             if (timestep % 20 == 0) {
-                sleeptime = 1000 / getSpeed();
+                sleeptime = 100; //1000 / getSpeed();
             }
 
             try {
@@ -453,8 +430,7 @@ public class ModReaperAgent extends Agent {
     }
 
     protected void debug(String format, Object... objects) {
-        System.out.println("[" + getId() + "]: "
-                + String.format(format, objects));
+        System.out.println("[" + getId() + "]: " + String.format(format, objects));
     }
 
     private Set<Position> moveable = new HashSet<Position>();
@@ -472,25 +448,21 @@ public class ModReaperAgent extends Agent {
         HashSet<Position> moveable = new HashSet<Position>();
 
         for (int i = -n.getSize(); i <= n.getSize(); i++) {
-
             for (int j = -n.getSize(); j <= n.getSize(); j++) {
 
                 if ((i == 0 && j == 0))
                     continue;
 
                 if (n.getCell(i, j) == Neighborhood.HEADQUARTERS) {
-
+                    System.out.println("Discovered HQ");
                     if (origin == null)
                         origin = new Position(x + i, y + j);
-
                     continue;
                 }
 
-                if (n.getCell(i, j) > 0
-                        || n.getCell(i, j) == Neighborhood.OTHER) {
-
+                if (n.getCell(i, j) > 0 || n.getCell(i, j) == Neighborhood.OTHER) {
+                    System.out.println("Discovered something else");
                     moveable.add(new Position(x + i, y + j));
-
                 }
 
             }
@@ -532,8 +504,10 @@ public class ModReaperAgent extends Agent {
 
                     MemberData member = new MemberData(id);
                     member.setPosition(p);
+                    System.out.println("Member position " + p.getX() + " , " + p.getY());
                     member.notified = -30;
                     registry.put(id, member);
+                    System.out.println("Member with id " + id + " put in registry.");
                 }
 
                 MemberData data = registry.get(id);
@@ -544,7 +518,7 @@ public class ModReaperAgent extends Agent {
                     data.map = false;
                 }
 
-                if (Math.abs(timestep - data.info) < 5 && !data.hasFlag && !data.map) {
+                if (Math.abs(timestep - data.info) < 5 && !data.map) {
                     sendMap(id);
                     data.map = true;
                 }
@@ -622,7 +596,7 @@ public class ModReaperAgent extends Agent {
 
                 int size = 3;
 
-                if (n.getCell(i, j) == Neighborhood.OTHER && hasFlag)
+                if (n.getCell(i, j) == Neighborhood.OTHER)
                     size = 5;
 
                 int factor = (Integer.MAX_VALUE - 1) / size;
@@ -631,13 +605,10 @@ public class ModReaperAgent extends Agent {
 
                     for (int jj = -size; jj <= size; jj++) {
 
-                        int cost = Math.max(0, size
-                                - (Math.abs(ii) + Math.abs(jj)));
+                        int cost = Math.max(0, size - (Math.abs(ii) + Math.abs(jj)));
 
                         if (cost > 0)
-                            map
-                                    .addModifier(x + i + ii, y + j + jj,
-                                            cost * factor);
+                            map.addModifier(x + i + ii, y + j + jj, cost * factor);
                     }
 
                 }
@@ -684,8 +655,7 @@ public class ModReaperAgent extends Agent {
 
         Position p = member.getPosition();
 
-        return neighborhood.getCell(p.getX() - x, p.getY() - y) == member
-                .getId();
+        return neighborhood.getCell(p.getX() - x, p.getY() - y) == member.getId();
 
     }
 
@@ -703,8 +673,6 @@ public class ModReaperAgent extends Agent {
 
             switch (type) {
                 case 1: { // info message
-
-                    boolean hasFlag = in.readByte() == 1;
 
                     Position origin = new Position(0, 0);
                     origin.setX(in.readInt());
@@ -725,7 +693,6 @@ public class ModReaperAgent extends Agent {
                     synchronized (registry) {
                         if (registry.containsKey(from)) {
                             MemberData data = registry.get(from);
-                            data.hasFlag = hasFlag;
                             data.bounds = bounds;
                             data.origin = origin;
                             data.center = center;
@@ -782,13 +749,10 @@ public class ModReaperAgent extends Agent {
     private void sendInfo(int to) {
 
         try {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream(
-                    getMaxMessageSize());
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream(getMaxMessageSize());
             ObjectOutputStream out = new ObjectOutputStream(buffer);
 
             out.writeByte(1);
-
-            out.writeByte(hasFlag ? 1 : 0);
 
             Bounds bounds = map.getBounds();
 
@@ -932,8 +896,7 @@ public class ModReaperAgent extends Agent {
 
         history.clear();
 
-        float variability = (float) Math.sqrt(varianceX * varianceX + varianceY
-                * varianceY);
+        float variability = (float) Math.sqrt(varianceX * varianceX + varianceY * varianceY);
 
         return variability < 2;
     }

@@ -56,6 +56,21 @@ public abstract class Agent {
 	private static Vector<ClientProtocolSocket> clients = new Vector<ClientProtocolSocket>();
 	private static String teamOverride = null;
 
+    // increment swarm_counter to assign agents to subgroups
+    private static int swarm_counter = 0;
+
+    public int getSwarmCounter() {
+        return swarm_counter;
+    }
+
+    public void incrementSwarmCounter(){
+        swarm_counter++;
+    }
+
+    public void setSwarmCounter(int magic) {
+        this.swarm_counter = magic;
+    }
+
     /**
      *  The class loader is responsible for locating libraries, reading their contents,
      *  and loading the classes contained within the libraries. This loading is typically
@@ -258,7 +273,7 @@ public abstract class Agent {
 			terminated = true;
 		}
 
-		@Override
+        @Override
 		public void run() {
 			Thread messages = new Thread(new Runnable() {
 
