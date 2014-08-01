@@ -580,6 +580,26 @@ int bakd = ConstantsRDPSO.NUM_SWARMS;
                             plan.clear();
                         }
 
+                        // build vector H(t) that includes solutions of all agents within the swarmID group
+                        //double swarmSolutionArray[] = buildSwarmSolutionArray(swarmID);
+                        // find best solution in vector H(t) = max(H(t))
+                        //double maxSwarmSolution = findMax(swarmSolutionArray);
+                        // check if subgroup improved
+                      /*  if (maxSwarmSolution > bestSwarmSolution) {
+                            bestSwarmSolution = maxSwarmSolution;
+                            // update social component
+                            solutionArray[1] = agentPosition;
+                            // decrease stagnancy counter
+                            if (SC > 0)
+                                SC = SC - 1;
+                            // check if group can be rewarded
+                            if (SC == 0) {
+                                   ///blablalba
+                            }
+                        } */
+
+
+
                         if (plan.isEmpty()) {
 
                             List<Direction> directions = null;
