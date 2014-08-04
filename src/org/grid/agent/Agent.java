@@ -55,8 +55,9 @@ public abstract class Agent {
 	private static Class<Agent> agentClassStatic = null;
 	private static Vector<ClientProtocolSocket> clients = new Vector<ClientProtocolSocket>();
 	private static String teamOverride = null;
+    private static double swarmSolutionArray[][];
 
-    // increment swarm_counter to assign agents to subgroups
+    // increment swarm_counter to assign agents to subgroups (subswarms)
     private static int swarm_counter = 0;
 
     public int getSwarmCounter() {
@@ -69,6 +70,35 @@ public abstract class Agent {
 
     public void setSwarmCounter(int magic) {
         this.swarm_counter = magic;
+    }
+
+    protected void addToSwarmSolutionArray(int NUM_SWARMS, int MAX_AGENTS, int swarmID, double agentBestSolution) {
+
+    }
+
+    /* find best solution H_max in swarmSolutionArray */
+    // todo: test if works
+    protected double findSwarmSolutionMax(int swarmID) {
+        double tempMax = 0;
+        for(int i = 0; i < swarmSolutionArray[swarmID].length; i++) {
+            if (tempMax < swarmSolutionArray[swarmID][i]) {
+                tempMax = swarmSolutionArray[swarmID][i];
+            }
+        }
+        return tempMax;
+    }
+
+
+    /* find worst solution H_min in swarmSolutionArray */
+    // todo: test if works
+    protected double findSwarmSolutionMin(int swarmID) {
+        double tempMin = swarmSolutionArray[swarmID][0];
+        for(int i = 1; i < swarmSolutionArray[swarmID].length; i++) {
+            if (tempMin > swarmSolutionArray[swarmID][i]) {
+                tempMin = swarmSolutionArray[swarmID][i];
+            }
+        }
+        return tempMin;
     }
 
     /**

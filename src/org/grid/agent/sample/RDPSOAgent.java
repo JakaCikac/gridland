@@ -43,16 +43,18 @@ public class RDPSOAgent extends Agent {
     private Position origin = null;
     private Vector<Position> history = new Vector<Position>();
     private boolean firstIteration = true;
-
+    private int numSwarms = 3; // initial number of swarms
+    private int numAgents= 5; // initial number of agents in each swarm
+    private int numKilledAgents = 0; // initial excluded robots
 
     protected static class ConstantsRDPSO {
         /* number of swarms */
-        private static final int NUM_SWARMS = 3; // initial number of swarms
+
         private static final int MAX_SWARMS = 4; // maximum number of swarms
         private static final int MIN_SWARMS = 0; // minimum number of swarms (0, to allow social exclusion of all agents)
 
         /* number of agents in each swarm */
-        private static final int INIT_AGENTS = 5; // initial number of agents in each swarm
+
         private static final int MAX_AGENTS = 15; // maximum number of agents in each swarm
         private static final int MIN_AGENTS = 0;  // minimum number of agetns in each swarm
 
@@ -70,6 +72,8 @@ public class RDPSOAgent extends Agent {
 	private static enum AgentState {
 		EXPLORE, SEEK, RETURN
 	}
+
+
 
     private static class State {
 
@@ -232,10 +236,6 @@ public class RDPSOAgent extends Agent {
             window.setSize(view.getPreferredSize(arena));
             window.setVisible(true);
         }
-    }
-
-    private double evaluateObjectiveFunction(double agentPosition) {
-        return 0.0;
     }
 
     /**
@@ -520,6 +520,9 @@ int bakd = ConstantsRDPSO.NUM_SWARMS;
     double agentSolution = 0; // h(x_n(t))
     double agentBestSolution = 0; // h_best
     double solutionArray[] = new double[3]; // X_1(t) = cognitive, X_2(t) = social, X_3(t) = obstacle
+    double bestSwarmSolution = 0; // H_best , shared
+    double obstacleSolution = 0; // g(x_n(t))
+    double obstacleBestSolution = 0; // g_best , shared
 
 	@Override
 	public void run() {
@@ -580,12 +583,12 @@ int bakd = ConstantsRDPSO.NUM_SWARMS;
                             plan.clear();
                         }
 
-                        // build vector H(t) that includes solutions of all agents within the swarmID group
-                        //double swarmSolutionArray[] = buildSwarmSolutionArray(swarmID);
+                        // add agentSolution to vector H(t) that includes solutions of all agents within the swarmID group
+                        addToSwarmSolutionArray(ConstantsRDPSO.MAX_SWARMS, ConstantsRDPSO.MAX_AGENTS, swarmID, agentBestSolution);
                         // find best solution in vector H(t) = max(H(t))
-                        //double maxSwarmSolution = findMax(swarmSolutionArray);
+                        double maxSwarmSolution = findSwarmSolutionMax(swarmID);
                         // check if subgroup improved
-                      /*  if (maxSwarmSolution > bestSwarmSolution) {
+                        if (maxSwarmSolution > bestSwarmSolution) {
                             bestSwarmSolution = maxSwarmSolution;
                             // update social component
                             solutionArray[1] = agentPosition;
@@ -594,9 +597,57 @@ int bakd = ConstantsRDPSO.NUM_SWARMS;
                                 SC = SC - 1;
                             // check if group can be rewarded
                             if (SC == 0) {
-                                   ///blablalba
+                                // TODO: punishing counter.. verjetno moras za vsako skupino posebi belezit kolk agentov je bilo punished / rewarded.
+                                if ((numAgents < ConstantsRDPSO.MAX_AGENTS) && spawnAgentProbability()) {
+                                    System.out.println("Sending new agent request.");
+                                    // sendNewAgentRequest();
+                                    if (numKilledAgents > 0) {
+                                        // decrease excluded agents counter
+                                        numKilledAgents = numKilledAgents - 1;
+                                        // check if group can spawn a new subgroup
+                                        if (spawnGroupProbability()) {
+                                            System.out.println("Sending new group request.");
+                                            //sendNewGroupRequest();
+                                            if (numKilledAgents > 0) {
+                                                // decrease excluded agents counter
+                                                numKilledAgents = numKilledAgents - 1;
+                                            }
+                                        }
+                                    }
+                                }
                             }
-                        } */
+                        // subgroup has NOT IMPROVED
+                        } else {
+                            SC = SC + 1;
+                            if (SC == ConstantsRDPSO.SC_MAX) { // punsh subgroup
+                                if (numAgents > ConstantsRDPSO.MIN_AGENTS) { // check if agent can be excluded
+                                    numKilledAgents = numKilledAgents + 1;
+                                    // reset stagnancy counter
+                                    SC = ConstantsRDPSO.SC_MAX * (1 - (1 / (numKilledAgents + 1)));
+                                    // if this is the worst preforming agent in the group, exclude
+                                    if (agentBestSolution == findSwarmSolutionMin(swarmID)) {
+                                        // exclude agent
+                                        swarmID = 0;
+                                    }
+                                } else { // delete the entire subgroup
+                                   // exclude this agent
+                                    swarmID = 0;
+                                }
+                            }
+                            // evaluate obstacle function
+                            obstacleSolution = evaluateObstacleFunction();
+                            if (obstacleSolution >= obstacleBestSolution) {
+                                // check if obstacleSolution is better than currently best solution
+                                obstacleBestSolution = obstacleSolution;
+                                // update obstacle component with agent's current solution
+                                solutionArray[2] = agentPosition;
+                            }
+                            // UPDATE AGENT'S VELOCITY
+
+                            // UPDATE AGENT'S POSITION
+                            
+
+                        }
 
 
 
@@ -745,6 +796,27 @@ int bakd = ConstantsRDPSO.NUM_SWARMS;
                 }
             }
 
+    private double evaluateObjectiveFunction(double agentPosition) {
+        return 0.0;
+    }
+
+    private double evaluateObstacleFunction() {
+        return 0.0;
+    }
+
+    /* check probability of a group spawning a new subgroup */
+    private boolean spawnGroupProbability() {
+        if ( (Math.random() * (numAgents / ConstantsRDPSO.MAX_AGENTS)) > Math.random()) {
+            return true;
+        } else return false;
+    }
+
+    /* check probability of a group spawning a new agent */
+    private boolean spawnAgentProbability() {
+       if ( Math.random() * (1 / (numKilledAgents + 1) ) > Math.random())
+         return true;
+        else return false;
+    }
 
     private Set<Position> analyzeNeighborhood(Neighborhood n) {
         int x = position.getX();
