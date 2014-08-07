@@ -57,15 +57,31 @@ public abstract class Agent {
 	private static Vector<ClientProtocolSocket> clients = new Vector<ClientProtocolSocket>();
 	private static String teamOverride = null;
 
-    double MAX_SWARMS = 4;
+    double MAX_SWARMS = 5;
 
 
     // swarm arrays
-    // max swarms, max agents..
+
     private static double swarmSolutionArray[][] = new double[5][15];
+    /*
     private static double swarmSC[] = new double[5];
+
+    public static double[] getNumKilledAgents() {
+        return numKilledAgents;
+    }
+
+    public static double[] getNumAgents() {
+        return numAgents;
+    }
+
+    public static double[] getSwarmSC() {
+        return swarmSC;
+    }
+
     private static double numKilledAgents[] = new double[5];
     private static double numAgents[] = new double[5];
+
+    */
 
     // increment swarm_counter to assign agents to subgroups (subswarms)
     private static int swarm_counter = 0;
@@ -90,10 +106,14 @@ public abstract class Agent {
     // todo: test if works
     protected double findSwarmSolutionMax(int swarmID) {
         double tempMax = 0;
-        for(int i = 0; i < swarmSolutionArray[swarmID-1].length; i++) {
-            if (tempMax < swarmSolutionArray[swarmID-1][i]) {
-                tempMax = swarmSolutionArray[swarmID-1][i];
+        try {
+            for (int i = 0; i < swarmSolutionArray[swarmID].length; i++) {
+                if (tempMax < swarmSolutionArray[swarmID][i]) {
+                    tempMax = swarmSolutionArray[swarmID][i];
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return tempMax;
     }
@@ -102,10 +122,10 @@ public abstract class Agent {
     /* find worst solution H_min in swarmSolutionArray */
     // todo: test if works
     protected double findSwarmSolutionMin(int swarmID) {
-        double tempMin = swarmSolutionArray[swarmID-1][0];
-        for(int i = 1; i < swarmSolutionArray[swarmID-1].length; i++) {
-            if (tempMin > swarmSolutionArray[swarmID-1][i]) {
-                tempMin = swarmSolutionArray[swarmID-1][i];
+        double tempMin = swarmSolutionArray[swarmID][0];
+        for(int i = 1; i < swarmSolutionArray[swarmID].length; i++) {
+            if (tempMin > swarmSolutionArray[swarmID][i]) {
+                tempMin = swarmSolutionArray[swarmID][i];
             }
         }
         return tempMin;

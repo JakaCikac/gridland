@@ -53,12 +53,12 @@ public class RDPSOAgent extends Agent {
     protected static class ConstantsRDPSO {
         /* number of swarms */
 
-        private static final int MAX_SWARMS = 4; // maximum number of swarms
+        private static final int MAX_SWARMS = 5; // maximum number of swarms, including social exclusion group
         private static final int MIN_SWARMS = 0; // minimum number of swarms (0, to allow social exclusion of all agents)
 
         /* number of agents in each swarm */
 
-        private static final int INIT_AGETNS = 5; // initial number of agetns in each swarm
+        private static final int INIT_AGENTS = 5; // initial number of agetns in each swarm
         private static final int MAX_AGENTS = 15; // maximum number of agents in each swarm
         private static final int MIN_AGENTS = 1;  // minimum number of agents in each swarm
 
@@ -470,14 +470,11 @@ public class RDPSOAgent extends Agent {
         callAgent = false;
         createSwarm = false;
 
-        // todo: llall
-        // hm, kako bi to naredil shared znotraj subgroupov, pa da sami vedo?
-        // jah, pac arraye bos moral sharat... mooop mooop.. Kje pa jih inicializirat?
-
         // The array index indicates which swarmID it belongs to.
-        numAgents++;
         SC = 0;
+        numAgents = ConstantsRDPSO.INIT_AGENTS;
         numKilledAgents = 0;
+
 
         local = 0;
         global = 0;
@@ -499,10 +496,10 @@ public class RDPSOAgent extends Agent {
     }
 
     /*
-        assign agents to different (incremental) swarm groups inside the main swarm (1 to MAX_SWARMS)
+        assign agents to different (incremental) swarm groups inside the main swarm (1 to MAX_SWARMS-1), 0 is social exclusion
      */
     private int assignToSwarm() {
-        if (getSwarmCounter() == ConstantsRDPSO.MAX_SWARMS)
+        if (getSwarmCounter() == ConstantsRDPSO.MAX_SWARMS - 1)
             setSwarmCounter(0);
         incrementSwarmCounter();
         return getSwarmCounter();
@@ -566,8 +563,10 @@ public class RDPSOAgent extends Agent {
 
                         // confirm that the agent is not a member of the excluded group (swarmID = 0)
                         if (swarmID != 0) {
+
                             // evaluate agent's current solution = h(x_n(t))
                             agentSolution = evaluateObjectiveFunction(agentPositionX, agentPositionY);
+
                             // check if agent improved and update agent's best solution
                             if (agentSolution > agentBestSolution) {
                                 agentBestSolution = agentSolution;
@@ -578,17 +577,19 @@ public class RDPSOAgent extends Agent {
 
                             // Send information to other agents
                             Set<Position> movable = analyzeNeighborhood(state.neighborhood);
+
                             // update agent's local map
                             boolean replanMap = map.update(state.neighborhood, position, timestep);
                             registerMoveable(movable, state.neighborhood);
-
                             replanAgents = blockMoveable(movable, state.neighborhood);
 
+                            // update information
                             while (!inbox.isEmpty()) {
                                 Message m = inbox.poll();
                                 // receive and parse message from other agents, filter data from agent's swarm
                                 replanMap &= parse(m.from, m.message, state.neighborhood);
                             }
+
                             // update arena
                             if (view != null)
                                 view.update(arena);
@@ -600,6 +601,8 @@ public class RDPSOAgent extends Agent {
 
                             // add agentSolution to vector H(t) that includes solutions of all agents within the swarmID group
                             addToSwarmSolutionArray(ConstantsRDPSO.MAX_SWARMS, ConstantsRDPSO.MAX_AGENTS, swarmID, agentBestSolution);
+                            // wait till all agents put solutions in solution array...
+
                             // find best solution in vector H(t) = max(H(t))
                             double maxSwarmSolution = findSwarmSolutionMax(swarmID);
                             // check if subgroup improved
@@ -710,6 +713,14 @@ public class RDPSOAgent extends Agent {
                             if (replanMap || replanAgents) {
                                 plan.clear();
                             }
+
+                            // randomly wander round
+                            // evaluate solution
+                            // check if agent improved
+                            // send group info
+                            // build vector H
+                            // check if group improved
+
 
                         }
 
