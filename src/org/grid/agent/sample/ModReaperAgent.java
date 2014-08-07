@@ -259,6 +259,8 @@ public class ModReaperAgent extends Agent {
                         replanMap &=parse(m.from, m.message,state.neighborhood);
                     }
 
+                    System.out.println("X, Y: " + position.getX() + ", " + position.getY());
+
                     if (view != null)
                         view.update(arena);
 

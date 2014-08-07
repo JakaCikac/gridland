@@ -28,6 +28,7 @@ import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import org.grid.agent.sample.RDPSOAgent;
 import org.grid.agent.sample.SampleAgent;
 import org.grid.protocol.Message;
 import org.grid.protocol.Neighborhood;
@@ -55,7 +56,8 @@ public abstract class Agent {
 	private static Class<Agent> agentClassStatic = null;
 	private static Vector<ClientProtocolSocket> clients = new Vector<ClientProtocolSocket>();
 	private static String teamOverride = null;
-    private static double swarmSolutionArray[][];
+    // max swarms, max agents..
+    private static double swarmSolutionArray[][] =new double[4][15];
 
     // increment swarm_counter to assign agents to subgroups (subswarms)
     private static int swarm_counter = 0;
@@ -80,9 +82,9 @@ public abstract class Agent {
     // todo: test if works
     protected double findSwarmSolutionMax(int swarmID) {
         double tempMax = 0;
-        for(int i = 0; i < swarmSolutionArray[swarmID].length; i++) {
-            if (tempMax < swarmSolutionArray[swarmID][i]) {
-                tempMax = swarmSolutionArray[swarmID][i];
+        for(int i = 0; i < swarmSolutionArray[swarmID-1].length; i++) {
+            if (tempMax < swarmSolutionArray[swarmID-1][i]) {
+                tempMax = swarmSolutionArray[swarmID-1][i];
             }
         }
         return tempMax;
@@ -92,10 +94,10 @@ public abstract class Agent {
     /* find worst solution H_min in swarmSolutionArray */
     // todo: test if works
     protected double findSwarmSolutionMin(int swarmID) {
-        double tempMin = swarmSolutionArray[swarmID][0];
-        for(int i = 1; i < swarmSolutionArray[swarmID].length; i++) {
-            if (tempMin > swarmSolutionArray[swarmID][i]) {
-                tempMin = swarmSolutionArray[swarmID][i];
+        double tempMin = swarmSolutionArray[swarmID-1][0];
+        for(int i = 1; i < swarmSolutionArray[swarmID-1].length; i++) {
+            if (tempMin > swarmSolutionArray[swarmID-1][i]) {
+                tempMin = swarmSolutionArray[swarmID-1][i];
             }
         }
         return tempMin;
