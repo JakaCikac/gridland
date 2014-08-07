@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f3f6e5c1-36d1-4bde-93db-26e0cc79e510" name="Default" comment="Looks nicer in theory than it does with this code.">
+    <list default="true" id="f3f6e5c1-36d1-4bde-93db-26e0cc79e510" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/Agent.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/Agent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/sample/ModReaperAgent.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/sample/ModReaperAgent.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -76,46 +75,46 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="RDPSOAgent.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="RDPSOAgent.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4130241" vertical-offset="8357" max-vertical-offset="18285">
-              <caret line="588" column="57" selection-start-line="588" selection-start-column="57" selection-end-line="588" selection-end-column="57" />
+            <state vertical-scroll-proportion="-93.46154" vertical-offset="6840" max-vertical-offset="18240">
+              <caret line="618" column="71" selection-start-line="618" selection-start-column="71" selection-end-line="618" selection-end-column="71" />
               <folding>
-                <element signature="e#0#43813#0" expanded="true" />
+                <element signature="e#0#43748#0" expanded="true" />
                 <element signature="imports" expanded="true" />
                 <element signature="e#1547#1557#0" expanded="true" />
                 <element signature="e#1624#1645#0" expanded="true" />
                 <element signature="e#1734#1744#0" expanded="true" />
-                <element signature="e#3649#3965#0" expanded="true" />
-                <element signature="e#3958#3959#0" expanded="true" />
-                <element signature="e#5462#5463#0" expanded="true" />
-                <element signature="e#5495#5496#0" expanded="true" />
-                <element signature="e#5536#5537#0" expanded="true" />
-                <element signature="e#5575#5576#0" expanded="true" />
-                <element signature="e#5629#5630#0" expanded="true" />
-                <element signature="e#5677#5678#0" expanded="true" />
-                <element signature="e#14904#14911#0" expanded="true" />
-                <element signature="e#14991#15000#0" expanded="true" />
-                <element signature="e#15081#15092#0" expanded="true" />
-                <element signature="e#34784#34794#0" expanded="true" />
-                <element signature="e#37670#37671#0" expanded="true" />
-                <element signature="e#37720#37721#0" expanded="true" />
-                <element signature="e#38738#38748#0" expanded="true" />
-                <element signature="e#38804#38814#0" expanded="true" />
-                <element signature="e#41741#41756#0" expanded="true" />
-                <element signature="e#41848#42347#0" expanded="true" />
-                <element signature="e#42332#42333#0" expanded="true" />
+                <element signature="e#3782#4098#0" expanded="true" />
+                <element signature="e#4091#4092#0" expanded="true" />
+                <element signature="e#5598#5599#0" expanded="true" />
+                <element signature="e#5631#5632#0" expanded="true" />
+                <element signature="e#5672#5673#0" expanded="true" />
+                <element signature="e#5711#5712#0" expanded="true" />
+                <element signature="e#5765#5766#0" expanded="true" />
+                <element signature="e#5813#5814#0" expanded="true" />
+                <element signature="e#15040#15047#0" expanded="true" />
+                <element signature="e#15127#15136#0" expanded="true" />
+                <element signature="e#15217#15228#0" expanded="true" />
+                <element signature="e#34719#34729#0" expanded="true" />
+                <element signature="e#37605#37606#0" expanded="true" />
+                <element signature="e#37655#37656#0" expanded="true" />
+                <element signature="e#38673#38683#0" expanded="true" />
+                <element signature="e#38739#38749#0" expanded="true" />
+                <element signature="e#41676#41691#0" expanded="true" />
+                <element signature="e#41783#42282#0" expanded="true" />
+                <element signature="e#42267#42268#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Agent.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Agent.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/grid/agent/Agent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="278" max-vertical-offset="7845">
-              <caret line="86" column="54" selection-start-line="86" selection-start-column="54" selection-end-line="86" selection-end-column="54" />
+            <state vertical-scroll-proportion="1.0331299" vertical-offset="0" max-vertical-offset="7980">
+              <caret line="119" column="53" selection-start-line="119" selection-start-column="53" selection-end-line="119" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -182,8 +181,8 @@
         <option value="$PROJECT_DIR$/src/org/grid/agent/sample/ModReaperAgent.java" />
         <option value="$PROJECT_DIR$/src/org/grid/protocol/Neighborhood.java" />
         <option value="$PROJECT_DIR$/src/org/grid/arena/Arena.java" />
-        <option value="$PROJECT_DIR$/src/org/grid/agent/Agent.java" />
         <option value="$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java" />
+        <option value="$PROJECT_DIR$/src/org/grid/agent/Agent.java" />
       </list>
     </option>
   </component>
@@ -855,7 +854,7 @@
       <workItem from="1405944816007" duration="3467000" />
       <workItem from="1406047022506" duration="786000" />
       <workItem from="1406536050929" duration="62717000" />
-      <workItem from="1407397078998" duration="3649000" />
+      <workItem from="1407397078998" duration="8872000" />
     </task>
     <task id="LOCAL-00001" summary="Test commit.">
       <created>1394200726993</created>
@@ -1105,11 +1104,15 @@
       <created>1407145763383</created>
       <updated>1407145763383</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="Some fixes to if/else indents.">
+      <created>1407400863892</created>
+      <updated>1407400863893</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="202307000" />
+    <option name="totallyTimeSpent" value="207530000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1133,7 +1136,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="2560" height="1440" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3540622" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1144,7 +1147,7 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959612" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23138686" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14233577" sideWeight="0.5019857" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14233577" sideWeight="0.5019857" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32956383" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36591277" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1180,7 +1183,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Comments, comments everywhere.." />
     <MESSAGE value="Comments, comments everywhere.. pt.2&#10;" />
     <MESSAGE value="Comments, comments everywhere.. pt.3&#10;" />
     <MESSAGE value="Comments, comments everywhere.. pt.4&#10;" />
@@ -1205,7 +1207,8 @@
     <MESSAGE value="Hm. No Idea what I'm doing." />
     <MESSAGE value="Still have no idea what I'm doing.." />
     <MESSAGE value="Looks nicer in theory than it does with this code." />
-    <option name="LAST_COMMIT_MESSAGE" value="Looks nicer in theory than it does with this code." />
+    <MESSAGE value="Some fixes to if/else indents." />
+    <option name="LAST_COMMIT_MESSAGE" value="Some fixes to if/else indents." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1370,6 +1373,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="2340">
           <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2016,44 +2020,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/Agent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="278" max-vertical-offset="7845">
-          <caret line="86" column="54" selection-start-line="86" selection-start-column="54" selection-end-line="86" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4130241" vertical-offset="8357" max-vertical-offset="18285">
-          <caret line="588" column="57" selection-start-line="588" selection-start-column="57" selection-end-line="588" selection-end-column="57" />
+        <state vertical-scroll-proportion="-93.46154" vertical-offset="6840" max-vertical-offset="18240">
+          <caret line="618" column="71" selection-start-line="618" selection-start-column="71" selection-end-line="618" selection-end-column="71" />
           <folding>
-            <element signature="e#0#43813#0" expanded="true" />
+            <element signature="e#0#43748#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1547#1557#0" expanded="true" />
             <element signature="e#1624#1645#0" expanded="true" />
             <element signature="e#1734#1744#0" expanded="true" />
-            <element signature="e#3649#3965#0" expanded="true" />
-            <element signature="e#3958#3959#0" expanded="true" />
-            <element signature="e#5462#5463#0" expanded="true" />
-            <element signature="e#5495#5496#0" expanded="true" />
-            <element signature="e#5536#5537#0" expanded="true" />
-            <element signature="e#5575#5576#0" expanded="true" />
-            <element signature="e#5629#5630#0" expanded="true" />
-            <element signature="e#5677#5678#0" expanded="true" />
-            <element signature="e#14904#14911#0" expanded="true" />
-            <element signature="e#14991#15000#0" expanded="true" />
-            <element signature="e#15081#15092#0" expanded="true" />
-            <element signature="e#34784#34794#0" expanded="true" />
-            <element signature="e#37670#37671#0" expanded="true" />
-            <element signature="e#37720#37721#0" expanded="true" />
-            <element signature="e#38738#38748#0" expanded="true" />
-            <element signature="e#38804#38814#0" expanded="true" />
-            <element signature="e#41741#41756#0" expanded="true" />
-            <element signature="e#41848#42347#0" expanded="true" />
-            <element signature="e#42332#42333#0" expanded="true" />
+            <element signature="e#3782#4098#0" expanded="true" />
+            <element signature="e#4091#4092#0" expanded="true" />
+            <element signature="e#5598#5599#0" expanded="true" />
+            <element signature="e#5631#5632#0" expanded="true" />
+            <element signature="e#5672#5673#0" expanded="true" />
+            <element signature="e#5711#5712#0" expanded="true" />
+            <element signature="e#5765#5766#0" expanded="true" />
+            <element signature="e#5813#5814#0" expanded="true" />
+            <element signature="e#15040#15047#0" expanded="true" />
+            <element signature="e#15127#15136#0" expanded="true" />
+            <element signature="e#15217#15228#0" expanded="true" />
+            <element signature="e#34719#34729#0" expanded="true" />
+            <element signature="e#37605#37606#0" expanded="true" />
+            <element signature="e#37655#37656#0" expanded="true" />
+            <element signature="e#38673#38683#0" expanded="true" />
+            <element signature="e#38739#38749#0" expanded="true" />
+            <element signature="e#41676#41691#0" expanded="true" />
+            <element signature="e#41783#42282#0" expanded="true" />
+            <element signature="e#42267#42268#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/Agent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.0331299" vertical-offset="0" max-vertical-offset="7980">
+          <caret line="119" column="53" selection-start-line="119" selection-start-column="53" selection-end-line="119" selection-end-column="53" />
+          <folding />
         </state>
       </provider>
     </entry>

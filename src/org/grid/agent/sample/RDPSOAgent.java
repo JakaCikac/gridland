@@ -43,8 +43,11 @@ public class RDPSOAgent extends Agent {
     private Position origin = null;
     private Vector<Position> history = new Vector<Position>();
     private boolean firstIteration = true;
+
     private int numSwarms = 3; // initial number of swarms
-    private int numAgents = 5; // initial number of agents in each swarm
+
+    /* shared variables in swarm .. */
+    private int numAgents = 5; // current number of agents in each swarm
     private int numKilledAgents = 0; // initial excluded robots
 
     protected static class ConstantsRDPSO {
@@ -55,6 +58,7 @@ public class RDPSOAgent extends Agent {
 
         /* number of agents in each swarm */
 
+        private static final int INIT_AGETNS = 5; // initial number of agetns in each swarm
         private static final int MAX_AGENTS = 15; // maximum number of agents in each swarm
         private static final int MIN_AGENTS = 1;  // minimum number of agents in each swarm
 
@@ -124,7 +128,7 @@ public class RDPSOAgent extends Agent {
     private double vy_t3 = 0;
 
     private int num_kill = 0;             // number of killed agents in swarm
-    private double SC = 0;                // search counter
+    private double SC = 0;                // stagnancy counter
     private boolean callAgent = false;    // need of calling a agent
     private boolean createSwarm = false;  // need of creating a swarm
 
@@ -462,24 +466,18 @@ public class RDPSOAgent extends Agent {
 
     public void initializeRDPSO() {
         // initialize cognitive, social and obstacle as agent's own position
-        //xcognitive = position.getX();
-        //ycognitive = position.getY();
-        //xobs = position.getX();
-        //yobs = position.getY();
-        //xgbest = position.getX();
-        //ygbest = position.getY();
-
-        // initialize objective functions to zero
-        //mainBestFunction = 0;
-        //gbestValue = 0;
-        //obsBestFunction = ConstantsRDPSO.COMM_RANGE;
-        swarmID = 1;//assignToSwarm();
-        System.out.println("Swarm ID: " + swarmID);
+        swarmID = assignToSwarm();
         callAgent = false;
         createSwarm = false;
 
+        // todo: llall
+        // hm, kako bi to naredil shared znotraj subgroupov, pa da sami vedo?
+        // jah, pac arraye bos moral sharat... mooop mooop.. Kje pa jih inicializirat?
+
+        // The array index indicates which swarmID it belongs to.
+        numAgents++;
         SC = 0;
-        num_kill = 0;
+        numKilledAgents = 0;
 
         local = 0;
         global = 0;
@@ -493,6 +491,7 @@ public class RDPSOAgent extends Agent {
         vy_t2 = 0;
         vy_t3 = 0;
 
+        // This is the same for all agents.
         constantArray[0] = ConstantsRDPSO.C1;
         constantArray[1] = ConstantsRDPSO.C2;
         constantArray[2] = ConstantsRDPSO.C3;
@@ -529,6 +528,7 @@ public class RDPSOAgent extends Agent {
     double obstacleSolution = 0; // g(x_n(t))
     double obstacleBestSolution = 0; // g_best , shared
 
+    // every agent has the same constants but it's own randoms
     double constantArray[] = new double[3];
     double randomArray[] = new double[3];
 
@@ -575,7 +575,6 @@ public class RDPSOAgent extends Agent {
                                 solutionArray[0] = agentPositionX;
                                 solutionArray[3] = agentPositionY;
                             }
-
 
                             // Send information to other agents
                             Set<Position> movable = analyzeNeighborhood(state.neighborhood);
@@ -640,9 +639,7 @@ public class RDPSOAgent extends Agent {
                                 SC = SC + 1;
                                 if (SC == ConstantsRDPSO.SC_MAX) { // punsh subgroup
                                     if (numAgents > ConstantsRDPSO.MIN_AGENTS) { // check if agent can be excluded
-                                        System.out.println("Num killed agents1 " + numKilledAgents);
                                         numKilledAgents++;
-                                        System.out.println("Num killed agents2 " + numKilledAgents);
                                         // reset stagnancy counter
                                         SC = ConstantsRDPSO.SC_MAX * (1 - (1 / (numKilledAgents + 1)));
                                         // if this is the worst preforming agent in the group, exclude
@@ -654,6 +651,7 @@ public class RDPSOAgent extends Agent {
                                     } else { // delete the entire subgroup
                                         // exclude this agent
                                         swarmID = 0;
+                                        numAgents--;
                                     }
                                 }
                             }
@@ -855,7 +853,6 @@ public class RDPSOAgent extends Agent {
                     }
                 } else
                     scan(0);
-
             }
         }
     }

@@ -56,8 +56,16 @@ public abstract class Agent {
 	private static Class<Agent> agentClassStatic = null;
 	private static Vector<ClientProtocolSocket> clients = new Vector<ClientProtocolSocket>();
 	private static String teamOverride = null;
+
+    double MAX_SWARMS = 4;
+
+
+    // swarm arrays
     // max swarms, max agents..
-    private static double swarmSolutionArray[][] =new double[4][15];
+    private static double swarmSolutionArray[][] = new double[5][15];
+    private static double swarmSC[] = new double[5];
+    private static double numKilledAgents[] = new double[5];
+    private static double numAgents[] = new double[5];
 
     // increment swarm_counter to assign agents to subgroups (subswarms)
     private static int swarm_counter = 0;
@@ -102,6 +110,7 @@ public abstract class Agent {
         }
         return tempMin;
     }
+
 
     /**
      *  The class loader is responsible for locating libraries, reading their contents,
