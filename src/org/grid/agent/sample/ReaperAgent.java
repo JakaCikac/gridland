@@ -122,16 +122,13 @@ public class ReaperAgent extends Agent {
 
             this.center = center;
 
-            radius = Math.min(known.getRight() - known.getLeft(), known
-                    .getBottom()
-                    - known.getTop());
+            radius = Math.min(known.getRight() - known.getLeft(), known.getBottom()- known.getTop());
         }
 
         @Override
         public boolean filter(Node n) {
 
-            if (n.getPosition().getX() % 3 != 0
-                    || n.getPosition().getY() % 3 != 0)
+            if (n.getPosition().getX() % 3 != 0|| n.getPosition().getY() % 3 != 0)
                 return false;
 
             if (!known.inside(n.getPosition()))

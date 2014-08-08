@@ -23,6 +23,7 @@ import org.grid.arena.SwingView;
 import org.grid.protocol.Message.Direction;
 import org.grid.protocol.Neighborhood;
 import org.grid.protocol.Position;
+import org.grid.agent.sample.ConstantsRDPSO;
 
 import javax.swing.*;
 import java.io.*;
@@ -50,27 +51,6 @@ public class RDPSOAgent extends Agent {
     private int numAgents = 5; // current number of agents in each swarm
     private int numKilledAgents = 0; // initial excluded robots
 
-    protected static class ConstantsRDPSO {
-        /* number of swarms */
-
-        private static final int MAX_SWARMS = 5; // maximum number of swarms, including social exclusion group
-        private static final int MIN_SWARMS = 0; // minimum number of swarms (0, to allow social exclusion of all agents)
-
-        /* number of agents in each swarm */
-
-        private static final int INIT_AGENTS = 5; // initial number of agetns in each swarm
-        private static final int MAX_AGENTS = 15; // maximum number of agents in each swarm
-        private static final int MIN_AGENTS = 1;  // minimum number of agents in each swarm
-
-        /* RDPSO coefficients */
-        private static final double W = 0.6;   // inertial coefficient (fract)
-        private static final double C1 = 0.8;  // cognitive weight (pc)
-        private static final double C2 = 0.04; // social weight (ps)
-        private static final double C3 = 0.2;  // obstacle suspectibility weight (pobs)
-
-        private static final int SC_MAX = 15;     // maximum number of iterations without improving the swarm
-        private static final int COMM_RANGE = 200; // maximum communication range
-    }
 
     // Possible agent states
     private static enum AgentState {

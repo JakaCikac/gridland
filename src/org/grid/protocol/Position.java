@@ -41,14 +41,17 @@ public class Position implements Serializable {
 	}
 
     /**
-     * Position scaled for factor factor
+     * Position p scaled for factor factor.
+     * @param p
+     * @param factor
      */
 	public Position(Position p, int factor) {
 		super();
 		this.x = p.x * factor;
 		this.y = p.y * factor;
 	}
-	
+
+
 	public String toString() {
 		return String.format("Position: %d, %d", getX(), getY());
 	}
@@ -75,29 +78,46 @@ public class Position implements Serializable {
      * @return int distance
      */
     public static int distance(Position p1, Position p2) {
-		return Math.max(Math.abs(p1.getX() - p2.getX()), Math.abs(p1.getY()
-				- p2.getY()));
+		return Math.max(Math.abs(p1.getX() - p2.getX()), Math.abs(p1.getY()- p2.getY()));
     }
 
     /**
      * Offset position for position points x and y
+     * @param p
      */
     public void offset(Position p) {
     	x += p.x;
     	y += p.y;
     }
 
-    // Getters
+    /**
+     * Retrieve component x.
+     * @return x
+     */
     public int getX() {
         return x;
     }
+
+    /**
+     * Retrieve component y.
+     * @return y
+     */
     public int getY() {
         return y;
     }
-    // Setters
+
+    /**
+     * Set component x.
+     * @param x
+     */
     public void setX(int x) {
         this.x = x;
     }
+
+    /**
+     * Set component y.
+     * @param y
+     */
     public void setY(int y) {
         this.y = y;
     }
