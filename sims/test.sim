@@ -1,5 +1,6 @@
 simulation.speed=100
 message.speed=20
+message.size=1024
 simulation.field=/Users/nanorax/Documents/workspace/gridland/maps/beatle.png
 simulation.agents=100
 simulation.respawn=30

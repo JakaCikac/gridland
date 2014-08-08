@@ -288,14 +288,14 @@ public class RDPSOAgent extends Agent {
             //out.writeDouble(ygbest);
             //out.writeDouble(xobs);
             //out.writeDouble(yobs);
-            out.writeDouble(vx);
-            out.writeDouble(vx_t1);
-            out.writeDouble(vx_t2);
-            out.writeDouble(vx_t3);
-            out.writeDouble(vy);
-            out.writeDouble(vy_t1);
-            out.writeDouble(vy_t2);
-            out.writeDouble(vy_t3);
+            //out.writeDouble(vx);
+            //out.writeDouble(vx_t1);
+            //out.writeDouble(vx_t2);
+            //out.writeDouble(vx_t3);
+            //out.writeDouble(vy);
+            //out.writeDouble(vy_t1);
+            //out.writeDouble(vy_t2);
+            //out.writeDouble(vy_t3);
             out.writeInt(num_kill);
             out.writeDouble(SC);
             out.writeBoolean(callAgent);
@@ -351,20 +351,20 @@ public class RDPSOAgent extends Agent {
                     swarmID = in.readInt();
                     tempLocal = in.readDouble();
                     tempGlobal = in.readDouble();
-                    tempXcognitive = in.readDouble();
-                    tempYcognitive = in.readDouble();
-                    tempxGbest = in.readDouble();
-                    tempyGbest = in.readDouble();
-                    tempXobs = in.readDouble();
-                    tempYobs = in.readDouble();
-                    vx = in.readDouble();
-                    vx_t1 = in.readDouble();
-                    vx_t2 = in.readDouble();
-                    vx_t3 = in.readDouble();
-                    vy = in.readDouble();
-                    vy_t1 = in.readDouble();
-                    vy_t2 = in.readDouble();
-                    vy_t3 = in.readDouble();
+                    //tempXcognitive = in.readDouble();
+                    //tempYcognitive = in.readDouble();
+                    //tempxGbest = in.readDouble();
+                    //tempyGbest = in.readDouble();
+                    //tempXobs = in.readDouble();
+                    //tempYobs = in.readDouble();
+                    //vx = in.readDouble();
+                    //vx_t1 = in.readDouble();
+                    //vx_t2 = in.readDouble();
+                    //vx_t3 = in.readDouble();
+                    //vy = in.readDouble();
+                    //vy_t1 = in.readDouble();
+                    //vy_t2 = in.readDouble();
+                    //vy_t3 = in.readDouble();
                     num_kill = in.readInt();
                     SC = in.readDouble();
                     callAgent = in.readBoolean();
@@ -475,6 +475,8 @@ public class RDPSOAgent extends Agent {
         numAgents = ConstantsRDPSO.INIT_AGENTS;
         numKilledAgents = 0;
 
+        swarmSolutionArray = new double[ConstantsRDPSO.MAX_AGENTS];
+
 
         local = 0;
         global = 0;
@@ -530,6 +532,8 @@ public class RDPSOAgent extends Agent {
     double randomArray[] = new double[3];
 
     boolean replanAgents = true;
+
+    double swarmSolutionArray[];
 
     // agentPositionX,Y = current agent position
     // agentSolution = agent's current solution
@@ -688,7 +692,17 @@ public class RDPSOAgent extends Agent {
 
                             // UPDATE AGENT'S POSITION
                             agentPositionX = agentPositionX + agentVelocityX;
+                            System.out.println("New agent position X: " + agentPositionX);
+                            int roundedX = (int) Math.round(agentPositionX);
+                            System.out.println("New rounded position X: " + roundedX);
+
                             agentPositionY = agentVelocityY + agentVelocityX;
+                            System.out.println("New agent position Y: " + agentPositionY);
+                            int roundedY = (int) Math.round(agentPositionY);
+                            System.out.println("New rounded position Y: " + roundedY);
+
+                            // move agent to new position
+                            //todo: move agent to new calculated position
 
                         } else { // if agent is in the EXCLUDED MEMBERS GROUP
 
@@ -698,7 +712,7 @@ public class RDPSOAgent extends Agent {
                             boolean replanMap = map.update(state.neighborhood, position, timestep);
                             registerMoveable(movable, state.neighborhood);
 
-                            replanAgents = blockMoveable(movable, state.neighborhood);
+                            //replanAgents = blockMoveable(movable, state.neighborhood);
 
                             while (!inbox.isEmpty()) {
                                 Message m = inbox.poll();
@@ -710,9 +724,9 @@ public class RDPSOAgent extends Agent {
                                 view.update(arena);
 
                             // if replan required
-                            if (replanMap || replanAgents) {
-                                plan.clear();
-                            }
+                            //if (replanMap || replanAgents) {
+                            //    plan.clear();
+                            // }
 
                             // randomly wander round
                             // evaluate solution
@@ -724,7 +738,7 @@ public class RDPSOAgent extends Agent {
 
                         }
 
-                        if (plan.isEmpty()) {
+                        /* if (plan.isEmpty()) {
 
                             List<Direction> directions = null;
 
@@ -860,7 +874,7 @@ public class RDPSOAgent extends Agent {
                             scan(0);
 
                         }
-
+                            */
                     }
                 } else
                     scan(0);
