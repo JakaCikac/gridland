@@ -2,11 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3f6e5c1-36d1-4bde-93db-26e0cc79e510" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/grid/agent/sample/ConstantsRDPSO.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/agents/agents/LocalMap.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/protocol/Position.java" afterPath="$PROJECT_DIR$/src/org/grid/protocol/Position.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/sample/ReaperAgent.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/sample/ReaperAgent.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="gridland.iws" />
@@ -905,7 +900,7 @@
       <workItem from="1406047022506" duration="786000" />
       <workItem from="1406536050929" duration="62717000" />
       <workItem from="1407397078998" duration="11898000" />
-      <workItem from="1407482699046" duration="8989000" />
+      <workItem from="1407482699046" duration="9684000" />
     </task>
     <task id="LOCAL-00001" summary="Test commit.">
       <created>1394200726993</created>
@@ -1171,11 +1166,15 @@
       <created>1407489463693</created>
       <updated>1407489463693</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="Put Constants in separate class, added some comments.">
+      <created>1407494443354</created>
+      <updated>1407494443354</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="219545000" />
+    <option name="totallyTimeSpent" value="220240000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1246,7 +1245,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Comments, comments everywhere.. pt.4&#10;" />
     <MESSAGE value="Comments, comments everywhere.. pt.5&#10;" />
     <MESSAGE value="Comments, comments everywhere.. pt.6&#10;" />
     <MESSAGE value="Add mili, micro and nano to ZOOM_LEVELS." />
@@ -1271,7 +1269,8 @@
     <MESSAGE value="Some fixes to if/else indents." />
     <MESSAGE value="Fixing swarm arrays and indices." />
     <MESSAGE value="No idea what I'm doing.." />
-    <option name="LAST_COMMIT_MESSAGE" value="No idea what I'm doing.." />
+    <MESSAGE value="Put Constants in separate class, added some comments." />
+    <option name="LAST_COMMIT_MESSAGE" value="Put Constants in separate class, added some comments." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
