@@ -262,27 +262,12 @@ public class RDPSOAgent extends Agent {
             out.writeInt(swarmID);
             out.writeDouble(local);
             out.writeDouble(global);
-            //out.writeDouble(xcognitive);
-            //out.writeDouble(ycognitive);
-            //out.writeDouble(xgbest);
-            //out.writeDouble(ygbest);
-            //out.writeDouble(xobs);
-            //out.writeDouble(yobs);
-            //out.writeDouble(vx);
-            //out.writeDouble(vx_t1);
-            //out.writeDouble(vx_t2);
-            //out.writeDouble(vx_t3);
-            //out.writeDouble(vy);
-            //out.writeDouble(vy_t1);
-            //out.writeDouble(vy_t2);
-            //out.writeDouble(vy_t3);
+
             out.writeInt(num_kill);
             out.writeDouble(SC);
             out.writeBoolean(callAgent);
             out.writeBoolean(createSwarm);
-            //out.writeDouble(mainBestFunction);
-            //out.writeDouble(gbestValue);
-            //out.writeDouble(obsBestFunction);
+
             out.writeInt(timestep);
 
             out.flush();
@@ -331,27 +316,12 @@ public class RDPSOAgent extends Agent {
                     swarmID = in.readInt();
                     tempLocal = in.readDouble();
                     tempGlobal = in.readDouble();
-                    //tempXcognitive = in.readDouble();
-                    //tempYcognitive = in.readDouble();
-                    //tempxGbest = in.readDouble();
-                    //tempyGbest = in.readDouble();
-                    //tempXobs = in.readDouble();
-                    //tempYobs = in.readDouble();
-                    //vx = in.readDouble();
-                    //vx_t1 = in.readDouble();
-                    //vx_t2 = in.readDouble();
-                    //vx_t3 = in.readDouble();
-                    //vy = in.readDouble();
-                    //vy_t1 = in.readDouble();
-                    //vy_t2 = in.readDouble();
-                    //vy_t3 = in.readDouble();
+
                     num_kill = in.readInt();
                     SC = in.readDouble();
                     callAgent = in.readBoolean();
                     createSwarm = in.readBoolean();
-                    //mainBestFunction = in.readDouble();
-                    //gbestValue = in.readDouble();
-                    //obsBestFunction = in.readDouble();
+
 
 
                     preTime = in.readInt();
@@ -528,6 +498,7 @@ public class RDPSOAgent extends Agent {
         scan(0);
 
         while (isAlive()) {
+
             // check for new state data
             State state = buffer.poll();
             // check if state is null, if null, you must call scan(0)
@@ -578,11 +549,6 @@ public class RDPSOAgent extends Agent {
                             if (view != null)
                                 view.update(arena);
 
-                            // if replan required
-                            if (replanMap || replanAgents) {
-                                plan.clear();
-                            }
-
                             // add agentSolution to vector H(t) that includes solutions of all agents within the swarmID group
                             addToSwarmSolutionArray(ConstantsRDPSO.MAX_SWARMS, ConstantsRDPSO.MAX_AGENTS, swarmID, agentBestSolution);
                             // wait till all agents put solutions in solution array...
@@ -600,7 +566,7 @@ public class RDPSOAgent extends Agent {
                                     SC = SC - 1;
                                 // check if group can be rewarded
                                 if (SC == 0) {
-                                    // TODO: punishing counter.. verjetno moras za vsako skupino posebi belezit kolk agentov je bilo punished / rewarded.
+                                    // todo: punishing counter.. verjetno moras za vsako skupino posebi belezit kolk agentov je bilo punished / rewarded.
                                     if ((numAgents < ConstantsRDPSO.MAX_AGENTS) && spawnAgentProbability()) {
                                         System.out.println("Sending new agent request.");
                                         // todo: send new agent request
@@ -703,11 +669,6 @@ public class RDPSOAgent extends Agent {
                             if (view != null)
                                 view.update(arena);
 
-                            // if replan required
-                            //if (replanMap || replanAgents) {
-                            //    plan.clear();
-                            // }
-
                             // randomly wander round
                             // evaluate solution
                             // check if agent improved
@@ -717,147 +678,15 @@ public class RDPSOAgent extends Agent {
 
 
                         }
-
-                        /* if (plan.isEmpty()) {
-
-                            List<Direction> directions = null;
-
-                            LocalMap.Paths paths = map.findShortestPaths(position);
-
-                            while (directions == null) {
-
-                                switch (mode) {
-                                    case EXPLORE: {
-
-                                        if (stohastic(0.9)) {
-                                            List<LocalMap.Node> candidates = map.filter(goalFilter);
-
-                                            directions = paths.shortestPathTo(candidates);
-
-                                            if (directions != null) {
-                                                changeMode(Mode.SEEK);
-                                                break;
-                                            }
-                                        }
-
-                                        List<LocalMap.Node> candidates = map.filter(LocalMap.BORDER_FILTER);
-
-                                        Collections.shuffle(candidates);
-
-                                        directions = paths.shortestPathTo(candidates);
-
-                                        if (directions == null) {
-                                            if (!replanAgents) {
-                                                changeMode(Mode.SURVEIL);
-                                                continue;
-                                            }
-                                        }
-                                        break;
-                                    }
-                                    case SURVEIL: {
-
-                                        if (stohastic(0.9)) {
-                                            List<LocalMap.Node> candidates = map.filter(goalFilter);
-
-                                            directions = paths.shortestPathTo(candidates);
-
-                                            if (directions != null) {
-                                                changeMode(Mode.SEEK);
-                                                break;
-                                            }
-                                        }
-
-                                        List<LocalMap.Node> candidates = map.getOldestNodes(10);
-
-                                        directions = paths.shortestPathTo(candidates);
-
-                                        break;
-                                    }
-                                    case SEEK: {
-
-                                        List<LocalMap.Node> candidates = map.filter(goalFilter);
-
-                                        directions = paths.shortestPathTo(candidates);
-
-                                        if (directions == null) {
-                                            changeMode(Mode.EXPLORE);
-                                            continue;
-                                        }
-
-                                        break;
-                                    }
-                                    // return to headquarters
-                                    case RETURN: {
-                                        // get hq position, get node and then shortest path
-                                        Position p = origin;
-                                        LocalMap.Node n = map.get(p.getX(), p.getY());
-                                        directions = paths.shortestPathTo(n);
-                                        break;
-                                    }
-
-                                    case CLEAR: {
-
-                                        List<LocalMap.Node> candidates = map.filter(new DistanceFilter(position,
-                                                state.neighborhood.getSize() - 1,
-                                                state.neighborhood.getSize() + 1));
-
-                                        directions = paths.shortestPathTo(candidates);
-
-                                        changeMode(Mode.EXPLORE);
-
-                                        break;
-                                    }
-                                    default:
-                                        break;
-                                }
-
-                                // cannot move anywhere ...
-                                if (directions == null) {
-                                    // otherwise just hold still for a timestep
-                                    directions = new Vector<Direction>();
-                                    for (int i = 0; i < 5; i++)
-                                        directions.add(Direction.NONE);
-                                }
-                            }
-
-                            plan.addAll(directions);
-
-                        }
-
-                        // if plan is not empty, pick up the next move
-                        if (!plan.isEmpty()) {
-
-                            Direction d = plan.poll();
-                            //debug("Next move: %s", d);
-
-                            timestep++;
-
-                            if (d != Direction.NONE) {
-                                move(d);
-                            }
-
-                            if (d == Direction.LEFT)
-                                position.setX(position.getX() - 1);
-                            if (d == Direction.RIGHT)
-                                position.setX(position.getX() + 1);
-                            if (d == Direction.UP)
-                                position.setY(position.getY() - 1);
-                            if (d == Direction.DOWN)
-                                position.setY(position.getY() + 1);
-
-                            arena.setOrigin(position.getX(), position.getY());
-
-                            if (detectLock() && (mode == Mode.EXPLORE || mode == Mode.SURVEIL)) {
-                                changeMode(Mode.CLEAR);
-                            }
-
-                            scan(0);
-
-                        }
-                            */
                     }
-                } else
+                } else {
                     scan(0);
+                }
+            }
+
+            try {
+                Thread.sleep(sleeptime);
+            } catch (InterruptedException e) {
             }
         }
     }
@@ -989,46 +818,6 @@ public class RDPSOAgent extends Agent {
 
     }
 
-    private boolean stohastic(double probability) {
-        return Math.random() < probability;
-    }
-
-    private boolean detectLock() {
-
-        history.add(new Position(position));
-
-        if (history.size() < 20)
-            return false;
-
-        float meanX = 0;
-        float meanY = 0;
-
-        for (Position p : history) {
-            meanX += p.getX();
-            meanY += p.getY();
-        }
-
-        meanX /= history.size();
-        meanY /= history.size();
-
-        float varianceX = 0;
-        float varianceY = 0;
-
-        for (Position p : history) {
-            varianceX += Math.pow(p.getX() - meanX, 2);
-            varianceY += Math.pow(p.getY() - meanY, 2);
-        }
-
-        varianceX /= history.size();
-        varianceY /= history.size();
-
-        history.clear();
-
-        float variability = (float) Math.sqrt(varianceX * varianceX + varianceY * varianceY);
-
-        return variability < 2;
-    }
-
     private void registerMoveable(Set<Position> moveable, Neighborhood n) {
 
         int x = position.getX();
@@ -1080,7 +869,7 @@ public class RDPSOAgent extends Agent {
 
                 // send map after some time
                 if (Math.abs(timestep - data.info) < 5 && !data.map) {
-                    //sendMap(id);
+                    sendMap(id);
                     data.map = true;
                 }
             }
