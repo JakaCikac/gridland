@@ -451,9 +451,12 @@ public class RDPSOAgent extends Agent {
         assign agents to different (incremental) swarm groups inside the main swarm (1 to MAX_SWARMS-1), 0 is social exclusion
      */
     private int assignToSwarm() {
+
         if (getSwarmCounter() == ConstantsRDPSO.MAX_SWARMS - 1)
             setSwarmCounter(0);
+
         incrementSwarmCounter();
+
         return getSwarmCounter();
     }
 
@@ -487,6 +490,7 @@ public class RDPSOAgent extends Agent {
 
     // cleanMove tells the agent to only move
     boolean cleanMove = false;
+    Position goalPosition = new Position(0,0);
     // how many moves left on x and y
     int moveXleft = 0;
     int moveYleft = 0;
@@ -518,7 +522,8 @@ public class RDPSOAgent extends Agent {
 
                 // todo: why null pointer exception? .. plan? .. -.-
 
-                if (state.direction == Direction.NONE && state.direction != null) {
+                if (state.direction == Direction.NONE) {
+                //if (true) {
 
                     if (firstIteration) {
                         // initialize RDPSO variables, position and swarmID
@@ -552,13 +557,12 @@ public class RDPSOAgent extends Agent {
                                 boolean replanMap = map.update(state.neighborhood, position, timestep);
                                 registerMoveable(movable, state.neighborhood);
                                 // todo: sharing info with agents in subswarm, maybe timeouts
-                                replanAgents = blockMoveable(movable, state.neighborhood);
 
                                 // update information
                                 while (!inbox.isEmpty()) {
                                     Message m = inbox.poll();
                                     // receive and parse message from other agents, filter data from agent's swarm
-                                    replanMap &= parse(m.from, m.message, state.neighborhood);
+                                    parse(m.from, m.message, state.neighborhood);
                                 }
 
                                 // update arena
@@ -657,14 +661,14 @@ public class RDPSOAgent extends Agent {
                                 double tempAgentPositionX = agentPositionX + agentVelocityX;
                                 //System.out.println("New agent position X: " + tempAgentPositionX);
                                 int roundedX = (int) Math.round(tempAgentPositionX);
-                                System.out.println("New rounded position X: " + roundedX);
 
                                 double tempAgentPositionY = agentPositionY + agentVelocityY;
                                 // System.out.println("New agent position Y: " + tempAgentPositionY);
                                 int roundedY = (int) Math.round(tempAgentPositionY);
-                                System.out.println("New rounded position Y: " + roundedY);
 
-                                cleanMove(roundedX,roundedY);
+                                System.out.println("Pure: " + tempAgentPositionX + ", " + tempAgentPositionY + " Rounded: " + roundedX + ", " + roundedY);
+
+                                goalPosition = cleanMove(roundedX,roundedY);
                                 cleanMove = true;
                                 // todo: don't forget to update the agent position (int, int)!
 
@@ -703,12 +707,13 @@ public class RDPSOAgent extends Agent {
                         } else {
                             // check if agent is in clean move mode (doesn't do anything else but move)
                             if (cleanMove) {
-
                                 // update agent's local map
-                                boolean replanMap = map.update(state.neighborhood, position, timestep);
+                               /* boolean replanMap = map.update(state.neighborhood, position, timestep);
                                 if (replanMap) {
-                                    plan.clear();
-                                }
+                                    replan(goalPosition);
+                                   // namesto clear, si moras zaponit ciljno lokacijo in se enkrat splanirat pot do tja?
+                               //     plan.clear();
+                                } */
 
                                 if (!plan.isEmpty()) {
 
@@ -740,6 +745,9 @@ public class RDPSOAgent extends Agent {
                                     scan(0);
 
                                 } else {
+                                    // reset goal position
+                                    goalPosition = null;
+                                    // mark end of multi move
                                     cleanMove = false;
                                 }
                             }
@@ -757,13 +765,34 @@ public class RDPSOAgent extends Agent {
         }
     }
 
-    private void cleanMove(int moveXleft, int moveYleft) {
-        List<Direction> directions = null;
-        System.out.println("To move: " + moveXleft + ", " + moveYleft);
+    private boolean canMove(Neighborhood n, int x, int y) {
+        // return empty for available tiles
+        return n.getCell(x, y) == Neighborhood.EMPTY;
 
+    }
+
+    private Position cleanMove(int moveXleft, int moveYleft) {
+
+        List<Direction> directions = null;
+
+        // todo: check why position?
         LocalMap.Paths paths = map.findShortestPaths(position);
 
         Position p = new Position(position.getX() + moveXleft, position.getY() + moveYleft);
+
+        LocalMap.Node n = map.get(p.getX(), p.getY());
+
+        directions = paths.shortestPathTo(n);
+
+        plan.addAll(directions);
+
+        return p;
+    }
+
+    private void replan(Position p) {
+        List<Direction> directions = null;
+
+        LocalMap.Paths paths = map.findShortestPaths(position);
 
         LocalMap.Node n = map.get(p.getX(), p.getY());
 
