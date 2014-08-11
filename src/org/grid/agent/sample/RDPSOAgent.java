@@ -536,6 +536,7 @@ public class RDPSOAgent extends Agent {
                             // update agent's local map
                             boolean replanMap = map.update(state.neighborhood, position, timestep);
                             registerMoveable(movable, state.neighborhood);
+                            // todo: sharing info with agents in subswarm, maybe timeouts
                             replanAgents = blockMoveable(movable, state.neighborhood);
 
                             // update information
@@ -550,6 +551,7 @@ public class RDPSOAgent extends Agent {
                                 view.update(arena);
 
                             // add agentSolution to vector H(t) that includes solutions of all agents within the swarmID group
+                            // todo: synced version of this concatenating the solutions of subswarms
                             addToSwarmSolutionArray(ConstantsRDPSO.MAX_SWARMS, ConstantsRDPSO.MAX_AGENTS, swarmID, agentBestSolution);
                             // wait till all agents put solutions in solution array...
 
@@ -649,27 +651,28 @@ public class RDPSOAgent extends Agent {
 
                             // move agent to new position
                             //todo: move agent to new calculated position
+                            //Decision d = updateDecisions(neighborhood, state);
+                           // if (d.getDirection() != Direction.NONE)
+                           //     move(d.getDirection());
 
                         } else { // if agent is in the EXCLUDED MEMBERS GROUP
 
                             // Send information to other agents
                             Set<Position> movable = analyzeNeighborhood(state.neighborhood);
                             // update agent's local map
-                            boolean replanMap = map.update(state.neighborhood, position, timestep);
+                            map.update(state.neighborhood, position, timestep);
                             registerMoveable(movable, state.neighborhood);
-
-                            //replanAgents = blockMoveable(movable, state.neighborhood);
 
                             while (!inbox.isEmpty()) {
                                 Message m = inbox.poll();
                                 // receive and parse message from other agents, filter data from agent's swarm
-                                replanMap &= parse(m.from, m.message, state.neighborhood);
+                                parse(m.from, m.message, state.neighborhood);
                             }
                             // update arena
                             if (view != null)
                                 view.update(arena);
 
-                            // randomly wander round
+                            // todo: randomly wander round
                             // evaluate solution
                             // check if agent improved
                             // send group info
@@ -692,12 +695,12 @@ public class RDPSOAgent extends Agent {
     }
 
     private double evaluateObjectiveFunction(double agentPositionX, double agentPositionY) {
-        // something like alpha*uncovered_cells + beta*time_needed
+        // todo: something like alpha*uncovered_cells + beta*time_needed
         return 0.0;
     }
 
     private double evaluateObstacleFunction() {
-        // evklidova razdalja do ovir?
+        // todo: evklidova razdalja do ovir?
         return 0.0;
     }
 
@@ -741,6 +744,29 @@ public class RDPSOAgent extends Agent {
 
         }
         return moveable;
+    }
+
+    protected static class Decision  {
+
+        private Direction direction;
+
+        public Direction getDirection() {
+            return direction;
+        }
+
+        public void setDirection(Direction direction) {
+            this.direction = direction;
+        }
+
+        public Decision(Direction direction) {
+            super();
+            this.direction = direction;
+        }
+
+        public String toString() {
+            return String.format("%s", direction.toString());
+        }
+
     }
 
     private void changeMode(Mode mode) {

@@ -251,7 +251,6 @@ public class SampleAgent extends Agent {
 					if (! (i == 0 && j == 0) ) {
                         // n.getCell(i,j) should be me, the sending agent
                         // broadcast my id to other agents
-                        // TODO: send new discovered area
 						send(n.getCell(i, j), "Hello " + n.getCell(i, j) + "!");
                         System.out.println("Sent out new message with me " + n.getCell(i, j));
                     }

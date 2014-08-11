@@ -199,7 +199,6 @@ public class PseudoRandomAgent extends Agent {
 				}
 
                 // if cell is occupied as an agent send a hello message
-                // TODO: send other message
 				if (n.getCell(i, j) > 0) {
 
 					if (! (i == 0 && j == 0) )

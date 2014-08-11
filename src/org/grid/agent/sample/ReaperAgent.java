@@ -45,7 +45,6 @@ public class ReaperAgent extends Agent {
         @Override
         public boolean filter(Node n) {
             return n.getBody() == 4;
-            //todo: namesto flag filter?..//Neighborhood.FLAG;
         }
 
     };
