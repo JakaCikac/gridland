@@ -239,6 +239,9 @@ public class ModReaperAgent extends Agent {
 
             if (state != null) {
 
+                System.out.println("position x " + position.getX());
+                System.out.println("position y " + position.getY());
+
                 if (state.direction == Direction.NONE && state.direction != null) {
 
                     // find movable fields
