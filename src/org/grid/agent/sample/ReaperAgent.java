@@ -65,47 +65,47 @@ public class ReaperAgent extends Agent {
 
     private static class MemberData {
 
-            private int id;
+        private int id;
 
-            private int info;
+        private int info;
 
-            private boolean map = false;
+        private boolean map = false;
 
-            private int timediff;
+        private int timediff;
 
-            private Position position;
+        private Position position;
 
-            int notified;
+        int notified;
 
-            boolean hasFlag;
+        boolean hasFlag;
 
-            private Bounds bounds;
+        private Bounds bounds;
 
-            private Position origin, center;
+        private Position origin, center;
 
-            public int getId() {
-                return id;
-            }
+        public int getId() {
+            return id;
+        }
 
-            public Position getPosition() {
-                return position;
-            }
+        public Position getPosition() {
+            return position;
+        }
 
-            public void setPosition(Position position) {
-                this.position = position;
-            }
+        public void setPosition(Position position) {
+            this.position = position;
+        }
 
-            protected MemberData(int id) {
-                super();
-                this.id = id;
-            }
+        protected MemberData(int id) {
+            super();
+            this.id = id;
+        }
 
-            @Override
-            public String toString() {
+        @Override
+        public String toString() {
 
-                return String.format("ID: %d, Flag: %b", id, hasFlag);
+            return String.format("ID: %d, Flag: %b", id, hasFlag);
 
-            }
+        }
     }
 
     private static class UnknownAreaFilter implements Filter {
@@ -121,13 +121,13 @@ public class ReaperAgent extends Agent {
 
             this.center = center;
 
-            radius = Math.min(known.getRight() - known.getLeft(), known.getBottom()- known.getTop());
+            radius = Math.min(known.getRight() - known.getLeft(), known.getBottom() - known.getTop());
         }
 
         @Override
         public boolean filter(Node n) {
 
-            if (n.getPosition().getX() % 3 != 0|| n.getPosition().getY() % 3 != 0)
+            if (n.getPosition().getX() % 3 != 0 || n.getPosition().getY() % 3 != 0)
                 return false;
 
             if (!known.inside(n.getPosition()))
@@ -319,11 +319,13 @@ public class ReaperAgent extends Agent {
                                 case EXPLORE: {
 
                                     if (stohastic(0.9)) {
+
+                                        // look for flags in the area
                                         List<Node> candidates = map
                                                 .filter(flagFilter);
-
+                                        // find paths to possible flags
                                         directions = paths.shortestPathTo(candidates);
-
+                                        // if there is at least one flag, change to seek and look for it
                                         if (directions != null) {
                                             changeMode(Mode.SEEK);
                                             break;

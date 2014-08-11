@@ -313,7 +313,13 @@ public class LocalMap {
 
             Vector<Direction> path = new Vector<Direction>();
 
-            int loc = to.id;
+            int loc = 0;
+            try {
+                loc = to.id;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             Node current = to;
             // backtrack from the target by P(revious), adding to the result
             // list
