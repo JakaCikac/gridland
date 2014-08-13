@@ -518,8 +518,8 @@ public class RDPSOAgent extends Agent {
             if (state != null) {
 
                 // todo: where do I update this?
-                //agentPositionX = position.getX();
-                //agentPositionY = position.getY();
+                agentPositionX = position.getX();
+                agentPositionY = position.getY();
 
                 if (state.direction == Direction.NONE) {
                 //if (true) {
@@ -658,7 +658,7 @@ public class RDPSOAgent extends Agent {
                                 agentVelocityY = ConstantsRDPSO.W + functionResultY;
 
                                 // UPDATE AGENT'S POSITION
-                                System.out.println("Agetn positio: " + agentPositionX + ", " + agentPositionY);
+                                //System.out.println("Agetn positio: " + agentPositionX + ", " + agentPositionY);
                                 double tempAgentPositionX = agentPositionX + agentVelocityX;
                                 //System.out.println("New agent position X: " + tempAgentPositionX);
                                 int roundedX = (int) Math.round(tempAgentPositionX);
@@ -667,7 +667,9 @@ public class RDPSOAgent extends Agent {
                                 // System.out.println("New agent position Y: " + tempAgentPositionY);
                                 int roundedY = (int) Math.round(tempAgentPositionY);
 
-                                System.out.println("Pure: " + tempAgentPositionX + ", " + tempAgentPositionY + " Rounded: " + roundedX + ", " + roundedY);
+                                //System.out.println("Pure: " + tempAgentPositionX + ", " + tempAgentPositionY + " Rounded: " + roundedX + ", " + roundedY);
+                                System.out.println("Current position: "+ agentPositionX + ", " + agentPositionY);
+                                System.out.println("Wanted position: " + roundedX + ", " + roundedY);
 
                                 goalPosition = cleanMove(roundedX,roundedY);
                                 // jump into movement execution next iteration
@@ -769,7 +771,7 @@ public class RDPSOAgent extends Agent {
                                 boolean replanMap = map.update(state.neighborhood, position, timestep);
                                 if (replanMap) {
                                     plan.clear();
-                                    //replan(goalPosition);
+                                    replan(goalPosition);
                                    // namesto clear, si moras zaponit ciljno lokacijo in se enkrat splanirat pot do tja?
                                //     plan.clear();
                                     // no idea what is wrong
@@ -800,7 +802,7 @@ public class RDPSOAgent extends Agent {
                                     agentPositionY = origin.getY();
 
                                     if (detectLock()) {
-                                        System.out.println("lock detected, getting free");
+                                        //System.out.println("lock detected, getting free");
                                         clearMovement(state);
                                     }
 
@@ -884,8 +886,7 @@ public class RDPSOAgent extends Agent {
 
         history.clear();
 
-        float variability = (float) Math.sqrt(varianceX * varianceX + varianceY
-                * varianceY);
+        float variability = (float) Math.sqrt(varianceX * varianceX + varianceY * varianceY);
 
         return variability < 2;
     }
@@ -900,12 +901,11 @@ public class RDPSOAgent extends Agent {
         Position p = new Position(position.getX() + moveXleft, position.getY() + moveYleft);
 
         LocalMap.Node n = map.get(p.getX(), p.getY());
-        // todo: error, cause position does not exist..?
+        // todo: what do on error?
         if (n == null) {
             plan.clear();
             return null;
         }
-        System.out.println(map.get(p.getX(), p.getY()).toString());
 
         directions = paths.shortestPathTo(n);
 
@@ -932,7 +932,7 @@ public class RDPSOAgent extends Agent {
         directions = paths.shortestPathTo(n);
 
         plan.addAll(directions);
-        System.out.println("Plan size: " + plan.size());
+        //System.out.println("Plan size: " + plan.size());
     }
 
     private double evaluateObjectiveFunction(int agentPositionX, int agentPositionY) {
@@ -944,15 +944,15 @@ public class RDPSOAgent extends Agent {
 
     private double evaluateObstacleFunction(State state) {
         // analyze neighbourhood, find obstacles
-        Set<Position> obstacles =  analyzeNeighborhood(state.neighborhood);
+        Set<Position> obstacles =  analyzeNeighborhoodObstacles(state.neighborhood);
         double functionResult = 0.0;
         for (Position p : obstacles) {
-            if (isObstacle(state.neighborhood, p.getX(), p.getY())) {
+            //if (isObstacle(state.neighborhood, p.getX(), p.getY())) {
                 // calculate manhattan distance to point
                 Position from = new Position(agentPositionX, agentPositionY);
                 Position to = new Position(p.getX(), p.getY());
                 functionResult += Position.distance(from, to);
-            }
+            //}
         }
         System.out.println("Obstacle evaluation: " + functionResult + ", Current best: " + obstacleBestSolution);
         return functionResult;
@@ -991,6 +991,34 @@ public class RDPSOAgent extends Agent {
                 }
 
                 if (n.getCell(i, j) > 0 || n.getCell(i, j) == Neighborhood.OTHER) {
+                    moveable.add(new Position(x + i, y + j));
+                }
+
+            }
+
+        }
+        return moveable;
+    }
+
+    private Set<Position> analyzeNeighborhoodObstacles(Neighborhood n) {
+        int x = position.getX();
+        int y = position.getY();
+
+        HashSet<Position> moveable = new HashSet<Position>();
+
+        for (int i = -n.getSize(); i <= n.getSize(); i++) {
+            for (int j = -n.getSize(); j <= n.getSize(); j++) {
+
+                if ((i == 0 && j == 0))
+                    continue;
+
+                if (n.getCell(i, j) == Neighborhood.HEADQUARTERS) {
+                    if (origin == null)
+                        origin = new Position(x + i, y + j);
+                    continue;
+                }
+
+                if (n.getCell(i, j) > 0 || n.getCell(i, j) == Neighborhood.WALL) {
                     moveable.add(new Position(x + i, y + j));
                 }
 
