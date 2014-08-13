@@ -520,8 +520,12 @@ public class RDPSOAgent extends Agent {
                 // todo: where do I update this?
                 //agentPositionX = position.getX();
                 //agentPositionY = position.getY();
-
-                // todo: why null pointer exception? .. plan? .. -.-
+                double[] testArray = {0.0, 0.1, 0.5, 0.4, 1.5, 2.7, 3.0};
+                double[] solArray = SwarmSolution.findTopISolutionsInSwarmSolutionArray(0, testArray, 3);
+                for (int i = 0; i < solArray.length; i ++) {
+                    System.out.print("SOL: " + solArray[i] + " ");
+                }
+                System.out.println();
 
                 if (state.direction == Direction.NONE) {
                 //if (true) {
@@ -531,7 +535,7 @@ public class RDPSOAgent extends Agent {
                         initializeRDPSO();
                         // call scan, to get new state information
                         scan(0);
-                        // set first itertion to false, continue the algorithm
+                        // set first iteration to false, continue the algorithm
                         firstIteration = false;
                     } // after the first iteration start the algorithm
                     else {
@@ -572,11 +576,11 @@ public class RDPSOAgent extends Agent {
 
                                 // add agentSolution to vector H(t) that includes solutions of all agents within the swarmID group
                                 // todo: synced version of this concatenating the solutions of subswarms
-                                addToSwarmSolutionArray(ConstantsRDPSO.MAX_SWARMS, ConstantsRDPSO.MAX_AGENTS, swarmID, agentBestSolution);
+                                // SwarmSolution.mergeSolutionToArray(); //addToSwarmSolutionArray(ConstantsRDPSO.MAX_SWARMS, ConstantsRDPSO.MAX_AGENTS, swarmID, agentBestSolution);
                                 // wait till all agents put solutions in solution array...
 
                                 // find best solution in vector H(t) = max(H(t))
-                                double maxSwarmSolution = findSwarmSolutionMax(swarmID);
+                                double maxSwarmSolution = SwarmSolution.findMaxInSwarmSolutionArray(swarmID, swarmSolutionArray);
                                 // check if subgroup improved
                                 if (maxSwarmSolution > bestSwarmSolution) {
                                     bestSwarmSolution = maxSwarmSolution;
@@ -588,7 +592,6 @@ public class RDPSOAgent extends Agent {
                                         SC = SC - 1;
                                     // check if group can be rewarded
                                     if (SC == 0) {
-                                        // todo: punishing counter.. verjetno moras za vsako skupino posebi belezit kolk agentov je bilo punished / rewarded.
                                         if ((numAgents < ConstantsRDPSO.MAX_AGENTS) && spawnAgentProbability()) {
                                             System.out.println("Sending new agent request.");
                                             // todo: send new agent request
@@ -618,7 +621,7 @@ public class RDPSOAgent extends Agent {
                                             // reset stagnancy counter
                                             SC = ConstantsRDPSO.SC_MAX * (1 - (1 / (numKilledAgents + 1)));
                                             // if this is the worst preforming agent in the group, exclude
-                                            if (agentBestSolution == findSwarmSolutionMin(swarmID)) {
+                                            if (agentBestSolution == SwarmSolution.findMinInSwarmSolutionArray(swarmID, swarmSolutionArray)) {
                                                 // exclude agent
                                                 swarmID = 0;
                                                 numAgents--;
@@ -631,8 +634,7 @@ public class RDPSOAgent extends Agent {
                                     }
                                 }
                                 // evaluate obstacle function
-                                // todo: check if obstaclesolution must actually be the position x_n(t)?
-                                // todo: mislm da moras kle gledat, ce je pozicija agenta vecja ali enaka razdalji do ovire
+                                // obstacleSolution is the distance from agent's position to the obstacle
                                 obstacleSolution = evaluateObstacleFunction(state);
                                 if (obstacleSolution >= obstacleBestSolution) {
                                     // check if obstacleSolution is better than currently best solution
@@ -697,10 +699,45 @@ public class RDPSOAgent extends Agent {
                                     view.update(arena);
 
                                 // todo: randomly wander round
-                                // evaluate solution
-                                // check if agent improved
+                                // randomly wander round
+
+                                // evaluate agent's current solution = h(x_n(t))
+                                agentSolution = evaluateObjectiveFunction(agentPositionX, agentPositionY);
+
+                                // check if agent improved and update agent's best solution
+                                if (agentSolution > agentBestSolution) {
+                                    agentBestSolution = agentSolution;
+                                    // update best cognitive solution
+                                    solutionArray[0] = agentPositionX;
+                                    solutionArray[3] = agentPositionY;
+                                }
                                 // send group info
+                                // Send information to other agents
+                                movable = analyzeNeighborhood(state.neighborhood);
+
+                                // update agent's local map
+                                boolean replanMap = map.update(state.neighborhood, position, timestep);
+                                registerMoveable(movable, state.neighborhood);
+                                // todo: sharing info with agents in subswarm, maybe timeouts
+
+                                // update information
+                                while (!inbox.isEmpty()) {
+                                    Message m = inbox.poll();
+                                    // receive and parse message from other agents, filter data from agent's swarm
+                                    parse(m.from, m.message, state.neighborhood);
+                                }
+
+                                // update arena
+                                if (view != null)
+                                    view.update(arena);
+
                                 // build vector H
+
+                                // add agentSolution to vector H(t) that includes solutions of all agents within the swarmID group
+                                // todo: synced version of this concatenating the solutions of subswarms
+                                // SwarmSolution.mergeSolutionToArray(); //addToSwarmSolutionArray(ConstantsRDPSO.MAX_SWARMS, ConstantsRDPSO.MAX_AGENTS, swarmID, agentBestSolution);
+                                // wait till all agents put solutions in solution array...
+
                                 // check if group improved
 
 

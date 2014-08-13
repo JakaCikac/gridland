@@ -98,40 +98,6 @@ public abstract class Agent {
         this.swarm_counter = magic;
     }
 
-    protected void addToSwarmSolutionArray(int NUM_SWARMS, int MAX_AGENTS, int swarmID, double agentBestSolution) {
-
-    }
-
-    /* find best solution H_max in swarmSolutionArray */
-    // todo: test if works
-    protected double findSwarmSolutionMax(int swarmID) {
-        double tempMax = 0;
-        try {
-            for (int i = 0; i < swarmSolutionArray[swarmID].length; i++) {
-                if (tempMax < swarmSolutionArray[swarmID][i]) {
-                    tempMax = swarmSolutionArray[swarmID][i];
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return tempMax;
-    }
-
-
-    /* find worst solution H_min in swarmSolutionArray */
-    // todo: test if works
-    protected double findSwarmSolutionMin(int swarmID) {
-        double tempMin = swarmSolutionArray[swarmID][0];
-        for(int i = 1; i < swarmSolutionArray[swarmID].length; i++) {
-            if (tempMin > swarmSolutionArray[swarmID][i]) {
-                tempMin = swarmSolutionArray[swarmID][i];
-            }
-        }
-        return tempMin;
-    }
-
-
     /**
      *  The class loader is responsible for locating libraries, reading their contents,
      *  and loading the classes contained within the libraries. This loading is typically
