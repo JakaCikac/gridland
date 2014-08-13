@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3f6e5c1-36d1-4bde-93db-26e0cc79e510" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/org/grid/agent/sample/MergeUtility.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/sample/SwarmSolution.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/Agent.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/Agent.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -100,13 +98,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RDPSOAgent.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="RDPSOAgent.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="7449" max-vertical-offset="17595">
-              <caret line="715" column="32" selection-start-line="715" selection-start-column="32" selection-end-line="715" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.6195652" vertical-offset="10485" max-vertical-offset="17895">
+              <caret line="746" column="124" selection-start-line="746" selection-start-column="124" selection-end-line="746" selection-end-column="124" />
               <folding>
-                <element signature="e#0#43363#0" expanded="true" />
+                <element signature="e#0#44860#0" expanded="true" />
                 <element signature="imports" expanded="true" />
                 <element signature="e#1624#1634#0" expanded="true" />
                 <element signature="e#1701#1722#0" expanded="true" />
@@ -114,22 +112,22 @@
                 <element signature="e#12497#12504#0" expanded="true" />
                 <element signature="e#12584#12593#0" expanded="true" />
                 <element signature="e#12674#12685#0" expanded="true" />
-                <element signature="e#32906#32907#0" expanded="true" />
-                <element signature="e#32964#32965#0" expanded="true" />
-                <element signature="e#37152#37162#0" expanded="true" />
-                <element signature="e#38496#38506#0" expanded="true" />
-                <element signature="e#38562#38572#0" expanded="true" />
-                <element signature="e#41291#41306#0" expanded="true" />
+                <element signature="e#34403#34404#0" expanded="true" />
+                <element signature="e#34461#34462#0" expanded="true" />
+                <element signature="e#38649#38659#0" expanded="true" />
+                <element signature="e#39993#40003#0" expanded="true" />
+                <element signature="e#40059#40069#0" expanded="true" />
+                <element signature="e#42788#42803#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SwarmSolution.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="SwarmSolution.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/SwarmSolution.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9358696" vertical-offset="204" max-vertical-offset="1455">
-              <caret line="71" column="38" selection-start-line="71" selection-start-column="38" selection-end-line="71" selection-end-column="38" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="520" max-vertical-offset="1455">
+              <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2046#2054#0" expanded="true" />
@@ -251,8 +249,8 @@
         <option value="$PROJECT_DIR$/src/org/grid/agent/sample/LocalMap.java" />
         <option value="$PROJECT_DIR$/src/org/grid/agent/sample/MergeUtility.java" />
         <option value="$PROJECT_DIR$/src/org/grid/agent/Agent.java" />
-        <option value="$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java" />
         <option value="$PROJECT_DIR$/src/org/grid/agent/sample/SwarmSolution.java" />
+        <option value="$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java" />
       </list>
     </option>
   </component>
@@ -997,7 +995,7 @@
       <workItem from="1406047022506" duration="786000" />
       <workItem from="1406536050929" duration="47221000" />
       <workItem from="1407064491389" duration="1790000" />
-      <workItem from="1407749869383" duration="19255000" />
+      <workItem from="1407749869383" duration="20402000" />
     </task>
     <task id="LOCAL-00001" summary="Test commit.">
       <created>1394200726993</created>
@@ -1259,11 +1257,15 @@
       <created>1407778457779</created>
       <updated>1407778457779</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="Implemented some utils, min, max, max_I, extending RDPSO algorithm for excluded members.">
+      <created>1407928713860</created>
+      <updated>1407928713860</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="204207000" />
+    <option name="totallyTimeSpent" value="205354000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1364,7 +1366,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Comments, comments everywhere.." />
     <MESSAGE value="Comments, comments everywhere.. pt.2&#10;" />
     <MESSAGE value="Comments, comments everywhere.. pt.3&#10;" />
     <MESSAGE value="Comments, comments everywhere.. pt.4&#10;" />
@@ -1389,7 +1390,8 @@
     <MESSAGE value="Hm. No Idea what I'm doing." />
     <MESSAGE value="Still have no idea what I'm doing.." />
     <MESSAGE value="Cleaning up unused code." />
-    <option name="LAST_COMMIT_MESSAGE" value="Cleaning up unused code." />
+    <MESSAGE value="Implemented some utils, min, max, max_I, extending RDPSO algorithm for excluded members." />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented some utils, min, max, max_I, extending RDPSO algorithm for excluded members." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2131,12 +2133,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/SwarmSolution.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="520" max-vertical-offset="1455">
+          <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2046#2054#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="7449" max-vertical-offset="17595">
-          <caret line="715" column="32" selection-start-line="715" selection-start-column="32" selection-end-line="715" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.6195652" vertical-offset="10485" max-vertical-offset="17895">
+          <caret line="746" column="124" selection-start-line="746" selection-start-column="124" selection-end-line="746" selection-end-column="124" />
           <folding>
-            <element signature="e#0#43363#0" expanded="true" />
+            <element signature="e#0#44860#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1624#1634#0" expanded="true" />
             <element signature="e#1701#1722#0" expanded="true" />
@@ -2144,23 +2157,12 @@
             <element signature="e#12497#12504#0" expanded="true" />
             <element signature="e#12584#12593#0" expanded="true" />
             <element signature="e#12674#12685#0" expanded="true" />
-            <element signature="e#32906#32907#0" expanded="true" />
-            <element signature="e#32964#32965#0" expanded="true" />
-            <element signature="e#37152#37162#0" expanded="true" />
-            <element signature="e#38496#38506#0" expanded="true" />
-            <element signature="e#38562#38572#0" expanded="true" />
-            <element signature="e#41291#41306#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/SwarmSolution.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9358696" vertical-offset="204" max-vertical-offset="1455">
-          <caret line="71" column="38" selection-start-line="71" selection-start-column="38" selection-end-line="71" selection-end-column="38" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2046#2054#0" expanded="true" />
+            <element signature="e#34403#34404#0" expanded="true" />
+            <element signature="e#34461#34462#0" expanded="true" />
+            <element signature="e#38649#38659#0" expanded="true" />
+            <element signature="e#39993#40003#0" expanded="true" />
+            <element signature="e#40059#40069#0" expanded="true" />
+            <element signature="e#42788#42803#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -520,12 +520,6 @@ public class RDPSOAgent extends Agent {
                 // todo: where do I update this?
                 //agentPositionX = position.getX();
                 //agentPositionY = position.getY();
-                double[] testArray = {0.0, 0.1, 0.5, 0.4, 1.5, 2.7, 3.0};
-                double[] solArray = SwarmSolution.findTopISolutionsInSwarmSolutionArray(0, testArray, 3);
-                for (int i = 0; i < solArray.length; i ++) {
-                    System.out.print("SOL: " + solArray[i] + " ");
-                }
-                System.out.println();
 
                 if (state.direction == Direction.NONE) {
                 //if (true) {
@@ -578,6 +572,7 @@ public class RDPSOAgent extends Agent {
                                 // todo: synced version of this concatenating the solutions of subswarms
                                 // SwarmSolution.mergeSolutionToArray(); //addToSwarmSolutionArray(ConstantsRDPSO.MAX_SWARMS, ConstantsRDPSO.MAX_AGENTS, swarmID, agentBestSolution);
                                 // wait till all agents put solutions in solution array...
+                                // todo: when agent dies, you have to check how many solutions are left in the array
 
                                 // find best solution in vector H(t) = max(H(t))
                                 double maxSwarmSolution = SwarmSolution.findMaxInSwarmSolutionArray(swarmID, swarmSolutionArray);
@@ -739,6 +734,31 @@ public class RDPSOAgent extends Agent {
                                 // wait till all agents put solutions in solution array...
 
                                 // check if group improved
+                                // find best solution in vector H(t) = max(H(t))
+                                double maxSwarmSolution = SwarmSolution.findMaxInSwarmSolutionArray(swarmID, swarmSolutionArray);
+                                // check if subgroup improved
+                                if (maxSwarmSolution > bestSwarmSolution) {
+                                    bestSwarmSolution = maxSwarmSolution;
+
+                                    // check to see, if this agent is one of the best N_I agents in the group
+                                    boolean best_ni = false;
+                                    // todo: what if num agents left in swarm < init_agents?
+                                    // todo: how do you track which solution is whos in the swarm solution array and how do you update them when they are let go from a swarm..?
+                                    double[] bestNISolutions = SwarmSolution.findTopISolutionsInSwarmSolutionArray(swarmID, swarmSolutionArray, ConstantsRDPSO.INIT_AGENTS);
+                                    for (int i = 0; i < bestNISolutions.length; i++) {
+                                        // check if agent's best solution matches any of topI swarm solutions
+                                        if (agentBestSolution == bestNISolutions[i]) {
+                                            best_ni = true;
+                                        }
+                                    }
+                                    // agent is one of the best in the excluded group
+                                    if (best_ni) {
+                                        // todo: what the hell is Nx?
+
+                                    }
+
+                                }
+
 
 
                             }
