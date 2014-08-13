@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f3f6e5c1-36d1-4bde-93db-26e0cc79e510" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sims/test_mini.sim" afterPath="$PROJECT_DIR$/sims/test_mini.sim" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="gridland.iws" />
@@ -102,24 +101,24 @@
       <file leaf-file-name="RDPSOAgent.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5923913" vertical-offset="10675" max-vertical-offset="18315">
-              <caret line="757" column="69" selection-start-line="757" selection-start-column="69" selection-end-line="757" selection-end-column="69" />
+            <state vertical-scroll-proportion="-4.6234307" vertical-offset="14880" max-vertical-offset="18735">
+              <caret line="780" column="37" selection-start-line="780" selection-start-column="37" selection-end-line="780" selection-end-column="37" />
               <folding>
-                <element signature="e#0#45823#0" expanded="true" />
+                <element signature="e#0#48421#0" expanded="true" />
                 <element signature="imports" expanded="true" />
                 <element signature="e#1624#1634#0" expanded="true" />
                 <element signature="e#1701#1722#0" expanded="true" />
                 <element signature="e#1811#1821#0" expanded="true" />
-                <element signature="e#12497#12504#0" expanded="true" />
-                <element signature="e#12584#12593#0" expanded="true" />
-                <element signature="e#12674#12685#0" expanded="true" />
-                <element signature="e#34619#34620#0" expanded="true" />
-                <element signature="e#34677#34678#0" expanded="true" />
-                <element signature="e#38774#38784#0" expanded="true" />
-                <element signature="e#39613#39623#0" expanded="true" />
-                <element signature="e#40956#40966#0" expanded="true" />
-                <element signature="e#41022#41032#0" expanded="true" />
-                <element signature="e#43751#43766#0" expanded="true" />
+                <element signature="e#12496#12503#0" expanded="true" />
+                <element signature="e#12583#12592#0" expanded="true" />
+                <element signature="e#12673#12684#0" expanded="true" />
+                <element signature="e#36800#36801#0" expanded="true" />
+                <element signature="e#36859#36860#0" expanded="true" />
+                <element signature="e#41373#41383#0" expanded="true" />
+                <element signature="e#42212#42222#0" expanded="true" />
+                <element signature="e#43554#43564#0" expanded="true" />
+                <element signature="e#43620#43630#0" expanded="true" />
+                <element signature="e#46349#46364#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -997,7 +996,7 @@
       <workItem from="1406047022506" duration="786000" />
       <workItem from="1406536050929" duration="47221000" />
       <workItem from="1407064491389" duration="1790000" />
-      <workItem from="1407749869383" duration="23165000" />
+      <workItem from="1407749869383" duration="24518000" />
     </task>
     <task id="LOCAL-00001" summary="Test commit.">
       <created>1394200726993</created>
@@ -1267,11 +1266,15 @@
       <created>1407932703623</created>
       <updated>1407932703623</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="Extending algorithm for excluded agent group. New questions arise..">
+      <created>1407943935615</created>
+      <updated>1407943935615</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="208117000" />
+    <option name="totallyTimeSpent" value="209470000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1295,7 +1298,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1200" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3540622" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1307,18 +1310,18 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959612" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23097827" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14130434" sideWeight="0.5021299" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2028754" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32518116" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2028754" sideWeight="0.50067115" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32956383" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1557971" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5461956" sideWeight="0.49840257" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32518116" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32518116" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32956383" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2028754" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14130434" sideWeight="0.4978701" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2028754" sideWeight="0.49932885" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14130434" sideWeight="0.4978701" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32956383" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -2152,24 +2155,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5923913" vertical-offset="10675" max-vertical-offset="18315">
-          <caret line="757" column="69" selection-start-line="757" selection-start-column="69" selection-end-line="757" selection-end-column="69" />
+        <state vertical-scroll-proportion="-4.6234307" vertical-offset="14880" max-vertical-offset="18735">
+          <caret line="780" column="37" selection-start-line="780" selection-start-column="37" selection-end-line="780" selection-end-column="37" />
           <folding>
-            <element signature="e#0#45823#0" expanded="true" />
+            <element signature="e#0#48421#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1624#1634#0" expanded="true" />
             <element signature="e#1701#1722#0" expanded="true" />
             <element signature="e#1811#1821#0" expanded="true" />
-            <element signature="e#12497#12504#0" expanded="true" />
-            <element signature="e#12584#12593#0" expanded="true" />
-            <element signature="e#12674#12685#0" expanded="true" />
-            <element signature="e#34619#34620#0" expanded="true" />
-            <element signature="e#34677#34678#0" expanded="true" />
-            <element signature="e#38774#38784#0" expanded="true" />
-            <element signature="e#39613#39623#0" expanded="true" />
-            <element signature="e#40956#40966#0" expanded="true" />
-            <element signature="e#41022#41032#0" expanded="true" />
-            <element signature="e#43751#43766#0" expanded="true" />
+            <element signature="e#12496#12503#0" expanded="true" />
+            <element signature="e#12583#12592#0" expanded="true" />
+            <element signature="e#12673#12684#0" expanded="true" />
+            <element signature="e#36800#36801#0" expanded="true" />
+            <element signature="e#36859#36860#0" expanded="true" />
+            <element signature="e#41373#41383#0" expanded="true" />
+            <element signature="e#42212#42222#0" expanded="true" />
+            <element signature="e#43554#43564#0" expanded="true" />
+            <element signature="e#43620#43630#0" expanded="true" />
+            <element signature="e#46349#46364#0" expanded="true" />
           </folding>
         </state>
       </provider>

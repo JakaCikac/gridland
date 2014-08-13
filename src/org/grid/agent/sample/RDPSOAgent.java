@@ -324,7 +324,6 @@ public class RDPSOAgent extends Agent {
                     createSwarm = in.readBoolean();
 
 
-
                     preTime = in.readInt();
                     int timediff = preTime - timestep;
 
@@ -491,7 +490,7 @@ public class RDPSOAgent extends Agent {
 
     // cleanMove tells the agent to only move
     boolean cleanMove = false;
-    Position goalPosition = new Position(0,0);
+    Position goalPosition = new Position(0, 0);
     // how many moves left on x and y
     int moveXleft = 0;
     int moveYleft = 0;
@@ -522,7 +521,7 @@ public class RDPSOAgent extends Agent {
                 agentPositionY = position.getY();
 
                 if (state.direction == Direction.NONE) {
-                //if (true) {
+                    //if (true) {
 
                     if (firstIteration) {
                         // initialize RDPSO variables, position and swarmID
@@ -668,10 +667,10 @@ public class RDPSOAgent extends Agent {
                                 int roundedY = (int) Math.round(tempAgentPositionY);
 
                                 //System.out.println("Pure: " + tempAgentPositionX + ", " + tempAgentPositionY + " Rounded: " + roundedX + ", " + roundedY);
-                                System.out.println("Current position: "+ agentPositionX + ", " + agentPositionY);
+                                System.out.println("Current position: " + agentPositionX + ", " + agentPositionY);
                                 System.out.println("Wanted position: " + roundedX + ", " + roundedY);
 
-                                goalPosition = cleanMove(roundedX,roundedY);
+                                goalPosition = cleanMove(roundedX, roundedY);
                                 // jump into movement execution next iteration
                                 cleanMove = true;
                                 // todo: don't forget to update the agent position (int, int)!
@@ -756,14 +755,35 @@ public class RDPSOAgent extends Agent {
                                     // agent is one of the best in the excluded group
                                     if (best_ni) {
                                         // todo: what the hell is Nx?
+                                        // check if number of excluded agents is bigger than number of initial agents
+                                        // required to form a sub-swarm then check probability for forming a new group
+                                        if (numAgents > ConstantsRDPSO.INIT_AGENTS && spawnGroupProbabilityExcluded()) {
+                                            //todo: how to assign new swarm.. I guess you will have to keep a number of swarms
+                                            //todo: broadcast a need for N_I-1 robots to form new swarm
+                                        }
+                                        // if the agent receives a request to join a swarm
+                                        else if (true) { // todo: condition is: If received the need to join swarm
+                                            swarmID = 2; // todo: change to received swarm number, you have to transmitt that info too
+                                            // increase number of swarms?
+                                            // increase number of agents in swarm
+                                            numAgents++;
+                                            // todo: send info about joining a swarm to all TEAMMATES!
+                                            // right, how do I do that..
 
+                                        } else if (true) { //todo: condition is: If received info to form a new subgroup
+                                            // include agent in the new subgroup
+                                            swarmID = 2; // todo: change to received swarm_id_new
+                                            // change number of agents to the initial number of agents in a swarm
+                                            numAgents = ConstantsRDPSO.INIT_AGENTS;
+                                            // reset number of excluded robots
+                                            numKilledAgents = 0;
+                                            // reset the stagnancy counter
+                                            SC = 0;
+                                        }
                                     }
-
                                 }
-
-
-
                             }
+
                         } else {
                             // check if agent is in clean move mode (doesn't do anything else but move)
                             if (cleanMove) {
@@ -772,8 +792,8 @@ public class RDPSOAgent extends Agent {
                                 if (replanMap) {
                                     plan.clear();
                                     replan(goalPosition);
-                                   // namesto clear, si moras zaponit ciljno lokacijo in se enkrat splanirat pot do tja?
-                               //     plan.clear();
+                                    // namesto clear, si moras zaponit ciljno lokacijo in se enkrat splanirat pot do tja?
+                                    //     plan.clear();
                                     // no idea what is wrong
                                 }
 
@@ -837,7 +857,7 @@ public class RDPSOAgent extends Agent {
     }
 
     private boolean isObstacle(Neighborhood n, int x, int y) {
-        return n.getCell(x,y) == Neighborhood.WALL;
+        return n.getCell(x, y) == Neighborhood.WALL;
     }
 
     private void clearMovement(State state) {
@@ -939,19 +959,19 @@ public class RDPSOAgent extends Agent {
 
         // todo: something like alpha*uncovered_cells + beta*time_needed
 
-        return Math.random()*100+1;
+        return Math.random() * 100 + 1;
     }
 
     private double evaluateObstacleFunction(State state) {
         // analyze neighbourhood, find obstacles
-        Set<Position> obstacles =  analyzeNeighborhoodObstacles(state.neighborhood);
+        Set<Position> obstacles = analyzeNeighborhoodObstacles(state.neighborhood);
         double functionResult = 0.0;
         for (Position p : obstacles) {
             //if (isObstacle(state.neighborhood, p.getX(), p.getY())) {
-                // calculate manhattan distance to point
-                Position from = new Position(agentPositionX, agentPositionY);
-                Position to = new Position(p.getX(), p.getY());
-                functionResult += Position.distance(from, to);
+            // calculate manhattan distance to point
+            Position from = new Position(agentPositionX, agentPositionY);
+            Position to = new Position(p.getX(), p.getY());
+            functionResult += Position.distance(from, to);
             //}
         }
         System.out.println("Obstacle evaluation: " + functionResult + ", Current best: " + obstacleBestSolution);
@@ -961,6 +981,14 @@ public class RDPSOAgent extends Agent {
     /* check probability of a group spawning a new subgroup */
     private boolean spawnGroupProbability() {
         if ((Math.random() * (numAgents / ConstantsRDPSO.MAX_AGENTS)) > Math.random()) {
+            return true;
+        } else return false;
+    }
+
+    /* check probability of a group spawning a new subgroup from excluded group */
+    private boolean spawnGroupProbabilityExcluded() {
+        // N_T = total population of agents. todo: I don't keep track of that yet, so change the formula later.
+        if ((Math.random() * (numAgents / (ConstantsRDPSO.INIT_AGENTS * ConstantsRDPSO.MAX_SWARMS))) > Math.random()) {
             return true;
         } else return false;
     }
@@ -1028,7 +1056,7 @@ public class RDPSOAgent extends Agent {
         return moveable;
     }
 
-    protected static class Decision  {
+    protected static class Decision {
 
         private Direction direction;
 
