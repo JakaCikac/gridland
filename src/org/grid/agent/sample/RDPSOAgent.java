@@ -100,15 +100,6 @@ public class RDPSOAgent extends Agent {
     private double local = 0;  // comm stuff
     private double global = 0; // comm stuff
 
-    private double vx = 0;
-    private double vx_t1 = 0;
-    private double vx_t2 = 0;
-    private double vx_t3 = 0;
-    private double vy = 0;
-    private double vy_t1 = 0;
-    private double vy_t2 = 0;
-    private double vy_t3 = 0;
-
     private int num_kill = 0;             // number of killed agents in swarm
     private double SC = 0;                // stagnancy counter
     private boolean callAgent = false;    // need of calling a agent
@@ -428,19 +419,6 @@ public class RDPSOAgent extends Agent {
 
         swarmSolutionArray = new double[ConstantsRDPSO.MAX_AGENTS];
 
-
-        local = 0;
-        global = 0;
-
-        vx = 0;
-        vx_t1 = 0;
-        vx_t2 = 0;
-        vx_t3 = 0;
-        vy = 0;
-        vy_t1 = 0;
-        vy_t2 = 0;
-        vy_t3 = 0;
-
         // This is the same for all agents.
         constantArray[0] = ConstantsRDPSO.C1;
         constantArray[1] = ConstantsRDPSO.C2;
@@ -519,7 +497,7 @@ public class RDPSOAgent extends Agent {
 
                 // todo: where do I update this?
                 agentPositionX = position.getX();
-                System.out.println("position x,y: (" + position.getX() + ", " + position.getY());
+                //System.out.println("position x,y: (" + position.getX() + ", " + position.getY());
                 agentPositionY = position.getY();
 
                 if (state.direction == Direction.NONE) {
@@ -673,8 +651,8 @@ public class RDPSOAgent extends Agent {
                                 System.out.println("Wanted position: " + roundedX + ", " + roundedY);
                                 */
 
-                                int roundedX = 0;
-                                int roundedY = 2;
+                                int roundedX = -2;
+                                int roundedY = 0;
                                 goalPosition = cleanMove(roundedX, roundedY);
                                 // jump into movement execution next iteration
                                 cleanMove = true;
@@ -760,7 +738,7 @@ public class RDPSOAgent extends Agent {
                                     }
                                     // agent is one of the best in the excluded group
                                     if (best_ni) {
-                                        // todo: what the hell is Nx?
+                                        // note: N_X is the number of agents in the excluded group
                                         // check if number of excluded agents is bigger than number of initial agents
                                         // required to form a sub-swarm then check probability for forming a new group
                                         if (numAgents > ConstantsRDPSO.INIT_AGENTS && spawnGroupProbabilityExcluded()) {
@@ -806,7 +784,7 @@ public class RDPSOAgent extends Agent {
                                 if (!plan.isEmpty()) {
 
                                     Direction d = plan.poll();
-                                    // debug("Next move: %s", d);
+                                    debug("Next move: %s", d);
 
                                     timestep++;
 
