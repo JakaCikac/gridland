@@ -13,7 +13,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program. If not, see <http://www.gnu.org/licenses/>. 
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 package org.grid.agent.sample;
 
@@ -199,7 +200,7 @@ public class RDPSOAgent extends Agent {
         // 6 = scope of the arena
         arena = map.getArena(6);
 
-        if (System.getProperty("rdpso") != null) {
+        //if (System.getProperty("rdpso") != null) {
             view = new SwingView(24);
 
             view.setBasePallette(new SwingView.HeatPalette(32));
@@ -207,7 +208,7 @@ public class RDPSOAgent extends Agent {
             window.setContentPane(view);
             window.setSize(view.getPreferredSize(arena));
             window.setVisible(true);
-        }
+        //}
     }
 
     /**
@@ -518,6 +519,7 @@ public class RDPSOAgent extends Agent {
 
                 // todo: where do I update this?
                 agentPositionX = position.getX();
+                System.out.println("position x,y: (" + position.getX() + ", " + position.getY());
                 agentPositionY = position.getY();
 
                 if (state.direction == Direction.NONE) {
@@ -639,7 +641,7 @@ public class RDPSOAgent extends Agent {
                                 }
 
                                 // UPDATE AGENT'S VELOCITY
-                                double functionResultX = 0.0;
+                                /* double functionResultX = 0.0;
                                 randomArray[0] = Math.random();
                                 randomArray[1] = Math.random();
                                 randomArray[2] = Math.random();
@@ -657,7 +659,7 @@ public class RDPSOAgent extends Agent {
                                 agentVelocityY = ConstantsRDPSO.W + functionResultY;
 
                                 // UPDATE AGENT'S POSITION
-                                //System.out.println("Agetn positio: " + agentPositionX + ", " + agentPositionY);
+                                //System.out.println("Agent position: " + agentPositionX + ", " + agentPositionY);
                                 double tempAgentPositionX = agentPositionX + agentVelocityX;
                                 //System.out.println("New agent position X: " + tempAgentPositionX);
                                 int roundedX = (int) Math.round(tempAgentPositionX);
@@ -669,12 +671,16 @@ public class RDPSOAgent extends Agent {
                                 //System.out.println("Pure: " + tempAgentPositionX + ", " + tempAgentPositionY + " Rounded: " + roundedX + ", " + roundedY);
                                 System.out.println("Current position: " + agentPositionX + ", " + agentPositionY);
                                 System.out.println("Wanted position: " + roundedX + ", " + roundedY);
+                                */
 
+                                int roundedX = 0;
+                                int roundedY = 2;
                                 goalPosition = cleanMove(roundedX, roundedY);
                                 // jump into movement execution next iteration
                                 cleanMove = true;
                                 // todo: don't forget to update the agent position (int, int)!
                                 // todo: move agent to new calculated position
+                                // todo: check if new position is possible (tile is not a wall)
 
 
                             } else { // if agent is in the EXCLUDED MEMBERS GROUP
@@ -790,7 +796,7 @@ public class RDPSOAgent extends Agent {
                                 // update agent's local map
                                 boolean replanMap = map.update(state.neighborhood, position, timestep);
                                 if (replanMap) {
-                                    plan.clear();
+                                        plan.clear();
                                     replan(goalPosition);
                                     // namesto clear, si moras zaponit ciljno lokacijo in se enkrat splanirat pot do tja?
                                     //     plan.clear();
@@ -821,10 +827,10 @@ public class RDPSOAgent extends Agent {
                                     agentPositionX = origin.getX();
                                     agentPositionY = origin.getY();
 
-                                    if (detectLock()) {
+                                   // if (detectLock()) {
                                         //System.out.println("lock detected, getting free");
-                                        clearMovement(state);
-                                    }
+                                   //     clearMovement(state);
+                                   // }
 
                                     // todo: update agent position according to the move
 
@@ -921,8 +927,10 @@ public class RDPSOAgent extends Agent {
         Position p = new Position(position.getX() + moveXleft, position.getY() + moveYleft);
 
         LocalMap.Node n = map.get(p.getX(), p.getY());
+        System.out.println(n);
+        System.out.println(p);
         // todo: what do on error?
-        if (n == null) {
+        if (n == null || n.getBody() == -1) {
             plan.clear();
             return null;
         }

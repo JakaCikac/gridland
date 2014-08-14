@@ -200,7 +200,7 @@ public class ModReaperAgent extends Agent {
         // 6 = scope of the arena
         arena = map.getArena(6);
 
-        if (System.getProperty("reaper") != null) {
+        //if (System.getProperty("reaper") != null) {
             view = new SwingView(24);
 
             view.setBasePallette(new SwingView.HeatPalette(32));
@@ -209,7 +209,7 @@ public class ModReaperAgent extends Agent {
             window.setSize(view.getPreferredSize(arena));
             window.setVisible(true);
 
-        }
+        //}
     }
 
     @Override
