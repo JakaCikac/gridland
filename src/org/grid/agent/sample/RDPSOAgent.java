@@ -47,18 +47,10 @@ public class RDPSOAgent extends Agent {
     private Vector<Position> history = new Vector<Position>();
     private boolean firstIteration = true;
 
-    private int numSwarms = 3; // initial number of swarms
-
-    /* shared variables in swarm .. */
-    private int numAgents = 5; // current number of agents in each swarm
-    private int numKilledAgents = 0; // initial excluded robots
-
-
     // Possible agent states
     private static enum AgentState {
         EXPLORE, SEEK, RETURN
     }
-
 
     private static class State {
 
@@ -90,20 +82,54 @@ public class RDPSOAgent extends Agent {
         }
     };
 
-    // RDPSO variables
+    /* ########################
+       RDPSO variables
+    ###########################  */
 
     private int swarmID = 1;            // which swarm does the agent belong to
     // swarmID = 0 = agent belongs to the socially excluded group
     private static int swarm_counter = 1;
 
-    /* memorized parameters of each agent */
-    private double local = 0;  // comm stuff
-    private double global = 0; // comm stuff
-
-    private int num_kill = 0;             // number of killed agents in swarm
     private double SC = 0;                // stagnancy counter
     private boolean callAgent = false;    // need of calling a agent
     private boolean createSwarm = false;  // need of creating a swarm
+
+    private int numSwarms = 3; // initial number of swarms
+
+    /* shared variables in swarm .. */
+    private int numAgents = 5; // current number of agents in each swarm
+    private int numKilledAgents = 0; // initial excluded robots
+
+
+    int agentPositionX = 0; // x_n(t)
+    int agentPositionY = 0; // x_n(t)
+
+    double agentVelocityX = 0;
+    double agentVelocityY = 0;
+
+    double agentSolution = 0; // h(x_n(t))
+    double agentBestSolution = 0; // h_best
+
+    // X_1_1(t) = cognitive x, X_1_2(t) = cognitive y, X_2_1(t) = social X, X_2_2(t) = social Y,
+    // X_3_1(t) = obstacle X, X_3_2(t) = obstacle Y
+    double solutionArray[] = new double[6];
+
+    double bestSwarmSolution = 0; // H_best , shared
+    double obstacleSolution = 0; // g(x_n(t))
+    double obstacleBestSolution = 0; // g_best , shared
+
+    // every agent has the same constants but it's own randoms
+    double constantArray[] = new double[3];
+    double randomArray[] = new double[3];
+
+    double swarmSolutionArray[];
+
+    // cleanMove tells the agent to only move
+    boolean cleanMove = false;
+    Position goalPosition = new Position(0, 0);
+    // agentPositionX,Y = current agent position
+    // agentSolution = agent's current solution
+    // agentBestSolution = agent's best solution so far
 
 
     /**
@@ -212,25 +238,23 @@ public class RDPSOAgent extends Agent {
         /*
             Required info in a message:
             -------------------------------------
-            int swarmID             - agent's swarmID
-            double local            - agent's local best solution
-            double global           - swarm's global best solution
-            double xcognitive       - agent's best cognitive position x
-            double ycognitive       - agent's best cognitive position y
-            double xgbest           - agent's best position x
-            double ygbest           - agent's best position y
-            double xobs             - agent's best obstacle avoidance x
-            double yobs             - agent's best obstacle avoidance y
-            double vx{ ,t1,t2,t3}, vy{, t1, t2, t3} - agent's previous and current speeds
-            int num_kill            - number of killed agents in the swarm
-            double SC               - search counter for the swarm group
-            boolean callagent       - is a new agent required
-            boolean createswarm     - should the swarm create a subswarm
-            double mainBestFunction - swarm's best objective solution
-            double gbestValue       - globally best solution
-            double obsBestFunction  - best obstacle avoidance function
+            int swarmID
+
+            int agentPositionX
+            int agentPositionY
+            double agentBestSolution
+            double solutionArray
+            (includes local,global,obstacle best (x and y for each)
+            double bestSwarmSolution
+            double obstacleBestSolution
+            double SC
+            boolean callAgent
+            boolean createSwarm
+            int num_agents
+            int numKilledAgents
 
          */
+
 
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream(getMaxMessageSize());
@@ -253,10 +277,6 @@ public class RDPSOAgent extends Agent {
             out.writeInt(center.getY());
 
             out.writeInt(swarmID);
-            out.writeDouble(local);
-            out.writeDouble(global);
-
-            out.writeInt(num_kill);
             out.writeDouble(SC);
             out.writeBoolean(callAgent);
             out.writeBoolean(createSwarm);
@@ -307,10 +327,6 @@ public class RDPSOAgent extends Agent {
                     center.setY(in.readInt());
 
                     swarmID = in.readInt();
-                    tempLocal = in.readDouble();
-                    tempGlobal = in.readDouble();
-
-                    num_kill = in.readInt();
                     SC = in.readDouble();
                     callAgent = in.readBoolean();
                     createSwarm = in.readBoolean();
@@ -438,46 +454,6 @@ public class RDPSOAgent extends Agent {
 
         return getSwarmCounter();
     }
-
-    /**
-     * RDPSO VARIABLES *
-     */
-    int agentPositionX = 0; // x_n(t)
-    int agentPositionY = 0; // x_n(t)
-
-    double agentVelocityX = 0;
-    double agentVelocityY = 0;
-
-    double agentSolution = 0; // h(x_n(t))
-    double agentBestSolution = 0; // h_best
-
-    // X_1_1(t) = cognitive x, X_1_2(t) = cognitive y, X_2_1(t) = social X, X_2_2(t) = social Y,
-    // X_3_1(t) = obstacle X, X_3_2(t) = obstacle Y
-    double solutionArray[] = new double[6];
-
-    double bestSwarmSolution = 0; // H_best , shared
-    double obstacleSolution = 0; // g(x_n(t))
-    double obstacleBestSolution = 0; // g_best , shared
-
-    // every agent has the same constants but it's own randoms
-    double constantArray[] = new double[3];
-    double randomArray[] = new double[3];
-
-    boolean replanAgents = true;
-
-    double swarmSolutionArray[];
-
-    // cleanMove tells the agent to only move
-    boolean cleanMove = false;
-    Position goalPosition = new Position(0, 0);
-    // how many moves left on x and y
-    int moveXleft = 0;
-    int moveYleft = 0;
-
-    // agentPositionX,Y = current agent position
-    // agentSolution = agent's current solution
-    // agentBestSolution = agent's best solution so far
-
 
     @Override
     public void run() {
