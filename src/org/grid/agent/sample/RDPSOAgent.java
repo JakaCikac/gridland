@@ -903,21 +903,6 @@ public class RDPSOAgent extends Agent {
         }
     }
 
-    private void clearMovement(State state) {
-
-        List<Direction> directions = null;
-
-        List<LocalMap.Node> candidates = map.filter(new DistanceFilter(
-                position,
-                state.neighborhood.getSize() - 1,
-                state.neighborhood.getSize() + 1));
-
-        LocalMap.Paths paths = map.findShortestPaths(position);
-        directions = paths.shortestPathTo(candidates);
-        plan.addAll(directions);
-
-    }
-
     private Position cleanMove(int moveXleft, int moveYleft) {
 
         List<Direction> directions = null;
@@ -1084,29 +1069,6 @@ public class RDPSOAgent extends Agent {
             System.out.println("Position: " + x + ", " + y + " is an obstacle.");
             return false;
         } else return  true;
-
-    }
-
-    protected static class Decision {
-
-        private Direction direction;
-
-        public Direction getDirection() {
-            return direction;
-        }
-
-        public void setDirection(Direction direction) {
-            this.direction = direction;
-        }
-
-        public Decision(Direction direction) {
-            super();
-            this.direction = direction;
-        }
-
-        public String toString() {
-            return String.format("%s", direction.toString());
-        }
 
     }
 
