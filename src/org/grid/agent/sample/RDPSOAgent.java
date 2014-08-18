@@ -484,7 +484,7 @@ public class RDPSOAgent extends Agent {
     @Override
     public void run() {
 
-        int sleeptime = 800;
+        int sleeptime = 100;
 
         scan(0);
 
@@ -623,7 +623,7 @@ public class RDPSOAgent extends Agent {
                                 }
 
                                 // UPDATE AGENT'S VELOCITY
-                                /* double functionResultX = 0.0;
+                                 double functionResultX = 0.0;
                                 randomArray[0] = Math.random();
                                 randomArray[1] = Math.random();
                                 randomArray[2] = Math.random();
@@ -659,10 +659,10 @@ public class RDPSOAgent extends Agent {
                                 //System.out.println("Current position: " + agentPositionX + ", " + agentPositionY);
 
                                 System.out.println("Wanted position: " + roundedX + ", " + roundedY);
-                                */
 
-                                int roundedX = 1;
-                                int roundedY = 1;
+
+                                //int roundedX = 1;
+                                //int roundedY = 1;
                                 // Check if the position is even possible, otherwise recalc.
                                 System.out.println("GLOB current: " + position.getX() + ", " + position.getY());
                                 System.out.println("GLOB new: " + (position.getX() + roundedX) + ", " + (position.getY() + roundedY));
@@ -675,6 +675,7 @@ public class RDPSOAgent extends Agent {
                                 } else {
                                     // todo: recalculate?
                                 }
+
 
                                 // todo: don't forget to update the agent position (int, int)!
                                 // todo: move agent to new calculated position
@@ -798,7 +799,7 @@ public class RDPSOAgent extends Agent {
                                  if (replanMap) {
                                         plan.clear();
                                         // on replan, remember what goal you were trying to reach and go for it
-                                       /
+
                                         System.out.println("replaning for " + goalPosition.toString());
                                         goalPosition.setX(goalPosition.getX() - position.getX());
                                         goalPosition.setY(goalPosition.getY() - position.getY());
@@ -954,9 +955,14 @@ public class RDPSOAgent extends Agent {
 
         LocalMap.Node n = map.get(p.getX(), p.getY());
 
-        directions = paths.shortestPathTo(n);
+        if (n == null || n.getBody() == -1) {
+            plan.clear();
+        } else {
+            directions = paths.shortestPathTo(n);
+        }
 
-        plan.addAll(directions);
+        if ( directions != null)
+            plan.addAll(directions);
 
     }
 
@@ -966,11 +972,11 @@ public class RDPSOAgent extends Agent {
 
         double result= 0.0;
         if ( Math.random() > 0.70 || Math.random() < 0.20) {
-            result = -1* Math.random() * 10000 + 1;
+            result = -1* Math.random() * 100000 + 1;
             //System.out.println("Evaluation: " + result);
             return result;
         } else {
-            result = Math.random() * 10000 + 1;
+            result = Math.random() * 100000 + 1;
             //System.out.println("Evaluation: " + result);
             return result;
         }

@@ -77,10 +77,10 @@
       <file leaf-file-name="RDPSOAgent.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="4.3636365" vertical-offset="9600" max-vertical-offset="19335">
-              <caret line="928" column="32" selection-start-line="928" selection-start-column="32" selection-end-line="928" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.6363636" vertical-offset="14040" max-vertical-offset="19425">
+              <caret line="978" column="43" selection-start-line="978" selection-start-column="43" selection-end-line="978" selection-end-column="43" />
               <folding>
-                <element signature="e#0#52920#0" expanded="true" />
+                <element signature="e#0#52991#0" expanded="true" />
                 <element signature="imports" expanded="true" />
                 <element signature="e#1626#1636#0" expanded="true" />
                 <element signature="e#1703#1724#0" expanded="true" />
@@ -96,17 +96,36 @@
                 <element signature="e#13266#13273#0" expanded="true" />
                 <element signature="e#13353#13362#0" expanded="true" />
                 <element signature="e#13443#13454#0" expanded="true" />
-                <element signature="e#45603#45613#0" expanded="true" />
-                <element signature="e#46442#46452#0" expanded="true" />
-                <element signature="e#47478#47479#0" expanded="true" />
-                <element signature="e#47518#47519#0" expanded="true" />
-                <element signature="e#47575#47576#0" expanded="true" />
-                <element signature="e#47625#47626#0" expanded="true" />
-                <element signature="e#47780#47781#0" expanded="true" />
-                <element signature="e#47852#47853#0" expanded="true" />
-                <element signature="e#48053#48063#0" expanded="true" />
-                <element signature="e#48119#48129#0" expanded="true" />
-                <element signature="e#50848#50863#0" expanded="true" />
+                <element signature="e#45674#45684#0" expanded="true" />
+                <element signature="e#46513#46523#0" expanded="true" />
+                <element signature="e#47549#47550#0" expanded="true" />
+                <element signature="e#47589#47590#0" expanded="true" />
+                <element signature="e#47646#47647#0" expanded="true" />
+                <element signature="e#47696#47697#0" expanded="true" />
+                <element signature="e#47851#47852#0" expanded="true" />
+                <element signature="e#47923#47924#0" expanded="true" />
+                <element signature="e#48124#48134#0" expanded="true" />
+                <element signature="e#48190#48200#0" expanded="true" />
+                <element signature="e#50919#50934#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LocalMap.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/LocalMap.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="3892" max-vertical-offset="11940">
+              <caret line="317" column="0" selection-start-line="317" selection-start-column="0" selection-end-line="317" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#6982#6993#0" expanded="true" />
+                <element signature="e#8076#8087#0" expanded="true" />
+                <element signature="e#12366#12382#0" expanded="true" />
+                <element signature="e#12453#12472#0" expanded="true" />
+                <element signature="e#17157#17163#0" expanded="true" />
+                <element signature="e#19434#19440#0" expanded="true" />
+                <element signature="e#19699#19705#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -937,7 +956,7 @@
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="org.grid.agent.Agent" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="localhost org.grid.agent.sample.RDPSOAgent 1 explorers" />
+      <option name="PROGRAM_PARAMETERS" value="localhost org.grid.agent.sample.RDPSOAgent 2 explorers" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
@@ -1030,7 +1049,7 @@
       <workItem from="1406047022506" duration="786000" />
       <workItem from="1406536050929" duration="62717000" />
       <workItem from="1407397078998" duration="11898000" />
-      <workItem from="1407482699046" duration="31311000" />
+      <workItem from="1407482699046" duration="32778000" />
     </task>
     <task id="LOCAL-00001" summary="Test commit.">
       <created>1394200726993</created>
@@ -1316,11 +1335,15 @@
       <created>1408364008987</created>
       <updated>1408364008987</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="Trying to figure out different coordinate systems.">
+      <created>1408367982691</created>
+      <updated>1408367982692</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="241867000" />
+    <option name="totallyTimeSpent" value="243334000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1360,7 +1383,7 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32956383" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25444266" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5467153" sideWeight="0.4992057" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.546042" sideWeight="0.49899194" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32532534" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16028225" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -2256,10 +2279,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/protocol/Neighborhood.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1875">
+          <caret line="72" column="45" selection-start-line="72" selection-start-column="45" selection-end-line="72" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/LocalMap.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.7795277" vertical-offset="10954" max-vertical-offset="11970">
-          <caret line="585" column="1" selection-start-line="585" selection-start-column="1" selection-end-line="585" selection-end-column="1" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="3892" max-vertical-offset="11940">
+          <caret line="317" column="0" selection-start-line="317" selection-start-column="0" selection-end-line="317" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#6982#6993#0" expanded="true" />
@@ -2269,26 +2300,16 @@
             <element signature="e#17157#17163#0" expanded="true" />
             <element signature="e#19434#19440#0" expanded="true" />
             <element signature="e#19699#19705#0" expanded="true" />
-            <element signature="e#20249#20250#0" expanded="true" />
-            <element signature="e#20302#20303#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/protocol/Neighborhood.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1875">
-          <caret line="72" column="45" selection-start-line="72" selection-start-column="45" selection-end-line="72" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.3636365" vertical-offset="9600" max-vertical-offset="19335">
-          <caret line="928" column="32" selection-start-line="928" selection-start-column="32" selection-end-line="928" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.6363636" vertical-offset="14040" max-vertical-offset="19425">
+          <caret line="978" column="43" selection-start-line="978" selection-start-column="43" selection-end-line="978" selection-end-column="43" />
           <folding>
-            <element signature="e#0#52920#0" expanded="true" />
+            <element signature="e#0#52991#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1626#1636#0" expanded="true" />
             <element signature="e#1703#1724#0" expanded="true" />
@@ -2304,17 +2325,17 @@
             <element signature="e#13266#13273#0" expanded="true" />
             <element signature="e#13353#13362#0" expanded="true" />
             <element signature="e#13443#13454#0" expanded="true" />
-            <element signature="e#45603#45613#0" expanded="true" />
-            <element signature="e#46442#46452#0" expanded="true" />
-            <element signature="e#47478#47479#0" expanded="true" />
-            <element signature="e#47518#47519#0" expanded="true" />
-            <element signature="e#47575#47576#0" expanded="true" />
-            <element signature="e#47625#47626#0" expanded="true" />
-            <element signature="e#47780#47781#0" expanded="true" />
-            <element signature="e#47852#47853#0" expanded="true" />
-            <element signature="e#48053#48063#0" expanded="true" />
-            <element signature="e#48119#48129#0" expanded="true" />
-            <element signature="e#50848#50863#0" expanded="true" />
+            <element signature="e#45674#45684#0" expanded="true" />
+            <element signature="e#46513#46523#0" expanded="true" />
+            <element signature="e#47549#47550#0" expanded="true" />
+            <element signature="e#47589#47590#0" expanded="true" />
+            <element signature="e#47646#47647#0" expanded="true" />
+            <element signature="e#47696#47697#0" expanded="true" />
+            <element signature="e#47851#47852#0" expanded="true" />
+            <element signature="e#47923#47924#0" expanded="true" />
+            <element signature="e#48124#48134#0" expanded="true" />
+            <element signature="e#48190#48200#0" expanded="true" />
+            <element signature="e#50919#50934#0" expanded="true" />
           </folding>
         </state>
       </provider>
