@@ -6,7 +6,7 @@ package org.grid.agent.sample;
 public class ConstantsRDPSO {
             /* number of swarms */
 
-    static final int MAX_SWARMS = 5; // maximum number of swarms, including social exclusion group
+    static final int MAX_SWARMS = 1; // maximum number of swarms, including social exclusion group
     static final int MIN_SWARMS = 0; // minimum number of swarms (0, to allow social exclusion of all agents)
 
         /* number of agents in each swarm */
