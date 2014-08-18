@@ -793,11 +793,17 @@ public class RDPSOAgent extends Agent {
                             if (cleanMove) {
                                 // update agent's local map
                                 boolean replanMap =  map.update(state.neighborhood, position, timestep);
+                                System.out.println("Replan? " + replanMap);
                                 // in case new map information is received, clear the plan and calculate new position
                                  if (replanMap) {
                                         plan.clear();
-                                        cleanMove = false;
-                                        goalPosition = null;
+                                        // on replan, remember what goal you were trying to reach and go for it
+                                       /
+                                        System.out.println("replaning for " + goalPosition.toString());
+                                        goalPosition.setX(goalPosition.getX() - position.getX());
+                                        goalPosition.setY(goalPosition.getY() - position.getY());
+                                        replan(goalPosition);
+                                        System.out.println(plan.size());
                                  }
 
                                 if (!plan.isEmpty()) {
@@ -932,7 +938,7 @@ public class RDPSOAgent extends Agent {
         // cannot move anywhere ...
         if (directions == null) {
             directions = new Vector<Direction>();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 2; i++)
                 directions.add(Direction.NONE);
         }
 
