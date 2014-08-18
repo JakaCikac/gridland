@@ -151,22 +151,25 @@ public class MovementAgent extends Agent {
                     } // after the first iteration start the algorithm
                     else {
 
+                        boolean replanMap = map.update(state.neighborhood, position, timestep);
+
+                        // update arena
+                        if (view != null)
+                            view.update(arena);
+
                         // confirm that the agent is not a member of the excluded group (swarmID = 0)
                         if (!cleanMove) {
 
-                                int roundedX = 1;
-                                int roundedY = 1;
+                                int roundedX = 3;
+                                int roundedY = 5;
+                                goalPosition.setX(roundedX);
+                                goalPosition.setY(roundedY);
                                 // Check if the position is even possible, otherwise recalc.
-                                System.out.println("GLOB current: " + position.getX() + ", " + position.getY());
-                                System.out.println("GLOB new: " + (position.getX() + roundedX) + ", " + (position.getY() + roundedY));
-                                System.out.println("LOCA new: " + (roundedX - position.getX()) + ", " + (roundedY - position.getY()));
                                 boolean movePossible = positionPossible(state.neighborhood, (roundedX - position.getX()), (roundedY - position.getY()));
-                            System.out.println(movePossible);
                                 if (movePossible) {
-                                    goalPosition = cleanMove(roundedX - position.getX(), roundedY - position.getY());
-                                    System.out.println(goalPosition);
+                                    cleanMove(roundedX - position.getX(), roundedY - position.getY());
                                     // jump into movement execution next iteration
-                                    cleanMove = true;
+                                    if(goalPosition != null) cleanMove = true;
                                 } else {
                                     // todo: recalculate?
                                 }
@@ -175,16 +178,11 @@ public class MovementAgent extends Agent {
                             // check if agent is in clean move mode (doesn't do anything else but move)
                             if (cleanMove) {
                                 // update agent's local map
-                                boolean replanMap =  map.update(state.neighborhood, position, timestep);
+                                replanMap =  map.update(state.neighborhood, position, timestep);
                                 System.out.println("Replan? " + replanMap);
                                 // in case new map information is received, clear the plan and calculate new position
                                 if (replanMap) {
                                     plan.clear();
-                                    // on replan, remember what goal you were trying to reach and go for it
-
-                                    System.out.println("replaning for " + goalPosition.toString());
-                                    goalPosition.setX(goalPosition.getX() - position.getX());
-                                    goalPosition.setY(goalPosition.getY() - position.getY());
                                     replan(goalPosition);
                                     System.out.println(plan.size());
                                 }
@@ -231,7 +229,7 @@ public class MovementAgent extends Agent {
                                             // if can't move, clear plan, reset goal position
                                         } else {
                                             plan.clear();
-                                            goalPosition = null;
+                                            //goalPosition = null;
                                             cleanMove = false;
                                         }
                                     }
@@ -254,7 +252,7 @@ public class MovementAgent extends Agent {
                                     }
                                     else {
                                         // reset goal position
-                                        goalPosition = null;
+                                        //goalPosition = null;
                                         // mark end of multi move
                                         cleanMove = false;
                                     }
@@ -263,7 +261,7 @@ public class MovementAgent extends Agent {
 
                                 } else {
                                     // reset goal position
-                                    goalPosition = null;
+                                    //goalPosition = null;
                                     // mark end of multi move
                                     cleanMove = false;
                                 }
@@ -289,13 +287,15 @@ public class MovementAgent extends Agent {
         // todo: check why position?
         LocalMap.Paths paths = map.findShortestPaths(position);
 
-        Position p = new Position(position.getX() + moveXleft, position.getY() + moveYleft);
-        System.out.println(p);
+        // tole moras reworkat
+        Position p = new Position(moveXleft, moveYleft);
+
 
         LocalMap.Node n = map.get(p.getX(), p.getY());
         // todo: what do on error?
         if (n == null || n.getBody() == -1) {
             plan.clear();
+            // warning: this return null for goalPosition, handle that
             return null;
         }
 
@@ -304,13 +304,12 @@ public class MovementAgent extends Agent {
         // cannot move anywhere ...
         if (directions == null) {
             directions = new Vector<Direction>();
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 1; i++)
                 directions.add(Direction.NONE);
         }
 
         plan.addAll(directions);
 
-        System.out.println(p);
         return p;
     }
 
