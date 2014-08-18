@@ -623,14 +623,14 @@ public class RDPSOAgent extends Agent {
                                 }
 
                                 // UPDATE AGENT'S VELOCITY
-                                 double functionResultX = 0.0;
+                                /* double functionResultX = 0.0;
                                 randomArray[0] = Math.random();
                                 randomArray[1] = Math.random();
                                 randomArray[2] = Math.random();
                                 for (int i = 0; i < 3; i++) {
                                     functionResultX += constantArray[i] * randomArray[i] * (solutionArray[i] - agentPositionX);
-                                    System.out.println("solarr: " + solutionArray[i] + " X res: " + functionResultX);
-                                    System.out.println("calc: " + solutionArray[i] + " - " + agentPositionX + " = " + (solutionArray[i] - agentPositionX));
+                                    //System.out.println("solarr: " + solutionArray[i] + " X res: " + functionResultX);
+                                    //System.out.println("calc: " + solutionArray[i] + " - " + agentPositionX + " = " + (solutionArray[i] - agentPositionX));
                                 }
                                 double functionResultY = 0.0;
                                 randomArray[0] = Math.random();
@@ -638,12 +638,12 @@ public class RDPSOAgent extends Agent {
                                 randomArray[2] = Math.random();
                                 for (int i = 0; i < 3; i++) {
                                     functionResultY += constantArray[i] * randomArray[i] * (solutionArray[i + 3] - agentPositionY);
-                                    System.out.println("solarr: " + solutionArray[i+3] +  " Y res: " + functionResultY);
-                                    System.out.println("calc: " + solutionArray[i+3] + " - " + agentPositionY + " = " + (solutionArray[i+3] - agentPositionY));
+                                    //System.out.println("solarr: " + solutionArray[i+3] +  " Y res: " + functionResultY);
+                                    //System.out.println("calc: " + solutionArray[i+3] + " - " + agentPositionY + " = " + (solutionArray[i+3] - agentPositionY));
                                 }
                                 agentVelocityX = ConstantsRDPSO.W + functionResultX;
                                 agentVelocityY = ConstantsRDPSO.W + functionResultY;
-                                System.out.println("agent velocity X, Y: " + agentVelocityX + ", " + agentVelocityY);
+                                //System.out.println("agent velocity X, Y: " + agentVelocityX + ", " + agentVelocityY);
 
                                 // UPDATE AGENT'S POSITION
                                 //System.out.println("Agent position: " + agentPositionX + ", " + agentPositionY);
@@ -659,13 +659,17 @@ public class RDPSOAgent extends Agent {
                                 //System.out.println("Current position: " + agentPositionX + ", " + agentPositionY);
 
                                 System.out.println("Wanted position: " + roundedX + ", " + roundedY);
+                                */
 
-                                //int roundedX = -2;
-                                //int roundedY = 0;
+                                int roundedX = 1;
+                                int roundedY = 1;
                                 // Check if the position is even possible, otherwise recalc.
-                                boolean movePossible = positionPossible(state.neighborhood, roundedX, roundedY);
+                                System.out.println("GLOB current: " + position.getX() + ", " + position.getY());
+                                System.out.println("GLOB new: " + (position.getX() + roundedX) + ", " + (position.getY() + roundedY));
+                                System.out.println("LOCA new: " + (roundedX - position.getX()) + ", " + (roundedY - position.getY()));
+                                boolean movePossible = positionPossible(state.neighborhood, (roundedX - position.getX()), (roundedY - position.getY()));
                                 if (movePossible) {
-                                    goalPosition = cleanMove(roundedX, roundedY);
+                                    goalPosition = cleanMove(roundedX - position.getX(), roundedY - position.getY());
                                     // jump into movement execution next iteration
                                     cleanMove = true;
                                 } else {
@@ -788,21 +792,17 @@ public class RDPSOAgent extends Agent {
                             // check if agent is in clean move mode (doesn't do anything else but move)
                             if (cleanMove) {
                                 // update agent's local map
-                                map.update(state.neighborhood, position, timestep);
-                                /* if (replanMap) {
+                                boolean replanMap =  map.update(state.neighborhood, position, timestep);
+                                // in case new map information is received, clear the plan and calculate new position
+                                 if (replanMap) {
                                         plan.clear();
-                                    // check if possition is even possible, otherwise recalculate everything
-                                    if (positionPossible(state.neighborhood, goalPosition.getX(), goalPosition.getY()))
-                                        replan(goalPosition);
-                                    else {
                                         cleanMove = false;
                                         goalPosition = null;
-                                    }
-                                } */
+                                 }
 
                                 if (!plan.isEmpty()) {
 
-                                    System.out.println("Plan size: " + plan.size());
+                                    //System.out.println("Plan size: " + plan.size());
 
                                     Direction d = plan.poll();
                                     //debug("Next move: %s", d);
@@ -810,35 +810,36 @@ public class RDPSOAgent extends Agent {
                                     timestep++;
 
                                     // does the plan even check if it is a wall..?
-                                    System.out.println("Current position: " + position.getX() + ", " + position.getY());
+                                    //System.out.println("Current position: " + position.getX() + ", " + position.getY());
                                     boolean canMove = false;
                                     if (d != Direction.NONE) {
                                         if (d == Direction.LEFT) {
                                             canMove = positionPossible(state.neighborhood, position.getX() - 1, position.getY());
                                             if (canMove) {
-                                                System.out.println("Moving to: " + (position.getX() - 1) + ", " + position.getY());
+                                                //System.out.println("Moving to: " + (position.getX() - 1) + ", " + position.getY());
                                             }
                                         }
                                         if (d == Direction.RIGHT) {
                                             canMove = positionPossible(state.neighborhood, position.getX() + 1, position.getY());
                                             if (canMove) {
-                                                System.out.println("Moving to: " + (position.getX() + 1) + ", " + position.getY());
+                                                //System.out.println("Moving to: " + (position.getX() + 1) + ", " + position.getY());
                                             }
                                         }
                                         if (d == Direction.UP) {
                                             canMove = positionPossible(state.neighborhood, position.getX(), position.getY() - 1);
                                             if (canMove) {
-                                                System.out.println("Moving to: " + (position.getX()) + ", " + (position.getY() - 1));
+                                                //System.out.println("Moving to: " + (position.getX()) + ", " + (position.getY() - 1));
                                             }
                                         }
                                         if (d == Direction.DOWN) {
                                             canMove = positionPossible(state.neighborhood, position.getX(), position.getY() + 1);
                                             if (canMove) {
-                                                System.out.println("Moving to: " + (position.getX()) + ", " + (position.getY() + 1));
+                                                //System.out.println("Moving to: " + (position.getX()) + ", " + (position.getY() + 1));
                                             }
                                         }
                                         if (canMove) {
                                             move(d);
+                                            // if can't move, clear plan, reset goal position
                                         } else {
                                             plan.clear();
                                             goalPosition = null;
@@ -848,6 +849,7 @@ public class RDPSOAgent extends Agent {
 
                                     if (canMove) {
 
+                                        // update agent position
                                         if (d == Direction.LEFT)
                                             position.setX(position.getX() - 1);
                                         if (d == Direction.RIGHT)
@@ -860,8 +862,12 @@ public class RDPSOAgent extends Agent {
                                         // update arena agent position
                                         arena.setOrigin(position.getX(), position.getY());
 
-                                        //agentPositionX = origin.getX();
-                                        //agentPositionY = origin.getY();
+                                    }
+                                    else {
+                                        // reset goal position
+                                        goalPosition = null;
+                                        // mark end of multi move
+                                        cleanMove = false;
                                     }
 
 
@@ -955,11 +961,11 @@ public class RDPSOAgent extends Agent {
         double result= 0.0;
         if ( Math.random() > 0.70 || Math.random() < 0.20) {
             result = -1* Math.random() * 10000 + 1;
-            System.out.println("Evaluation: " + result);
+            //System.out.println("Evaluation: " + result);
             return result;
         } else {
             result = Math.random() * 10000 + 1;
-            System.out.println("Evaluation: " + result);
+            //System.out.println("Evaluation: " + result);
             return result;
         }
 
@@ -1060,10 +1066,10 @@ public class RDPSOAgent extends Agent {
         return moveable;
     }
 
-    private boolean positionPossible(Neighborhood n, int roundedX, int roundedY) {
+    private boolean positionPossible(Neighborhood n, int x, int y) {
 
-        if ( n.getCell(roundedX, roundedY) > 0 || n.getCell(roundedX, roundedY) == Neighborhood.WALL ) {
-            System.out.println("Position: " + roundedX + ", " + roundedY + " is an obstacle.");
+        if ( n.getCell(x, y) == Neighborhood.WALL ) {
+            System.out.println("Position: " + x + ", " + y + " is an obstacle.");
             return false;
         } else return  true;
 
