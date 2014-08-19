@@ -23,6 +23,7 @@ public class MovementAgent extends Agent {
     private boolean firstIteration = true;
     boolean positionNotInMap = false;
     boolean knownLocalMap = false;
+    private Position origin = null;
 
     // variables
     int agentPositionX = 0; // x_n(t)
@@ -143,10 +144,10 @@ public class MovementAgent extends Agent {
 
                 if (state.direction == org.grid.protocol.Message.Direction.NONE && state.direction != null) {
 
-
                         // update local map (otherwise plan can't be executed)
                         boolean replanMap = map.update(state.neighborhood, position, timestep);
-                        if (replanMap) {
+
+                        if (replanMap ) {
                             // not sure if I need this here.
                             plan.clear();
                             if (goalPosition != null)
@@ -179,8 +180,10 @@ public class MovementAgent extends Agent {
                                 // go out of cleanMove or explore
                                 explore = false;
                                 cleanMove = false;
-                                positionNotInMap = false;
-                                knownLocalMap = true;
+                                if (positionNotInMap) {
+                                    positionNotInMap = false;
+                                    knownLocalMap = true;
+                                }
 
                                 roundedX = 3;
                                 roundedY = 2;
@@ -354,6 +357,5 @@ public class MovementAgent extends Agent {
         int random = - min + (int)(Math.random() * ((max - (-min)) + 1));
         return random;
     }
-
 
 }
