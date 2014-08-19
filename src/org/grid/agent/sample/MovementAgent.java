@@ -21,6 +21,8 @@ public class MovementAgent extends Agent {
     private Position position = new Position(0, 0);
     private int timestep = 1;
     private boolean firstIteration = true;
+    boolean positionNotInMap = false;
+    boolean knownLocalMap = false;
 
     // variables
     int agentPositionX = 0; // x_n(t)
@@ -28,7 +30,7 @@ public class MovementAgent extends Agent {
 
     // cleanMove tells the agent to only move
     boolean cleanMove = false;
-    Position goalPosition = new Position(0, 0);
+    Position goalPosition = null;
 
     private JFrame window;
     private LocalMap.LocalMapArena arena;
@@ -120,9 +122,14 @@ public class MovementAgent extends Agent {
     @Override
     public void run() {
 
-        int sleeptime = 100;
+        int sleeptime = 10;
 
         scan(0);
+
+        int roundedX = -120;
+        int roundedY = 60;
+        boolean explore = false;
+
 
         while (isAlive()) {
 
@@ -142,7 +149,8 @@ public class MovementAgent extends Agent {
                         if (replanMap) {
                             // not sure if I need this here.
                             plan.clear();
-                            replan(goalPosition);
+                            if (goalPosition != null)
+                                replan(goalPosition);
                         }
 
                         // update arena
@@ -152,35 +160,52 @@ public class MovementAgent extends Agent {
                         if (!cleanMove) {
 
                             // it's not global, it's an offset from the current global location
-                            int roundedX = 3;
-                            int roundedY = 3;
-                            if ( goalPosition == null || goalPosition.getX() == 0 && goalPosition.getY() == 0 ) {
+
+                            if ( goalPosition == null ) {
+
+                                // todo: calculate new goal position
+
                                 goalPosition = new Position(0,0);
-                                roundedX = -1 + position.getX() + generateRandomOffset(2,6);
-                                roundedY = 1 + position.getY() + generateRandomOffset(2,6);
                                 goalPosition.setX(roundedX);
                                 goalPosition.setY(roundedY);
+                                System.out.println("New goal: " + goalPosition);
                             }
-                            System.out.println("Goal: " + goalPosition);
 
-                            // Is goal position clear?
-                            boolean movePossible = positionPossible(state.neighborhood, (goalPosition.getX() - position.getX()), (goalPosition.getY() - position.getY()));
-
-                            if (movePossible) {
-                                System.out.println("Move possible!");
-                                // call move with local coordinates (offset from 0,0)
-                                cleanMove(goalPosition.getX(), goalPosition.getY());
-                                // jump into movement execution next iteration
-                                if (goalPosition != null) cleanMove = true; // this can happen if no local map
-                            } else {
-                                System.out.println("Impossible move!");
+                            // Is agent on goal position or is the position not even in the map?
+                            if ( (goalPosition.getX() - position.getX()) == 0 && (goalPosition.getY() - position.getY()) == 0 || positionNotInMap) {
+                                System.out.println("Goal position reached or position is not on the map.");
+                                // reset goal position so a new one can be calculated
                                 goalPosition = null;
+                                // go out of cleanMove or explore
+                                explore = false;
+                                cleanMove = false;
+                                positionNotInMap = false;
+                                knownLocalMap = true;
+
+                                roundedX = 3;
+                                roundedY = 2;
+                            } else {
+                                // Is goal position clear?
+                                boolean movePossible = positionPossible(state.neighborhood, (goalPosition.getX() - position.getX()), (goalPosition.getY() - position.getY()));
+
+                                if (movePossible || knownLocalMap) {
+                                    System.out.println("Move possible, executing clean move!");
+                                    // call move with local coordinates (offset from 0,0)
+                                    cleanMove(goalPosition.getX(), goalPosition.getY());
+                                    // jump into movement execution next iteration
+                                    if (goalPosition != null) cleanMove = true; // this can happen if no local map
+                                } else {
+                                    System.out.println("Impossible move, going into explore!");
+                                    // jump into explore mode
+                                    exploreMove();
+                                    explore = true;
+                                    cleanMove = true;
+                                }
                             }
                             scan(0);
 
                         } else {
                             // check if agent is in clean move mode (doesn't do anything else but move)
-                            if (cleanMove) {
                                 // update agent's local map
                                 replanMap = map.update(state.neighborhood, position, timestep);
                                 // update arena
@@ -189,13 +214,14 @@ public class MovementAgent extends Agent {
                                 // in case new map information is received, clear the plan and calculate new position
                                 if (replanMap) {
                                     plan.clear();
-                                    replan(goalPosition);
+                                    if (!explore)
+                                        replan(goalPosition);
                                 }
 
                                 if (!plan.isEmpty()) {
 
                                     Direction d = plan.poll();
-                                    debug("Next move: %s", d);
+                                    //debug("Next move: %s", d);
 
                                     timestep++;
                                     if (d != org.grid.protocol.Message.Direction.NONE) {
@@ -219,14 +245,13 @@ public class MovementAgent extends Agent {
 
                                 } else {
                                     // reset goal position
-                                     goalPosition = null;
+                                     //goalPosition = null;
                                     // mark end of multi move
                                     cleanMove = false;
+                                    explore = false;
                                     scan(0);
                                 }
                             }
-                        }
-
                 } else {
                     scan(0);
                 }
@@ -263,21 +288,33 @@ public class MovementAgent extends Agent {
 
         // cannot move anywhere ... assure, that at least one move is in the plan
         if (directions == null) {
-            List<LocalMap.Node> candidates = map.filter(LocalMap.BORDER_FILTER);
-
-            Collections.shuffle(candidates);
-
-            directions = paths.shortestPathTo(candidates);
-            if (directions == null) {
                 directions = new Vector<Direction>();
                 for (int i = 0; i < 1; i++)
                     directions.add(Direction.NONE);
-            }
         }
 
         plan.addAll(directions);
 
         return p;
+    }
+
+    private void exploreMove() {
+
+        List<Direction> directions = null;
+        LocalMap.Paths paths = map.findShortestPaths(position);
+        List<LocalMap.Node> candidates = map.filter(LocalMap.BORDER_FILTER);
+
+        Collections.shuffle(candidates);
+        directions = paths.shortestPathTo(candidates);
+
+        if (directions == null) {
+            directions = new Vector<Direction>();
+            for (int i = 0; i < 1; i++)
+                positionNotInMap = true;
+                directions.add(Direction.NONE);
+        }
+
+        plan.addAll(directions);
     }
 
     private void replan(Position p) {
@@ -304,7 +341,7 @@ public class MovementAgent extends Agent {
     private boolean positionPossible(Neighborhood n, int x, int y) {
 
         if (n.getCell(x,y) != Neighborhood.EMPTY) {
-            System.out.println("Position: " + x + ", " + y + " is an obstacle.");
+            System.out.println("Position: " + x + ", " + y + " is an obstacle or not visible.");
             return false;
         } else {
             // if move is possible

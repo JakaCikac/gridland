@@ -603,6 +603,14 @@ public class RDPSOAgent extends Agent {
                             //System.out.println("Current position: " + agentPositionX + ", " + agentPositionY);
 
                             System.out.println("Wanted position: " + roundedX + ", " + roundedY);
+                            if ( goalPosition == null || goalPosition.getX() == 0 && goalPosition.getY() == 0 ) {
+                                goalPosition = new Position(0,0);
+                                //roundedX = -1 + position.getX() + generateRandomOffset(2,6);
+                                //roundedY = 1 + position.getY() + generateRandomOffset(2,6);
+                                goalPosition.setX(roundedX);
+                                goalPosition.setY(roundedY);
+                            }
+                            System.out.println("Goal: " + goalPosition);
 
                             // Is goal position clear?
                             boolean movePossible = positionPossible(state.neighborhood, (goalPosition.getX() - position.getX()), (goalPosition.getY() - position.getY()));
