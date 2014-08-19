@@ -70,9 +70,6 @@ public class MovementAgent extends Agent {
 
         // 6 = scope of the arena
         arena = map.getArena(6);
-
-        // enable arena, to monitor agent's behaviour, to disable, uncomment if
-        //if (System.getProperty("rdpso") != null) {
         view = new SwingView(24);
 
         view.setBasePallette(new SwingView.HeatPalette(32));
@@ -80,7 +77,7 @@ public class MovementAgent extends Agent {
         window.setContentPane(view);
         window.setSize(view.getPreferredSize(arena));
         window.setVisible(true);
-        //}
+
     }
 
     /**
@@ -123,7 +120,7 @@ public class MovementAgent extends Agent {
     @Override
     public void run() {
 
-        int sleeptime = 400;
+        int sleeptime = 100;
 
         scan(0);
 
@@ -145,7 +142,6 @@ public class MovementAgent extends Agent {
                         if (replanMap) {
                             // not sure if I need this here.
                             plan.clear();
-                            System.out.println("Replanning with goal position: " + goalPosition);
                             replan(goalPosition);
                         }
 
@@ -159,12 +155,9 @@ public class MovementAgent extends Agent {
                             int roundedX = 3;
                             int roundedY = 3;
                             if ( goalPosition == null || goalPosition.getX() == 0 && goalPosition.getY() == 0 ) {
-                                System.out.println("recalc position");
                                 goalPosition = new Position(0,0);
-                                roundedX = -1 + position.getX() + (int)(Math.random()* 10+1);
-                                System.out.println("Rx: " + (int)(Math.random()* 10+1));
-                                roundedY = 1 + position.getY() + (int)(Math.random()* 10+1);
-                                System.out.println("ry: " + (int)(Math.random()* 10+1));
+                                roundedX = -1 + position.getX() + generateRandomOffset(2,6);
+                                roundedY = 1 + position.getY() + generateRandomOffset(2,6);
                                 goalPosition.setX(roundedX);
                                 goalPosition.setY(roundedY);
                             }
@@ -177,7 +170,6 @@ public class MovementAgent extends Agent {
                                 System.out.println("Move possible!");
                                 // call move with local coordinates (offset from 0,0)
                                 cleanMove(goalPosition.getX(), goalPosition.getY());
-                                System.out.println("Retrieved plan, size: " + plan.size());
                                 // jump into movement execution next iteration
                                 if (goalPosition != null) cleanMove = true; // this can happen if no local map
                             } else {
@@ -196,7 +188,6 @@ public class MovementAgent extends Agent {
                                     view.update(arena);
                                 // in case new map information is received, clear the plan and calculate new position
                                 if (replanMap) {
-                                    System.out.println("Replanning with goal position: " + goalPosition);
                                     plan.clear();
                                     replan(goalPosition);
                                 }
@@ -320,6 +311,11 @@ public class MovementAgent extends Agent {
             return true;
         }
 
+    }
+
+    public static int generateRandomOffset(int max , int min) {
+        int random = - min + (int)(Math.random() * ((max - (-min)) + 1));
+        return random;
     }
 
 
