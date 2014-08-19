@@ -22,6 +22,19 @@ public class MovementAgent extends Agent {
     private int timestep = 1;
     private boolean firstIteration = true;
 
+    // variables
+    int agentPositionX = 0; // x_n(t)
+    int agentPositionY = 0; // x_n(t)
+
+    // cleanMove tells the agent to only move
+    boolean cleanMove = false;
+    Position goalPosition = new Position(0, 0);
+
+    private JFrame window;
+    private LocalMap.LocalMapArena arena;
+    private SwingView view;
+
+
     private static class State {
 
         Neighborhood neighborhood;
@@ -51,17 +64,6 @@ public class MovementAgent extends Agent {
         }
     }
 
-    // variables
-    int agentPositionX = 0; // x_n(t)
-    int agentPositionY = 0; // x_n(t)
-
-    // cleanMove tells the agent to only move
-    boolean cleanMove = false;
-    Position goalPosition = new Position(0, 0);
-
-    private JFrame window;
-    private LocalMap.LocalMapArena arena;
-    private SwingView view;
 
     @Override
     public void initialize() {
@@ -121,120 +123,93 @@ public class MovementAgent extends Agent {
     @Override
     public void run() {
 
-        int sleeptime = 100;
+        int sleeptime = 400;
 
         scan(0);
 
         while (isAlive()) {
-
-            scan(0);
 
             // check for new state data
             State state = buffer.poll();
             // check if state is null, if null, you must call scan(0)
             if (state != null) {
 
-                // todo: where do I update this?
                 agentPositionX = position.getX();
-                //System.out.println("position x,y: (" + position.getX() + ", " + position.getY());
                 agentPositionY = position.getY();
 
-                if (state.direction == org.grid.protocol.Message.Direction.NONE) {
-                    //if (true) {
+                if (state.direction == org.grid.protocol.Message.Direction.NONE && state.direction != null) {
 
-                    if (firstIteration) {
-                        // initialize RDPSO variables, position and swarmID
-                        // call scan, to get new state information
-                        scan(0);
-                        // set first iteration to false, continue the algorithm
-                        firstIteration = false;
-                    } // after the first iteration start the algorithm
-                    else {
 
+                        // update local map (otherwise plan can't be executed)
                         boolean replanMap = map.update(state.neighborhood, position, timestep);
+                        if (replanMap) {
+                            // not sure if I need this here.
+                            plan.clear();
+                            System.out.println("Replanning with goal position: " + goalPosition);
+                            replan(goalPosition);
+                        }
 
                         // update arena
                         if (view != null)
                             view.update(arena);
 
-                        // confirm that the agent is not a member of the excluded group (swarmID = 0)
                         if (!cleanMove) {
 
-                                int roundedX = 3;
-                                int roundedY = 5;
+                            // it's not global, it's an offset from the current global location
+                            int roundedX = 3;
+                            int roundedY = 3;
+                            if ( goalPosition == null || goalPosition.getX() == 0 && goalPosition.getY() == 0 ) {
+                                System.out.println("recalc position");
+                                goalPosition = new Position(0,0);
+                                roundedX = -1 + position.getX() + (int)(Math.random()* 10+1);
+                                System.out.println("Rx: " + (int)(Math.random()* 10+1));
+                                roundedY = 1 + position.getY() + (int)(Math.random()* 10+1);
+                                System.out.println("ry: " + (int)(Math.random()* 10+1));
                                 goalPosition.setX(roundedX);
                                 goalPosition.setY(roundedY);
-                                // Check if the position is even possible, otherwise recalc.
-                                boolean movePossible = positionPossible(state.neighborhood, (roundedX - position.getX()), (roundedY - position.getY()));
-                                if (movePossible) {
-                                    cleanMove(roundedX - position.getX(), roundedY - position.getY());
-                                    // jump into movement execution next iteration
-                                    if(goalPosition != null) cleanMove = true;
-                                } else {
-                                    // todo: recalculate?
-                                }
+                            }
+                            System.out.println("Goal: " + goalPosition);
+
+                            // Is goal position clear?
+                            boolean movePossible = positionPossible(state.neighborhood, (goalPosition.getX() - position.getX()), (goalPosition.getY() - position.getY()));
+
+                            if (movePossible) {
+                                System.out.println("Move possible!");
+                                // call move with local coordinates (offset from 0,0)
+                                cleanMove(goalPosition.getX(), goalPosition.getY());
+                                System.out.println("Retrieved plan, size: " + plan.size());
+                                // jump into movement execution next iteration
+                                if (goalPosition != null) cleanMove = true; // this can happen if no local map
+                            } else {
+                                System.out.println("Impossible move!");
+                                goalPosition = null;
+                            }
+                            scan(0);
 
                         } else {
                             // check if agent is in clean move mode (doesn't do anything else but move)
                             if (cleanMove) {
                                 // update agent's local map
-                                replanMap =  map.update(state.neighborhood, position, timestep);
-                                System.out.println("Replan? " + replanMap);
+                                replanMap = map.update(state.neighborhood, position, timestep);
+                                // update arena
+                                if (view != null)
+                                    view.update(arena);
                                 // in case new map information is received, clear the plan and calculate new position
                                 if (replanMap) {
+                                    System.out.println("Replanning with goal position: " + goalPosition);
                                     plan.clear();
                                     replan(goalPosition);
-                                    System.out.println(plan.size());
                                 }
 
                                 if (!plan.isEmpty()) {
 
-                                    //System.out.println("Plan size: " + plan.size());
-
                                     Direction d = plan.poll();
-                                    //debug("Next move: %s", d);
+                                    debug("Next move: %s", d);
 
                                     timestep++;
-
-                                    // does the plan even check if it is a wall..?
-                                    //System.out.println("Current position: " + position.getX() + ", " + position.getY());
-                                    boolean canMove = false;
                                     if (d != org.grid.protocol.Message.Direction.NONE) {
-                                        if (d == org.grid.protocol.Message.Direction.LEFT) {
-                                            canMove = positionPossible(state.neighborhood, position.getX() - 1, position.getY());
-                                            if (canMove) {
-                                                //System.out.println("Moving to: " + (position.getX() - 1) + ", " + position.getY());
-                                            }
-                                        }
-                                        if (d == org.grid.protocol.Message.Direction.RIGHT) {
-                                            canMove = positionPossible(state.neighborhood, position.getX() + 1, position.getY());
-                                            if (canMove) {
-                                                //System.out.println("Moving to: " + (position.getX() + 1) + ", " + position.getY());
-                                            }
-                                        }
-                                        if (d == org.grid.protocol.Message.Direction.UP) {
-                                            canMove = positionPossible(state.neighborhood, position.getX(), position.getY() - 1);
-                                            if (canMove) {
-                                                //System.out.println("Moving to: " + (position.getX()) + ", " + (position.getY() - 1));
-                                            }
-                                        }
-                                        if (d == org.grid.protocol.Message.Direction.DOWN) {
-                                            canMove = positionPossible(state.neighborhood, position.getX(), position.getY() + 1);
-                                            if (canMove) {
-                                                //System.out.println("Moving to: " + (position.getX()) + ", " + (position.getY() + 1));
-                                            }
-                                        }
-                                        if (canMove) {
                                             move(d);
-                                            // if can't move, clear plan, reset goal position
-                                        } else {
-                                            plan.clear();
-                                            //goalPosition = null;
-                                            cleanMove = false;
-                                        }
                                     }
-
-                                    if (canMove) {
 
                                         // update agent position
                                         if (d == org.grid.protocol.Message.Direction.LEFT)
@@ -249,25 +224,18 @@ public class MovementAgent extends Agent {
                                         // update arena agent position
                                         arena.setOrigin(position.getX(), position.getY());
 
-                                    }
-                                    else {
-                                        // reset goal position
-                                        //goalPosition = null;
-                                        // mark end of multi move
-                                        cleanMove = false;
-                                    }
-
                                     scan(0);
 
                                 } else {
                                     // reset goal position
-                                    //goalPosition = null;
+                                     goalPosition = null;
                                     // mark end of multi move
                                     cleanMove = false;
+                                    scan(0);
                                 }
                             }
                         }
-                    }
+
                 } else {
                     scan(0);
                 }
@@ -284,28 +252,36 @@ public class MovementAgent extends Agent {
 
         List<Direction> directions = null;
 
-        // todo: check why position?
         LocalMap.Paths paths = map.findShortestPaths(position);
 
-        // tole moras reworkat
         Position p = new Position(moveXleft, moveYleft);
 
-
         LocalMap.Node n = map.get(p.getX(), p.getY());
-        // todo: what do on error?
-        if (n == null || n.getBody() == -1) {
+        if (n != null) {
+            System.out.println("Node exists on local map: " + n);
+        } else  if (n == null || n.getBody() == -1) {
+            System.out.println("Node doesn't exist on local map!");
+
+            // todo: how to handle missing node?
             plan.clear();
-            // warning: this return null for goalPosition, handle that
             return null;
         }
 
+        // calculate directions to node n
         directions = paths.shortestPathTo(n);
 
-        // cannot move anywhere ...
+        // cannot move anywhere ... assure, that at least one move is in the plan
         if (directions == null) {
-            directions = new Vector<Direction>();
-            for (int i = 0; i < 1; i++)
-                directions.add(Direction.NONE);
+            List<LocalMap.Node> candidates = map.filter(LocalMap.BORDER_FILTER);
+
+            Collections.shuffle(candidates);
+
+            directions = paths.shortestPathTo(candidates);
+            if (directions == null) {
+                directions = new Vector<Direction>();
+                for (int i = 0; i < 1; i++)
+                    directions.add(Direction.NONE);
+            }
         }
 
         plan.addAll(directions);
@@ -314,29 +290,35 @@ public class MovementAgent extends Agent {
     }
 
     private void replan(Position p) {
+
         List<org.grid.protocol.Message.Direction> directions = null;
 
         LocalMap.Paths paths = map.findShortestPaths(position);
 
         LocalMap.Node n = map.get(p.getX(), p.getY());
-
-        if (n == null || n.getBody() == -1) {
+        if (n != null) {
+            System.out.println("re: Node exists on local map: " + n);
+        }
+        else if (n == null || n.getBody() == -1) {
+            System.out.println("re: Node doesn't exist, clearing plan.");
             plan.clear();
         } else {
             directions = paths.shortestPathTo(n);
         }
 
-        if ( directions != null)
+        if (directions != null)
             plan.addAll(directions);
-
     }
 
     private boolean positionPossible(Neighborhood n, int x, int y) {
 
-        if ( n.getCell(x, y) == Neighborhood.WALL ) {
+        if (n.getCell(x,y) != Neighborhood.EMPTY) {
             System.out.println("Position: " + x + ", " + y + " is an obstacle.");
             return false;
-        } else return  true;
+        } else {
+            // if move is possible
+            return true;
+        }
 
     }
 

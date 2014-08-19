@@ -233,11 +233,15 @@ public class ModReaperAgent extends Agent {
         int sleeptime = 100;
 
         scan(0);
+        System.out.println("buffer: " + buffer.size() );
 
         while (isAlive()) {
+            System.out.println("buffer: " + buffer.size());
             State state = buffer.poll();
+            System.out.println(state);
 
             if (state != null) {
+                System.out.println("state is not null..");
 
                 System.out.println("position x " + position.getX());
                 System.out.println("position y " + position.getY());
@@ -408,8 +412,10 @@ public class ModReaperAgent extends Agent {
 
                     }
 
-                } else
+                } else {
+                    System.out.println("Calling scan..");
                     scan(0);
+                }
 
             }
 
