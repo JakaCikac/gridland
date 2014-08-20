@@ -230,27 +230,21 @@ public class ModReaperAgent extends Agent {
     @Override
     public void run() {
 
-        int sleeptime = 100;
+        int sleeptime = 1000;
 
         scan(0);
-        System.out.println("buffer: " + buffer.size() );
+
 
         while (isAlive()) {
-            System.out.println("buffer: " + buffer.size());
+
             State state = buffer.poll();
-            System.out.println(state);
 
             if (state != null) {
-                System.out.println("state is not null..");
-
-                System.out.println("position x " + position.getX());
-                System.out.println("position y " + position.getY());
 
                 if (state.direction == Direction.NONE && state.direction != null) {
 
                     // find movable fields
                     Set<Position> movable = analyzeNeighborhood(state.neighborhood);
-                    System.out.println("movable size : " + movable.size());
                     // update local map
                     boolean replanMap = map.update(state.neighborhood, position, timestep);
 
@@ -266,12 +260,14 @@ public class ModReaperAgent extends Agent {
                         replanMap &=parse(m.from, m.message,state.neighborhood);
                     }
 
-                    System.out.println("X, Y: " + position.getX() + ", " + position.getY());
 
                     if (view != null)
                         view.update(arena);
 
                     if (replanMap || replanAgents) {
+                        if (replanAgents) {
+                            System.out.println("Replanning agents...");
+                        }
                         plan.clear();
                     }
 
@@ -405,6 +401,7 @@ public class ModReaperAgent extends Agent {
                         arena.setOrigin(position.getX(), position.getY());
 
                         if (detectLock() && (mode == Mode.EXPLORE || mode == Mode.SURVEIL)) {
+                            System.out.println("LOCK DETECTED");
                             changeMode(Mode.CLEAR);
                         }
 
@@ -413,7 +410,7 @@ public class ModReaperAgent extends Agent {
                     }
 
                 } else {
-                    System.out.println("Calling scan..");
+                    //System.out.println("Calling scan..");
                     scan(0);
                 }
 
@@ -465,14 +462,14 @@ public class ModReaperAgent extends Agent {
                     continue;
 
                 if (n.getCell(i, j) == Neighborhood.HEADQUARTERS) {
-                    System.out.println("Discovered HQ");
+                    //System.out.println("Discovered HQ");
                     if (origin == null)
                         origin = new Position(x + i, y + j);
                     continue;
                 }
 
                 if (n.getCell(i, j) > 0 || n.getCell(i, j) == Neighborhood.OTHER) {
-                    System.out.println("Discovered something else");
+                    //System.out.println("Discovered something else");
                     moveable.add(new Position(x + i, y + j));
                 }
 
@@ -515,10 +512,10 @@ public class ModReaperAgent extends Agent {
 
                     MemberData member = new MemberData(id);
                     member.setPosition(p);
-                    System.out.println("Member position " + p.getX() + " , " + p.getY());
+                    //System.out.println("Member position " + p.getX() + " , " + p.getY());
                     member.notified = -30;
                     registry.put(id, member);
-                    System.out.println("Member with id " + id + " put in registry.");
+                    //System.out.println("Member with id " + id + " put in registry.");
                 }
 
                 MemberData data = registry.get(id);
@@ -602,13 +599,17 @@ public class ModReaperAgent extends Agent {
             int i = p.getX() - x;
             int j = p.getY() - y;
 
+            System.out.println("BM: (i,j):  " + i + ", " + j);
+
 
             if (n.getCell(i, j) > 0 || n.getCell(i, j) == Neighborhood.OTHER) {
-
+                System.out.println("Agent detected.");
                 int size = 3;
 
-                if (n.getCell(i, j) == Neighborhood.OTHER)
+                if (n.getCell(i, j) == Neighborhood.OTHER) {
                     size = 5;
+                    System.out.println("Size increased to 5.");
+                }
 
                 int factor = (Integer.MAX_VALUE - 1) / size;
 

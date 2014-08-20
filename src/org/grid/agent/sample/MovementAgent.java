@@ -199,7 +199,7 @@ public class MovementAgent extends Agent {
                                 positionNotInMap = false;
                                 // tell the agent that he has the whole map and should use planning
                                 knownLocalMap = true;
-                                System.out.println("THE WHOLE MAP HAS BEEN EXPLORED.");
+                                System.out.println("WHOLE MAP HAS BEEN EXPLORED.");
                             }
 
                             offsetCurrent = true;

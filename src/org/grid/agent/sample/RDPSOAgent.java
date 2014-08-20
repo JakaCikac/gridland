@@ -457,7 +457,7 @@ public class RDPSOAgent extends Agent {
     @Override
     public void run() {
 
-        int sleeptime = 100;
+        int sleeptime = 10;
         boolean replanMap = false;
         boolean explore = false;
         int offsetX = 0;
@@ -504,6 +504,9 @@ public class RDPSOAgent extends Agent {
                             plan.clear();
                             if (goalPosition != null)
                                 replan(goalPosition);
+
+                        if (replanAgents && detectLock())
+                            goalPosition = null;
                     }
 
                     // update arena
@@ -579,6 +582,7 @@ public class RDPSOAgent extends Agent {
                                         // if this is the worst preforming agent in the group, exclude
                                         if (agentBestSolution == SwarmSolution.findMinInSwarmSolutionArray(swarmID, swarmSolutionArray)) {
                                             // exclude agent
+                                            System.out.println("EXCLUDED!");
                                             swarmID = 0;
                                             numAgents--;
                                         }
@@ -866,9 +870,11 @@ public class RDPSOAgent extends Agent {
                             // update arena agent position
                             arena.setOrigin(position.getX(), position.getY());
 
-                            if (detectLock()) {
+                            /*if (detectLock()) {
                                 clearMove(state);
-                            }
+                                System.out.println("LOCK detected");
+                                cleanMove = false;
+                            } */
 
                             scan(0);
 
@@ -961,7 +967,6 @@ public class RDPSOAgent extends Agent {
         directions = paths.shortestPathTo(candidates);
         if (directions != null) {
             plan.addAll(directions);
-            cleanMove = false;
         } else {
             System.out.println("Stuck.");
         }
@@ -1214,13 +1219,16 @@ public class RDPSOAgent extends Agent {
             int j = p.getY() - y;
 
 
+
+
             // if there is an agent
             if (n.getCell(i, j) > 0 || n.getCell(i, j) == Neighborhood.OTHER) {
 
-                int size = 3;
+                int size = 2;
 
                 if (n.getCell(i, j) == Neighborhood.OTHER)
-                    size = 5;
+                    size = 3;
+
 
                 int factor = (Integer.MAX_VALUE - 1) / size;
 
