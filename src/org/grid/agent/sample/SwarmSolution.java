@@ -1,9 +1,6 @@
 package org.grid.agent.sample;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * Created by nanorax on 11/08/14.
@@ -12,13 +9,9 @@ import java.util.Iterator;
  */
 public class SwarmSolution {
 
-    public static ArrayList mergeSolutionToArray(double solution, Double[] swarmSolutionArray) {
-        // hello world, how do I do this?
-        // probably has to be synced, otherwise weird arrays may occur..
-        // am I merging arrays, or am I merging a single solution into an array?
-        // I think I'm merging actual arrays, otherwise there would have to be an array
-        // for each swarm, kept somewhere centrally, and yeah no, we don't want that.
-        return null;
+    public static synchronized ArrayList<Double> mergeSolutionToArray(double solution, ArrayList<Double> swarmSolutionArray) {
+        swarmSolutionArray.add(solution);
+        return swarmSolutionArray;
     }
 
 
