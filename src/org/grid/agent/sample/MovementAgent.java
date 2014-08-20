@@ -127,9 +127,12 @@ public class MovementAgent extends Agent {
 
         scan(0);
 
-        int roundedX = -120;
-        int roundedY = 60;
+        int roundedX = 2;
+        int roundedY = 3;
         boolean explore = false;
+        int offsetX = 0;
+        int offsetY = 0;
+        boolean offsetCurrent = false;
 
 
         while (isAlive()) {
@@ -164,29 +167,45 @@ public class MovementAgent extends Agent {
 
                             if ( goalPosition == null ) {
 
-                                // todo: calculate new goal position
-
                                 goalPosition = new Position(0,0);
-                                goalPosition.setX(roundedX);
-                                goalPosition.setY(roundedY);
-                                System.out.println("New goal: " + goalPosition);
+                                if (offsetCurrent) {
+                                    System.out.println(" Using offset.");
+                                    offsetX = generateRandomOffset(2, 12);
+                                    offsetY = generateRandomOffset(2, 12);
+                                } else {
+                                    offsetX = 0;
+                                    offsetY = 0;
+                                }
+                                goalPosition.setX(roundedX + offsetX);
+                                goalPosition.setY(roundedY + offsetY);
+
+                                System.out.println(" New wanted position: " + goalPosition);
                             }
 
                             // Is agent on goal position or is the position not even in the map?
                             if ( (goalPosition.getX() - position.getX()) == 0 && (goalPosition.getY() - position.getY()) == 0 || positionNotInMap) {
-                                System.out.println("Goal position reached or position is not on the map.");
+
+                                if ((goalPosition.getX() - position.getX()) == 0 && (goalPosition.getY() - position.getY()) == 0) {
+                                    System.out.println("Goal " + goalPosition + " reached!!");
+                                } else if (positionNotInMap) {
+                                    System.out.println(goalPosition + " is not on the map!!");
+                                }
+
                                 // reset goal position so a new one can be calculated
                                 goalPosition = null;
                                 // go out of cleanMove or explore
                                 explore = false;
                                 cleanMove = false;
+
                                 if (positionNotInMap) {
+                                    // the next position may be in the map
                                     positionNotInMap = false;
+                                    // tell the agent that he has the whole map and should use planning
                                     knownLocalMap = true;
                                 }
 
-                                roundedX = 3;
-                                roundedY = 2;
+                                offsetCurrent = true;
+
                             } else {
                                 // Is goal position clear?
                                 boolean movePossible = positionPossible(state.neighborhood, (goalPosition.getX() - position.getX()), (goalPosition.getY() - position.getY()));

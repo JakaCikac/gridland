@@ -459,9 +459,38 @@ public class RDPSOAgent extends Agent {
 
                 if (state.direction == Direction.NONE && state.direction != null) {
 
+                    // Send information to other agents
+                    Set<Position> movable = analyzeNeighborhood(state.neighborhood);
 
-                    // confirm that the agent is not a member of the excluded group (swarmID = 0)
+                    // update local map (otherwise plan can't be executed)
+                    replanMap = map.update(state.neighborhood, position, timestep);
+
+                    boolean replanAgents = blockMoveable(movable, state.neighborhood);
+
+                    registerMoveable(movable, state.neighborhood);
+                    // todo: sharing info with agents in subswarm, maybe timeouts
+
+                    // update information
+                    while (!inbox.isEmpty()) {
+                        Message m = inbox.poll();
+                        // receive and parse message from other agents, filter data from agent's swarm
+                        replanMap &= parse(m.from, m.message, state.neighborhood);
+                    }
+                    if (replanMap || replanAgents) {
+                        // not sure if I need this here.
+                        plan.clear();
+                        if (goalPosition != null)
+                            replan(goalPosition);
+                    }
+
+                    // update arena
+                    if (view != null)
+                        view.update(arena);
+
+                    // check if iteration is a movement iteration
                     if (!cleanMove) {
+
+                        // confirm that the agent is not a member of the excluded group (swarmID = 0)
                         if (swarmID != 0) {
 
                             // evaluate agent's current solution = h(x_n(t))
@@ -474,34 +503,6 @@ public class RDPSOAgent extends Agent {
                                 solutionArray[0] = agentPositionX;
                                 solutionArray[3] = agentPositionY;
                             }
-
-                            // Send information to other agents
-                            Set<Position> movable = analyzeNeighborhood(state.neighborhood);
-
-                            // update local map (otherwise plan can't be executed)
-                            replanMap = map.update(state.neighborhood, position, timestep);
-
-                            boolean replanAgents = blockMoveable(movable, state.neighborhood);
-
-                            registerMoveable(movable, state.neighborhood);
-                            // todo: sharing info with agents in subswarm, maybe timeouts
-
-                            // update information
-                            while (!inbox.isEmpty()) {
-                                Message m = inbox.poll();
-                                // receive and parse message from other agents, filter data from agent's swarm
-                                replanMap &= parse(m.from, m.message, state.neighborhood);
-                            }
-                            if (replanMap || replanAgents) {
-                                // not sure if I need this here.
-                                plan.clear();
-                                if (goalPosition != null)
-                                    replan(goalPosition);
-                            }
-
-                            // update arena
-                            if (view != null)
-                                view.update(arena);
 
                             // add agentSolution to vector H(t) that includes solutions of all agents within the swarmID group
                             // todo: synced version of this concatenating the solutions of subswarms
@@ -576,6 +577,7 @@ public class RDPSOAgent extends Agent {
                                 solutionArray[5] = agentPositionY;
                             }
 
+
                             if (goalPosition == null) {
                                 // todo: calculate new goal position
                                 System.out.print("Recalculating position.");
@@ -620,13 +622,11 @@ public class RDPSOAgent extends Agent {
                                 System.out.println(" New wanted position: " + goalPosition);
                             }
 
-                            System.out.println("Goal: " + goalPosition);
-
                             // Is agent on goal position or is the position not even in the map?
                             // we can't know if it's not in the map, until the whole map is explored
                             if ((goalPosition.getX() - position.getX()) == 0 && (goalPosition.getY() - position.getY()) == 0 || positionNotInMap) {
 
-                                if ((goalPosition.getX() - position.getX()) == 0 && (goalPosition.getY() - position.getY()) == 0 ) {
+                                if ((goalPosition.getX() - position.getX()) == 0 && (goalPosition.getY() - position.getY()) == 0) {
                                     System.out.println("Goal " + goalPosition + " reached!!");
                                 } else if (positionNotInMap) {
                                     System.out.println(goalPosition + " is not on the map!!");
@@ -653,13 +653,14 @@ public class RDPSOAgent extends Agent {
                                 if (movePossible || knownLocalMap) {
 
                                     // move is possible
-                                    if ( movePossible && !knownLocalMap ) {
+                                    if (movePossible && !knownLocalMap) {
+
                                         System.out.println("Move is possible, going into clean move!");
                                         // call move with local coordinates (offset from 0,0)
                                         if (cleanMove(goalPosition.getX(), goalPosition.getY()) != null) {
                                             // jump into movement execution next iteration
-                                            if (goalPosition != null)  cleanMove = true; // this can happen if no local map
-
+                                            if (goalPosition != null)
+                                                cleanMove = true; // this can happen if no local map
 
                                         } else {
                                             // move is possible but not accessible yet - go to explore
@@ -679,7 +680,7 @@ public class RDPSOAgent extends Agent {
                                     // jump into explore mode
                                     // what if the position is only an obstacle, you don't have to do a lot of explore..
                                     // check if the position is on the local map, if yes, then it's a wall
-                                    if ( isWall(goalPosition) ) {
+                                    if (isWall(goalPosition)) {
                                         System.out.println(goalPosition + " may be a wall, not entering explore.");
                                         offsetCurrent = true;
                                         goalPosition = null;
@@ -693,13 +694,12 @@ public class RDPSOAgent extends Agent {
                                 }
                             }
                             scan(0);
-
                         } else { // if agent is in the EXCLUDED MEMBERS GROUP
 
                             // TODO: Watch out, in this section you'll also have to do scans!
 
                             // Send information to other agents
-                            Set<Position> movable = analyzeNeighborhood(state.neighborhood);
+                            movable = analyzeNeighborhood(state.neighborhood);
                             // update agent's local map
                             map.update(state.neighborhood, position, timestep);
                             registerMoveable(movable, state.neighborhood);
@@ -802,65 +802,60 @@ public class RDPSOAgent extends Agent {
                                 }
                             }
                         }
-
                     } else {
                         // check if agent is in clean move mode (doesn't do anything else but move)
-                            // update agent's local map
-                            replanMap = map.update(state.neighborhood, position, timestep);
-
-                            // update arena
-                            if (view != null)
-                                view.update(arena);
-                            // in case new map information is received, clear the plan and calculate new position
-                            if (replanMap) {
-                                plan.clear();
-                                if (!explore)
-                                    replan(goalPosition);
-                            }
-
-                            if (!plan.isEmpty()) {
-
-                                Direction d = plan.poll();
-                                //debug("Next move: %s", d);
-
-                                timestep++;
-                                boolean moveClear = false;
-                                if (d != org.grid.protocol.Message.Direction.NONE) {
-                                    if (d == Direction.LEFT) {
-                                         moveClear = canMove(state.neighborhood, position.getX() - 1, position.getY() );
-                                    } else if (d == Direction.RIGHT) {
-                                         moveClear = canMove(state.neighborhood, position.getX() + 1, position.getY() );
-                                    } else if (d == Direction.UP) {
-                                          moveClear = canMove(state.neighborhood, position.getX(), position.getY() - 1);
-                                    } else if (d == Direction.DOWN) {
-                                          moveClear = canMove(state.neighborhood, position.getX(), position.getY() + 1);
-                                    }
-                                    if(moveClear)
-                                        move(d);
-                                }
-
-                                // update agent position
-                                if (d == org.grid.protocol.Message.Direction.LEFT)
-                                    position.setX(position.getX() - 1);
-                                if (d == org.grid.protocol.Message.Direction.RIGHT)
-                                    position.setX(position.getX() + 1);
-                                if (d == org.grid.protocol.Message.Direction.UP)
-                                    position.setY(position.getY() - 1);
-                                if (d == org.grid.protocol.Message.Direction.DOWN)
-                                    position.setY(position.getY() + 1);
-
-                                // update arena agent position
-                                arena.setOrigin(position.getX(), position.getY());
-
-                                scan(0);
-
-                            } else {
-                                // mark end of multi move
-                                cleanMove = false;
-                                explore = false;
-                                scan(0);
-                            }
+                        // update agent's local map
+                        replanMap = map.update(state.neighborhood, position, timestep);
+                        // in case new map information is received, clear the plan and calculate new position
+                        if (replanMap) {
+                            plan.clear();
+                            if (!explore)
+                                replan(goalPosition);
                         }
+
+                        if (!plan.isEmpty()) {
+
+                            Direction d = plan.poll();
+                            //debug("Next move: %s", d);
+
+                            timestep++;
+                            boolean moveClear = false;
+                            if (d != org.grid.protocol.Message.Direction.NONE) {
+                                if (d == Direction.LEFT) {
+                                    moveClear = canMove(state.neighborhood, position.getX() - 1, position.getY());
+                                } else if (d == Direction.RIGHT) {
+                                    moveClear = canMove(state.neighborhood, position.getX() + 1, position.getY());
+                                } else if (d == Direction.UP) {
+                                    moveClear = canMove(state.neighborhood, position.getX(), position.getY() - 1);
+                                } else if (d == Direction.DOWN) {
+                                    moveClear = canMove(state.neighborhood, position.getX(), position.getY() + 1);
+                                }
+                                if (moveClear)
+                                    move(d);
+                            }
+
+                            // update agent position
+                            if (d == org.grid.protocol.Message.Direction.LEFT)
+                                position.setX(position.getX() - 1);
+                            if (d == org.grid.protocol.Message.Direction.RIGHT)
+                                position.setX(position.getX() + 1);
+                            if (d == org.grid.protocol.Message.Direction.UP)
+                                position.setY(position.getY() - 1);
+                            if (d == org.grid.protocol.Message.Direction.DOWN)
+                                position.setY(position.getY() + 1);
+
+                            // update arena agent position
+                            arena.setOrigin(position.getX(), position.getY());
+
+                            scan(0);
+
+                        } else {
+                            // mark end of multi move
+                            cleanMove = false;
+                            explore = false;
+                            scan(0);
+                        }
+                    }
                 } else {
                     scan(0);
                 }
@@ -897,11 +892,11 @@ public class RDPSOAgent extends Agent {
 
         // calculate directions to node n
         directions = paths.shortestPathTo(n);
-        if ( directions != null )
+        if (directions != null)
             plan.addAll(directions);
 
         // node is on map but there is not a known path to the node
-        if ( directions == null) {
+        if (directions == null) {
             System.out.println("There is not a known path to the node.");
             plan.clear();
             return null;
@@ -926,6 +921,7 @@ public class RDPSOAgent extends Agent {
         }
 
         plan.addAll(directions);
+        System.out.println("Explore mode enabled. Explore plan: " + plan.size());
     }
 
     private void replan(Position p) {
