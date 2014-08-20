@@ -41,6 +41,8 @@ public class RDPSOAgent extends Agent {
     private Set<Position> moveable = new HashSet<Position>();
     private HashMap<Integer, MemberData> registry = new HashMap<Integer, MemberData>();
     private Position origin = null;
+    private Vector<Position> history = new Vector<Position>();
+
 
     private static class State {
 
@@ -122,6 +124,26 @@ public class RDPSOAgent extends Agent {
             this.from = from;
             this.message = message;
         }
+    }
+
+    private static class DistanceFilter implements LocalMap.Filter {
+
+        private Position p;
+
+        private int mindistance, maxdistance;
+
+        public DistanceFilter(Position p, int mindistance, int maxdistance) {
+            this.p = p;
+            this.mindistance = mindistance;
+            this.maxdistance = maxdistance;
+        }
+
+        @Override
+        public boolean filter(LocalMap.Node n) {
+            int distance = Position.distance(n.getPosition(), p);
+            return distance <= maxdistance && distance >= mindistance;
+        }
+
     }
 
     private static class MemberData {
@@ -579,7 +601,6 @@ public class RDPSOAgent extends Agent {
 
 
                             if (goalPosition == null) {
-                                // todo: calculate new goal position
                                 System.out.print("Recalculating position.");
                                 goalPosition = new Position(0, 0);
                                 if (offsetCurrent) {
@@ -623,7 +644,6 @@ public class RDPSOAgent extends Agent {
                             }
 
                             // Is agent on goal position or is the position not even in the map?
-                            // we can't know if it's not in the map, until the whole map is explored
                             if ((goalPosition.getX() - position.getX()) == 0 && (goalPosition.getY() - position.getY()) == 0 || positionNotInMap) {
 
                                 if ((goalPosition.getX() - position.getX()) == 0 && (goalPosition.getY() - position.getY()) == 0) {
@@ -643,53 +663,59 @@ public class RDPSOAgent extends Agent {
                                     positionNotInMap = false;
                                     // tell the agent that he has the whole map and should use planning
                                     knownLocalMap = true;
+                                    System.out.println("THE WHOLE MAP HAS BEEN EXPLORED.");
                                 }
                             } else {
-
                                 // Is goal position clear?
                                 boolean movePossible = positionPossible(state.neighborhood, (goalPosition.getX() - position.getX()), (goalPosition.getY() - position.getY()));
-                                // knownLocalMap: because positionPossible checks neighbourhood, the agent must ignore it
-                                // but then later check if the move is possible (if path exists)
-                                if (movePossible || knownLocalMap) {
 
-                                    // move is possible
-                                    if (movePossible && !knownLocalMap) {
+                                if ((movePossible && !knownLocalMap) || (movePossible && knownLocalMap)) {
 
-                                        System.out.println("Move is possible, going into clean move!");
-                                        // call move with local coordinates (offset from 0,0)
-                                        if (cleanMove(goalPosition.getX(), goalPosition.getY()) != null) {
-                                            // jump into movement execution next iteration
-                                            if (goalPosition != null)
-                                                cleanMove = true; // this can happen if no local map
+                                    //System.out.println("Move is possible, going into clean move!");
+                                    // call move with local coordinates (offset from 0,0)
+                                    if (cleanMove(goalPosition.getX(), goalPosition.getY()) != null) {
+                                        // jump into movement execution next iteration
+                                        if (goalPosition != null)
+                                            cleanMove = true; // this can happen if no local map
 
-                                        } else {
-                                            // move is possible but not accessible yet - go to explore
-                                            // or the node doesn't yet exist on map - go to explore
-                                            System.out.println(goalPosition + " is unknown, entering explore.");
-                                            offsetCurrent = false;
-                                            exploreMove();
-                                            explore = true;
-                                            cleanMove = true;
-
-                                        }
-                                    } //else if (!(knownLocalMap && isWall(goalPosition))) {
-                                    //scan(0);
-
-                                } else if (!movePossible && !knownLocalMap) {
-                                    //System.out.println("Impossible move, going into explore!");
-                                    // jump into explore mode
-                                    // what if the position is only an obstacle, you don't have to do a lot of explore..
-                                    // check if the position is on the local map, if yes, then it's a wall
-                                    if (isWall(goalPosition)) {
-                                        System.out.println(goalPosition + " may be a wall, not entering explore.");
-                                        offsetCurrent = true;
-                                        goalPosition = null;
                                     } else {
-                                        System.out.println(goalPosition + " is unknown, entering explore.");
+                                        // move is possible but not accessible yet - go to explore
+                                        //System.out.println(goalPosition + " is unknown, entering explore.");
                                         offsetCurrent = false;
                                         exploreMove();
                                         explore = true;
                                         cleanMove = true;
+
+                                    }
+                                    // CASE: is unknown
+                                } else if (!movePossible && !knownLocalMap) {
+                                    // CASE: is wall / obstacle
+                                    // check if the position is an actual wall
+                                    if (isWall(goalPosition)) {
+                                        //System.out.println(goalPosition + " may be a wall, not entering explore, choosing different goal.");
+                                        offsetCurrent = true;
+                                        goalPosition = null;
+
+                                        // CASE: is unknown
+                                    } else {
+                                        //System.out.println(goalPosition + " is unknown, entering explore.");
+                                        offsetCurrent = false;
+                                        exploreMove();
+                                        explore = true;
+                                        cleanMove = true;
+                                    }
+
+                                    // CASE: is an obstacle, doesn't exist
+                                } else if (!movePossible && knownLocalMap) {
+                                    // have to check if node exists on the global map and use plan if it does, otherwise
+                                    // it doesn't exist
+                                    if (cleanMove(goalPosition.getX(), goalPosition.getY()) != null) {
+                                        cleanMove = true;
+                                        offsetCurrent = false;
+                                    } else {
+                                        //System.out.println(goalPosition + " is an obstacle or doesn't exist.");
+                                        goalPosition = null;
+                                        offsetCurrent = true;
                                     }
                                 }
                             }
@@ -806,6 +832,9 @@ public class RDPSOAgent extends Agent {
                         // check if agent is in clean move mode (doesn't do anything else but move)
                         // update agent's local map
                         replanMap = map.update(state.neighborhood, position, timestep);
+                        // update arena
+                        if (view != null)
+                            view.update(arena);
                         // in case new map information is received, clear the plan and calculate new position
                         if (replanMap) {
                             plan.clear();
@@ -819,19 +848,8 @@ public class RDPSOAgent extends Agent {
                             //debug("Next move: %s", d);
 
                             timestep++;
-                            boolean moveClear = false;
                             if (d != org.grid.protocol.Message.Direction.NONE) {
-                                if (d == Direction.LEFT) {
-                                    moveClear = canMove(state.neighborhood, position.getX() - 1, position.getY());
-                                } else if (d == Direction.RIGHT) {
-                                    moveClear = canMove(state.neighborhood, position.getX() + 1, position.getY());
-                                } else if (d == Direction.UP) {
-                                    moveClear = canMove(state.neighborhood, position.getX(), position.getY() - 1);
-                                } else if (d == Direction.DOWN) {
-                                    moveClear = canMove(state.neighborhood, position.getX(), position.getY() + 1);
-                                }
-                                if (moveClear)
-                                    move(d);
+                                move(d);
                             }
 
                             // update agent position
@@ -850,6 +868,8 @@ public class RDPSOAgent extends Agent {
                             scan(0);
 
                         } else {
+                            // reset goal position
+                            //goalPosition = null;
                             // mark end of multi move
                             cleanMove = false;
                             explore = false;
@@ -884,23 +904,24 @@ public class RDPSOAgent extends Agent {
 
         LocalMap.Node n = map.get(p.getX(), p.getY());
 
+        // node doesn't exist on local map
         if (n == null || n.getBody() == -1) {
-            System.out.println("Node doesn't exist on local map!");
             plan.clear();
             return null;
         }
 
         // calculate directions to node n
         directions = paths.shortestPathTo(n);
-        if (directions != null)
-            plan.addAll(directions);
 
-        // node is on map but there is not a known path to the node
+        // cannot move anywhere ... assure, that at least one move is in the plan
         if (directions == null) {
-            System.out.println("There is not a known path to the node.");
-            plan.clear();
-            return null;
+            directions = new Vector<Direction>();
+            for (int i = 0; i < 1; i++)
+                directions.add(Direction.NONE);
         }
+
+        plan.addAll(directions);
+
         return p;
     }
 
@@ -915,15 +936,31 @@ public class RDPSOAgent extends Agent {
 
         if (directions == null) {
             directions = new Vector<Direction>();
-            for (int i = 0; i < 1; i++)
-                positionNotInMap = true;
+            // there is no more area to be explored, this can be taken as if the whole map has been explored
+            positionNotInMap = true;
+            knownLocalMap = true;
             directions.add(Direction.NONE);
         }
 
         plan.addAll(directions);
-        System.out.println("Explore mode enabled. Explore plan: " + plan.size());
     }
 
+    private void clearMove(State state) {
+
+        List<Direction> directions = null;
+        LocalMap.Paths paths = map.findShortestPaths(position);
+        List<LocalMap.Node> candidates = map.filter(new DistanceFilter(position,
+                state.neighborhood.getSize() - 1,
+                state.neighborhood.getSize() + 1));
+
+        directions = paths.shortestPathTo(candidates);
+        if (directions != null) {
+            plan.addAll(directions);
+        } else {
+            System.out.println("Stuck.");
+        }
+    }
+    
     private void replan(Position p) {
 
         List<org.grid.protocol.Message.Direction> directions = null;
@@ -931,10 +968,9 @@ public class RDPSOAgent extends Agent {
         LocalMap.Paths paths = map.findShortestPaths(position);
 
         LocalMap.Node n = map.get(p.getX(), p.getY());
-        if (n != null) {
-            //System.out.println("re: Node exists on local map: " + n);
-        } else if (n == null || n.getBody() == -1) {
-            //System.out.println("re: Node doesn't exist, clearing plan.");
+
+        // node doesn't exist on local map
+        if (n == null || n.getBody() == -1) {
             plan.clear();
         } else {
             directions = paths.shortestPathTo(n);
@@ -963,10 +999,15 @@ public class RDPSOAgent extends Agent {
             // if the node doesn't exist on the local map, it's unknown
             return false;
         } else {
-            // if node exists on the local map it may be a wall
-            return true;
+            // if node exists on the local map it may be an obstacle
+            // therefore check if it is and return true/false accordingly
+            if (n.getBody() == Neighborhood.WALL ||
+                    n.getBody() == Neighborhood.HEADQUARTERS ||
+                    n.getBody() == Neighborhood.OTHER_HEADQUARTERS ||
+                    n.getBody() == Neighborhood.OTHER)
+                return true;
+            else return false;
         }
-
     }
 
     public static int generateRandomOffset(int max, int min) {
@@ -1167,6 +1208,7 @@ public class RDPSOAgent extends Agent {
             int j = p.getY() - y;
 
 
+            // if there is an agent
             if (n.getCell(i, j) > 0 || n.getCell(i, j) == Neighborhood.OTHER) {
 
                 int size = 3;
@@ -1331,6 +1373,42 @@ public class RDPSOAgent extends Agent {
             return false;
         }
 
+    }
+
+    private boolean detectLock() {
+
+        history.add(new Position(position));
+
+        if (history.size() < 20)
+            return false;
+
+        float meanX = 0;
+        float meanY = 0;
+
+        for (Position p : history) {
+            meanX += p.getX();
+            meanY += p.getY();
+        }
+
+        meanX /= history.size();
+        meanY /= history.size();
+
+        float varianceX = 0;
+        float varianceY = 0;
+
+        for (Position p : history) {
+            varianceX += Math.pow(p.getX() - meanX, 2);
+            varianceY += Math.pow(p.getY() - meanY, 2);
+        }
+
+        varianceX /= history.size();
+        varianceY /= history.size();
+
+        history.clear();
+
+        float variability = (float) Math.sqrt(varianceX * varianceX + varianceY * varianceY);
+
+        return variability < 2;
     }
 
 }

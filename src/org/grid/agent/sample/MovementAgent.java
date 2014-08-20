@@ -20,10 +20,9 @@ public class MovementAgent extends Agent {
     private LocalMap map = new LocalMap();
     private Position position = new Position(0, 0);
     private int timestep = 1;
-    private boolean firstIteration = true;
+
     boolean positionNotInMap = false;
     boolean knownLocalMap = false;
-    private Position origin = null;
 
     // variables
     int agentPositionX = 0; // x_n(t)
@@ -115,8 +114,6 @@ public class MovementAgent extends Agent {
 
     @Override
     public void terminate() {
-
-        firstIteration = true;
 
     }
 
