@@ -578,10 +578,12 @@ public class RDPSOAgent extends Agent {
 
                             if (goalPosition == null) {
                                 // todo: calculate new goal position
+                                System.out.print("Recalculating position.");
                                 goalPosition = new Position(0, 0);
                                 if (offsetCurrent) {
-                                    offsetX = generateRandomOffset(2, 6);
-                                    offsetY = generateRandomOffset(2, 6);
+                                    System.out.println(" Using offset.");
+                                    offsetX = generateRandomOffset(2, 12);
+                                    offsetY = generateRandomOffset(2, 12);
                                 } else {
                                     offsetX = 0;
                                     offsetY = 0;
@@ -612,19 +614,23 @@ public class RDPSOAgent extends Agent {
                                 double tempAgentPositionY = agentPositionY + agentVelocityY;
                                 int roundedY = (int) Math.round(tempAgentPositionY);
 
-
-                                System.out.println("Wanted position: " + roundedX + ", " + roundedY);
                                 goalPosition.setX(roundedX + offsetX);
                                 goalPosition.setY(roundedY + offsetY);
-                                System.out.println("New goal: " + goalPosition);
+
+                                System.out.println(" New wanted position: " + goalPosition);
                             }
 
                             System.out.println("Goal: " + goalPosition);
 
                             // Is agent on goal position or is the position not even in the map?
+                            // we can't know if it's not in the map, until the whole map is explored
                             if ((goalPosition.getX() - position.getX()) == 0 && (goalPosition.getY() - position.getY()) == 0 || positionNotInMap) {
 
-                                System.out.println("Goal position reached or position is not on the map.");
+                                if ((goalPosition.getX() - position.getX()) == 0 && (goalPosition.getY() - position.getY()) == 0 ) {
+                                    System.out.println("Goal " + goalPosition + " reached!!");
+                                } else if (positionNotInMap) {
+                                    System.out.println(goalPosition + " is not on the map!!");
+                                }
 
                                 // reset goal position so a new one can be calculated
                                 goalPosition = null;
@@ -635,21 +641,40 @@ public class RDPSOAgent extends Agent {
                                 if (positionNotInMap) {
                                     // the next position may be in the map
                                     positionNotInMap = false;
-                                    // tell the agent that he has the whole map
+                                    // tell the agent that he has the whole map and should use planning
                                     knownLocalMap = true;
                                 }
                             } else {
 
                                 // Is goal position clear?
                                 boolean movePossible = positionPossible(state.neighborhood, (goalPosition.getX() - position.getX()), (goalPosition.getY() - position.getY()));
-
+                                // knownLocalMap: because positionPossible checks neighbourhood, the agent must ignore it
+                                // but then later check if the move is possible (if path exists)
                                 if (movePossible || knownLocalMap) {
-                                    //System.out.println("Move possible!");
-                                    // call move with local coordinates (offset from 0,0)
-                                    cleanMove(goalPosition.getX(), goalPosition.getY());
-                                    // jump into movement execution next iteration
-                                    if (goalPosition != null) cleanMove = true; // this can happen if no local map
-                                } else {
+
+                                    // move is possible
+                                    if ( movePossible && !knownLocalMap ) {
+                                        System.out.println("Move is possible, going into clean move!");
+                                        // call move with local coordinates (offset from 0,0)
+                                        if (cleanMove(goalPosition.getX(), goalPosition.getY()) != null) {
+                                            // jump into movement execution next iteration
+                                            if (goalPosition != null)  cleanMove = true; // this can happen if no local map
+
+
+                                        } else {
+                                            // move is possible but not accessible yet - go to explore
+                                            // or the node doesn't yet exist on map - go to explore
+                                            System.out.println(goalPosition + " is unknown, entering explore.");
+                                            offsetCurrent = false;
+                                            exploreMove();
+                                            explore = true;
+                                            cleanMove = true;
+
+                                        }
+                                    } //else if (!(knownLocalMap && isWall(goalPosition))) {
+                                    //scan(0);
+
+                                } else if (!movePossible && !knownLocalMap) {
                                     //System.out.println("Impossible move, going into explore!");
                                     // jump into explore mode
                                     // what if the position is only an obstacle, you don't have to do a lot of explore..
@@ -668,12 +693,6 @@ public class RDPSOAgent extends Agent {
                                 }
                             }
                             scan(0);
-
-
-                            // todo: don't forget to update the agent position (int, int)!
-                            // todo: move agent to new calculated position
-                            // todo: check if new position is possible (tile is not a wall)
-
 
                         } else { // if agent is in the EXCLUDED MEMBERS GROUP
 
@@ -786,7 +805,6 @@ public class RDPSOAgent extends Agent {
 
                     } else {
                         // check if agent is in clean move mode (doesn't do anything else but move)
-                        if (cleanMove) {
                             // update agent's local map
                             replanMap = map.update(state.neighborhood, position, timestep);
 
@@ -843,7 +861,6 @@ public class RDPSOAgent extends Agent {
                                 scan(0);
                             }
                         }
-                    }
                 } else {
                     scan(0);
                 }
@@ -871,26 +888,24 @@ public class RDPSOAgent extends Agent {
         Position p = new Position(moveXleft, moveYleft);
 
         LocalMap.Node n = map.get(p.getX(), p.getY());
-        if (n != null) {
-            //System.out.println("Node exists on local map: " + n);
-        } else if (n == null || n.getBody() == -1) {
-            //System.out.println("Node doesn't exist on local map!");
+
+        if (n == null || n.getBody() == -1) {
+            System.out.println("Node doesn't exist on local map!");
             plan.clear();
             return null;
         }
 
         // calculate directions to node n
         directions = paths.shortestPathTo(n);
+        if ( directions != null )
+            plan.addAll(directions);
 
-        // cannot move anywhere ... assure, that at least one move is in the plan
-        if (directions == null) {
-            directions = new Vector<Direction>();
-            for (int i = 0; i < 1; i++)
-                directions.add(Direction.NONE);
+        // node is on map but there is not a known path to the node
+        if ( directions == null) {
+            System.out.println("There is not a known path to the node.");
+            plan.clear();
+            return null;
         }
-
-        plan.addAll(directions);
-
         return p;
     }
 

@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3f6e5c1-36d1-4bde-93db-26e0cc79e510" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/sample/MovementAgent.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/sample/MovementAgent.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sims/test_mini.sim" afterPath="$PROJECT_DIR$/sims/test_mini.sim" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="gridland.iws" />
@@ -79,7 +77,7 @@
       <file leaf-file-name="MovementAgent.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/MovementAgent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-39.0" vertical-offset="4236" max-vertical-offset="5370">
+            <state vertical-scroll-proportion="-134.76923" vertical-offset="1746" max-vertical-offset="5370">
               <caret line="359" column="0" selection-start-line="359" selection-start-column="0" selection-end-line="359" selection-end-column="0" />
               <folding />
             </state>
@@ -101,10 +99,10 @@
       <file leaf-file-name="RDPSOAgent.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="3.37" vertical-offset="9319" max-vertical-offset="19950">
-              <caret line="801" column="0" selection-start-line="801" selection-start-column="0" selection-end-line="801" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.5425" vertical-offset="9241" max-vertical-offset="20175">
+              <caret line="645" column="33" selection-start-line="645" selection-start-column="33" selection-end-line="645" selection-end-column="33" />
               <folding>
-                <element signature="e#0#52364#0" expanded="true" />
+                <element signature="e#0#53703#0" expanded="true" />
                 <element signature="imports" expanded="true" />
                 <element signature="e#1511#1521#0" expanded="true" />
                 <element signature="e#1588#1609#0" expanded="true" />
@@ -117,13 +115,13 @@
                 <element signature="e#11892#11899#0" expanded="true" />
                 <element signature="e#11979#11988#0" expanded="true" />
                 <element signature="e#12069#12080#0" expanded="true" />
-                <element signature="e#43814#43824#0" expanded="true" />
-                <element signature="e#44653#44663#0" expanded="true" />
-                <element signature="e#45494#45504#0" expanded="true" />
-                <element signature="e#45560#45570#0" expanded="true" />
-                <element signature="e#50292#50307#0" expanded="true" />
-                <element signature="e#50399#50898#0" expanded="true" />
-                <element signature="e#50883#50884#0" expanded="true" />
+                <element signature="e#45153#45163#0" expanded="true" />
+                <element signature="e#45992#46002#0" expanded="true" />
+                <element signature="e#46833#46843#0" expanded="true" />
+                <element signature="e#46899#46909#0" expanded="true" />
+                <element signature="e#51631#51646#0" expanded="true" />
+                <element signature="e#51738#52237#0" expanded="true" />
+                <element signature="e#52222#52223#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -888,7 +886,7 @@
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="org.grid.agent.Agent" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="localhost org.grid.agent.sample.RDPSOAgent 10 explorers" />
+      <option name="PROGRAM_PARAMETERS" value="localhost org.grid.agent.sample.RDPSOAgent 1 explorers" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
@@ -1005,7 +1003,7 @@
       <workItem from="1406047022506" duration="786000" />
       <workItem from="1406536050929" duration="47221000" />
       <workItem from="1407064491389" duration="1790000" />
-      <workItem from="1407749869383" duration="67400000" />
+      <workItem from="1407749869383" duration="73334000" />
     </task>
     <task id="LOCAL-00001" summary="Test commit.">
       <created>1394200726993</created>
@@ -1307,11 +1305,15 @@
       <created>1408455998655</created>
       <updated>1408455998656</updated>
     </task>
-    <option name="localTasksCounter" value="76" />
+    <task id="LOCAL-00076" summary="No idea what's going on...">
+      <created>1408469354142</created>
+      <updated>1408469354143</updated>
+    </task>
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="252352000" />
+    <option name="totallyTimeSpent" value="258286000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1412,7 +1414,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Adding PackAgent" />
     <MESSAGE value="Add history button next to team name, remove score label. Some comments added." />
     <MESSAGE value="More comments." />
     <MESSAGE value="More comments and a bit of code clean up." />
@@ -1437,7 +1438,8 @@
     <MESSAGE value="Fixed movement agent, plan gets executed, arena refreshed and scanned." />
     <MESSAGE value="Cleaning up RDPSO, merging MovementAgent stuff into RDPSO." />
     <MESSAGE value="Movementagent now explores the map until goal position is not visible.&#10;&#10;If the goal position is not in the map, it explores the whole map and notifies that the position is not in the map, a new goal is then calculated and local map is then used to navigate to the desired goal." />
-    <option name="LAST_COMMIT_MESSAGE" value="Movementagent now explores the map until goal position is not visible.&#10;&#10;If the goal position is not in the map, it explores the whole map and notifies that the position is not in the map, a new goal is then calculated and local map is then used to navigate to the desired goal." />
+    <MESSAGE value="No idea what's going on..." />
+    <option name="LAST_COMMIT_MESSAGE" value="No idea what's going on..." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2189,14 +2191,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/MovementAgent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-39.0" vertical-offset="4236" max-vertical-offset="5370">
-          <caret line="359" column="0" selection-start-line="359" selection-start-column="0" selection-end-line="359" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/LocalMap.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.4615383" vertical-offset="6278" max-vertical-offset="11940">
@@ -2220,12 +2214,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/MovementAgent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-134.76923" vertical-offset="1746" max-vertical-offset="5370">
+          <caret line="359" column="0" selection-start-line="359" selection-start-column="0" selection-end-line="359" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.37" vertical-offset="9319" max-vertical-offset="19950">
-          <caret line="801" column="0" selection-start-line="801" selection-start-column="0" selection-end-line="801" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.5425" vertical-offset="9241" max-vertical-offset="20175">
+          <caret line="645" column="33" selection-start-line="645" selection-start-column="33" selection-end-line="645" selection-end-column="33" />
           <folding>
-            <element signature="e#0#52364#0" expanded="true" />
+            <element signature="e#0#53703#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1511#1521#0" expanded="true" />
             <element signature="e#1588#1609#0" expanded="true" />
@@ -2238,13 +2240,13 @@
             <element signature="e#11892#11899#0" expanded="true" />
             <element signature="e#11979#11988#0" expanded="true" />
             <element signature="e#12069#12080#0" expanded="true" />
-            <element signature="e#43814#43824#0" expanded="true" />
-            <element signature="e#44653#44663#0" expanded="true" />
-            <element signature="e#45494#45504#0" expanded="true" />
-            <element signature="e#45560#45570#0" expanded="true" />
-            <element signature="e#50292#50307#0" expanded="true" />
-            <element signature="e#50399#50898#0" expanded="true" />
-            <element signature="e#50883#50884#0" expanded="true" />
+            <element signature="e#45153#45163#0" expanded="true" />
+            <element signature="e#45992#46002#0" expanded="true" />
+            <element signature="e#46833#46843#0" expanded="true" />
+            <element signature="e#46899#46909#0" expanded="true" />
+            <element signature="e#51631#51646#0" expanded="true" />
+            <element signature="e#51738#52237#0" expanded="true" />
+            <element signature="e#52222#52223#0" expanded="true" />
           </folding>
         </state>
       </provider>
