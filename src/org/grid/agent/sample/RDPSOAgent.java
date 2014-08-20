@@ -419,7 +419,7 @@ public class RDPSOAgent extends Agent {
     public void initializeRDPSO() {
         // initialize cognitive, social and obstacle as agent's own position
         swarmID = assignToSwarm();
-        System.out.println("Swarm ID: " + swarmID);
+        //System.out.println("Swarm ID: " + swarmID);
         callAgent = false;
         createSwarm = false;
 
@@ -457,7 +457,7 @@ public class RDPSOAgent extends Agent {
     @Override
     public void run() {
 
-        int sleeptime = 10;
+        int sleeptime = 200;
         boolean replanMap = false;
         boolean explore = false;
         int offsetX = 0;
@@ -606,10 +606,10 @@ public class RDPSOAgent extends Agent {
 
 
                             if (goalPosition == null) {
-                                System.out.print("Recalculating position.");
+                                //System.out.print("Recalculating position.");
                                 goalPosition = new Position(0, 0);
                                 if (offsetCurrent) {
-                                    System.out.println(" Using offset.");
+                                    //System.out.println(" Using offset.");
                                     offsetX = generateRandomOffset(2, 12);
                                     offsetY = generateRandomOffset(2, 12);
                                 } else {
@@ -869,12 +869,6 @@ public class RDPSOAgent extends Agent {
 
                             // update arena agent position
                             arena.setOrigin(position.getX(), position.getY());
-
-                            /*if (detectLock()) {
-                                clearMove(state);
-                                System.out.println("LOCK detected");
-                                cleanMove = false;
-                            } */
 
                             scan(0);
 
