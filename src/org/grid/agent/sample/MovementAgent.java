@@ -384,8 +384,9 @@ public class MovementAgent extends Agent {
 
         if (directions == null) {
             directions = new Vector<Direction>();
-            for (int i = 0; i < 1; i++)
-                positionNotInMap = true;
+            // there is no more area to be explored, this can be taken as if the whole map has been explored
+            positionNotInMap = true;
+            knownLocalMap = true;
             directions.add(Direction.NONE);
         }
 
