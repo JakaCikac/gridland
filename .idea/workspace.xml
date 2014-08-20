@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3f6e5c1-36d1-4bde-93db-26e0cc79e510" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/sample/MovementAgent.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/sample/MovementAgent.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -24,7 +23,7 @@
     <SUITE FILE_PATH="coverage/gridland$Main.coverage" NAME="Main Coverage Results" MODIFIED="1394542737062" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="CreatePatchCommitExecutor">
-    <option name="PATCH_PATH" value="" />
+    <option name="PATCH_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
@@ -93,21 +92,21 @@
       <file leaf-file-name="RDPSOAgent.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.745" vertical-offset="13744" max-vertical-offset="21135">
-              <caret line="962" column="4" selection-start-line="962" selection-start-column="4" selection-end-line="962" selection-end-column="4" />
+            <state vertical-scroll-proportion="0.895" vertical-offset="7174" max-vertical-offset="21225">
+              <caret line="532" column="3" selection-start-line="532" selection-start-column="3" selection-end-line="532" selection-end-column="3" />
               <folding>
-                <element signature="e#0#55003#0" expanded="true" />
+                <element signature="e#0#55240#0" expanded="true" />
                 <element signature="imports" expanded="true" />
                 <element signature="e#1511#1521#0" expanded="true" />
                 <element signature="e#1588#1609#0" expanded="true" />
                 <element signature="e#12525#12532#0" expanded="true" />
                 <element signature="e#12612#12621#0" expanded="true" />
                 <element signature="e#12702#12713#0" expanded="true" />
-                <element signature="e#45593#45603#0" expanded="true" />
-                <element signature="e#46432#46442#0" expanded="true" />
-                <element signature="e#47273#47283#0" expanded="true" />
-                <element signature="e#47339#47349#0" expanded="true" />
-                <element signature="e#52107#52122#0" expanded="true" />
+                <element signature="e#45830#45840#0" expanded="true" />
+                <element signature="e#46669#46679#0" expanded="true" />
+                <element signature="e#47510#47520#0" expanded="true" />
+                <element signature="e#47576#47586#0" expanded="true" />
+                <element signature="e#52344#52359#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -116,8 +115,8 @@
       <file leaf-file-name="ModReaperAgent.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/ModReaperAgent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-14.692307" vertical-offset="1358" max-vertical-offset="13515">
-              <caret line="135" column="37" selection-start-line="135" selection-start-column="37" selection-end-line="135" selection-end-column="37" />
+            <state vertical-scroll-proportion="-7.1923075" vertical-offset="4898" max-vertical-offset="13515">
+              <caret line="362" column="37" selection-start-line="362" selection-start-column="37" selection-end-line="362" selection-end-column="61" />
               <folding />
             </state>
           </provider>
@@ -861,7 +860,7 @@
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="org.grid.agent.Agent" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="localhost org.grid.agent.sample.RDPSOAgent 3 explorers" />
+      <option name="PROGRAM_PARAMETERS" value="localhost org.grid.agent.sample.RDPSOAgent 2 explorers" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
@@ -978,7 +977,7 @@
       <workItem from="1406047022506" duration="786000" />
       <workItem from="1406536050929" duration="47221000" />
       <workItem from="1407064491389" duration="1790000" />
-      <workItem from="1407749869383" duration="81280000" />
+      <workItem from="1407749869383" duration="83289000" />
     </task>
     <task id="LOCAL-00001" summary="Test commit.">
       <created>1394200726993</created>
@@ -1300,11 +1299,15 @@
       <created>1408535966251</created>
       <updated>1408535966252</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="Merged MovementAgent into RDPSO agent movement. Working on detecting deadLocks.">
+      <created>1408537363688</created>
+      <updated>1408537363688</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="266232000" />
+    <option name="totallyTimeSpent" value="268241000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1405,7 +1408,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Random agent" />
     <MESSAGE value="Comment in neighborhood, empty field list and comment fix in random agent." />
     <MESSAGE value="Select and deselect all Client JPanels with &quot;History&quot; button. (Just GUI side).&#10;&#10;Bug: If trying to deselect just one agent, when all of them are selected, the first &quot;deselect click&quot; will not deselect the clicked JPanel but rather the last one in the list to get selected. The next deselect click will deselect (or select) the correct agent." />
     <MESSAGE value="Team history working but isn't refreshing yet for the whole team. Just the last selected agent." />
@@ -1430,7 +1432,8 @@
     <MESSAGE value="Having trouble with refreshing arena.." />
     <MESSAGE value="Working movement agent. I'll try to ruin it now, so this is a snapshot." />
     <MESSAGE value="Improved movement agent. Now able to explore the whole map and then use planning to navigate around." />
-    <option name="LAST_COMMIT_MESSAGE" value="Improved movement agent. Now able to explore the whole map and then use planning to navigate around." />
+    <MESSAGE value="Merged MovementAgent into RDPSO agent movement. Working on detecting deadLocks." />
+    <option name="LAST_COMMIT_MESSAGE" value="Merged MovementAgent into RDPSO agent movement. Working on detecting deadLocks." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2215,29 +2218,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/ModReaperAgent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.692307" vertical-offset="1358" max-vertical-offset="13515">
-          <caret line="135" column="37" selection-start-line="135" selection-start-column="37" selection-end-line="135" selection-end-column="37" />
+        <state vertical-scroll-proportion="-7.1923075" vertical-offset="4898" max-vertical-offset="13515">
+          <caret line="362" column="37" selection-start-line="362" selection-start-column="37" selection-end-line="362" selection-end-column="61" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.745" vertical-offset="13744" max-vertical-offset="21135">
-          <caret line="962" column="4" selection-start-line="962" selection-start-column="4" selection-end-line="962" selection-end-column="4" />
+        <state vertical-scroll-proportion="0.895" vertical-offset="7174" max-vertical-offset="21225">
+          <caret line="532" column="3" selection-start-line="532" selection-start-column="3" selection-end-line="532" selection-end-column="3" />
           <folding>
-            <element signature="e#0#55003#0" expanded="true" />
+            <element signature="e#0#55240#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1511#1521#0" expanded="true" />
             <element signature="e#1588#1609#0" expanded="true" />
             <element signature="e#12525#12532#0" expanded="true" />
             <element signature="e#12612#12621#0" expanded="true" />
             <element signature="e#12702#12713#0" expanded="true" />
-            <element signature="e#45593#45603#0" expanded="true" />
-            <element signature="e#46432#46442#0" expanded="true" />
-            <element signature="e#47273#47283#0" expanded="true" />
-            <element signature="e#47339#47349#0" expanded="true" />
-            <element signature="e#52107#52122#0" expanded="true" />
+            <element signature="e#45830#45840#0" expanded="true" />
+            <element signature="e#46669#46679#0" expanded="true" />
+            <element signature="e#47510#47520#0" expanded="true" />
+            <element signature="e#47576#47586#0" expanded="true" />
+            <element signature="e#52344#52359#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -463,6 +463,7 @@ public class RDPSOAgent extends Agent {
         int offsetX = 0;
         int offsetY = 0;
         boolean offsetCurrent = false;
+        boolean clearMove = false;
 
         scan(0);
 
@@ -500,9 +501,9 @@ public class RDPSOAgent extends Agent {
                     }
                     if (replanMap || replanAgents) {
                         // not sure if I need this here.
-                        plan.clear();
-                        if (goalPosition != null)
-                            replan(goalPosition);
+                            plan.clear();
+                            if (goalPosition != null)
+                                replan(goalPosition);
                     }
 
                     // update arena
@@ -510,7 +511,7 @@ public class RDPSOAgent extends Agent {
                         view.update(arena);
 
                     // check if iteration is a movement iteration
-                    if (!cleanMove) {
+                    if (!cleanMove) { // && !clearMove && !detectLock()
 
                         // confirm that the agent is not a member of the excluded group (swarmID = 0)
                         if (swarmID != 0) {
@@ -865,6 +866,10 @@ public class RDPSOAgent extends Agent {
                             // update arena agent position
                             arena.setOrigin(position.getX(), position.getY());
 
+                            if (detectLock()) {
+                                clearMove(state);
+                            }
+
                             scan(0);
 
                         } else {
@@ -956,11 +961,12 @@ public class RDPSOAgent extends Agent {
         directions = paths.shortestPathTo(candidates);
         if (directions != null) {
             plan.addAll(directions);
+            cleanMove = false;
         } else {
             System.out.println("Stuck.");
         }
     }
-    
+
     private void replan(Position p) {
 
         List<org.grid.protocol.Message.Direction> directions = null;
