@@ -9,11 +9,32 @@ import java.util.*;
  */
 public class SwarmSolution {
 
-    public static synchronized ArrayList<Double> mergeSolutionToArray(double solution, ArrayList<Double> swarmSolutionArray) {
-        swarmSolutionArray.add(solution);
+
+    // I realize this is probably the slowest way to do this, but I ran out of ideas, it gets too complex really quick.
+    public static synchronized ArrayList<AgentSolution> mergeSolutionToArray(AgentSolution a, ArrayList<AgentSolution> swarmSolutionArray) {
+        System.out.print("Received id, solution: " + a.getId() + ", " + a.getSolution() + " , array size: " + swarmSolutionArray.size());
+        boolean exists = false;
+        for (int i = 0; i < swarmSolutionArray.size(); i++) {
+            if (swarmSolutionArray.get(i).getId() == a.getId()) {
+                swarmSolutionArray.set(i, a);
+                exists = true;
+            }
+        }
+        if (!exists)
+            swarmSolutionArray.add(a);
+        System.out.println(" , size after add: " + swarmSolutionArray.size());
         return swarmSolutionArray;
     }
 
+
+
+    public static double findMinSwarmSolutionList(ArrayList<AgentSolution> swarmSolutionArray) {
+        return Collections.max(swarmSolutionArray, new AgentSolutionCompMin()).getSolution();
+    }
+
+    public static double findMaxSwarmSolutionList(ArrayList<AgentSolution> swarmSolutionArray) {
+        return Collections.max(swarmSolutionArray, new AgentSolutionCompMax()).getSolution();
+    }
 
     public static double findMaxInSwarmSolutionArray(int swarmID, double[] swarmSolutionArray) {
         double tempMax = 0;
@@ -37,6 +58,28 @@ public class SwarmSolution {
             }
         }
         return tempMin;
+    }
+
+    public static double[] findTopISolutionsInSwarmSolutionList(ArrayList<AgentSolution> swarmSolutionArray, int topI) {
+        Collections.sort(swarmSolutionArray, new AgentSolutionCompMax());
+        Collections.reverse(swarmSolutionArray);
+        double[] result = null;
+        // create sublist from element on position zero to topI (eg. 0,3 return elements at [0], [1], [2])
+        System.out.println("Swarm sol array size: " + swarmSolutionArray.size() + "topI " + topI);
+        if (swarmSolutionArray.size() >= topI) {
+            List<AgentSolution> maxn = swarmSolutionArray.subList(0, topI);
+            result = new double[maxn.size()];
+            System.out.print("TOP: ");
+            for (int i = 0; i < maxn.size(); i++) {
+                result[i] = maxn.get(i).getSolution();
+                System.out.print(result[i] + ", ");
+            }
+            System.out.println();
+        } else {
+            System.out.println("Not enough solutions in swarm solution array.");
+        }
+
+        return result;
     }
 
     // find I best solutions in an array, I = number of initialized robots in a swarm
