@@ -73,7 +73,7 @@ public class SwarmSolution {
                 result[i] = maxn.get(i).getSolution();
             }
         } else {
-            //System.out.println("Not enough solutions in swarm solution array.");
+            result = new double[1];
         }
 
         return result;

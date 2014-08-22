@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3f6e5c1-36d1-4bde-93db-26e0cc79e510" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/Agent.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/Agent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/sample/ConstantsRDPSO.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/sample/ConstantsRDPSO.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/sample/RandomAgent.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/sample/RandomAgent.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/sample/SwarmSolution.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/sample/SwarmSolution.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -98,20 +94,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SwarmSolution.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="SwarmSolution.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/SwarmSolution.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="585" max-vertical-offset="1950">
-              <caret line="76" column="9" selection-start-line="76" selection-start-column="9" selection-end-line="76" selection-end-column="9" />
+            <state vertical-scroll-proportion="1.4620253" vertical-offset="0" max-vertical-offset="1950">
+              <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RDPSOAgent.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="RDPSOAgent.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.37283623" vertical-offset="12965" max-vertical-offset="23535">
+            <state vertical-scroll-proportion="-9.615385" vertical-offset="12995" max-vertical-offset="23535">
               <caret line="895" column="0" selection-start-line="895" selection-start-column="0" selection-end-line="895" selection-end-column="0" />
               <folding>
                 <element signature="e#0#61816#0" expanded="true" />
@@ -951,7 +947,7 @@
       <workItem from="1406536050929" duration="47221000" />
       <workItem from="1407064491389" duration="1790000" />
       <workItem from="1407749869383" duration="97144000" />
-      <workItem from="1408638858297" duration="7234000" />
+      <workItem from="1408638858297" duration="7714000" />
     </task>
     <task id="LOCAL-00001" summary="Test commit.">
       <created>1394200726993</created>
@@ -1301,11 +1297,15 @@
       <created>1408704544724</created>
       <updated>1408704544724</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <task id="LOCAL-00088" summary="Fixed swarm assignment. Added NISolutions assignment. Still errors.. gah.">
+      <created>1408707631132</created>
+      <updated>1408707631132</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="289330000" />
+    <option name="totallyTimeSpent" value="289810000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1376,7 +1376,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Working on PseudoRandom agent implementation (not tested yet)." />
     <MESSAGE value="Working on pseudo-random agent, not tested yet." />
     <MESSAGE value="Working on RDPSO agent... initial variables." />
     <MESSAGE value="Re-added LocalMap and Reaper. Changed folder." />
@@ -1401,7 +1400,8 @@
     <MESSAGE value="Working on swarmSolutionArray" />
     <MESSAGE value="Finding min, max and max n solutions in swarm solution array (beta)" />
     <MESSAGE value="Snapshot before randomly wandering round code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Snapshot before randomly wandering round code" />
+    <MESSAGE value="Fixed swarm assignment. Added NISolutions assignment. Still errors.. gah." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed swarm assignment. Added NISolutions assignment. Still errors.. gah." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1763,17 +1763,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/SwarmSolution.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="585" max-vertical-offset="1950">
-          <caret line="76" column="9" selection-start-line="76" selection-start-column="9" selection-end-line="76" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37283623" vertical-offset="12965" max-vertical-offset="23535">
+        <state vertical-scroll-proportion="-9.615385" vertical-offset="12995" max-vertical-offset="23535">
           <caret line="895" column="0" selection-start-line="895" selection-start-column="0" selection-end-line="895" selection-end-column="0" />
           <folding>
             <element signature="e#0#61816#0" expanded="true" />
@@ -1792,6 +1784,14 @@
             <element signature="e#53729#53739#0" expanded="true" />
             <element signature="e#58500#58515#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/SwarmSolution.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.4620253" vertical-offset="0" max-vertical-offset="1950">
+          <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
