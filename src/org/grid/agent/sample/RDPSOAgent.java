@@ -110,6 +110,8 @@ public class RDPSOAgent extends Agent {
     boolean positionNotInMap = false;
     boolean knownLocalMap = false;
 
+    int requestingSwarmID = 0;
+    int newSwarmID = numSwarms;
 
     /**
      * Define agent message format
@@ -237,6 +239,8 @@ public class RDPSOAgent extends Agent {
             boolean createSwarm
             int numAgents
             int numKilledAgents
+            int requestingSwarmID
+            int newSwarmID
 
          */
 
@@ -267,7 +271,7 @@ public class RDPSOAgent extends Agent {
             //out.writeDouble(agentBestSolution);
             //out.writeDouble(obstacleBestSolution);
             out.writeInt(swarmSolutionArray.size());
-            for (AgentSolution a: swarmSolutionArray) {
+            for (AgentSolution a : swarmSolutionArray) {
                 out.writeObject(a);
             }
 
@@ -278,6 +282,8 @@ public class RDPSOAgent extends Agent {
             out.writeBoolean(createSwarm);
             out.writeInt(numAgents);
             out.writeInt(numKilledAgents);
+            out.writeInt(requestingSwarmID);
+            out.writeInt(newSwarmID);
 
             out.writeInt(timestep);
 
@@ -298,9 +304,7 @@ public class RDPSOAgent extends Agent {
 
             int type = in.readByte();
             int preTime;
-
             int recSwarmID = -1;
-
 
             switch (type) {
                 case 1: { // info message
@@ -319,46 +323,58 @@ public class RDPSOAgent extends Agent {
                     center.setX(in.readInt());
                     center.setY(in.readInt());
 
+                    ArrayList<AgentSolution> tempSolutionArray = new ArrayList<AgentSolution>();
 
                     // RDPSO variables
                     recSwarmID = in.readInt();
+                    int tempSize = in.readInt();
+                    for (int i = 0; i < tempSize; i++) {
+                        tempSolutionArray.add((AgentSolution) in.readObject());
+                    }
+
+                    double tempBestSwarmSolution = in.readDouble();
+                    double tempSC = in.readDouble();
+                    boolean tempCallAgent = in.readBoolean();
+                    boolean tempCreateSwarm = in.readBoolean();
+                    int tempNumAgents = in.readInt();
+                    int tempNumKilledAgents = in.readInt();
+                    int tempRequestingSwarmID = in.readInt();
+                    int tempNewSwarmID = in.readInt();
+
                     if (recSwarmID == swarmID) {
                         // update stuff
-                        //agentPositionX = in.readInt();
-                        //agentPositionY = in.readInt();
-                        //agentBestSolution = in.readDouble();
-                        //obstacleBestSolution = in.readDouble();
+                        bestSwarmSolution = tempBestSwarmSolution;
+                        swarmSolutionArray = new ArrayList<AgentSolution>(tempSolutionArray);
+                        SC = tempSC;
+                        callAgent = tempCallAgent;
+                        createSwarm = tempCreateSwarm;
+                        numAgents = tempNumAgents;
+                        numKilledAgents = tempNumKilledAgents;
+                    }
 
-                        int size = in.readInt();
-                        swarmSolutionArray = new ArrayList<AgentSolution>();
-                        for (int i = 0; i < size; i++) {
-                           swarmSolutionArray.add((AgentSolution)in.readObject());
-                        }
-                        bestSwarmSolution = in.readDouble();
+                    if (recSwarmID == 0) {
+                        // update excluded group stuff
+                        requestingSwarmID = tempRequestingSwarmID;
+                        newSwarmID = tempNewSwarmID;
+                    }
 
-                        SC = in.readDouble();
-                        callAgent = in.readBoolean();
-                        createSwarm = in.readBoolean();
-                        numAgents = in.readInt();
-                        numKilledAgents = in.readInt();
+                    preTime = in.readInt();
+                    int timediff = preTime - timestep;
 
-                        preTime = in.readInt();
-                        int timediff = preTime - timestep;
+                    //debug("Updated info: %f %f %b %b %d %d", bestSwarmSolution, SC, callAgent, createSwarm, numAgents, numKilledAgents);
 
-                        debug("Updated info: %f %f %b %b %d %d", bestSwarmSolution, SC, callAgent, createSwarm, numAgents, numKilledAgents);
-
-                        synchronized (registry) {
-                            if (registry.containsKey(from)) {
-                                MemberData data = registry.get(from);
-                                data.bounds = bounds;
-                                data.origin = origin;
-                                data.center = center;
-                                data.info = timestep;
-                                data.timediff = timediff;
-                                //debug("New info: %s %s %s %s", data.bounds, data.origin, data.center, data.info);
-                            }
+                    synchronized (registry) {
+                        if (registry.containsKey(from)) {
+                            MemberData data = registry.get(from);
+                            data.bounds = bounds;
+                            data.origin = origin;
+                            data.center = center;
+                            data.info = timestep;
+                            data.timediff = timediff;
+                            //debug("New info: %s %s %s %s", data.bounds, data.origin, data.center, data.info);
                         }
                     }
+
                     break;
                 }
                 case 2: { // map message
@@ -380,7 +396,7 @@ public class RDPSOAgent extends Agent {
                         }
                     }
 
-                    debug("Got %d map chunks from %d, new data %b", chunks, from, replan);
+                    //debug("Got %d map chunks from %d, new data %b", chunks, from, replan);
 
                     if (!map.verify())
                         debug("Map no longer valid!");
@@ -494,6 +510,8 @@ public class RDPSOAgent extends Agent {
 
                 if (state.direction == Direction.NONE && state.direction != null) {
 
+
+
                     // Send information to other agents
                     Set<Position> movable = analyzeNeighborhood(state.neighborhood);
 
@@ -513,9 +531,9 @@ public class RDPSOAgent extends Agent {
                     }
                     if (replanMap || replanAgents) {
                         // not sure if I need this here.
-                            plan.clear();
-                            if (goalPosition != null)
-                                replan(goalPosition);
+                        plan.clear();
+                        if (goalPosition != null)
+                            replan(goalPosition);
 
                         if (replanAgents && detectLock())
                             goalPosition = null;
@@ -549,11 +567,7 @@ public class RDPSOAgent extends Agent {
 
                             // find best solution in vector H(t) = max(H(t))
                             double maxSwarmSolution = SwarmSolution.findMaxSwarmSolutionList(swarmSolutionArray);
-                            double[] test = SwarmSolution.findTopISolutionsInSwarmSolutionList(swarmSolutionArray, 2);
-                            if (test != null)
-                            for(int i = 0; i < test.length; i++) {
-                                System.out.println(test[i]);
-                            }
+
                             // check if subgroup improved
                             if (maxSwarmSolution > bestSwarmSolution) {
                                 bestSwarmSolution = maxSwarmSolution;
@@ -566,23 +580,31 @@ public class RDPSOAgent extends Agent {
                                 // check if group can be rewarded
                                 if (SC == 0) {
                                     if ((numAgents < ConstantsRDPSO.MAX_AGENTS) && spawnAgentProbability()) {
-                                        //System.out.println("Sending new agent request.");
-                                        // todo: send new agent request
-                                        // sendNewAgentRequest();
+                                        System.out.println(getId() + ": Sending new agent request.");
+                                        callAgent = true;
+                                        // todo: which swarm has reqested it? and all agetns should read this info
+                                        // do not filter by if (swarmID == receivedSwarmID)
+                                        requestingSwarmID = swarmID;
                                         if (numKilledAgents > 0) {
                                             // decrease excluded agents counter
                                             numKilledAgents--;
                                             // check if group can spawn a new subgroup
                                         }
+                                    } else {
+                                        callAgent = false;
                                     }
                                     if (spawnGroupProbability()) {
-                                       // System.out.println("Sending new group request.");
-                                        // todo: send new group request
-                                        //sendNewGroupRequest();
+                                        System.out.println(getId() + ": Sending new group request.");
+                                        createSwarm = true;
+                                        // send information about new swarmID
+                                        newSwarmID = numSwarms + 1;
+                                        // todo: really?
                                         if (numKilledAgents > 0) {
                                             // decrease excluded agents counter
                                             numKilledAgents--;
                                         }
+                                    } else {
+                                        createSwarm = false;
                                     }
                                 }
                                 // subgroup has NOT IMPROVED
@@ -596,13 +618,16 @@ public class RDPSOAgent extends Agent {
                                         // if this is the worst preforming agent in the group, exclude
                                         if (agentBestSolution == SwarmSolution.findMinSwarmSolutionList(swarmSolutionArray)) {
                                             // exclude agent
-                                           // System.out.println("EXCLUDED!");
+                                            System.out.println(getId() + " EXCLUDED!");
                                             swarmID = 0;
+                                            // todo: removing solution from swarmSolutionArray? Timeout?
                                             numAgents--;
                                         }
                                     } else { // delete the entire subgroup
                                         // exclude this agent
+                                        System.out.println(getId() + " EXCLUDED!");
                                         swarmID = 0;
+                                        // todo: removing solution from swarmSolutionArray? Timeout?
                                         numAgents--;
                                     }
                                 }
@@ -758,7 +783,9 @@ public class RDPSOAgent extends Agent {
                             if (view != null)
                                 view.update(arena);
 
+                            System.out.println(getId() + ": I'm excluded, I should randomly wander about..");
                             // todo: randomly wander round
+
                             // randomly wander round
 
                             // evaluate agent's current solution = h(x_n(t))
@@ -791,16 +818,13 @@ public class RDPSOAgent extends Agent {
                             if (view != null)
                                 view.update(arena);
 
-                            // build vector H
-
                             // add agentSolution to vector H(t) that includes solutions of all agents within the swarmID group
-                            // todo: synced version of this concatenating the solutions of subswarms
-                            // SwarmSolution.mergeSolutionToArray(); //addToSwarmSolutionArray(ConstantsRDPSO.MAX_SWARMS, ConstantsRDPSO.MAX_AGENTS, swarmID, agentBestSolution);
+                            SwarmSolution.mergeSolutionToArray(new AgentSolution(getId(), agentBestSolution), swarmSolutionArray);
                             // wait till all agents put solutions in solution array...
 
                             // check if group improved
                             // find best solution in vector H(t) = max(H(t))
-                            double maxSwarmSolution = 0.0; // todo: uncom SwarmSolution.findMaxInSwarmSolutionArray(swarmID, swarmSolutionArray);
+                            double maxSwarmSolution = SwarmSolution.findMaxSwarmSolutionList(swarmSolutionArray);
                             // check if subgroup improved
                             if (maxSwarmSolution > bestSwarmSolution) {
                                 bestSwarmSolution = maxSwarmSolution;
@@ -808,35 +832,39 @@ public class RDPSOAgent extends Agent {
                                 // check to see, if this agent is one of the best N_I agents in the group
                                 boolean best_ni = false;
                                 // todo: what if num agents left in swarm < init_agents?
-                                // todo: how do you track which solution is whos in the swarm solution array and how do you update them when they are let go from a swarm..?
-                                double[] bestNISolutions = SwarmSolution.findTopISolutionsInSwarmSolutionList(swarmSolutionArray, ConstantsRDPSO.INIT_AGENTS);
+                                double[] bestNISolutions = SwarmSolution.findTopISolutionsInSwarmSolutionList(swarmSolutionArray, numAgents);
                                 for (int i = 0; i < bestNISolutions.length; i++) {
                                     // check if agent's best solution matches any of topI swarm solutions
                                     if (agentBestSolution == bestNISolutions[i]) {
                                         best_ni = true;
                                     }
                                 }
+
                                 // agent is one of the best in the excluded group
                                 if (best_ni) {
                                     // note: N_X is the number of agents in the excluded group
                                     // check if number of excluded agents is bigger than number of initial agents
                                     // required to form a sub-swarm then check probability for forming a new group
                                     if (numAgents > ConstantsRDPSO.INIT_AGENTS && spawnGroupProbabilityExcluded()) {
+                                        System.out.println("I should spawn a new group.");
                                         //todo: how to assign new swarm.. I guess you will have to keep a number of swarms
                                         //todo: broadcast a need for N_I-1 robots to form new swarm
                                     }
                                     // if the agent receives a request to join a swarm
-                                    else if (true) { // todo: condition is: If received the need to join swarm
-                                        swarmID = 2; // todo: change to received swarm number, you have to transmitt that info too
+                                    else if (callAgent) {
+                                        swarmID = requestingSwarmID;
+                                        System.out.println(getId() + ": I joined new swarm group: " + swarmID);
                                         // increase number of swarms?
                                         // increase number of agents in swarm
                                         numAgents++;
                                         // todo: send info about joining a swarm to all TEAMMATES!
                                         // right, how do I do that..
+                                        // if agent receives a request to join a new swarm
 
-                                    } else if (true) { //todo: condition is: If received info to form a new subgroup
+                                    } else if (createSwarm) {
                                         // include agent in the new subgroup
-                                        swarmID = 2; // todo: change to received swarm_id_new
+                                        swarmID = newSwarmID;
+                                        System.out.println(getId() + ": I'm joining a newly created group " + swarmID);
                                         // change number of agents to the initial number of agents in a swarm
                                         numAgents = ConstantsRDPSO.INIT_AGENTS;
                                         // reset number of excluded robots
@@ -887,8 +915,6 @@ public class RDPSOAgent extends Agent {
                             scan(0);
 
                         } else {
-                            // reset goal position
-                            //goalPosition = null;
                             // mark end of multi move
                             cleanMove = false;
                             explore = false;
@@ -1227,8 +1253,6 @@ public class RDPSOAgent extends Agent {
             int j = p.getY() - y;
 
 
-
-
             // if there is an agent
             if (n.getCell(i, j) > 0 || n.getCell(i, j) == Neighborhood.OTHER) {
 
@@ -1317,7 +1341,7 @@ public class RDPSOAgent extends Agent {
         if (nodes == null || nodes.isEmpty())
             return;
 
-        debug("Sending map to %d: %d chunks", to, nodes.size());
+        //debug("Sending map to %d: %d chunks", to, nodes.size());
 
         try {
 
@@ -1431,6 +1455,10 @@ public class RDPSOAgent extends Agent {
         float variability = (float) Math.sqrt(varianceX * varianceX + varianceY * varianceY);
 
         return variability < 2;
+    }
+
+    private void statusReport(int id) {
+
     }
 
 }
