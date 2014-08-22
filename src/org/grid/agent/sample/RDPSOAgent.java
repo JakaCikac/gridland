@@ -42,6 +42,8 @@ public class RDPSOAgent extends Agent {
     private HashMap<Integer, MemberData> registry = new HashMap<Integer, MemberData>();
     private Position origin = null;
     private Vector<Position> history = new Vector<Position>();
+    private Decision left, right, up, down, still;
+    private Decision[] decisions;
 
 
     private static class State {
@@ -58,6 +60,29 @@ public class RDPSOAgent extends Agent {
 
     }
 
+    protected static class Decision  {
+
+        private Direction direction;
+
+        public Direction getDirection() {
+            return direction;
+        }
+
+        public void setDirection(Direction direction) {
+            this.direction = direction;
+        }
+
+        public Decision(Direction direction) {
+            super();
+            this.direction = direction;
+        }
+
+        public String toString() {
+            return String.format("%s", direction.toString());
+        }
+
+    }
+
     /* ########################
        RDPSO variables
     ###########################  */
@@ -70,7 +95,7 @@ public class RDPSOAgent extends Agent {
     private boolean callAgent = false;    // need of calling a agent
     private boolean createSwarm = false;  // need of creating a swarm
 
-    private int numSwarms = 3; // initial number of swarms
+    private int numSwarms = ConstantsRDPSO.INIT_SWARMS; // initial number of swarms
 
     /* shared variables in swarm .. */
     private int numAgents = ConstantsRDPSO.INIT_AGENTS; // current number of agents in each swarm
@@ -192,6 +217,16 @@ public class RDPSOAgent extends Agent {
 
     @Override
     public void initialize() {
+
+        left = new Decision(Direction.LEFT);
+        right = new Decision(Direction.RIGHT);
+        up = new Decision(Direction.UP);
+        down = new Decision(Direction.DOWN);
+        still = new Decision(Direction.NONE);
+
+        decisions = new Decision[] {
+                left, right, up, down
+        };
 
         // 6 = scope of the arena
         arena = map.getArena(6);
@@ -450,7 +485,7 @@ public class RDPSOAgent extends Agent {
     public void initializeRDPSO() {
         // initialize cognitive, social and obstacle as agent's own position
         swarmID = assignToSwarm();
-        //System.out.println("Swarm ID: " + swarmID);
+        System.out.println(getId() + ": Swarm ID: " + swarmID);
         callAgent = false;
         createSwarm = false;
 
@@ -464,6 +499,8 @@ public class RDPSOAgent extends Agent {
         constantArray[1] = ConstantsRDPSO.C2;
         constantArray[2] = ConstantsRDPSO.C3;
 
+        swarmSolutionArray = SwarmSolution.mergeSolutionToArray(new AgentSolution(getId(), agentBestSolution), swarmSolutionArray);
+
     }
 
     /*
@@ -472,10 +509,10 @@ public class RDPSOAgent extends Agent {
     private int assignToSwarm() {
 
         // in case there is just one swarm
-        if (ConstantsRDPSO.MAX_SWARMS == 1)
+        if (ConstantsRDPSO.INIT_SWARMS == 1)
             return 1;
 
-        if (getSwarmCounter() == ConstantsRDPSO.MAX_SWARMS - 1)
+        if (getSwarmCounter() == ConstantsRDPSO.INIT_SWARMS - 1)
             setSwarmCounter(0);
 
         incrementSwarmCounter();
@@ -486,7 +523,7 @@ public class RDPSOAgent extends Agent {
     @Override
     public void run() {
 
-        int sleeptime = 100;
+        int sleeptime = 60;
         boolean replanMap = false;
         boolean explore = false;
         int offsetX = 0;
@@ -620,6 +657,8 @@ public class RDPSOAgent extends Agent {
                                             // exclude agent
                                             System.out.println(getId() + " EXCLUDED!");
                                             swarmID = 0;
+                                            movable = analyzeNeighborhood(state.neighborhood);
+                                            registerMoveable(movable, state.neighborhood);
                                             // todo: removing solution from swarmSolutionArray? Timeout?
                                             numAgents--;
                                         }
@@ -627,6 +666,8 @@ public class RDPSOAgent extends Agent {
                                         // exclude this agent
                                         System.out.println(getId() + " EXCLUDED!");
                                         swarmID = 0;
+                                        movable = analyzeNeighborhood(state.neighborhood);
+                                        registerMoveable(movable, state.neighborhood);
                                         // todo: removing solution from swarmSolutionArray? Timeout?
                                         numAgents--;
                                     }
@@ -783,8 +824,27 @@ public class RDPSOAgent extends Agent {
                             if (view != null)
                                 view.update(arena);
 
-                            System.out.println(getId() + ": I'm excluded, I should randomly wander about..");
-                            // todo: randomly wander round
+                            plan.clear();
+                            Decision d = updateDecisions(state.neighborhood);
+                                timestep++;
+                                if (d.direction != Direction.NONE) {
+                                    move(d.direction);
+                                }
+
+                                // update agent position
+                                if (d.direction == Direction.LEFT)
+                                    position.setX(position.getX() - 1);
+                                if (d.direction == Direction.RIGHT)
+                                    position.setX(position.getX() + 1);
+                                if (d.direction == Direction.UP)
+                                    position.setY(position.getY() - 1);
+                                if (d.direction == Direction.DOWN)
+                                    position.setY(position.getY() + 1);
+
+                                // update arena agent position
+                                arena.setOrigin(position.getX(), position.getY());
+
+                                scan(0);
 
                             // randomly wander round
 
@@ -833,14 +893,20 @@ public class RDPSOAgent extends Agent {
                                 boolean best_ni = false;
                                 // todo: what if num agents left in swarm < init_agents?
                                 double[] bestNISolutions = SwarmSolution.findTopISolutionsInSwarmSolutionList(swarmSolutionArray, numAgents);
+                                System.out.println(getId() + ": checking NISol, " + bestNISolutions.length);
+                                System.out.print(getId() + ": my sol: " + agentBestSolution + " NISol: ");
                                 for (int i = 0; i < bestNISolutions.length; i++) {
                                     // check if agent's best solution matches any of topI swarm solutions
+                                    System.out.print(bestNISolutions[i] + " ");
                                     if (agentBestSolution == bestNISolutions[i]) {
                                         best_ni = true;
+                                        System.out.println(getId() + ": I am one of the best performing agents with " + bestNISolutions[i] + " !");
                                     }
                                 }
+                                System.out.println();
 
                                 // agent is one of the best in the excluded group
+                                System.out.println(getId() + ": Am i one of best NI?");
                                 if (best_ni) {
                                     // note: N_X is the number of agents in the excluded group
                                     // check if number of excluded agents is bigger than number of initial agents
@@ -858,6 +924,8 @@ public class RDPSOAgent extends Agent {
                                         // increase number of agents in swarm
                                         numAgents++;
                                         // todo: send info about joining a swarm to all TEAMMATES!
+                                        movable = analyzeNeighborhood(state.neighborhood);
+                                        registerMoveable(movable, state.neighborhood);
                                         // right, how do I do that..
                                         // if agent receives a request to join a new swarm
 
@@ -871,6 +939,8 @@ public class RDPSOAgent extends Agent {
                                         numKilledAgents = 0;
                                         // reset the stagnancy counter
                                         SC = 0;
+                                        movable = analyzeNeighborhood(state.neighborhood);
+                                        registerMoveable(movable, state.neighborhood);
                                     }
                                 }
                             }
@@ -968,6 +1038,38 @@ public class RDPSOAgent extends Agent {
         plan.addAll(directions);
 
         return p;
+    }
+
+    private Decision updateDecisions(Neighborhood n) {
+
+        // Check which ways the agent can move.
+        if (n == null)
+            return still;
+
+        boolean up = canMove(n, 0, -1);
+        boolean down = canMove(n, 0, 1);
+        boolean left =  canMove(n, -1, 0);
+        boolean right = canMove(n, 1, 0);
+        boolean moves[] = {up, down, left, right};
+
+        // Randomly shuffle possible moves.
+        shuffleArray(decisions);
+
+        // Check which moves are available against the shuffled array
+        // then choose the move first possible move from the array.
+        for (int i = 0; i < decisions.length; i++) {
+            if ( decisions[i].getDirection().toString().equals("UP") && moves[0]) {
+                return decisions[i];
+            } else if (decisions[i].getDirection().toString().equals("DOWN") && moves[1]) {
+                return decisions[i];
+            } else if (decisions[i].getDirection().toString().equals("LEFT") && moves[2]) {
+                return decisions[i];
+            } else if (decisions[i].getDirection().toString().equals("RIGHT") && moves[3]) {
+                return decisions[i];
+            }
+        }
+        // if no other move is available, stand still for the current move
+        return still;
     }
 
     private void exploreMove() {
@@ -1459,6 +1561,20 @@ public class RDPSOAgent extends Agent {
 
     private void statusReport(int id) {
 
+    }
+
+    //FisherYates shuffle for random array shuffle
+    static void shuffleArray(Decision[] ar)
+    {
+        Random rnd = new Random();
+        for (int i = ar.length - 1; i > 0; i--)
+        {
+            int index = rnd.nextInt(i + 1);
+            // Simple swap
+            Decision a = ar[index];
+            ar[index] = ar[i];
+            ar[i] = a;
+        }
     }
 
 }

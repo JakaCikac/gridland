@@ -69,7 +69,9 @@ public class SwarmSolution {
         if (swarmSolutionArray.size() >= topI) {
             List<AgentSolution> maxn = swarmSolutionArray.subList(0, topI);
             result = new double[maxn.size()];
-
+            for (int i = 0; i < result.length; i++) {
+                result[i] = maxn.get(i).getSolution();
+            }
         } else {
             //System.out.println("Not enough solutions in swarm solution array.");
         }

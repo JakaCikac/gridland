@@ -147,7 +147,7 @@ public class RandomAgent extends Agent {
 					}
 
                     // If obstacle or agent on path, change direction of movement
-					Decision d = updateDecisions(neighborhood, state);
+					Decision d = updateDecisions(neighborhood);
 
 					if (d.getDirection() != Direction.NONE) 
 						move(d.getDirection());
@@ -207,7 +207,7 @@ public class RandomAgent extends Agent {
          }
 	}
 
-	private Decision updateDecisions(Neighborhood n, AgentState state) {
+	private Decision updateDecisions(Neighborhood n) {
 
         // Check which ways the agent can move.
         if (n == null)

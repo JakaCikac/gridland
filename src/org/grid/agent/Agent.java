@@ -57,31 +57,6 @@ public abstract class Agent {
 	private static Vector<ClientProtocolSocket> clients = new Vector<ClientProtocolSocket>();
 	private static String teamOverride = null;
 
-    double MAX_SWARMS = 5;
-
-
-    // swarm arrays
-
-    private static double swarmSolutionArray[][] = new double[5][15];
-    /*
-    private static double swarmSC[] = new double[5];
-
-    public static double[] getNumKilledAgents() {
-        return numKilledAgents;
-    }
-
-    public static double[] getNumAgents() {
-        return numAgents;
-    }
-
-    public static double[] getSwarmSC() {
-        return swarmSC;
-    }
-
-    private static double numKilledAgents[] = new double[5];
-    private static double numAgents[] = new double[5];
-
-    */
 
     // increment swarm_counter to assign agents to subgroups (subswarms)
     private static int swarm_counter = 0;
