@@ -57,7 +57,6 @@ public class RDPSOAgent extends Agent {
             this.neighborhood = neighborhood;
             this.direction = direction;
         }
-
     }
 
     protected static class Decision  {
@@ -177,7 +176,6 @@ public class RDPSOAgent extends Agent {
             int distance = Position.distance(n.getPosition(), p);
             return distance <= maxdistance && distance >= mindistance;
         }
-
     }
 
     private static class MemberData {
@@ -308,10 +306,6 @@ public class RDPSOAgent extends Agent {
             out.writeInt(center.getY());
 
             out.writeInt(swarmID);
-            //out.writeInt(agentPositionX);
-            //out.writeInt(agentPositionY);
-            //out.writeDouble(agentBestSolution);
-            //out.writeDouble(obstacleBestSolution);
             out.writeInt(swarmSolutionArray.size());
             for (AgentSolution a : swarmSolutionArray) {
                 out.writeObject(a);
@@ -539,7 +533,7 @@ public class RDPSOAgent extends Agent {
     @Override
     public void run() {
 
-        int sleeptime = 500;
+        int sleeptime = 60;
         boolean replanMap = false;
         boolean explore = false;
         int offsetX = 0;
@@ -604,7 +598,7 @@ public class RDPSOAgent extends Agent {
                         if (swarmID != 0) {
 
                             // evaluate agent's current solution = h(x_n(t))
-                            agentSolution = evaluateObjectiveFunction(agentPositionX, agentPositionY);
+                            agentSolution = evaluateObjectiveFunction();
 
                             // check if agent improved and update agent's best solution
                             if (agentSolution > agentBestSolution) {
@@ -674,7 +668,6 @@ public class RDPSOAgent extends Agent {
                                     SC = ConstantsRDPSO.SC_MAX * (1 - (1 / (numKilledAgents + 1)));
                                     // check if agent can be excluded
                                     if (numAgents > ConstantsRDPSO.MIN_AGENTS) {
-                                        // todo: this is not the seq in pseudo, but it makes more sense to me
                                         // if this is the worst preforming agent in the group, exclude
                                         if (agentBestSolution == SwarmSolution.findMinSwarmSolutionList(swarmSolutionArray)) {
                                             // increase number of excluded agents in swarm
@@ -897,7 +890,7 @@ public class RDPSOAgent extends Agent {
                             // randomly wander round
 
                             // evaluate agent's current solution = h(x_n(t))
-                            agentSolution = evaluateObjectiveFunction(agentPositionX, agentPositionY);
+                            agentSolution = evaluateObjectiveFunction();
 
                             // check if agent improved and update agent's best solution
                             if (agentSolution > agentBestSolution) {
@@ -986,7 +979,7 @@ public class RDPSOAgent extends Agent {
                                         createSwarm = false;
                                         System.out.println(getId() + ": I'm joining a newly created group " + swarmID);
                                         // change number of agents to the initial number of agents in a swarm
-                                        numAgents = ConstantsRDPSO.INIT_AGENTS;
+                                        numAgents = numAgents+1;//ConstantsRDPSO.INIT_AGENTS;
                                         // reset number of excluded robots
                                         numKilledAgents = 0;
                                         // reset the stagnancy counter
@@ -1092,6 +1085,7 @@ public class RDPSOAgent extends Agent {
         return p;
     }
 
+    // to implement random wandering
     private Decision updateDecisions(Neighborhood n) {
 
         // Check which ways the agent can move.
@@ -1142,22 +1136,6 @@ public class RDPSOAgent extends Agent {
         }
 
         plan.addAll(directions);
-    }
-
-    private void clearMove(State state) {
-
-        List<Direction> directions = null;
-        LocalMap.Paths paths = map.findShortestPaths(position);
-        List<LocalMap.Node> candidates = map.filter(new DistanceFilter(position,
-                state.neighborhood.getSize() - 1,
-                state.neighborhood.getSize() + 1));
-
-        directions = paths.shortestPathTo(candidates);
-        if (directions != null) {
-            plan.addAll(directions);
-        } else {
-            System.out.println("Stuck.");
-        }
     }
 
     private void replan(Position p) {
@@ -1214,7 +1192,7 @@ public class RDPSOAgent extends Agent {
         return random;
     }
 
-    private double evaluateObjectiveFunction(int agentPositionX, int agentPositionY) {
+    private double evaluateObjectiveFunction() {
 
         int newT = timestep;
         // time passed since previous evaluation, should give the time agent needed to explore a certain amount of area
@@ -1260,15 +1238,11 @@ public class RDPSOAgent extends Agent {
         Set<Position> obstacles = analyzeNeighborhoodObstacles(state.neighborhood);
         double functionResult = 0.0;
         for (Position p : obstacles) {
-            //if (isObstacle(state.neighborhood, p.getX(), p.getY())) {
             // calculate manhattan distance to point
             Position from = new Position(agentPositionX, agentPositionY);
             Position to = new Position(p.getX(), p.getY());
             functionResult += Position.distance(from, to);
-            //}
         }
-
-        // System.out.println("Obstacle evaluation: " + functionResult + ", Current best: " + obstacleBestSolution);
         return functionResult;
     }
 
@@ -1281,8 +1255,8 @@ public class RDPSOAgent extends Agent {
 
     /* check probability of a group spawning a new subgroup from excluded group */
     private boolean spawnGroupProbabilityExcluded() {
-        // N_T = total population of agents. todo: I don't keep track of that yet, so change the formula later.
-        if ((Math.random() * (numAgents / (ConstantsRDPSO.INIT_AGENTS * ConstantsRDPSO.MAX_SWARMS))) > Math.random()) {
+        // initial agents in each swarm * (initial number of swarms - 1) to account for social exclusion
+        if ((Math.random() * (numAgents / (ConstantsRDPSO.INIT_AGENTS * (ConstantsRDPSO.INIT_SWARMS-1)))) > Math.random()) {
             return true;
         } else return false;
     }
@@ -1315,9 +1289,7 @@ public class RDPSOAgent extends Agent {
                 if (n.getCell(i, j) > 0 || n.getCell(i, j) == Neighborhood.OTHER) {
                     moveable.add(new Position(x + i, y + j));
                 }
-
             }
-
         }
         return moveable;
     }
@@ -1390,7 +1362,7 @@ public class RDPSOAgent extends Agent {
                 MemberData data = registry.get(id);
 
                 // send info after some time
-                if (Math.abs(timestep - data.notified) > 20) {
+                if (Math.abs(timestep - data.notified) > 2) {
                     sendInfo(id);
                     data.notified = timestep;
                     data.map = false;
@@ -1470,13 +1442,7 @@ public class RDPSOAgent extends Agent {
                 }
 
             } else if (n.getCell(i, j) == Neighborhood.OTHER) {
-                // map.addModifier(x+i-1, y+j-1); map.addModifier(x+i,
-                // y+j-1); map.addModifier(x+i+1, y+j-1);
-                // map.addModifier(x+i-1, y+j);
                 map.addModifier(x + i, y + j);
-                // map.addModifier(x+i+1, y+j);
-                // map.addModifier(x+i-1, y+j+1); map.addModifier(x+i,
-                // y+j+1); map.addModifier(x+i+1, y+j+1);
             }
         }
 
@@ -1584,13 +1550,13 @@ public class RDPSOAgent extends Agent {
 
         @Override
         public boolean filter(LocalMap.Node n) {
-            // Check if field is a flag, if not return false
+            // Check if field is a target, if not return false
             if (n.getPosition().getX() % 2 != 0 || n.getPosition().getY() % 2 != 0)
                 return false;
-            //
+
             if (!known.inside(n.getPosition()))
                 return true;
-            //
+
             if (Position.distance(center, n.getPosition()) > radius)
                 return true;
 
@@ -1633,10 +1599,6 @@ public class RDPSOAgent extends Agent {
         float variability = (float) Math.sqrt(varianceX * varianceX + varianceY * varianceY);
 
         return variability < 2;
-    }
-
-    private void statusReport(int id) {
-
     }
 
     //FisherYates shuffle for random array shuffle
