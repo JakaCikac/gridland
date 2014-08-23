@@ -610,6 +610,7 @@ public class LocalMap {
         modifiers.clear();
     }
 
+    // this gets called when agent wants to update it's map
     public boolean update(Neighborhood neighborhood, Position anchor, int timestep) {
 
         Node n = nodes.get(anchor);
@@ -623,6 +624,8 @@ public class LocalMap {
         int y = anchor.getY();
 
         boolean changed = false;
+
+        int counter = 0;
 
         for (int i = -neighborhood.getSize(); i <= neighborhood.getSize(); i++) {
             for (int j = -neighborhood.getSize(); j <= neighborhood.getSize(); j++) {
@@ -642,10 +645,10 @@ public class LocalMap {
             }
 
         }
-
         return changed;
     }
 
+    // this gets called when agent receives updates from others
     public boolean update(MapChunk chunk) {
 
         int size = 1;

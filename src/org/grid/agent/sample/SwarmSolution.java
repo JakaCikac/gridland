@@ -26,7 +26,17 @@ public class SwarmSolution {
         return swarmSolutionArray;
     }
 
+    public static synchronized void removeSolutionFromArray(AgentSolution a, ArrayList<AgentSolution> swarmSolutionArray) {
 
+        boolean exists = false;
+        for (int i = 0; i < swarmSolutionArray.size(); i++) {
+            if (swarmSolutionArray.get(i).getId() == a.getId()) {
+                exists = true;
+            }
+        }
+        if (exists)
+            swarmSolutionArray.remove(a);
+    }
 
     public static double findMinSwarmSolutionList(ArrayList<AgentSolution> swarmSolutionArray) {
         return Collections.max(swarmSolutionArray, new AgentSolutionCompMin()).getSolution();

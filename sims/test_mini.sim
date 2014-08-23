@@ -1,6 +1,6 @@
 simulation.speed=100
 message.speed=20
-message.neighborhood=10
+message.neighborhood=30
 simulation.field=/Users/nanorax/Documents/FRI/Diploma/implementacija/gridland/maps/beatle.png
 simulation.agents=200
 simulation.respawn=30
