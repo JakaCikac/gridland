@@ -77,10 +77,10 @@
       <file leaf-file-name="RDPSOAgent.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.767141" vertical-offset="7447" max-vertical-offset="26835">
-              <caret line="536" column="29" selection-start-line="536" selection-start-column="29" selection-end-line="536" selection-end-column="29" />
+            <state vertical-scroll-proportion="-7.344114" vertical-offset="19162" max-vertical-offset="26820">
+              <caret line="899" column="0" selection-start-line="899" selection-start-column="0" selection-end-line="899" selection-end-column="0" />
               <folding>
-                <element signature="e#0#71801#0" expanded="true" />
+                <element signature="e#0#71800#0" expanded="true" />
                 <element signature="imports" expanded="true" />
                 <element signature="e#1511#1521#0" expanded="true" />
                 <element signature="e#1588#1609#0" expanded="true" />
@@ -103,13 +103,13 @@
                 <element signature="e#22426#22433#0" expanded="true" />
                 <element signature="e#22513#22522#0" expanded="true" />
                 <element signature="e#22603#22614#0" expanded="true" />
-                <element signature="e#62386#62396#0" expanded="true" />
-                <element signature="e#63223#63233#0" expanded="true" />
-                <element signature="e#64078#64088#0" expanded="true" />
-                <element signature="e#64144#64154#0" expanded="true" />
-                <element signature="e#68571#68586#0" expanded="true" />
-                <element signature="e#68678#69177#0" expanded="true" />
-                <element signature="e#69162#69163#0" expanded="true" />
+                <element signature="e#62385#62395#0" expanded="true" />
+                <element signature="e#63222#63232#0" expanded="true" />
+                <element signature="e#64077#64087#0" expanded="true" />
+                <element signature="e#64143#64153#0" expanded="true" />
+                <element signature="e#68570#68585#0" expanded="true" />
+                <element signature="e#68677#69176#0" expanded="true" />
+                <element signature="e#69161#69162#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -930,7 +930,7 @@
       <workItem from="1407064491389" duration="1790000" />
       <workItem from="1407749869383" duration="97144000" />
       <workItem from="1408638858297" duration="7742000" />
-      <workItem from="1408712015640" duration="37630000" />
+      <workItem from="1408712015640" duration="39489000" />
     </task>
     <task id="LOCAL-00001" summary="Test commit.">
       <created>1394200726993</created>
@@ -1320,11 +1320,15 @@
       <created>1409072704561</created>
       <updated>1409072704571</updated>
     </task>
-    <option name="localTasksCounter" value="98" />
+    <task id="LOCAL-00098" summary="Working on new ways to transmit info and try keeping it in sync..">
+      <created>1409074556651</created>
+      <updated>1409074556651</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="327468000" />
+    <option name="totallyTimeSpent" value="329327000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1797,10 +1801,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.767141" vertical-offset="7447" max-vertical-offset="26835">
-          <caret line="536" column="29" selection-start-line="536" selection-start-column="29" selection-end-line="536" selection-end-column="29" />
+        <state vertical-scroll-proportion="-7.344114" vertical-offset="19162" max-vertical-offset="26820">
+          <caret line="899" column="0" selection-start-line="899" selection-start-column="0" selection-end-line="899" selection-end-column="0" />
           <folding>
-            <element signature="e#0#71801#0" expanded="true" />
+            <element signature="e#0#71800#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1511#1521#0" expanded="true" />
             <element signature="e#1588#1609#0" expanded="true" />
@@ -1823,13 +1827,13 @@
             <element signature="e#22426#22433#0" expanded="true" />
             <element signature="e#22513#22522#0" expanded="true" />
             <element signature="e#22603#22614#0" expanded="true" />
-            <element signature="e#62386#62396#0" expanded="true" />
-            <element signature="e#63223#63233#0" expanded="true" />
-            <element signature="e#64078#64088#0" expanded="true" />
-            <element signature="e#64144#64154#0" expanded="true" />
-            <element signature="e#68571#68586#0" expanded="true" />
-            <element signature="e#68678#69177#0" expanded="true" />
-            <element signature="e#69162#69163#0" expanded="true" />
+            <element signature="e#62385#62395#0" expanded="true" />
+            <element signature="e#63222#63232#0" expanded="true" />
+            <element signature="e#64077#64087#0" expanded="true" />
+            <element signature="e#64143#64153#0" expanded="true" />
+            <element signature="e#68570#68585#0" expanded="true" />
+            <element signature="e#68677#69176#0" expanded="true" />
+            <element signature="e#69161#69162#0" expanded="true" />
           </folding>
         </state>
       </provider>

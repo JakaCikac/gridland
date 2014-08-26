@@ -795,7 +795,6 @@ public class RDPSOAgent extends Agent {
                                         registerMoveable(movable, state.neighborhood, 2); // 2 = send request agent info
                                         // only broadcast this request to the excluded group of agents
 
-
                                         if (numKilledAgents > 0) {
                                             // decrease killed agents counter
                                             numKilledAgents--;
