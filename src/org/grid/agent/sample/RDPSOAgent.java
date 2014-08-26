@@ -135,7 +135,8 @@ public class RDPSOAgent extends Agent {
     boolean knownLocalMap = false;
 
     int requestingSwarmID = 0;
-    int newSwarmID = numSwarms;
+    int subgroupRequestedByID = 0;
+    //int newSwarmID = numSwarms;
 
     int previousT = 0;
     int counter = 0;
@@ -350,14 +351,23 @@ public class RDPSOAgent extends Agent {
                 case 3: // subgroup request
                 {
                     out.writeByte(1); // 1 = info, 2 = map
-                    out.writeByte(3); // 2 = new subgroup request
+                    out.writeByte(3); // 3 = new subgroup request
 
-                    out.writeInt(swarmID);
+                    out.writeInt(swarmID); // will be 0 anyway
+                    // so a response can be sent to them
+                    out.writeInt(subgroupRequestedByID);
                     out.writeBoolean(createSwarm);
                     out.writeInt(numSwarms);
                     out.writeInt(timestep);
 
                     break;
+                }
+                case 7: // subgroup response
+                {
+                    out.writeInt(swarmID); // is in fact a requestedByID
+                    out.writeBoolean(ackSubgroupRequest);
+                    out.writeBoolean(createSwarm);
+
                 }
                 case 4: // the need of Ni-1 agents to form subgroup
                 {
@@ -373,7 +383,7 @@ public class RDPSOAgent extends Agent {
                     out.writeInt(numAgents);
                     out.writeInt(numKilledAgents);
                     out.writeInt(requestingSwarmID);
-                    out.writeInt(newSwarmID);
+                    //out.writeInt(newSwarmID);
                     out.writeInt(numSwarms);
 
                     out.writeInt(timestep);
@@ -520,6 +530,12 @@ public class RDPSOAgent extends Agent {
                             numSwarms = in.readInt();
                             timestep = in.readInt();
 
+                            // only a member of excluded group can receive subgroup request
+                            if (swarmID == 0) {
+                                createSwarm = tempCreateSwarm;
+                                requestingSwarmID = recSwarmID;
+                            }
+
                             break;
                         }
                         case 4: {
@@ -532,7 +548,7 @@ public class RDPSOAgent extends Agent {
 
                             break;
                         }
-                        case 6: { // new agent response received
+                        case 6: { // new agent response ack
                             recSwarmID = in.readInt();
                             tempCallAgent = in.readBoolean();
                             tempNumAgents = in.readInt();
@@ -547,6 +563,19 @@ public class RDPSOAgent extends Agent {
                                 if (ackAgentRequest) {
                                     pendingAgentRequest = false;
                                 }
+                            }
+                            break;
+                        }
+                        case 7: { // new subgroup response ack
+                            int tempSubgroupRequestedByID = in.readInt();
+                            boolean tempAckSubgroupResponse = in.readBoolean();
+
+                            if (tempSubgroupRequestedByID == swarmID && tempAckSubgroupResponse) {
+                                pendingSubgroupRequest = false;
+                            }
+                            tempCreateSwarm = in.readBoolean();
+                            if (tempSubgroupRequestedByID == swarmID) {
+                                createSwarm = false;
                             }
                             break;
                         }
@@ -758,7 +787,6 @@ public class RDPSOAgent extends Agent {
                                 if (SC == 0) {
                                     if ((numAgents < ConstantsRDPSO.MAX_AGENTS) && spawnAgentProbability() && !pendingAgentRequest) {
 
-                                        //todo : if (agentRequestRespondedTo) {
                                         callAgent = true;
                                         requestingSwarmID = swarmID;
                                         pendingAgentRequest = true;
@@ -766,7 +794,7 @@ public class RDPSOAgent extends Agent {
                                         movable = analyzeNeighborhood(state.neighborhood);
                                         registerMoveable(movable, state.neighborhood, 2); // 2 = send request agent info
                                         // only broadcast this request to the excluded group of agents
-                                        // todo: }
+
 
                                         if (numKilledAgents > 0) {
                                             // decrease killed agents counter
@@ -779,14 +807,13 @@ public class RDPSOAgent extends Agent {
                                     if (spawnGroupProbability() && !pendingSubgroupRequest) {
                                         System.out.println(getId() + ": Sending new group request.");
 
-                                        // todo:  if (subgroupRequestRespondedTo) {
                                         createSwarm = true;
                                         pendingSubgroupRequest = true;
+                                        subgroupRequestedByID = swarmID;
 
                                         movable = analyzeNeighborhood(state.neighborhood);
                                         registerMoveable(movable, state.neighborhood, 3); // 3 = send create subgroup info
 
-                                        // todo: }
                                         // yes, also decrease the numKilledAgents, it's really just a performance counter
                                         // doesn't have to do much with actual number of excluded agents
                                         if (numKilledAgents > 0) {
@@ -1102,10 +1129,19 @@ public class RDPSOAgent extends Agent {
                                     // if there is a need for a new subgroup and there is enough agents in excluded
                                         // group to create one, then go for it
                                     } else if (createSwarm && numAgents >= ConstantsRDPSO.INIT_AGENTS) {
-                                        // include agent in the new subgroup and increase numSwarms
-                                        swarmID = numSwarms++;
+
+                                        // temp change swarmID to the group that requested it, so a message can be sent
+                                        swarmID = subgroupRequestedByID;
+                                        // acknowledge the new group request
+                                        ackSubgroupRequest = true;
                                         // stop the creation of even more swarms
                                         createSwarm = false;
+                                        // send out ack for group creation to the previously requesting swarm!!
+                                        movable = analyzeNeighborhood(state.neighborhood);
+                                        registerMoveable(movable, state.neighborhood, 7); // 7 = subgroup ack
+
+                                        // include agent in the new subgroup and increase numSwarms
+                                        swarmID = numSwarms++;
                                         System.out.println(getId() + ": I'm creating a new group! " + swarmID);
                                         // change number of agents to 1
                                         numAgents = 1;
@@ -1117,14 +1153,7 @@ public class RDPSOAgent extends Agent {
                                         swarmSolutionArray = new ArrayList<AgentSolution>();
                                         // reset best swarm solution
                                         bestSwarmSolution = 0.0;
-                                        // acknowledge the new group request
-                                        ackSubgroupRequest = true;
-                                        // send out a callAgent request, N_i agents has to joing this group
-                                        callAgent = true;
 
-                                        movable = analyzeNeighborhood(state.neighborhood);
-                                        registerMoveable(movable, state.neighborhood, 1); // 1 = basic info
-                                        // todo: confirm new subgroup request
                                     }
                                 }
                             }
