@@ -144,10 +144,13 @@ public class RDPSOAgent extends Agent {
     double previousResult = 0.0;
     int numOfImprovements = 0;
 
+    // req/res/ack flags
     boolean pendingAgentRequest = false;
-
+    boolean pendingSubgroupRequest = false;
     boolean dirtyData = false;
     boolean ackAgentRequest = false;
+    boolean ackSubgroupRequest = false;
+    boolean newGroupCreation = false;
 
     /**
      * Define agent message format
@@ -286,8 +289,8 @@ public class RDPSOAgent extends Agent {
             int numKilledAgents
             int requestingSwarmID
             int newSwarmID
-
          */
+
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream(getMaxMessageSize());
             ObjectOutputStream out = new ObjectOutputStream(buffer);
@@ -499,7 +502,7 @@ public class RDPSOAgent extends Agent {
                             tempRequestingSwarmID = in.readInt();
                             timestep = in.readInt();
 
-                            // if an excluded agent recieves a request to join a swarm, update variables
+                            // if an excluded agent receives a request to join a swarm, update variables
                             if (swarmID == 0) {
                                 // do I need to join a new swarm?
                                 callAgent = tempCallAgent;
@@ -632,8 +635,6 @@ public class RDPSOAgent extends Agent {
 
         // The array index indicates which swarmID it belongs to.
         SC = 0;
-        //numAgents = ConstantsRDPSO.INIT_AGENTS;
-        //System.out.println(getId() + " initial numAgents: " + numAgents);
         numKilledAgents = 0;
 
         // This is the same for all agents.
@@ -775,14 +776,12 @@ public class RDPSOAgent extends Agent {
                                         System.out.println(getId() + ": S new agent req, to join swarm id: " + swarmID +
                                                 " numKilled: " + numKilledAgents + " numAgents: " + numAgents);
                                     }
-                                    if (spawnGroupProbability()) {
+                                    if (spawnGroupProbability() && !pendingSubgroupRequest) {
                                         System.out.println(getId() + ": Sending new group request.");
 
                                         // todo:  if (subgroupRequestRespondedTo) {
                                         createSwarm = true;
-                                        // send information about new swarmID
-                                        // todo: how to keep better track of this? Where is the max swarms restriction?
-                                        newSwarmID = numSwarms + 1;
+                                        pendingSubgroupRequest = true;
 
                                         movable = analyzeNeighborhood(state.neighborhood);
                                         registerMoveable(movable, state.neighborhood, 3); // 3 = send create subgroup info
@@ -809,7 +808,7 @@ public class RDPSOAgent extends Agent {
                                     // reset stagnancy counter
                                     SC = ConstantsRDPSO.SC_MAX * (1 - (1 / (numKilledAgents + 1)));
                                     // check if agent can be excluded
-                                    if (numAgents > ConstantsRDPSO.MIN_AGENTS) {
+                                    if (numAgents > ConstantsRDPSO.MIN_AGENTS && !newGroupCreation) {
                                         // if this is the worst preforming agent in the group, exclude
                                         if (agentBestSolution == SwarmSolution.findMinSwarmSolutionList(swarmSolutionArray)) {
                                             // increase number of excluded agents in swarm
@@ -824,15 +823,15 @@ public class RDPSOAgent extends Agent {
                                             movable = analyzeNeighborhood(state.neighborhood);
                                             registerMoveable(movable, state.neighborhood, 1); // 1 = send info
                                             // exclude agent
-                                            System.out.println(getId() + " EXCLUDED! " + " numKilled: " + numKilledAgents + " SC: " + SC);
+                                            System.out.println(getId() + " EXCLUDED!" + " numAgents left after excluding self: " + numAgents);
                                             swarmID = 0;
                                             numOfImprovements = 0;
                                             SwarmSolution.removeSolutionFromArray(new AgentSolution(getId(), agentBestSolution), swarmSolutionArray);
                                             swarmSolutionArray = new ArrayList<AgentSolution>();
-                                            System.out.println(getId() + ": numAgents left after excluding self: " + numAgents);
+
                                         }
                                         // delete the entire subgroup
-                                    } else {
+                                    } else  {
                                         // exclude this agent
                                         //System.out.println(getId() + " subgroup deleted.., excluding self");
                                         // decrease the number of remaining swarms
@@ -851,7 +850,7 @@ public class RDPSOAgent extends Agent {
                                         SwarmSolution.removeSolutionFromArray(new AgentSolution(getId(), agentBestSolution), swarmSolutionArray);
                                         // create a new, clean and fresh array, should be updated with new swarm
                                         swarmSolutionArray = new ArrayList<AgentSolution>();
-                                        //System.out.println(getId() + ": numAgents left after subgroup delete: " + numAgents);
+
                                     }
                                 }
                             }
@@ -1076,7 +1075,7 @@ public class RDPSOAgent extends Agent {
                                     // note: N_X is the number of agents in the excluded group
                                     // check if number of excluded agents is bigger than number of initial agents
                                     // required to form a sub-swarm then check probability for forming a new group
-                                    if (numAgents > ConstantsRDPSO.INIT_AGENTS && spawnGroupProbabilityExcluded()) {
+                                    if (numAgents >= ConstantsRDPSO.INIT_AGENTS && spawnGroupProbabilityExcluded()) {
                                         System.out.println("I should spawn a new group.");
                                         //todo: how to assign new swarm.. I guess you will have to keep a number of swarms
                                         //todo: broadcast a need for N_I-1 robots to form new swarm
@@ -1095,30 +1094,37 @@ public class RDPSOAgent extends Agent {
                                         // request responded to
                                         ackAgentRequest = true;
 
-                                        // todo: send ACK, RES message to new swarm
                                         movable = analyzeNeighborhood(state.neighborhood);
                                         registerMoveable(movable, state.neighborhood, 6); // 6 - agent response
 
                                         System.out.println(getId() + ": joined new swarm group: " + swarmID + ", group now has " + numAgents + " agents.");
 
-                                    } else if (createSwarm) {
-                                        // include agent in the new subgroup
-                                        swarmID = newSwarmID + 1;
-                                        // update number of swarms
-                                        numSwarms++;
+                                    // if there is a need for a new subgroup and there is enough agents in excluded
+                                        // group to create one, then go for it
+                                    } else if (createSwarm && numAgents >= ConstantsRDPSO.INIT_AGENTS) {
+                                        // include agent in the new subgroup and increase numSwarms
+                                        swarmID = numSwarms++;
                                         // stop the creation of even more swarms
                                         createSwarm = false;
-                                        System.out.println(getId() + ": I'm joining a newly created group " + swarmID);
-                                        // change number of agents to the initial number of agents in a swarm
-                                        numAgents = numAgents + 1;  //ConstantsRDPSO.INIT_AGENTS;
+                                        System.out.println(getId() + ": I'm creating a new group! " + swarmID);
+                                        // change number of agents to 1
+                                        numAgents = 1;
                                         // reset number of excluded robots
                                         numKilledAgents = 0;
                                         // reset the stagnancy counter
                                         SC = 0;
+                                        // reset swarm solution array
+                                        swarmSolutionArray = new ArrayList<AgentSolution>();
+                                        // reset best swarm solution
+                                        bestSwarmSolution = 0.0;
+                                        // acknowledge the new group request
+                                        ackSubgroupRequest = true;
+                                        // send out a callAgent request, N_i agents has to joing this group
+                                        callAgent = true;
 
                                         movable = analyzeNeighborhood(state.neighborhood);
                                         registerMoveable(movable, state.neighborhood, 1); // 1 = basic info
-                                        // todo: confirm new sugroup request
+                                        // todo: confirm new subgroup request
                                     }
                                 }
                             }
