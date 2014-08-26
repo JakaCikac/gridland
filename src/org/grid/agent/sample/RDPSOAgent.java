@@ -147,6 +147,7 @@ public class RDPSOAgent extends Agent {
     boolean pendingAgentRequest = false;
 
     boolean dirtyData = false;
+    boolean ackAgentRequest = false;
 
     /**
      * Define agent message format
@@ -292,7 +293,7 @@ public class RDPSOAgent extends Agent {
             ObjectOutputStream out = new ObjectOutputStream(buffer);
             switch (dataType) {
                 case 1: // info
-
+                {
                     out.writeByte(1); // 1 = info, 2 = map
                     out.writeByte(1); // 1 = basic info
 
@@ -322,9 +323,9 @@ public class RDPSOAgent extends Agent {
                     out.writeInt(timestep);
 
                     break;
-
+                }
                 case 2: // agent request
-
+                {
                     out.writeByte(1); // 1 = info, 2 = map
                     out.writeByte(2); // 2 = new agent request
 
@@ -334,9 +335,17 @@ public class RDPSOAgent extends Agent {
                     out.writeInt(timestep);
 
                     break;
+                }
 
+                case 6: // agent response
+                {
+                    out.writeInt(swarmID);
+                    out.writeBoolean(callAgent);
+                    out.writeInt(numAgents);
+                    out.writeBoolean(ackAgentRequest);
+                }
                 case 3: // subgroup request
-
+                {
                     out.writeByte(1); // 1 = info, 2 = map
                     out.writeByte(3); // 2 = new subgroup request
 
@@ -346,9 +355,9 @@ public class RDPSOAgent extends Agent {
                     out.writeInt(timestep);
 
                     break;
-
+                }
                 case 4: // the need of Ni-1 agents to form subgroup
-
+                {
                     out.writeByte(1); // 1 = info, 2 = map
                     out.writeByte(4); // 2 = need of Ni-1 agents to form subgroup
 
@@ -367,9 +376,9 @@ public class RDPSOAgent extends Agent {
                     out.writeInt(timestep);
 
                     break;
-
+                }
                 case 5: // exchange info with teammates about Ns (number of swarms)
-
+                {
                     out.writeByte(1); // 1 = info, 2 = map
                     out.writeByte(5); // 2 = new agent request
 
@@ -377,6 +386,7 @@ public class RDPSOAgent extends Agent {
                     out.writeInt(timestep);
 
                     break;
+                }
             }
 
             out.flush();
@@ -517,6 +527,24 @@ public class RDPSOAgent extends Agent {
                             numSwarms = in.readInt();
                             timestep = in.readInt();
 
+                            break;
+                        }
+                        case 6: { // new agent response received
+                            recSwarmID = in.readInt();
+                            tempCallAgent = in.readBoolean();
+                            tempNumAgents = in.readInt();
+                            boolean tempAckAgentRequest = in.readBoolean();
+
+                            if ( recSwarmID == swarmID ) {
+                                callAgent = tempCallAgent;
+                                // update to the new agent number in swarm
+                                numAgents = tempNumAgents;
+                                ackAgentRequest = tempAckAgentRequest;
+                                // allow the agent to ask for new agents
+                                if (ackAgentRequest) {
+                                    pendingAgentRequest = false;
+                                }
+                            }
                             break;
                         }
 
@@ -708,7 +736,6 @@ public class RDPSOAgent extends Agent {
                                 solutionArray[0] = agentPositionX;
                                 solutionArray[3] = agentPositionY;
                             }
-                            System.out.println(getId() + ": my best solution: " + agentBestSolution);
 
                             // add agentSolution to vector H(t) that includes solutions of all agents within the swarmID group
                             swarmSolutionArray = SwarmSolution.mergeSolutionToArray(new AgentSolution(getId(), agentBestSolution), swarmSolutionArray);
@@ -716,7 +743,6 @@ public class RDPSOAgent extends Agent {
 
                             // find best solution in vector H(t) = max(H(t))
                             double maxSwarmSolution = SwarmSolution.findMaxSwarmSolutionList(swarmSolutionArray);
-                            System.out.println(getId() + " merged solution to array, length" + swarmSolutionArray.size() + ", max solution: " + maxSwarmSolution);
                             // check if subgroup improved
                             if (maxSwarmSolution > bestSwarmSolution) {
 
@@ -790,6 +816,9 @@ public class RDPSOAgent extends Agent {
                                             numKilledAgents++;
                                             // decrease number of agents left in the swarm
                                             numAgents--;
+                                            // reset acknowledged to be able to accept new swarm requests
+                                            ackAgentRequest = false;
+
                                             dirtyData = true;
                                             // try to send out a message, to old swarmID, so they can update
                                             movable = analyzeNeighborhood(state.neighborhood);
@@ -1040,7 +1069,6 @@ public class RDPSOAgent extends Agent {
                                     // check if agent's best solution matches any of topI swarm solutions
                                     if (agentBestSolution == bestNISolutions[i]) {
                                         best_ni = true;
-                                        System.out.println(getId() + ": I am one of the best performing agents with " + bestNISolutions[i] + " !");
                                     }
                                 }
                                 // agent is one of the best in the excluded group
@@ -1054,7 +1082,7 @@ public class RDPSOAgent extends Agent {
                                         //todo: broadcast a need for N_I-1 robots to form new swarm
                                         movable = analyzeNeighborhood(state.neighborhood);
                                         registerMoveable(movable, state.neighborhood, 1); // 1 = send info
-                                        swarmID = newSwarmID + 1;
+                                        //swarmID = newSwarmID + 1;
                                     }
                                     // if the agent receives a request to join a swarm
                                     else if (callAgent) {
@@ -1065,11 +1093,11 @@ public class RDPSOAgent extends Agent {
                                         // i accepted the request
                                         callAgent = false;
                                         // request responded to
-                                        //ackAgentRequest = true;
+                                        ackAgentRequest = true;
 
                                         // todo: send ACK, RES message to new swarm
                                         movable = analyzeNeighborhood(state.neighborhood);
-                                        registerMoveable(movable, state.neighborhood, 1); // 1 - basic info
+                                        registerMoveable(movable, state.neighborhood, 6); // 6 - agent response
 
                                         System.out.println(getId() + ": joined new swarm group: " + swarmID + ", group now has " + numAgents + " agents.");
 
@@ -1335,7 +1363,6 @@ public class RDPSOAgent extends Agent {
 
         previousResult = result;
 
-        System.out.println(getId() + ": objective function result: " + result);
         return result;
     }
 
