@@ -355,9 +355,6 @@ public class RDPSOAgent extends Agent {
 
                     out.writeInt(swarmID);
 
-                    out.writeDouble(bestSwarmSolution);
-
-                    out.writeDouble(SC);
                     out.writeBoolean(callAgent);
                     out.writeBoolean(createSwarm);
                     out.writeInt(numAgents);
@@ -444,36 +441,22 @@ public class RDPSOAgent extends Agent {
 
                             tempBestSwarmSolution = in.readDouble();
                             tempSC = in.readDouble();
-                            tempCallAgent = in.readBoolean();
-                            tempCreateSwarm = in.readBoolean();
                             tempNumAgents = in.readInt();
                             tempNumKilledAgents = in.readInt();
-                            tempRequestingSwarmID = in.readInt();
-                            tempNewSwarmID = in.readInt();
 
                             if (recSwarmID == swarmID) {
                                 // update stuff
-                                bestSwarmSolution = tempBestSwarmSolution;
                                 swarmSolutionArray = new ArrayList<AgentSolution>(tempSolutionArray);
+                                bestSwarmSolution = tempBestSwarmSolution;
                                 SC = tempSC;
-                                callAgent = tempCallAgent;
-                                createSwarm = tempCreateSwarm;
                                 numAgents = tempNumAgents;
                                 numKilledAgents = tempNumKilledAgents;
-
-
-                            }
-
-                            if (recSwarmID == 0) {
-                                // update excluded group stuff
-                                requestingSwarmID = tempRequestingSwarmID;
-                                newSwarmID = tempNewSwarmID;
                             }
 
                             numSwarms = in.readInt();
+
                             preTime = in.readInt();
                             int timediff = preTime - timestep;
-
 
                             synchronized (registry) {
                                 if (registry.containsKey(from)) {
@@ -487,6 +470,33 @@ public class RDPSOAgent extends Agent {
                                 }
                             }
                             break; // break dataType case 1 = basic info
+                        }
+                        case 2: {
+                            recSwarmID = in.readInt();
+                            tempCallAgent = in.readBoolean();
+                            tempNumAgents = in.readInt();
+                            tempRequestingSwarmID = in.readInt();
+                            timestep = in.readInt();
+
+                            break; // break dataType case 2 = agent request
+                        }
+                        case 3: {
+                            recSwarmID = in.readInt();
+                            tempCreateSwarm = in.readBoolean();
+                            numSwarms = in.readInt();
+                            timestep = in.readInt();
+
+                            break;
+                        }
+                        case 4: {
+                            recSwarmID = in.readInt();
+                            break;
+                        }
+                        case 5: {
+                            numSwarms = in.readInt();
+                            timestep = in.readInt();
+
+                            break;
                         }
 
                     } // end second switch
