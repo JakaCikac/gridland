@@ -285,27 +285,23 @@ public class RDPSOAgent extends Agent {
             int newSwarmID
 
          */
-
-        switch (dataType) {
-            case 1: // info
-                try {
-                    ByteArrayOutputStream buffer = new ByteArrayOutputStream(getMaxMessageSize());
-                    ObjectOutputStream out = new ObjectOutputStream(buffer);
+        try {
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream(getMaxMessageSize());
+            ObjectOutputStream out = new ObjectOutputStream(buffer);
+            switch (dataType) {
+                case 1: // info
 
                     out.writeByte(1); // 1 = info, 2 = map
                     out.writeByte(1); // 1 = basic info
 
                     LocalMap.Bounds bounds = map.getBounds();
-
                     Position center = map.getCenter();
-
                     out.writeInt(origin.getX());
                     out.writeInt(origin.getY());
                     out.writeInt(bounds.getTop());
                     out.writeInt(bounds.getBottom());
                     out.writeInt(bounds.getLeft());
                     out.writeInt(bounds.getRight());
-
                     out.writeInt(center.getX());
                     out.writeInt(center.getY());
 
@@ -323,18 +319,9 @@ public class RDPSOAgent extends Agent {
 
                     out.writeInt(timestep);
 
-                    out.flush();
+                    break;
 
-                    send(to, buffer.toByteArray());
-
-                } catch (IOException e) {
-                    debug("Error sending message to %d: %s", to, e);
-                }
-                break;
-            case 2: // agent request
-                try {
-                    ByteArrayOutputStream buffer = new ByteArrayOutputStream(getMaxMessageSize());
-                    ObjectOutputStream out = new ObjectOutputStream(buffer);
+                case 2: // agent request
 
                     out.writeByte(1); // 1 = info, 2 = map
                     out.writeByte(2); // 2 = new agent request
@@ -345,19 +332,9 @@ public class RDPSOAgent extends Agent {
                     out.writeInt(requestingSwarmID);
                     out.writeInt(timestep);
 
-                    out.flush();
+                    break;
 
-                    send(to, buffer.toByteArray());
-
-                } catch (IOException e) {
-                    debug("Error sending message to %d: %s", to, e);
-                }
-
-                break;
-            case 3: // subgroup request
-                try {
-                    ByteArrayOutputStream buffer = new ByteArrayOutputStream(getMaxMessageSize());
-                    ObjectOutputStream out = new ObjectOutputStream(buffer);
+                case 3: // subgroup request
 
                     out.writeByte(1); // 1 = info, 2 = map
                     out.writeByte(3); // 2 = new subgroup request
@@ -367,38 +344,16 @@ public class RDPSOAgent extends Agent {
                     out.writeInt(numSwarms);
                     out.writeInt(timestep);
 
-                    out.flush();
+                    break;
 
-                    send(to, buffer.toByteArray());
-
-                } catch (IOException e) {
-                    debug("Error sending message to %d: %s", to, e);
-                }
-                break;
-            case 4: // the need of Ni-1 agents to form subgroup
-                try {
-                    ByteArrayOutputStream buffer = new ByteArrayOutputStream(getMaxMessageSize());
-                    ObjectOutputStream out = new ObjectOutputStream(buffer);
+                case 4: // the need of Ni-1 agents to form subgroup
 
                     out.writeByte(1); // 1 = info, 2 = map
                     out.writeByte(4); // 2 = need of Ni-1 agents to form subgroup
 
-                    LocalMap.Bounds bounds = map.getBounds();
-
-                    Position center = map.getCenter();
-
-                    out.writeInt(origin.getX());
-                    out.writeInt(origin.getY());
-                    out.writeInt(bounds.getTop());
-                    out.writeInt(bounds.getBottom());
-                    out.writeInt(bounds.getLeft());
-                    out.writeInt(bounds.getRight());
-
-                    out.writeInt(center.getX());
-                    out.writeInt(center.getY());
+                    // probably need to count how many agents from swarmID=0 already responded..
 
                     out.writeInt(swarmID);
-
 
                     out.writeDouble(bestSwarmSolution);
 
@@ -413,60 +368,24 @@ public class RDPSOAgent extends Agent {
 
                     out.writeInt(timestep);
 
-                    out.flush();
+                    break;
 
-                    send(to, buffer.toByteArray());
-
-                } catch (IOException e) {
-                    debug("Error sending message to %d: %s", to, e);
-                }
-                break;
-            case 5: // exchange info with teammates about Ns (number of swarms)
-                try {
-                    ByteArrayOutputStream buffer = new ByteArrayOutputStream(getMaxMessageSize());
-                    ObjectOutputStream out = new ObjectOutputStream(buffer);
+                case 5: // exchange info with teammates about Ns (number of swarms)
 
                     out.writeByte(1); // 1 = info, 2 = map
                     out.writeByte(5); // 2 = new agent request
 
-                    LocalMap.Bounds bounds = map.getBounds();
-
-                    Position center = map.getCenter();
-
-                    out.writeInt(origin.getX());
-                    out.writeInt(origin.getY());
-                    out.writeInt(bounds.getTop());
-                    out.writeInt(bounds.getBottom());
-                    out.writeInt(bounds.getLeft());
-                    out.writeInt(bounds.getRight());
-
-                    out.writeInt(center.getX());
-                    out.writeInt(center.getY());
-
-                    out.writeInt(swarmID);
-
-
-                    out.writeDouble(bestSwarmSolution);
-
-                    out.writeDouble(SC);
-                    out.writeBoolean(callAgent);
-                    out.writeBoolean(createSwarm);
-                    out.writeInt(numAgents);
-                    out.writeInt(numKilledAgents);
-                    out.writeInt(requestingSwarmID);
-                    out.writeInt(newSwarmID);
                     out.writeInt(numSwarms);
-
                     out.writeInt(timestep);
 
-                    out.flush();
+                    break;
+            }
 
-                    send(to, buffer.toByteArray());
+            out.flush();
+            send(to, buffer.toByteArray());
 
-                } catch (IOException e) {
-                    debug("Error sending message to %d: %s", to, e);
-                }
-                break;
+        } catch (IOException e) {
+            debug("Error sending message to %d: %s", to, e);
         }
 
     }
@@ -476,87 +395,105 @@ public class RDPSOAgent extends Agent {
         try {
             ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(message));
 
+            // message classification
             int type = in.readByte();
+            int dataType = in.readByte();
+
+            // time variables
             int preTime;
+
+            // swarm variables
             int recSwarmID = -1;
+            double tempBestSwarmSolution = 0.0;
+            double tempSC = 0.0;
+            boolean tempCallAgent = false;
+            boolean tempCreateSwarm = false;
+            int tempNumAgents = 0;
+            int tempNumKilledAgents = 0;
+            int tempRequestingSwarmID = 0;
+            int tempNewSwarmID = 0;
+
 
             switch (type) {
                 case 1: { // info message
 
-                    Position origin = new Position(0, 0);
-                    origin.setX(in.readInt());
-                    origin.setY(in.readInt());
+                    switch (dataType) {
+                        case 1: {
+                            Position origin = new Position(0, 0);
+                            origin.setX(in.readInt());
+                            origin.setY(in.readInt());
 
-                    LocalMap.Bounds bounds = new LocalMap.Bounds(0, 0, 0, 0);
-                    Position center = new Position(0, 0);
-                    bounds.setTop(in.readInt());
-                    bounds.setBottom(in.readInt());
-                    bounds.setLeft(in.readInt());
-                    bounds.setRight(in.readInt());
+                            LocalMap.Bounds bounds = new LocalMap.Bounds(0, 0, 0, 0);
+                            Position center = new Position(0, 0);
+                            bounds.setTop(in.readInt());
+                            bounds.setBottom(in.readInt());
+                            bounds.setLeft(in.readInt());
+                            bounds.setRight(in.readInt());
 
-                    center.setX(in.readInt());
-                    center.setY(in.readInt());
+                            center.setX(in.readInt());
+                            center.setY(in.readInt());
 
-                    ArrayList<AgentSolution> tempSolutionArray = new ArrayList<AgentSolution>();
+                            ArrayList<AgentSolution> tempSolutionArray = new ArrayList<AgentSolution>();
 
-                    // RDPSO variables
-                    recSwarmID = in.readInt();
-                    int tempSize = in.readInt();
-                    for (int i = 0; i < tempSize; i++) {
-                        tempSolutionArray.add((AgentSolution) in.readObject());
-                    }
+                            // RDPSO variables
+                            recSwarmID = in.readInt();
+                            int tempSize = in.readInt();
+                            for (int i = 0; i < tempSize; i++) {
+                                tempSolutionArray.add((AgentSolution) in.readObject());
+                            }
 
-                    double tempBestSwarmSolution = in.readDouble();
-                    double tempSC = in.readDouble();
-                    boolean tempCallAgent = in.readBoolean();
-                    boolean tempCreateSwarm = in.readBoolean();
-                    int tempNumAgents = in.readInt();
-                    int tempNumKilledAgents = in.readInt();
-                    int tempRequestingSwarmID = in.readInt();
-                    int tempNewSwarmID = in.readInt();
+                            tempBestSwarmSolution = in.readDouble();
+                            tempSC = in.readDouble();
+                            tempCallAgent = in.readBoolean();
+                            tempCreateSwarm = in.readBoolean();
+                            tempNumAgents = in.readInt();
+                            tempNumKilledAgents = in.readInt();
+                            tempRequestingSwarmID = in.readInt();
+                            tempNewSwarmID = in.readInt();
 
-                    if (recSwarmID == swarmID) {
-                        // update stuff
-                        bestSwarmSolution = tempBestSwarmSolution;
-                        swarmSolutionArray = new ArrayList<AgentSolution>(tempSolutionArray);
-                        SC = tempSC;
-                        callAgent = tempCallAgent;
-                        createSwarm = tempCreateSwarm;
-                        numAgents = tempNumAgents;
-                        numKilledAgents = tempNumKilledAgents;
+                            if (recSwarmID == swarmID) {
+                                // update stuff
+                                bestSwarmSolution = tempBestSwarmSolution;
+                                swarmSolutionArray = new ArrayList<AgentSolution>(tempSolutionArray);
+                                SC = tempSC;
+                                callAgent = tempCallAgent;
+                                createSwarm = tempCreateSwarm;
+                                numAgents = tempNumAgents;
+                                numKilledAgents = tempNumKilledAgents;
 
-                        System.out.println(getId() + "( received | update ) " + " numAgents: ( " + tempNumAgents + ", " + numAgents + ") ");
-                    }
 
-                    if (recSwarmID == 0) {
-                        // update excluded group stuff
-                        requestingSwarmID = tempRequestingSwarmID;
-                        newSwarmID = tempNewSwarmID;
-                    }
+                            }
 
-                    numSwarms = in.readInt();
-                    preTime = in.readInt();
-                    int timediff = preTime - timestep;
+                            if (recSwarmID == 0) {
+                                // update excluded group stuff
+                                requestingSwarmID = tempRequestingSwarmID;
+                                newSwarmID = tempNewSwarmID;
+                            }
 
-                    //System.out.print(getId() + " FROM swarmID " + recSwarmID + ": ( SC = " + tempSC + " ), ( numAgents = " + tempNumAgents + " ), ( numKilled = " + tempNumKilledAgents + ") ");
-                    //System.out.println(" ( callAgent = " + tempCallAgent + "), (createSwarm = " + tempCreateSwarm + ") ");
+                            numSwarms = in.readInt();
+                            preTime = in.readInt();
+                            int timediff = preTime - timestep;
 
-                    //debug("Updated info: %f %f %b %b %d %d", bestSwarmSolution, SC, callAgent, createSwarm, numAgents, numKilledAgents);
 
-                    synchronized (registry) {
-                        if (registry.containsKey(from)) {
-                            MemberData data = registry.get(from);
-                            data.bounds = bounds;
-                            data.origin = origin;
-                            data.center = center;
-                            data.info = timestep;
-                            data.timediff = timediff;
-                            //debug("New info: %s %s %s %s", data.bounds, data.origin, data.center, data.info);
+                            synchronized (registry) {
+                                if (registry.containsKey(from)) {
+                                    MemberData data = registry.get(from);
+                                    data.bounds = bounds;
+                                    data.origin = origin;
+                                    data.center = center;
+                                    data.info = timestep;
+                                    data.timediff = timediff;
+                                    //debug("New info: %s %s %s %s", data.bounds, data.origin, data.center, data.info);
+                                }
+                            }
+                            break; // break dataType case 1 = basic info
                         }
-                    }
 
-                    break;
+                    } // end second switch
+
+                    break; // break case 1 = info message
                 }
+
                 case 2: { // map message
 
                     LocalMap.MapChunk chunk = new LocalMap.MapChunk();
@@ -767,8 +704,8 @@ public class RDPSOAgent extends Agent {
                                         System.out.println(getId() + ": Sending new agent request, to join swarm id: " + swarmID + " numKilled: " + numKilledAgents + " numAgents: " + numAgents);
 
                                         //todo : if (agentRequestRespondedTo) {
-                                            callAgent = true;
-                                            requestingSwarmID = swarmID;
+                                        callAgent = true;
+                                        requestingSwarmID = swarmID;
 
                                         movable = analyzeNeighborhood(state.neighborhood);
                                         registerMoveable(movable, state.neighborhood, 2); // 2 = send request agent info
@@ -785,13 +722,13 @@ public class RDPSOAgent extends Agent {
                                         System.out.println(getId() + ": Sending new group request.");
 
                                         // todo:  if (subgroupRequestRespondedTo) {
-                                            createSwarm = true;
-                                            // send information about new swarmID
-                                            // todo: how to keep better track of this? Where is the max swarms restriction?
-                                            newSwarmID = numSwarms + 1;
+                                        createSwarm = true;
+                                        // send information about new swarmID
+                                        // todo: how to keep better track of this? Where is the max swarms restriction?
+                                        newSwarmID = numSwarms + 1;
 
-                                            movable = analyzeNeighborhood(state.neighborhood);
-                                            registerMoveable(movable, state.neighborhood, 3); // 3 = send create subgroup info
+                                        movable = analyzeNeighborhood(state.neighborhood);
+                                        registerMoveable(movable, state.neighborhood, 3); // 3 = send create subgroup info
 
                                         // todo: }
                                         // yes, also decrease the numKilledAgents, it's really just a performance counter
