@@ -9,13 +9,13 @@ public class ConstantsRDPSO {
     static final int MAX_SWARMS = 5; // maximum number of swarms, including social exclusion group
     static final int MIN_SWARMS = 2; // minimum number of swarms (0, to allow social exclusion of all agents)
     // for 3 swarms + socially excluded, set the number to 4
-    static final int INIT_SWARMS = 2; // 0 = socially excluded, 1,2,3..,n-1 are swarms
+    static final int INIT_SWARMS = 4; // 0 = socially excluded, 1,2,3..,n-1 are swarms
 
     // set the number of agents to INIT_SWARMS * INIT_AGENTS
 
         /* number of agents in each swarm */
 
-    static final int INIT_AGENTS = 2; // initial number of agents in each swarm
+    static final int INIT_AGENTS = 4; // initial number of agents in each swarm
     static final int MAX_AGENTS = 5; // maximum number of agents in each swarm
     static final int MIN_AGENTS = 1;  // minimum number of agents in each swarm
 
