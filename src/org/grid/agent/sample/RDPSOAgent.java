@@ -425,9 +425,8 @@ public class RDPSOAgent extends Agent {
             }
 
             out.flush();
-            if (!requestSnapshot) {
-                send(to, buffer.toByteArray());
-            }
+            send(to, buffer.toByteArray());
+
 
             // agent communicated changed variables, so it can update with received
             //if (dirtyData)
@@ -793,7 +792,6 @@ public class RDPSOAgent extends Agent {
                     }
 
                     boolean replanAgents = blockMoveable(movable, state.neighborhood);
-                    //registerMoveable(movable, state.neighborhood, 1); // 1 = send basic info
 
                     // update information
                     while (!inbox.isEmpty()) {
@@ -819,6 +817,9 @@ public class RDPSOAgent extends Agent {
 
                         // confirm that the agent is not a member of the excluded group (swarmID = 0)
                         if (swarmID != 0) {
+
+                            // exchange info with teammates
+                            registerMoveable(movable, state.neighborhood, 1); // 1 = send basic info
 
                             // evaluate agent's current solution = h(x_n(t))
                             agentSolution = evaluateObjectiveFunction();
@@ -926,23 +927,21 @@ public class RDPSOAgent extends Agent {
 
                                         }
                                         // delete the entire subgroup
-                                    } else {
+                                    } else if(numSwarms > ConstantsRDPSO.MIN_SWARMS) {
                                         // exclude this agent
                                         //System.out.println(getId() + " subgroup deleted.., EXCLUDING self");
+                                        movable = analyzeNeighborhood(state.neighborhood);
                                         // decrease the number of remaining swarms
                                         numSwarms--;
+                                        registerMoveable(movable, state.neighborhood, 5); //  5 - notify about numSwarms
                                         // decrease number of agents left in swarm
                                         numAgents--;
                                         System.out.println(getId() + " decreased numAgents (delsub) " + numAgents);
 
-                                        //dirtyData = true;
                                         // try to send out a message to old swarmID, so they can update
-                                        movable = analyzeNeighborhood(state.neighborhood);
                                         registerMoveable(movable, state.neighborhood, 1); //  1 = send info
-
                                         // exclude agent
                                         swarmID = 0;
-
                                         resetGroupVariables();
 
                                     }
@@ -964,8 +963,8 @@ public class RDPSOAgent extends Agent {
                                 goalPosition = new Position(0, 0);
                                 if (offsetCurrent) {
                                     //System.out.println(" Using offset.");
-                                    offsetX = generateRandomOffset(2, 12);
-                                    offsetY = generateRandomOffset(2, 12);
+                                    offsetX = generateRandomOffset(6, 12);
+                                    offsetY = generateRandomOffset(12, 18);
                                 } else {
                                     offsetX = 0;
                                     offsetY = 0;
@@ -999,7 +998,7 @@ public class RDPSOAgent extends Agent {
                                 goalPosition.setX(roundedX + offsetX);
                                 goalPosition.setY(roundedY + offsetY);
 
-                                //System.out.println(" New wanted position: " + goalPosition);
+                                System.out.println(" New wanted position: " + goalPosition);
                             }
 
                             // Is agent on goal position or is the position not even in the map?
@@ -1176,6 +1175,8 @@ public class RDPSOAgent extends Agent {
                                         movable = analyzeNeighborhood(state.neighborhood);
                                         registerMoveable(movable, state.neighborhood, 1); // 1 = send info
                                         //swarmID = newSwarmID + 1;
+
+                                        //
                                     }
                                     // if the agent receives a request to join a swarm
                                     else if (callAgent) {
@@ -1468,7 +1469,8 @@ public class RDPSOAgent extends Agent {
             result += numOfImprovements * delta;
         }
 
-        previousResult = result;
+        previousResult = result*10;
+        System.out.println("Objective function result: " + result);
 
         return result;
     }
@@ -1483,7 +1485,8 @@ public class RDPSOAgent extends Agent {
             Position to = new Position(p.getX(), p.getY());
             functionResult += Position.distance(from, to);
         }
-        return functionResult;
+        System.out.println("Obstacle function result: " + (functionResult/1000));
+        return functionResult/1000;
     }
 
     /* check probability of a group spawning a new subgroup */
@@ -1646,6 +1649,7 @@ public class RDPSOAgent extends Agent {
             // if there is an agent
             if (n.getCell(i, j) > 0 || n.getCell(i, j) == Neighborhood.OTHER) {
 
+                // change size of relative agent space
                 int size = 2;
 
                 if (n.getCell(i, j) == Neighborhood.OTHER)
@@ -1838,7 +1842,7 @@ public class RDPSOAgent extends Agent {
 
         float variability = (float) Math.sqrt(varianceX * varianceX + varianceY * varianceY);
 
-        return variability < 2;
+        return variability < 3;
     }
 
     //FisherYates shuffle for random array shuffle
