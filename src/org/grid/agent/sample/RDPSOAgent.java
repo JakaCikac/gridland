@@ -124,6 +124,7 @@ public class RDPSOAgent extends Agent {
     double randomArray[] = new double[3];
 
     ArrayList<AgentSolution> swarmSolutionArray = new ArrayList<AgentSolution>();
+    ArrayList<Set<Integer>> subswarmingArray = new ArrayList<Set<Integer>>();
 
     // cleanMove tells the agent to only move
     boolean cleanMove = false;
@@ -705,6 +706,10 @@ public class RDPSOAgent extends Agent {
     public void terminate() {
     }
 
+    // subswarming variables
+    int modifyTimestamp = 0;
+    int numMods = 0;
+
     public void initializeRDPSO() {
         // initialize cognitive, social and obstacle as agent's own position
         swarmID = assignToSwarm();
@@ -723,6 +728,14 @@ public class RDPSOAgent extends Agent {
 
         // put agent into the solution array
         swarmSolutionArray = SwarmSolution.mergeSolutionToArray(new AgentSolution(getId(), agentBestSolution), swarmSolutionArray);
+        // initialize subswarming array, to keep track of teammates
+        subswarmingArray = Subswarming.initializeSubswarmingArray();
+        // add this agent to the appropriate set
+        subswarmingArray.get(swarmID).add(getId());
+        // update subswarming variables
+        modifyTimestamp = timestep;
+        numMods++;
+        Subswarming.toString(subswarmingArray);
 
     }
 
