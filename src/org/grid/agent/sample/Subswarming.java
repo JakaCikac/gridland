@@ -23,6 +23,11 @@ public class Subswarming {
         return subswarmingArray;
     }
 
+    public static ArrayList<Set<Integer>> removeAgentFromSubswarming(ArrayList<Set<Integer>> subswarmingArray, int id, int swarmID) {
+        subswarmingArray.get(swarmID).remove(id);
+        return subswarmingArray;
+    }
+
     public static void toString(ArrayList<Set<Integer>> subswarmingArray) {
         int counter = 0;
         System.out.println("ARRAY: ");

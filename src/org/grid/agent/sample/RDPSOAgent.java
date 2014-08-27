@@ -510,7 +510,6 @@ public class RDPSOAgent extends Agent {
                                 // only update this, if changed info has been communicated
                                 //if (!dirtyData) {
                                 numAgents = tempNumAgents;
-                                System.out.println(getId() + " updated numAgents (bi) " + numAgents);
                                 numKilledAgents = tempNumKilledAgents;
                                 //}
                             }
@@ -568,7 +567,6 @@ public class RDPSOAgent extends Agent {
                                 snapBestSwarmSolution = tempBestSwarmSolution;
                                 snapSC = tempSC;
                                 snapNumAgents = tempNumAgents;
-                                System.out.println(getId() + " updated numAgents (bi) " + numAgents);
                                 snapKilledAgents = tempNumKilledAgents;
 
                             }
@@ -853,7 +851,7 @@ public class RDPSOAgent extends Agent {
                             double maxSwarmSolution = SwarmSolution.findMaxSwarmSolutionList(swarmSolutionArray);
                             // check if subgroup improved
                             if (maxSwarmSolution > bestSwarmSolution) {
-
+                                System.out.println(getId() + " max swarm sol is better than best.");
                                 bestSwarmSolution = maxSwarmSolution;
                                 // update social component
                                 solutionArray[1] = agentPositionX;
@@ -863,6 +861,7 @@ public class RDPSOAgent extends Agent {
                                     SC = SC - 1;
                                 // check if group can be rewarded
                                 if (SC == 0) {
+
                                     if ((numAgents < ConstantsRDPSO.MAX_AGENTS) && spawnAgentProbability() && !pendingAgentRequest) {
 
                                         callAgent = true;
@@ -878,10 +877,10 @@ public class RDPSOAgent extends Agent {
                                             numKilledAgents--;
                                         }
 
-                                        //System.out.println(getId() + ": S new agent req, to join swarm id: " + swarmID);
+                                        System.out.println(getId() + ": S new agent req, to join swarm id: " + swarmID);
                                     }
                                     if (spawnGroupProbability() && !pendingSubgroupRequest) {
-                                        //System.out.println(getId() + ": Sending new group request.");
+                                        System.out.println(getId() + ": Sending new group request.");
 
                                         createSwarm = true;
                                         pendingSubgroupRequest = true;
@@ -901,12 +900,12 @@ public class RDPSOAgent extends Agent {
                                 }
                                 // subgroup has NOT IMPROVED
                             } else {
-                                //System.out.print(getId() + " my subgroup has not improved");
+                                System.out.println(getId() + " my subgroup " + swarmID + " has not improved SC = " + (SC+1));
                                 SC = SC + 1;
                                 //System.out.println(", new stagnancy counter " + SC);
-                                // punsh subgroup
+                                // punish subgroup
                                 if (SC == ConstantsRDPSO.SC_MAX) {
-                                    //System.out.println(getId() + " numAgents at exclusion check: " + numAgents);
+                                    System.out.println(getId() + " numAgents at exclusion check: " + numAgents);
 
                                     // reset stagnancy counter
                                     SC = ConstantsRDPSO.SC_MAX * (1 - (1 / (numKilledAgents + 1)));
@@ -914,6 +913,13 @@ public class RDPSOAgent extends Agent {
                                     if (numAgents > ConstantsRDPSO.MIN_AGENTS && !newGroupCreation) {
                                         // if this is the worst preforming agent in the group, exclude
                                         if (agentBestSolution == SwarmSolution.findMinSwarmSolutionList(swarmSolutionArray)) {
+
+                                            // remove agent from subswarming array
+                                            subswarmingArray = Subswarming.removeAgentFromSubswarming(subswarmingArray, getId(), swarmID);
+                                            System.out.print(getId() + " removing myself from subswarming ");
+                                            Subswarming.toString(subswarmingArray);
+
+
                                             // increase number of excluded agents in swarm
                                             numKilledAgents++;
                                             // decrease number of agents left in the swarm
@@ -935,6 +941,8 @@ public class RDPSOAgent extends Agent {
                                             // rather should receive their information first, then be able to send
                                             System.out.println(getId() + " requesting 0 snapshot");
                                             requestSnapshot = true;
+
+
 
                                            System.out.println(getId() + " EXCLUDED!" + " numAgents left after excluding self: " + numAgents);
 
@@ -1011,7 +1019,7 @@ public class RDPSOAgent extends Agent {
                                 goalPosition.setX(roundedX + offsetX);
                                 goalPosition.setY(roundedY + offsetY);
 
-                                System.out.println(" New wanted position: " + goalPosition);
+                                System.out.println(getId() + " New wanted position: " + goalPosition);
                             }
 
                             // Is agent on goal position or is the position not even in the map?
@@ -1483,7 +1491,7 @@ public class RDPSOAgent extends Agent {
         }
 
         previousResult = result*10;
-        System.out.println("Objective function result: " + result);
+        //System.out.println(getId() + " Objective function result: " + result);
 
         return result;
     }
@@ -1498,7 +1506,6 @@ public class RDPSOAgent extends Agent {
             Position to = new Position(p.getX(), p.getY());
             functionResult += Position.distance(from, to);
         }
-        System.out.println("Obstacle function result: " + (functionResult/1000));
         return functionResult/1000;
     }
 
