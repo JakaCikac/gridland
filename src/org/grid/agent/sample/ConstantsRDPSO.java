@@ -15,7 +15,7 @@ public class ConstantsRDPSO {
 
         /* number of agents in each swarm */
 
-    static final int INIT_AGENTS = 1; // initial number of agents in each swarm
+    static final int INIT_AGENTS = 2; // initial number of agents in each swarm
     static final int MAX_AGENTS = 5; // maximum number of agents in each swarm
     static final int MIN_AGENTS = 1;  // minimum number of agents in each swarm
 

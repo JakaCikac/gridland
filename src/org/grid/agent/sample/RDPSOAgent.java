@@ -843,6 +843,7 @@ public class RDPSOAgent extends Agent {
         int offsetX = 0;
         int offsetY = 0;
         boolean offsetCurrent = false;
+        boolean initRoutine = true;
 
         scan(0);
 
@@ -859,8 +860,6 @@ public class RDPSOAgent extends Agent {
                 agentPositionY = position.getY();
 
                 if (state.direction == Direction.NONE && state.direction != null) {
-
-
 
                     timestep++;
 
@@ -899,330 +898,383 @@ public class RDPSOAgent extends Agent {
                     if (view != null)
                         view.update(arena);
 
-                    // check if iteration is a movement iteration
-                    if (!cleanMove) { // && !clearMove && !detectLock()
+                    // INIT ROUTINE
+                    // the purpose of this routine is to get all global agent's info, so the algorithm starts in sync
+                    // : randomly wander, check if you have all the messages and then start the algorithm
+                    if ( initRoutine ) {
+                        // check if agent can start the algorithm
+                        if (subswarmingArray.size() == (ConstantsRDPSO.INIT_SWARMS) ) {
 
-                        // confirm that the agent is not a member of the excluded group (swarmID = 0)
-                        if (swarmID != 0) {
+                            int globalAgentNumber = 0;
 
-                            // evaluate agent's current solution = h(x_n(t))
-                            agentSolution = evaluateObjectiveFunction();
-
-                            // check if agent improved and update agent's best solution
-                            if (agentSolution > agentBestSolution) {
-                                agentBestSolution = agentSolution;
-                                // update best cognitive solution
-                                solutionArray[0] = agentPositionX;
-                                solutionArray[3] = agentPositionY;
+                            for (Set<Integer> s : subswarmingArray) {
+                                globalAgentNumber += s.size();
                             }
 
-                            // add agentSolution to vector H(t) that includes solutions of all agents within the swarmID group
-                            swarmSolutionArray = SwarmSolution.mergeSolutionToArray(new AgentSolution(getId(), agentBestSolution), swarmSolutionArray);
-                            // wait till all agents put solutions in solution array...
-
-                            // find best solution in vector H(t) = max(H(t))
-                            double maxSwarmSolution = SwarmSolution.findMaxSwarmSolutionList(swarmSolutionArray);
-                            // check if subgroup improved
-
-                            if (maxSwarmSolution > bestSwarmSolution) {
-                                //System.out.println(getId() + " max swarm sol is better than best.");
-                                bestSwarmSolution = maxSwarmSolution;
-                                // update social component
-                                solutionArray[1] = agentPositionX;
-                                solutionArray[4] = agentPositionY;
-                                // decrease stagnancy counter
-                                if (SC > 0)
-                                    SC = SC - 1;
-                                // check if group can be rewarded
-                                if (SC == 0) {
-
-                                    if ((numAgents < ConstantsRDPSO.MAX_AGENTS) && spawnAgentProbability() && !pendingAgentRequest) {
-
-                                        callAgent = true;
-                                        requestingSwarmID = swarmID;
-                                        pendingAgentRequest = true;
-
-                                        movable = analyzeNeighborhood(state.neighborhood);
-                                        registerMoveable(movable, state.neighborhood, 2); // 2 = send request agent info
-                                        // only broadcast this request to the excluded group of agents
-
-                                        if (numKilledAgents > 0) {
-                                            // decrease killed agents counter
-                                            numKilledAgents--;
-                                        }
-
-                                       // System.out.println(getId() + ": S new agent req, to join swarm id: " + swarmID);
-                                    }
-                                    if (spawnGroupProbability() && !pendingSubgroupRequest) {
-                                        //System.out.println(getId() + ": Sending new group request.");
-
-                                        createSwarm = true;
-                                        pendingSubgroupRequest = true;
-                                        subgroupRequestedByID = swarmID;
-
-                                        movable = analyzeNeighborhood(state.neighborhood);
-                                        registerMoveable(movable, state.neighborhood, 3); // 3 = send create subgroup info
-
-                                        // yes, also decrease the numKilledAgents, it's really just a performance counter
-                                        // doesn't have to do much with actual number of excluded agents
-                                        if (numKilledAgents > 0) {
-                                            // decrease excluded agents counter
-                                            //dirtyData = true;
-                                            numKilledAgents--;
-                                        }
-                                    }
-                                }
-                                // subgroup has NOT IMPROVED
+                            if (globalAgentNumber == ((ConstantsRDPSO.INIT_SWARMS-1) * ConstantsRDPSO.INIT_AGENTS)) {
+                                // stop init routine
+                                initRoutine = false;
+                                System.out.println(getId() + " Got info from every agent.");
+                                scan(0);
                             } else {
-                                //System.out.println(getId() + " my subgroup " + swarmID + " has not improved SC = " + (SC + 1));
-                                SC = SC + 1;
-                                //System.out.println(", new stagnancy counter " + SC);
-                                // punish subgroup
-                                if (SC == ConstantsRDPSO.SC_MAX) {
-                                    //System.out.println(getId() + " numAgents at exclusion check: " + numAgents);
+                                // keep waiting and collecting data
+                                System.out.println(getId() + " Waiting for info about other agents ... ");
 
-                                    // reset stagnancy counter
-                                    SC = ConstantsRDPSO.SC_MAX * (1 - (1 / (numKilledAgents + 1)));
-                                    // check if agent can be excluded
-                                    if (numAgents > ConstantsRDPSO.MIN_AGENTS && !newGroupCreation) {
-                                        // if this is the worst preforming agent in the group, exclude
-                                        if (agentBestSolution == SwarmSolution.findMinSwarmSolutionList(swarmSolutionArray)) {
+                                plan.clear();
+                                Decision d = updateDecisions(state.neighborhood);
 
+                                if (d.direction != Direction.NONE) {
+                                    move(d.direction);
+                                }
+
+                                // update agent position
+                                if (d.direction == Direction.LEFT)
+                                    position.setX(position.getX() - 1);
+                                if (d.direction == Direction.RIGHT)
+                                    position.setX(position.getX() + 1);
+                                if (d.direction == Direction.UP)
+                                    position.setY(position.getY() - 1);
+                                if (d.direction == Direction.DOWN)
+                                    position.setY(position.getY() + 1);
+
+                                // update arena agent position
+                                arena.setOrigin(position.getX(), position.getY());
+                                // get node for history
+                                LocalMap.Node n = map.get(position.getX(), position.getY());
+                                agentHistory.add(n);
+
+                                scan(0);
+                            }
+                        } else {
+                            System.out.println(getId() + " Something is wrong with constants. Please check.");
+                        }
+
+                    } else { // no longer in init routine
+
+                        // check if iteration is a movement iteration
+                        if (!cleanMove) { // && !clearMove && !detectLock()
+
+                            // confirm that the agent is not a member of the excluded group (swarmID = 0)
+                            if (swarmID != 0) {
+
+                                // evaluate agent's current solution = h(x_n(t))
+                                agentSolution = evaluateObjectiveFunction();
+
+                                // check if agent improved and update agent's best solution
+                                if (agentSolution > agentBestSolution) {
+                                    agentBestSolution = agentSolution;
+                                    // update best cognitive solution
+                                    solutionArray[0] = agentPositionX;
+                                    solutionArray[3] = agentPositionY;
+                                }
+
+                                // add agentSolution to vector H(t) that includes solutions of all agents within the swarmID group
+                                swarmSolutionArray = SwarmSolution.mergeSolutionToArray(new AgentSolution(getId(), agentBestSolution), swarmSolutionArray);
+                                // wait till all agents put solutions in solution array...
+
+                                // find best solution in vector H(t) = max(H(t))
+                                double maxSwarmSolution = SwarmSolution.findMaxSwarmSolutionList(swarmSolutionArray);
+                                // check if subgroup improved
+
+                                if (maxSwarmSolution > bestSwarmSolution) {
+                                    //System.out.println(getId() + " max swarm sol is better than best.");
+                                    bestSwarmSolution = maxSwarmSolution;
+                                    // update social component
+                                    solutionArray[1] = agentPositionX;
+                                    solutionArray[4] = agentPositionY;
+                                    // decrease stagnancy counter
+                                    if (SC > 0)
+                                        SC = SC - 1;
+                                    // check if group can be rewarded
+                                    if (SC == 0) {
+
+                                        if ((numAgents < ConstantsRDPSO.MAX_AGENTS) && spawnAgentProbability() && !pendingAgentRequest) {
+
+                                            callAgent = true;
+                                            requestingSwarmID = swarmID;
+                                            pendingAgentRequest = true;
+
+                                            movable = analyzeNeighborhood(state.neighborhood);
+                                            registerMoveable(movable, state.neighborhood, 2); // 2 = send request agent info
+                                            // only broadcast this request to the excluded group of agents
+
+                                            if (numKilledAgents > 0) {
+                                                // decrease killed agents counter
+                                                numKilledAgents--;
+                                            }
+
+                                            // System.out.println(getId() + ": S new agent req, to join swarm id: " + swarmID);
+                                        }
+                                        if (spawnGroupProbability() && !pendingSubgroupRequest) {
+                                            //System.out.println(getId() + ": Sending new group request.");
+
+                                            createSwarm = true;
+                                            pendingSubgroupRequest = true;
+                                            subgroupRequestedByID = swarmID;
+
+                                            movable = analyzeNeighborhood(state.neighborhood);
+                                            registerMoveable(movable, state.neighborhood, 3); // 3 = send create subgroup info
+
+                                            // yes, also decrease the numKilledAgents, it's really just a performance counter
+                                            // doesn't have to do much with actual number of excluded agents
+                                            if (numKilledAgents > 0) {
+                                                // decrease excluded agents counter
+                                                //dirtyData = true;
+                                                numKilledAgents--;
+                                            }
+                                        }
+                                    }
+                                    // subgroup has NOT IMPROVED
+                                } else {
+                                    //System.out.println(getId() + " my subgroup " + swarmID + " has not improved SC = " + (SC + 1));
+                                    SC = SC + 1;
+                                    //System.out.println(", new stagnancy counter " + SC);
+                                    // punish subgroup
+                                    if (SC == ConstantsRDPSO.SC_MAX) {
+                                        //System.out.println(getId() + " numAgents at exclusion check: " + numAgents);
+
+                                        // reset stagnancy counter
+                                        SC = ConstantsRDPSO.SC_MAX * (1 - (1 / (numKilledAgents + 1)));
+                                        // check if agent can be excluded
+                                        if (numAgents > ConstantsRDPSO.MIN_AGENTS && !newGroupCreation) {
+                                            // if this is the worst preforming agent in the group, exclude
+                                            if (agentBestSolution == SwarmSolution.findMinSwarmSolutionList(swarmSolutionArray)) {
+
+                                                // remove agent from subswarming array
+                                                subswarmingArray = Subswarming.removeAgentFromSubswarming(subswarmingArray, getId(), swarmID);
+                                                //System.out.print(getId() + " removing myself from subswarming ");
+                                                Subswarming.toString(subswarmingArray);
+
+
+                                                // increase number of excluded agents in swarm
+                                                numKilledAgents++;
+                                                // decrease number of agents left in the swarm
+                                                numAgents--;
+                                                //System.out.println(getId() + " decreased numAgents (excl) " + numAgents);
+                                                // reset acknowledged to be able to accept new swarm requests
+                                                ackAgentRequest = false;
+
+                                                //dirtyData = true;
+                                                // try to send out a message, to old swarmID, so they can update
+                                                movable = analyzeNeighborhood(state.neighborhood);
+                                                registerMoveable(movable, state.neighborhood, 1); // 1 = send info
+                                                // exclude agent
+                                                swarmID = 0;
+
+                                                resetGroupVariables();
+
+                                                // prevent agent from sending wrong data to members of excluded group
+                                                // rather should receive their information first, then be able to send
+                                                //System.out.println(getId() + " requesting 0 snapshot");
+                                                requestSnapshot = true;
+
+                                                //System.out.println(getId() + " EXCLUDED!" + " numAgents left after excluding self: " + numAgents);
+
+                                            }
+                                            // delete the entire subgroup
+                                        } else if (numSwarms > ConstantsRDPSO.MIN_SWARMS) {
+                                            // exclude this agent
+                                            //System.out.println(getId() + " subgroup deleted.., EXCLUDING self");
                                             // remove agent from subswarming array
                                             subswarmingArray = Subswarming.removeAgentFromSubswarming(subswarmingArray, getId(), swarmID);
-                                            //System.out.print(getId() + " removing myself from subswarming ");
+                                            //System.out.print(getId() + " removing myself from subswarming, delete subgroup ");
                                             Subswarming.toString(subswarmingArray);
 
-
-                                            // increase number of excluded agents in swarm
-                                            numKilledAgents++;
-                                            // decrease number of agents left in the swarm
-                                            numAgents--;
-                                            //System.out.println(getId() + " decreased numAgents (excl) " + numAgents);
-                                            // reset acknowledged to be able to accept new swarm requests
-                                            ackAgentRequest = false;
-
-                                            //dirtyData = true;
-                                            // try to send out a message, to old swarmID, so they can update
                                             movable = analyzeNeighborhood(state.neighborhood);
-                                            registerMoveable(movable, state.neighborhood, 1); // 1 = send info
+                                            // decrease the number of remaining swarms
+                                            numSwarms--;
+                                            registerMoveable(movable, state.neighborhood, 5); //  5 - notify about numSwarms
+                                            // decrease number of agents left in swarm
+                                            numAgents--;
+                                            //System.out.println(getId() + " decreased numAgents (delsub) " + numAgents);
+
+                                            // try to send out a message to old swarmID, so they can update
+                                            registerMoveable(movable, state.neighborhood, 1); //  1 = send info
                                             // exclude agent
                                             swarmID = 0;
-
                                             resetGroupVariables();
 
-                                            // prevent agent from sending wrong data to members of excluded group
-                                            // rather should receive their information first, then be able to send
-                                            //System.out.println(getId() + " requesting 0 snapshot");
-                                            requestSnapshot = true;
+                                        }
+                                    }
+                                }
+                                // evaluate obstacle function
+                                // obstacleSolution is the distance from agent's position to the obstacle
+                                obstacleSolution = evaluateObstacleFunction(state);
+                                if (obstacleSolution >= obstacleBestSolution) {
+                                    // check if obstacleSolution is better than currently best solution
+                                    obstacleBestSolution = obstacleSolution;
+                                    // update obstacle component with agent's current solution
+                                    solutionArray[2] = agentPositionX;
+                                    solutionArray[5] = agentPositionY;
+                                }
 
-                                           //System.out.println(getId() + " EXCLUDED!" + " numAgents left after excluding self: " + numAgents);
+                                if (goalPosition == null) {
+                                    //System.out.print("Recalculating position.");
+                                    goalPosition = new Position(0, 0);
+                                    if (offsetCurrent) {
+                                        //System.out.println(" Using offset.");
+                                        offsetX = generateRandomOffset(6, 12);
+                                        offsetY = generateRandomOffset(12, 18);
+                                    } else {
+                                        offsetX = 0;
+                                        offsetY = 0;
+                                    }
+
+                                    // UPDATE AGENT'S VELOCITY
+                                    double functionResultX = 0.0;
+                                    randomArray[0] = Math.random();
+                                    randomArray[1] = Math.random();
+                                    randomArray[2] = Math.random();
+                                    for (int i = 0; i < 3; i++) {
+                                        functionResultX += constantArray[i] * randomArray[i] * (solutionArray[i] - agentPositionX);
+                                    }
+                                    double functionResultY = 0.0;
+                                    randomArray[0] = Math.random();
+                                    randomArray[1] = Math.random();
+                                    randomArray[2] = Math.random();
+                                    for (int i = 0; i < 3; i++) {
+                                        functionResultY += constantArray[i] * randomArray[i] * (solutionArray[i + 3] - agentPositionY);
+                                    }
+                                    agentVelocityX = ConstantsRDPSO.W + functionResultX;
+                                    agentVelocityY = ConstantsRDPSO.W + functionResultY;
+
+                                    // UPDATE AGENT'S POSITION
+                                    double tempAgentPositionX = agentPositionX + agentVelocityX;
+                                    int roundedX = (int) Math.round(tempAgentPositionX);
+
+                                    double tempAgentPositionY = agentPositionY + agentVelocityY;
+                                    int roundedY = (int) Math.round(tempAgentPositionY);
+
+                                    goalPosition.setX(roundedX + offsetX);
+                                    goalPosition.setY(roundedY + offsetY);
+
+                                    //System.out.println(getId() + " New wanted position: " + goalPosition);
+                                }
+
+                                // Is agent on goal position or is the position not even in the map?
+                                if ((goalPosition.getX() - position.getX()) == 0 && (goalPosition.getY() - position.getY()) == 0 || positionNotInMap) {
+
+                                    // reset goal position so a new one can be calculated
+                                    goalPosition = null;
+                                    // go out of cleanMove or explore
+                                    explore = false;
+                                    cleanMove = false;
+
+                                    if (positionNotInMap) {
+                                        // the next position may be in the map
+                                        positionNotInMap = false;
+                                        // tell the agent that he has the whole map and should use planning
+                                        knownLocalMap = true;
+                                    }
+                                } else {
+                                    // Is goal position clear?
+                                    boolean movePossible = positionPossible(state.neighborhood, (goalPosition.getX() - position.getX()), (goalPosition.getY() - position.getY()));
+
+                                    if ((movePossible && !knownLocalMap) || (movePossible && knownLocalMap)) {
+                                        // call move with local coordinates (offset from 0,0)
+                                        if (cleanMove(goalPosition.getX(), goalPosition.getY()) != null) {
+                                            // jump into movement execution next iteration
+                                            if (goalPosition != null)
+                                                cleanMove = true; // this can happen if no local map
+
+                                        } else {
+                                            // move is possible but not accessible yet - go to explore
+                                            offsetCurrent = false;
+                                            exploreMove();
+                                            explore = true;
+                                            cleanMove = true;
 
                                         }
-                                        // delete the entire subgroup
-                                    } else if(numSwarms > ConstantsRDPSO.MIN_SWARMS) {
-                                        // exclude this agent
-                                        //System.out.println(getId() + " subgroup deleted.., EXCLUDING self");
-                                        // remove agent from subswarming array
-                                        subswarmingArray = Subswarming.removeAgentFromSubswarming(subswarmingArray, getId(), swarmID);
-                                        //System.out.print(getId() + " removing myself from subswarming, delete subgroup ");
-                                        Subswarming.toString(subswarmingArray);
-
-                                        movable = analyzeNeighborhood(state.neighborhood);
-                                        // decrease the number of remaining swarms
-                                        numSwarms--;
-                                        registerMoveable(movable, state.neighborhood, 5); //  5 - notify about numSwarms
-                                        // decrease number of agents left in swarm
-                                        numAgents--;
-                                        //System.out.println(getId() + " decreased numAgents (delsub) " + numAgents);
-
-                                        // try to send out a message to old swarmID, so they can update
-                                        registerMoveable(movable, state.neighborhood, 1); //  1 = send info
-                                        // exclude agent
-                                        swarmID = 0;
-                                        resetGroupVariables();
-
-                                    }
-                                }
-                            }
-                            // evaluate obstacle function
-                            // obstacleSolution is the distance from agent's position to the obstacle
-                            obstacleSolution = evaluateObstacleFunction(state);
-                            if (obstacleSolution >= obstacleBestSolution) {
-                                // check if obstacleSolution is better than currently best solution
-                                obstacleBestSolution = obstacleSolution;
-                                // update obstacle component with agent's current solution
-                                solutionArray[2] = agentPositionX;
-                                solutionArray[5] = agentPositionY;
-                            }
-
-                            if (goalPosition == null) {
-                                //System.out.print("Recalculating position.");
-                                goalPosition = new Position(0, 0);
-                                if (offsetCurrent) {
-                                    //System.out.println(" Using offset.");
-                                    offsetX = generateRandomOffset(6, 12);
-                                    offsetY = generateRandomOffset(12, 18);
-                                } else {
-                                    offsetX = 0;
-                                    offsetY = 0;
-                                }
-
-                                // UPDATE AGENT'S VELOCITY
-                                double functionResultX = 0.0;
-                                randomArray[0] = Math.random();
-                                randomArray[1] = Math.random();
-                                randomArray[2] = Math.random();
-                                for (int i = 0; i < 3; i++) {
-                                    functionResultX += constantArray[i] * randomArray[i] * (solutionArray[i] - agentPositionX);
-                                }
-                                double functionResultY = 0.0;
-                                randomArray[0] = Math.random();
-                                randomArray[1] = Math.random();
-                                randomArray[2] = Math.random();
-                                for (int i = 0; i < 3; i++) {
-                                    functionResultY += constantArray[i] * randomArray[i] * (solutionArray[i + 3] - agentPositionY);
-                                }
-                                agentVelocityX = ConstantsRDPSO.W + functionResultX;
-                                agentVelocityY = ConstantsRDPSO.W + functionResultY;
-
-                                // UPDATE AGENT'S POSITION
-                                double tempAgentPositionX = agentPositionX + agentVelocityX;
-                                int roundedX = (int) Math.round(tempAgentPositionX);
-
-                                double tempAgentPositionY = agentPositionY + agentVelocityY;
-                                int roundedY = (int) Math.round(tempAgentPositionY);
-
-                                goalPosition.setX(roundedX + offsetX);
-                                goalPosition.setY(roundedY + offsetY);
-
-                                //System.out.println(getId() + " New wanted position: " + goalPosition);
-                            }
-
-                            // Is agent on goal position or is the position not even in the map?
-                            if ((goalPosition.getX() - position.getX()) == 0 && (goalPosition.getY() - position.getY()) == 0 || positionNotInMap) {
-
-                                // reset goal position so a new one can be calculated
-                                goalPosition = null;
-                                // go out of cleanMove or explore
-                                explore = false;
-                                cleanMove = false;
-
-                                if (positionNotInMap) {
-                                    // the next position may be in the map
-                                    positionNotInMap = false;
-                                    // tell the agent that he has the whole map and should use planning
-                                    knownLocalMap = true;
-                                }
-                            } else {
-                                // Is goal position clear?
-                                boolean movePossible = positionPossible(state.neighborhood, (goalPosition.getX() - position.getX()), (goalPosition.getY() - position.getY()));
-
-                                if ((movePossible && !knownLocalMap) || (movePossible && knownLocalMap)) {
-                                    // call move with local coordinates (offset from 0,0)
-                                    if (cleanMove(goalPosition.getX(), goalPosition.getY()) != null) {
-                                        // jump into movement execution next iteration
-                                        if (goalPosition != null)
-                                            cleanMove = true; // this can happen if no local map
-
-                                    } else {
-                                        // move is possible but not accessible yet - go to explore
-                                        offsetCurrent = false;
-                                        exploreMove();
-                                        explore = true;
-                                        cleanMove = true;
-
-                                    }
-                                    // CASE: is unknown
-                                } else if (!movePossible && !knownLocalMap) {
-                                    // CASE: is wall / obstacle
-                                    // check if the position is an actual wall
-                                    if (isWall(goalPosition)) {
-                                        //System.out.println(goalPosition + " may be a wall, not entering explore, choosing different goal.");
-                                        offsetCurrent = true;
-                                        goalPosition = null;
-
                                         // CASE: is unknown
-                                    } else {
-                                        //System.out.println(goalPosition + " is unknown, entering explore.");
-                                        offsetCurrent = false;
-                                        exploreMove();
-                                        explore = true;
-                                        cleanMove = true;
-                                    }
+                                    } else if (!movePossible && !knownLocalMap) {
+                                        // CASE: is wall / obstacle
+                                        // check if the position is an actual wall
+                                        if (isWall(goalPosition)) {
+                                            //System.out.println(goalPosition + " may be a wall, not entering explore, choosing different goal.");
+                                            offsetCurrent = true;
+                                            goalPosition = null;
 
-                                    // CASE: is an obstacle, doesn't exist
-                                } else if (!movePossible && knownLocalMap) {
-                                    // have to check if node exists on the global map and use plan if it does, otherwise
-                                    // it doesn't exist
-                                    if (cleanMove(goalPosition.getX(), goalPosition.getY()) != null) {
-                                        cleanMove = true;
-                                        offsetCurrent = false;
-                                    } else {
-                                        //System.out.println(goalPosition + " is an obstacle or doesn't exist.");
-                                        goalPosition = null;
-                                        offsetCurrent = true;
+                                            // CASE: is unknown
+                                        } else {
+                                            //System.out.println(goalPosition + " is unknown, entering explore.");
+                                            offsetCurrent = false;
+                                            exploreMove();
+                                            explore = true;
+                                            cleanMove = true;
+                                        }
+
+                                        // CASE: is an obstacle, doesn't exist
+                                    } else if (!movePossible && knownLocalMap) {
+                                        // have to check if node exists on the global map and use plan if it does, otherwise
+                                        // it doesn't exist
+                                        if (cleanMove(goalPosition.getX(), goalPosition.getY()) != null) {
+                                            cleanMove = true;
+                                            offsetCurrent = false;
+                                        } else {
+                                            //System.out.println(goalPosition + " is an obstacle or doesn't exist.");
+                                            goalPosition = null;
+                                            offsetCurrent = true;
+                                        }
                                     }
                                 }
-                            }
-                            scan(0);
-                        } else { // if agent is in the EXCLUDED MEMBERS GROUP
+                                scan(0);
+                            } else { // if agent is in the EXCLUDED MEMBERS GROUP
 
-                            // Send information to other agents
-                            movable = analyzeNeighborhood(state.neighborhood);
-                            // update agent's local map
-                            boolean replan = map.update(state.neighborhood, position, timestep);
-                            if (replan) {
-                                counter++;
-                            }
-                            registerMoveable(movable, state.neighborhood, 1); // 1 = send basic info
+                                // Send information to other agents
+                                movable = analyzeNeighborhood(state.neighborhood);
+                                // update agent's local map
+                                boolean replan = map.update(state.neighborhood, position, timestep);
+                                if (replan) {
+                                    counter++;
+                                }
+                                registerMoveable(movable, state.neighborhood, 1); // 1 = send basic info
 
-                            while (!inbox.isEmpty()) {
-                                Message m = inbox.poll();
-                                // receive and parse message from other agents, filter data from agent's swarm
-                                parse(m.from, m.message, state.neighborhood);
-                            }
-                            // update arena
-                            if (view != null)
-                                view.update(arena);
+                                while (!inbox.isEmpty()) {
+                                    Message m = inbox.poll();
+                                    // receive and parse message from other agents, filter data from agent's swarm
+                                    parse(m.from, m.message, state.neighborhood);
+                                }
+                                // update arena
+                                if (view != null)
+                                    view.update(arena);
 
-                            plan.clear();
-                            Decision d = updateDecisions(state.neighborhood);
-                            //timestep++;
-                            if (d.direction != Direction.NONE) {
-                                move(d.direction);
-                            }
+                                plan.clear();
+                                Decision d = updateDecisions(state.neighborhood);
+                                //timestep++;
+                                if (d.direction != Direction.NONE) {
+                                    move(d.direction);
+                                }
 
-                            // update agent position
-                            if (d.direction == Direction.LEFT)
-                                position.setX(position.getX() - 1);
-                            if (d.direction == Direction.RIGHT)
-                                position.setX(position.getX() + 1);
-                            if (d.direction == Direction.UP)
-                                position.setY(position.getY() - 1);
-                            if (d.direction == Direction.DOWN)
-                                position.setY(position.getY() + 1);
+                                // update agent position
+                                if (d.direction == Direction.LEFT)
+                                    position.setX(position.getX() - 1);
+                                if (d.direction == Direction.RIGHT)
+                                    position.setX(position.getX() + 1);
+                                if (d.direction == Direction.UP)
+                                    position.setY(position.getY() - 1);
+                                if (d.direction == Direction.DOWN)
+                                    position.setY(position.getY() + 1);
 
-                            // update arena agent position
-                            arena.setOrigin(position.getX(), position.getY());
-                            // get node for history
-                            LocalMap.Node n = map.get(position.getX(), position.getY());
-                            agentHistory.add(n);
+                                // update arena agent position
+                                arena.setOrigin(position.getX(), position.getY());
+                                // get node for history
+                                LocalMap.Node n = map.get(position.getX(), position.getY());
+                                agentHistory.add(n);
 
-                            scan(0);
+                                scan(0);
 
-                            // randomly wander round
+                                // randomly wander round
 
-                            // evaluate agent's current solution = h(x_n(t))
-                            agentSolution = evaluateObjectiveFunction();
+                                // evaluate agent's current solution = h(x_n(t))
+                                agentSolution = evaluateObjectiveFunction();
 
-                            // check if agent improved and update agent's best solution
-                            if (agentSolution > agentBestSolution) {
-                                agentBestSolution = agentSolution;
-                                // update best cognitive solution
-                                solutionArray[0] = agentPositionX;
-                                solutionArray[3] = agentPositionY;
-                            }
+                                // check if agent improved and update agent's best solution
+                                if (agentSolution > agentBestSolution) {
+                                    agentBestSolution = agentSolution;
+                                    // update best cognitive solution
+                                    solutionArray[0] = agentPositionX;
+                                    solutionArray[3] = agentPositionY;
+                                }
 
                             /* // Send information to other agents
                             movable = analyzeNeighborhood(state.neighborhood);
@@ -1241,144 +1293,145 @@ public class RDPSOAgent extends Agent {
                             if (view != null)
                                 view.update(arena); */
 
-                            // add agentSolution to vector H(t) that includes solutions of all agents within the swarmID group
-                            SwarmSolution.mergeSolutionToArray(new AgentSolution(getId(), agentBestSolution), swarmSolutionArray);
-                            // wait till all agents put solutions in solution array...
+                                // add agentSolution to vector H(t) that includes solutions of all agents within the swarmID group
+                                SwarmSolution.mergeSolutionToArray(new AgentSolution(getId(), agentBestSolution), swarmSolutionArray);
+                                // wait till all agents put solutions in solution array...
 
-                            // check if group improved
-                            // find best solution in vector H(t) = max(H(t))
-                            double maxSwarmSolution = SwarmSolution.findMaxSwarmSolutionList(swarmSolutionArray);
-                            // check if subgroup improved
-                            if (maxSwarmSolution > bestSwarmSolution) {
-                                bestSwarmSolution = maxSwarmSolution;
+                                // check if group improved
+                                // find best solution in vector H(t) = max(H(t))
+                                double maxSwarmSolution = SwarmSolution.findMaxSwarmSolutionList(swarmSolutionArray);
+                                // check if subgroup improved
+                                if (maxSwarmSolution > bestSwarmSolution) {
+                                    bestSwarmSolution = maxSwarmSolution;
 
-                                // check to see, if this agent is one of the best N_I agents in the group
-                                boolean best_ni = false;
-                                double[] bestNISolutions = SwarmSolution.findTopISolutionsInSwarmSolutionList(swarmSolutionArray, numAgents);
-                                for (int i = 0; i < bestNISolutions.length; i++) {
-                                    // check if agent's best solution matches any of topI swarm solutions
-                                    if (agentBestSolution == bestNISolutions[i]) {
-                                        best_ni = true;
+                                    // check to see, if this agent is one of the best N_I agents in the group
+                                    boolean best_ni = false;
+                                    double[] bestNISolutions = SwarmSolution.findTopISolutionsInSwarmSolutionList(swarmSolutionArray, numAgents);
+                                    for (int i = 0; i < bestNISolutions.length; i++) {
+                                        // check if agent's best solution matches any of topI swarm solutions
+                                        if (agentBestSolution == bestNISolutions[i]) {
+                                            best_ni = true;
+                                        }
                                     }
-                                }
-                                // agent is one of the best in the excluded group
-                                if (best_ni) {
-                                    // note: N_X is the number of agents in the excluded group
-                                    // check if number of excluded agents is bigger than number of initial agents
-                                    // required to form a sub-swarm then check probability for forming a new group
-                                    if (numAgents >= ConstantsRDPSO.INIT_AGENTS && spawnGroupProbabilityExcluded()) {
-                                        //System.out.println("I should spawn a new group.");
-                                        //todo: how to assign new swarm.. I guess you will have to keep a number of swarms
-                                        //todo: broadcast a need for N_I-1 robots to form new swarm
-                                        movable = analyzeNeighborhood(state.neighborhood);
-                                        registerMoveable(movable, state.neighborhood, 1); // 1 = send info
-                                        //swarmID = newSwarmID + 1;
+                                    // agent is one of the best in the excluded group
+                                    if (best_ni) {
+                                        // note: N_X is the number of agents in the excluded group
+                                        // check if number of excluded agents is bigger than number of initial agents
+                                        // required to form a sub-swarm then check probability for forming a new group
+                                        if (numAgents >= ConstantsRDPSO.INIT_AGENTS && spawnGroupProbabilityExcluded()) {
+                                            //System.out.println("I should spawn a new group.");
+                                            //todo: how to assign new swarm.. I guess you will have to keep a number of swarms
+                                            //todo: broadcast a need for N_I-1 robots to form new swarm
+                                            movable = analyzeNeighborhood(state.neighborhood);
+                                            registerMoveable(movable, state.neighborhood, 1); // 1 = send info
+                                            //swarmID = newSwarmID + 1;
 
-                                        //
-                                    }
-                                    // if the agent receives a request to join a swarm
-                                    else if (callAgent) {
-                                        // i belong to a new swarm
-                                        swarmID = requestingSwarmID;
+                                            //
+                                        }
+                                        // if the agent receives a request to join a swarm
+                                        else if (callAgent) {
+                                            // i belong to a new swarm
+                                            swarmID = requestingSwarmID;
 
-                                        //System.out.println(getId() + " increased numAgents (areexc) " + numAgents);
+                                            //System.out.println(getId() + " increased numAgents (areexc) " + numAgents);
 
-                                        // i accepted the request
-                                        callAgent = false;
-                                        // request responded to
-                                        ackAgentRequest = true;
+                                            // i accepted the request
+                                            callAgent = false;
+                                            // request responded to
+                                            ackAgentRequest = true;
 
-                                        // update snapshot the requesting swarm ID variables
-                                        swarmSolutionArray = new ArrayList<AgentSolution>(snapSolutionArray);
-                                        SC = snapSC;
-                                        bestSwarmSolution = snapBestSwarmSolution;
-                                        numAgents = snapNumAgents + 1;
-                                        numKilledAgents = snapKilledAgents;
+                                            // update snapshot the requesting swarm ID variables
+                                            swarmSolutionArray = new ArrayList<AgentSolution>(snapSolutionArray);
+                                            SC = snapSC;
+                                            bestSwarmSolution = snapBestSwarmSolution;
+                                            numAgents = snapNumAgents + 1;
+                                            numKilledAgents = snapKilledAgents;
 
-                                        movable = analyzeNeighborhood(state.neighborhood);
-                                        registerMoveable(movable, state.neighborhood, 6); // 6 - agent response
-                                        registerMoveable(movable, state.neighborhood, 1); // 1 - send info
+                                            movable = analyzeNeighborhood(state.neighborhood);
+                                            registerMoveable(movable, state.neighborhood, 6); // 6 - agent response
+                                            registerMoveable(movable, state.neighborhood, 1); // 1 - send info
 
-                                        //System.out.println(getId() + ": joined new swarm group: " + swarmID + ", group now has " + numAgents + " agents.");
+                                            //System.out.println(getId() + ": joined new swarm group: " + swarmID + ", group now has " + numAgents + " agents.");
 
-                                        // if there is a need for a new subgroup and there is enough agents in excluded
-                                        // group to create one, then go for it
-                                    } else if (createSwarm && numAgents >= ConstantsRDPSO.INIT_AGENTS) {
+                                            // if there is a need for a new subgroup and there is enough agents in excluded
+                                            // group to create one, then go for it
+                                        } else if (createSwarm && numAgents >= ConstantsRDPSO.INIT_AGENTS) {
 
-                                        // temp change swarmID to the group that requested it, so a message can be sent
-                                        swarmID = subgroupRequestedByID;
-                                        // acknowledge the new group request
-                                        ackSubgroupRequest = true;
-                                        // stop the creation of even more swarms
-                                        createSwarm = false;
-                                        // send out ack for group creation to the previously requesting swarm!!
-                                        movable = analyzeNeighborhood(state.neighborhood);
-                                        registerMoveable(movable, state.neighborhood, 7); // 7 = subgroup ack
+                                            // temp change swarmID to the group that requested it, so a message can be sent
+                                            swarmID = subgroupRequestedByID;
+                                            // acknowledge the new group request
+                                            ackSubgroupRequest = true;
+                                            // stop the creation of even more swarms
+                                            createSwarm = false;
+                                            // send out ack for group creation to the previously requesting swarm!!
+                                            movable = analyzeNeighborhood(state.neighborhood);
+                                            registerMoveable(movable, state.neighborhood, 7); // 7 = subgroup ack
 
-                                        // include agent in the new subgroup and increase numSwarms
-                                        swarmID = numSwarms++;
-                                        //System.out.println(getId() + ": I'm creating a new group! " + swarmID);
-                                        // change number of agents to 1
-                                        numAgents = 1;
-                                        //System.out.println(getId() + " set numAgents (new group) " + numAgents);
-                                        resetGroupVariables();
-                                        // send out new group info
-                                        registerMoveable(movable, state.neighborhood, 1); // 1 = send info
+                                            // include agent in the new subgroup and increase numSwarms
+                                            swarmID = numSwarms++;
+                                            //System.out.println(getId() + ": I'm creating a new group! " + swarmID);
+                                            // change number of agents to 1
+                                            numAgents = 1;
+                                            //System.out.println(getId() + " set numAgents (new group) " + numAgents);
+                                            resetGroupVariables();
+                                            // send out new group info
+                                            registerMoveable(movable, state.neighborhood, 1); // 1 = send info
 
+                                        }
                                     }
                                 }
                             }
-                        }
-                    } else {
-
-                        // check if agent is in clean move mode (doesn't do anything else but move)
-                        // update agent's local map
-                        replanMap = map.update(state.neighborhood, position, timestep);
-                        // update arena
-                        if (view != null)
-                            view.update(arena);
-                        // in case new map information is received, clear the plan and calculate new position
-                        if (replanMap) {
-                            plan.clear();
-                            if (!explore)
-                                replan(goalPosition);
-                        }
-
-                        if (!plan.isEmpty()) {
-
-                            Direction d = plan.poll();
-                            //debug("Next move: %s", d);
-
-                            //timestep++;
-                            if (d != org.grid.protocol.Message.Direction.NONE) {
-                                move(d);
-                            }
-
-                            // update agent position
-                            if (d == org.grid.protocol.Message.Direction.LEFT)
-                                position.setX(position.getX() - 1);
-                            if (d == org.grid.protocol.Message.Direction.RIGHT)
-                                position.setX(position.getX() + 1);
-                            if (d == org.grid.protocol.Message.Direction.UP)
-                                position.setY(position.getY() - 1);
-                            if (d == org.grid.protocol.Message.Direction.DOWN)
-                                position.setY(position.getY() + 1);
-
-                            // update arena agent position
-                            arena.setOrigin(position.getX(), position.getY());
-                            // get node for history
-                            LocalMap.Node n = map.get(position.getX(), position.getY());
-                            agentHistory.add(n);
-
-                            scan(0);
-
                         } else {
-                            // mark end of multi move
-                            cleanMove = false;
-                            explore = false;
-                            scan(0);
+
+                            // check if agent is in clean move mode (doesn't do anything else but move)
+                            // update agent's local map
+                            replanMap = map.update(state.neighborhood, position, timestep);
+                            // update arena
+                            if (view != null)
+                                view.update(arena);
+                            // in case new map information is received, clear the plan and calculate new position
+                            if (replanMap) {
+                                plan.clear();
+                                if (!explore)
+                                    replan(goalPosition);
+                            }
+
+                            if (!plan.isEmpty()) {
+
+                                Direction d = plan.poll();
+                                //debug("Next move: %s", d);
+
+                                //timestep++;
+                                if (d != org.grid.protocol.Message.Direction.NONE) {
+                                    move(d);
+                                }
+
+                                // update agent position
+                                if (d == org.grid.protocol.Message.Direction.LEFT)
+                                    position.setX(position.getX() - 1);
+                                if (d == org.grid.protocol.Message.Direction.RIGHT)
+                                    position.setX(position.getX() + 1);
+                                if (d == org.grid.protocol.Message.Direction.UP)
+                                    position.setY(position.getY() - 1);
+                                if (d == org.grid.protocol.Message.Direction.DOWN)
+                                    position.setY(position.getY() + 1);
+
+                                // update arena agent position
+                                arena.setOrigin(position.getX(), position.getY());
+                                // get node for history
+                                LocalMap.Node n = map.get(position.getX(), position.getY());
+                                agentHistory.add(n);
+
+                                scan(0);
+
+                            } else {
+                                // mark end of multi move
+                                cleanMove = false;
+                                explore = false;
+                                scan(0);
+                            }
                         }
-                    }
+                    } // close init routine
                 } else {
                     scan(0);
                 }
@@ -1555,7 +1608,7 @@ public class RDPSOAgent extends Agent {
         double result = previousResult + bonus - malus;
         previousResult = result;
 
-        System.out.println(String.valueOf(result));
+        //System.out.println(String.valueOf(result));
 
         return result;
     }
