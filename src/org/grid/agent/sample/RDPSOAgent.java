@@ -516,9 +516,11 @@ public class RDPSOAgent extends Agent {
 
                             ArrayList<Set<Integer>> tempsub = new ArrayList<Set<Integer>>();
                             tempsub = (ArrayList<Set<Integer>>)in.readObject();
-                            //System.out.println("Received temp subswarming array: ");
+                            System.out.println(getId() + " Received temp subswarming array: ");
                             Subswarming.toString(tempsub);
-
+                            subswarmingArray = Subswarming.unityMergeSubswarmingArrays(subswarmingArray, tempsub);
+                            System.out.println(getId() + " Merged subswarming array with union!");
+                            Subswarming.toString(subswarmingArray);
 
                             ArrayList<AgentSolution> tempSolutionArray = new ArrayList<AgentSolution>();
 

@@ -2,6 +2,7 @@ package org.grid.agent.sample;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -91,6 +92,30 @@ public class Subswarming {
 
         // if there is no reason to update the array, keep the currently held one
         return held;
+    }
+
+    public static ArrayList<Set<Integer>> unityMergeSubswarmingArrays(ArrayList<Set<Integer>> held, ArrayList<Set<Integer>> received) {
+
+        ArrayList<Set<Integer>> merged = null;
+
+        if (held.size() == received.size()) {
+
+            Iterator<Set<Integer>> itHel = held.iterator();
+            Iterator<Set<Integer>> itRec = received.iterator();
+
+            merged = new ArrayList<Set<Integer>>();
+
+            while(itHel.hasNext()) {
+                Set<Integer> union = new HashSet<Integer>();
+                Set<Integer> heldSet = itHel.next();
+                Set<Integer> recSet = itRec.next();
+                union.addAll(heldSet);
+                union.addAll(recSet);
+                merged.add(union);
+            }
+            return merged;
+
+        } else return null;
     }
 
     public static void toString(ArrayList<Set<Integer>> subswarmingArray) {
