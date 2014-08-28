@@ -6,7 +6,7 @@ package org.grid.agent.sample;
 public class ConstantsRDPSO {
             /* number of swarms */
 
-    static final int MAX_SWARMS = 5; // maximum number of swarms, including social exclusion group
+    static final int MAX_SWARMS = 2; // maximum number of swarms, including social exclusion group
     static final int MIN_SWARMS = 2; // minimum number of swarms (0, to allow social exclusion of all agents)
     // for 3 swarms + socially excluded, set the number to 4
     static final int INIT_SWARMS = 3; // 0 = socially excluded, 1,2,3..,n-1 are swarms
@@ -16,7 +16,7 @@ public class ConstantsRDPSO {
         /* number of agents in each swarm */
 
     static final int INIT_AGENTS = 3; // initial number of agents in each swarm
-    static final int MAX_AGENTS = 5; // maximum number of agents in each swarm
+    static final int MAX_AGENTS = 3; // maximum number of agents in each swarm
     static final int MIN_AGENTS = 1;  // minimum number of agents in each swarm
 
     /* RDPSO coefficients */
@@ -25,6 +25,6 @@ public class ConstantsRDPSO {
     static final double C2 = 0.04; // social weight (ps)
     static final double C3 = 0.2;  // obstacle suspectibility weight (pobs)
 
-    static final int SC_MAX = 5;     // maximum number of iterations without improving the swarm
+    static final int SC_MAX = 2;     // maximum number of iterations without improving the swarm
 
 }

@@ -978,7 +978,8 @@ public class RDPSOAgent extends Agent {
 
                                              System.out.println(getId() + ": S new agent req, to join swarm id: " + swarmID);
                                         }
-                                        if (spawnGroupProbability() && !pendingSubgroupRequest) {
+                                        if (Subswarming.getNumberOfSubSwarms(subswarmingArray) < ConstantsRDPSO.MAX_SWARMS
+                                                && spawnGroupProbability() && !pendingSubgroupRequest) {
 
                                             System.out.println(getId() + ": Sending new group request.");
 
@@ -1314,8 +1315,6 @@ public class RDPSOAgent extends Agent {
                                             movable = analyzeNeighborhood(state.neighborhood);
                                             registerMoveable(movable, state.neighborhood, 1); // 1 = send info
                                             //swarmID = newSwarmID + 1;
-
-                                            //
                                         }
                                         // if the agent receives a request to join a swarm
                                         else if (callAgent) {
