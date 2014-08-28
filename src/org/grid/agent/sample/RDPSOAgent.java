@@ -140,12 +140,17 @@ public class RDPSOAgent extends Agent {
     int subgroupRequestedByID = 0;
     //int newSwarmID = numSwarms;
 
+    // objective function
     int previousT = 0;
     int counter = 0;
     int previousNodeCount = 0;
     int noNewNodesCounter = 0;
     double previousResult = 0.0;
     int numOfImprovements = 0;
+    int previousNodeDiff1 = 0;
+    int previousNodeDiff2 = 0;
+    int previousNodeDiff3 = 0;
+    int previousNodeDiff4 = 0;
 
     // req/res/ack flags
     boolean pendingAgentRequest = false;
@@ -323,6 +328,10 @@ public class RDPSOAgent extends Agent {
                     out.writeInt(center.getX());
                     out.writeInt(center.getY());
 
+                    out.writeObject(subswarmingArray);
+                    //System.out.println("Sent out subswarming array: ");
+                    Subswarming.toString(subswarmingArray);
+
                     out.writeInt(swarmID);
                     out.writeInt(swarmSolutionArray.size());
                     for (AgentSolution a : swarmSolutionArray) {
@@ -483,6 +492,12 @@ public class RDPSOAgent extends Agent {
                             center.setX(in.readInt());
                             center.setY(in.readInt());
 
+                            ArrayList<Set<Integer>> tempsub = new ArrayList<Set<Integer>>();
+                            tempsub = (ArrayList<Set<Integer>>)in.readObject();
+                            //System.out.println("Received temp subswarming array: ");
+                            Subswarming.toString(tempsub);
+
+
                             ArrayList<AgentSolution> tempSolutionArray = new ArrayList<AgentSolution>();
 
                             // RDPSO variables
@@ -501,7 +516,7 @@ public class RDPSOAgent extends Agent {
 
                                 if (swarmID == 0 && requestSnapshot) {
                                     requestSnapshot = false;
-                                    System.out.println(getId() + " received 0 snapshot!");
+                                    //System.out.println(getId() + " received 0 snapshot!");
                                 }
                                 // update stuff
                                 swarmSolutionArray = new ArrayList<AgentSolution>(tempSolutionArray);
@@ -735,6 +750,17 @@ public class RDPSOAgent extends Agent {
         numMods++;
         Subswarming.toString(subswarmingArray);
 
+        /* subswarmingArray = Subswarming.removeAgentFromSubswarming(subswarmingArray, getId(), swarmID);
+        Subswarming.toString(subswarmingArray);
+        subswarmingArray = Subswarming.deleteSubgroupFromSubswarmingArray(subswarmingArray, swarmID);
+        Subswarming.toString(subswarmingArray);
+        subswarmingArray = Subswarming.restoreSubgroupInSubswarmingArray(subswarmingArray, swarmID);
+        Subswarming.toString(subswarmingArray);
+        subswarmingArray = Subswarming.addAgentToSubswarming(subswarmingArray, getId(), swarmID);
+        Subswarming.toString(subswarmingArray);
+        System.out.println("Num of subswamrs: " + Subswarming.getNumberOfSubSwarms(subswarmingArray));
+        System.out.println("Num of agents in subswarm: " + Subswarming.getNumerOfAgentsInSubSwarm(subswarmingArray, swarmID)); */
+
     }
 
     /*
@@ -743,7 +769,7 @@ public class RDPSOAgent extends Agent {
     private int assignToSwarm() {
 
         // in case there is just one swarm
-        if (ConstantsRDPSO.INIT_SWARMS == 1)
+        if (ConstantsRDPSO.INIT_SWARMS == 2)
             return 1;
 
         if (getSwarmCounter() == ConstantsRDPSO.INIT_SWARMS - 1)
@@ -792,6 +818,8 @@ public class RDPSOAgent extends Agent {
 
                 if (state.direction == Direction.NONE && state.direction != null) {
 
+                    timestep++;
+
                     // Send information to other agents
                     Set<Position> movable = analyzeNeighborhood(state.neighborhood);
 
@@ -802,6 +830,9 @@ public class RDPSOAgent extends Agent {
                         counter++;
                     }
 
+                    // exchange info with teammates
+                    registerMoveable(movable, state.neighborhood, 1); // 1 = send basic info
+
                     boolean replanAgents = blockMoveable(movable, state.neighborhood);
 
                     // update information
@@ -809,6 +840,7 @@ public class RDPSOAgent extends Agent {
                         Message m = inbox.poll();
                         // receive and parse message from other agents, filter data from agent's swarm
                         replanMap &= parse(m.from, m.message, state.neighborhood);
+                        System.out.println("I have received a message.");
                     }
                     if (replanMap || replanAgents) {
                         plan.clear();
@@ -829,9 +861,6 @@ public class RDPSOAgent extends Agent {
                         // confirm that the agent is not a member of the excluded group (swarmID = 0)
                         if (swarmID != 0) {
 
-                            // exchange info with teammates
-                            registerMoveable(movable, state.neighborhood, 1); // 1 = send basic info
-
                             // evaluate agent's current solution = h(x_n(t))
                             agentSolution = evaluateObjectiveFunction();
 
@@ -850,8 +879,9 @@ public class RDPSOAgent extends Agent {
                             // find best solution in vector H(t) = max(H(t))
                             double maxSwarmSolution = SwarmSolution.findMaxSwarmSolutionList(swarmSolutionArray);
                             // check if subgroup improved
+
                             if (maxSwarmSolution > bestSwarmSolution) {
-                                System.out.println(getId() + " max swarm sol is better than best.");
+                                //System.out.println(getId() + " max swarm sol is better than best.");
                                 bestSwarmSolution = maxSwarmSolution;
                                 // update social component
                                 solutionArray[1] = agentPositionX;
@@ -877,10 +907,10 @@ public class RDPSOAgent extends Agent {
                                             numKilledAgents--;
                                         }
 
-                                        System.out.println(getId() + ": S new agent req, to join swarm id: " + swarmID);
+                                       // System.out.println(getId() + ": S new agent req, to join swarm id: " + swarmID);
                                     }
                                     if (spawnGroupProbability() && !pendingSubgroupRequest) {
-                                        System.out.println(getId() + ": Sending new group request.");
+                                        //System.out.println(getId() + ": Sending new group request.");
 
                                         createSwarm = true;
                                         pendingSubgroupRequest = true;
@@ -900,12 +930,12 @@ public class RDPSOAgent extends Agent {
                                 }
                                 // subgroup has NOT IMPROVED
                             } else {
-                                System.out.println(getId() + " my subgroup " + swarmID + " has not improved SC = " + (SC+1));
+                                //System.out.println(getId() + " my subgroup " + swarmID + " has not improved SC = " + (SC + 1));
                                 SC = SC + 1;
                                 //System.out.println(", new stagnancy counter " + SC);
                                 // punish subgroup
                                 if (SC == ConstantsRDPSO.SC_MAX) {
-                                    System.out.println(getId() + " numAgents at exclusion check: " + numAgents);
+                                    //System.out.println(getId() + " numAgents at exclusion check: " + numAgents);
 
                                     // reset stagnancy counter
                                     SC = ConstantsRDPSO.SC_MAX * (1 - (1 / (numKilledAgents + 1)));
@@ -916,7 +946,7 @@ public class RDPSOAgent extends Agent {
 
                                             // remove agent from subswarming array
                                             subswarmingArray = Subswarming.removeAgentFromSubswarming(subswarmingArray, getId(), swarmID);
-                                            System.out.print(getId() + " removing myself from subswarming ");
+                                            //System.out.print(getId() + " removing myself from subswarming ");
                                             Subswarming.toString(subswarmingArray);
 
 
@@ -924,7 +954,7 @@ public class RDPSOAgent extends Agent {
                                             numKilledAgents++;
                                             // decrease number of agents left in the swarm
                                             numAgents--;
-                                            System.out.println(getId() + " decreased numAgents (excl) " + numAgents);
+                                            //System.out.println(getId() + " decreased numAgents (excl) " + numAgents);
                                             // reset acknowledged to be able to accept new swarm requests
                                             ackAgentRequest = false;
 
@@ -939,25 +969,30 @@ public class RDPSOAgent extends Agent {
 
                                             // prevent agent from sending wrong data to members of excluded group
                                             // rather should receive their information first, then be able to send
-                                            System.out.println(getId() + " requesting 0 snapshot");
+                                            //System.out.println(getId() + " requesting 0 snapshot");
                                             requestSnapshot = true;
 
 
 
-                                           System.out.println(getId() + " EXCLUDED!" + " numAgents left after excluding self: " + numAgents);
+                                           //System.out.println(getId() + " EXCLUDED!" + " numAgents left after excluding self: " + numAgents);
 
                                         }
                                         // delete the entire subgroup
                                     } else if(numSwarms > ConstantsRDPSO.MIN_SWARMS) {
                                         // exclude this agent
                                         //System.out.println(getId() + " subgroup deleted.., EXCLUDING self");
+                                        // remove agent from subswarming array
+                                        subswarmingArray = Subswarming.removeAgentFromSubswarming(subswarmingArray, getId(), swarmID);
+                                        //System.out.print(getId() + " removing myself from subswarming, delete subgroup ");
+                                        Subswarming.toString(subswarmingArray);
+
                                         movable = analyzeNeighborhood(state.neighborhood);
                                         // decrease the number of remaining swarms
                                         numSwarms--;
                                         registerMoveable(movable, state.neighborhood, 5); //  5 - notify about numSwarms
                                         // decrease number of agents left in swarm
                                         numAgents--;
-                                        System.out.println(getId() + " decreased numAgents (delsub) " + numAgents);
+                                        //System.out.println(getId() + " decreased numAgents (delsub) " + numAgents);
 
                                         // try to send out a message to old swarmID, so they can update
                                         registerMoveable(movable, state.neighborhood, 1); //  1 = send info
@@ -1019,7 +1054,7 @@ public class RDPSOAgent extends Agent {
                                 goalPosition.setX(roundedX + offsetX);
                                 goalPosition.setY(roundedY + offsetY);
 
-                                System.out.println(getId() + " New wanted position: " + goalPosition);
+                                //System.out.println(getId() + " New wanted position: " + goalPosition);
                             }
 
                             // Is agent on goal position or is the position not even in the map?
@@ -1111,7 +1146,7 @@ public class RDPSOAgent extends Agent {
 
                             plan.clear();
                             Decision d = updateDecisions(state.neighborhood);
-                            timestep++;
+                            //timestep++;
                             if (d.direction != Direction.NONE) {
                                 move(d.direction);
                             }
@@ -1204,7 +1239,7 @@ public class RDPSOAgent extends Agent {
                                         // i belong to a new swarm
                                         swarmID = requestingSwarmID;
 
-                                        System.out.println(getId() + " increased numAgents (areexc) " + numAgents);
+                                        //System.out.println(getId() + " increased numAgents (areexc) " + numAgents);
 
                                         // i accepted the request
                                         callAgent = false;
@@ -1253,6 +1288,7 @@ public class RDPSOAgent extends Agent {
                             }
                         }
                     } else {
+
                         // check if agent is in clean move mode (doesn't do anything else but move)
                         // update agent's local map
                         replanMap = map.update(state.neighborhood, position, timestep);
@@ -1271,7 +1307,7 @@ public class RDPSOAgent extends Agent {
                             Direction d = plan.poll();
                             //debug("Next move: %s", d);
 
-                            timestep++;
+                            //timestep++;
                             if (d != org.grid.protocol.Message.Direction.NONE) {
                                 move(d);
                             }
@@ -1288,6 +1324,9 @@ public class RDPSOAgent extends Agent {
 
                             // update arena agent position
                             arena.setOrigin(position.getX(), position.getY());
+                            // get node for history
+                            LocalMap.Node n = map.get(position.getX(), position.getY());
+                            agentHistory.add(n);
 
                             scan(0);
 
@@ -1336,13 +1375,15 @@ public class RDPSOAgent extends Agent {
         directions = paths.shortestPathTo(n);
 
         // cannot move anywhere ... assure, that at least one move is in the plan
-        if (directions == null) {
+        /* if (directions == null) {
             directions = new Vector<Direction>();
             for (int i = 0; i < 1; i++)
                 directions.add(Direction.NONE);
-        }
+        }*/
 
-        plan.addAll(directions);
+        if (directions == null)
+            plan.clear();
+        else plan.addAll(directions);
 
         return p;
     }
@@ -1454,7 +1495,7 @@ public class RDPSOAgent extends Agent {
         return random;
     }
 
-    private double evaluateObjectiveFunction() {
+    private double evaluateObjectiveFunctionAlpha() {
 
         int newT = timestep;
         // time passed since previous evaluation, should give the time agent needed to explore a certain amount of area
@@ -1492,6 +1533,36 @@ public class RDPSOAgent extends Agent {
 
         previousResult = result*10;
         //System.out.println(getId() + " Objective function result: " + result);
+        //System.out.println(String.valueOf(result));
+
+        return result;
+    }
+
+    private double evaluateObjectiveFunction() {
+
+        int newT = timestep;
+        // time passed since previous evaluation, should give the time agent needed to explore a certain amount of area
+        int timeDifference = newT - previousT;
+        // update previousT
+        previousT = newT;
+
+        // How many nodes have been explored since last timestep
+        int newNodeCount = agentHistory.size();
+        int nodeDifference = newNodeCount - previousNodeCount;
+        previousNodeCount = newNodeCount;
+
+        double bonus = (4 * nodeDifference) - (1 - previousNodeDiff4) - (0.5 - (0.5 * previousNodeDiff3)) -
+                (0.25 - (0.25 * previousNodeDiff2)) - (0.12 - (0.12 * previousNodeDiff1));
+
+        previousNodeDiff1 = previousNodeDiff2;
+        previousNodeDiff2 = previousNodeDiff3;
+        previousNodeDiff3 = previousNodeDiff4;
+        previousNodeDiff4 = nodeDifference;
+
+        double result = previousResult + bonus;
+        previousResult = result;
+
+        System.out.println(String.valueOf(result));
 
         return result;
     }
