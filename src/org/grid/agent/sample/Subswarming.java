@@ -72,6 +72,27 @@ public class Subswarming {
         return subswarmingArray.get(swarmID).size();
     }
 
+    // merge two arrays (received and currently held)
+    public static ArrayList<Set<Integer>> mergeTwoSubswarmingArrays(ArrayList<Set<Integer>> held,
+                                                                    ArrayList<Set<Integer>> received,
+                                                                    int numMods, int numMods2int, int lastMod1, int lastMod2,
+                                                                    int idRecieved, int idHeld) {
+
+        // scenario 1: Held wasn't modified by receiving agent, it has a newer timestep than held
+        // solution: just override held with received
+        if (lastMod2 != idHeld) {
+            // held array wasn't modified by holding agent
+                return received;
+
+        // scenario 2: last modification on received was made by the currently held agent.. so received is probably older
+        } else if (lastMod1 == lastMod2) {
+            return held;
+        }
+
+        // if there is no reason to update the array, keep the currently held one
+        return held;
+    }
+
     public static void toString(ArrayList<Set<Integer>> subswarmingArray) {
         int counter = 0;
         System.out.println("ARRAY: ");
