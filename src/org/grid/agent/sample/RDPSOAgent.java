@@ -169,6 +169,8 @@ public class RDPSOAgent extends Agent {
     int snapNumAgents = 0;
     int snapKilledAgents = 0;
 
+    boolean initRoutine = true;
+
     /**
      * Define agent message format
      */
@@ -333,7 +335,6 @@ public class RDPSOAgent extends Agent {
                     out.writeInt(center.getY());
 
                     out.writeObject(subswarmingArray);
-                    //System.out.println("Sent out subswarming array: ");
 
                     out.writeInt(swarmID);
                     out.writeInt(swarmSolutionArray.size());
@@ -458,9 +459,6 @@ public class RDPSOAgent extends Agent {
             out.flush();
             send(to, buffer.toByteArray());
 
-            //System.out.print(" Done.");
-            System.out.println();
-
         } catch (IOException e) {
             debug("Error sending message to %d: %s", to, e);
         }
@@ -514,13 +512,10 @@ public class RDPSOAgent extends Agent {
                             center.setX(in.readInt());
                             center.setY(in.readInt());
 
-                            ArrayList<Set<Integer>> tempsub = new ArrayList<Set<Integer>>();
-                            tempsub = (ArrayList<Set<Integer>>)in.readObject();
-                            System.out.println(getId() + " Received temp subswarming array: ");
-                            Subswarming.toString(tempsub);
-                            subswarmingArray = Subswarming.unityMergeSubswarmingArrays(subswarmingArray, tempsub);
-                            System.out.println(getId() + " Merged subswarming array with union!");
-                            Subswarming.toString(subswarmingArray);
+                            ArrayList<Set<Integer>> tempsub = (ArrayList<Set<Integer>>)in.readObject();
+                            if (initRoutine)
+                                subswarmingArray = Subswarming.unityMergeSubswarmingArrays(subswarmingArray, tempsub);
+
 
                             ArrayList<AgentSolution> tempSolutionArray = new ArrayList<AgentSolution>();
 
@@ -792,18 +787,6 @@ public class RDPSOAgent extends Agent {
         // update subswarming variables
         modifyTimestamp = timestep;
         numMods++;
-        Subswarming.toString(subswarmingArray);
-
-        /* subswarmingArray = Subswarming.removeAgentFromSubswarming(subswarmingArray, getId(), swarmID);
-        Subswarming.toString(subswarmingArray);
-        subswarmingArray = Subswarming.deleteSubgroupFromSubswarmingArray(subswarmingArray, swarmID);
-        Subswarming.toString(subswarmingArray);
-        subswarmingArray = Subswarming.restoreSubgroupInSubswarmingArray(subswarmingArray, swarmID);
-        Subswarming.toString(subswarmingArray);
-        subswarmingArray = Subswarming.addAgentToSubswarming(subswarmingArray, getId(), swarmID);
-        Subswarming.toString(subswarmingArray);
-        System.out.println("Num of subswamrs: " + Subswarming.getNumberOfSubSwarms(subswarmingArray));
-        System.out.println("Num of agents in subswarm: " + Subswarming.getNumerOfAgentsInSubSwarm(subswarmingArray, swarmID)); */
 
     }
 
@@ -845,7 +828,6 @@ public class RDPSOAgent extends Agent {
         int offsetX = 0;
         int offsetY = 0;
         boolean offsetCurrent = false;
-        boolean initRoutine = true;
 
         scan(0);
 
@@ -904,6 +886,7 @@ public class RDPSOAgent extends Agent {
                     // the purpose of this routine is to get all global agent's info, so the algorithm starts in sync
                     // : randomly wander, check if you have all the messages and then start the algorithm
                     if ( initRoutine ) {
+
                         // check if agent can start the algorithm
                         if (subswarmingArray.size() == (ConstantsRDPSO.INIT_SWARMS) ) {
 
@@ -916,11 +899,14 @@ public class RDPSOAgent extends Agent {
                             if (globalAgentNumber == ((ConstantsRDPSO.INIT_SWARMS-1) * ConstantsRDPSO.INIT_AGENTS)) {
                                 // stop init routine
                                 initRoutine = false;
-                                System.out.println(getId() + " Got info from every agent.");
+                                //System.out.println(getId() + " Got info from every agent.");
+                                numAgents = Subswarming.getNumerOfAgentsInSubSwarm(subswarmingArray, swarmID);
+                                numSwarms = Subswarming.getNumberOfSubSwarms(subswarmingArray);
+
                                 scan(0);
                             } else {
                                 // keep waiting and collecting data
-                                System.out.println(getId() + " Waiting for info about other agents ... ");
+                                //System.out.println(getId() + " Waiting for info about other agents ... ");
 
                                 plan.clear();
                                 Decision d = updateDecisions(state.neighborhood);

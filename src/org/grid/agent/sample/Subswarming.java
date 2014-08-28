@@ -66,7 +66,17 @@ public class Subswarming {
     }
 
     public static int getNumberOfSubSwarms(ArrayList<Set<Integer>> subswarmingArray) {
-        return subswarmingArray.size();
+        int numberOfSwarms = subswarmingArray.size();
+        // check every set, if it contains a negative number, if yes, then it is a deleted swarm!
+        for (Set<Integer> s : subswarmingArray) {
+            for (Integer i : s) {
+                if (i.intValue() < 0) {
+                    numberOfSwarms--;
+                }
+            }
+        }
+        // -1 to account for swarm 0
+        return (numberOfSwarms-1);
     }
 
     public static int getNumerOfAgentsInSubSwarm(ArrayList<Set<Integer>> subswarmingArray, int swarmID) {
