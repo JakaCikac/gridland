@@ -308,6 +308,8 @@ public class RDPSOAgent extends Agent {
             int newSwarmID
          */
 
+        System.out.print(getId() + ": Sending out info. ");
+
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream(getMaxMessageSize());
             ObjectOutputStream out = new ObjectOutputStream(buffer);
@@ -316,6 +318,8 @@ public class RDPSOAgent extends Agent {
                 {
                     out.writeByte(1); // 1 = info, 2 = map
                     out.writeByte(1); // 1 = basic info
+
+                    System.out.print("Message type: info");
 
                     LocalMap.Bounds bounds = map.getBounds();
                     Position center = map.getCenter();
@@ -330,7 +334,6 @@ public class RDPSOAgent extends Agent {
 
                     out.writeObject(subswarmingArray);
                     //System.out.println("Sent out subswarming array: ");
-                    Subswarming.toString(subswarmingArray);
 
                     out.writeInt(swarmID);
                     out.writeInt(swarmSolutionArray.size());
@@ -352,6 +355,8 @@ public class RDPSOAgent extends Agent {
                 {
                     out.writeByte(1); // 1 = info, 2 = map
                     out.writeByte(2); // 2 = new agent request
+
+                    System.out.print("Message type: agent req");
 
                     out.writeBoolean(callAgent);
                     out.writeInt(numAgents);
@@ -375,6 +380,11 @@ public class RDPSOAgent extends Agent {
 
                 case 6: // agent response
                 {
+                    out.writeByte(1); // 1 = info, 2 = map
+                    out.writeByte(6); // 6 = new agent response
+
+                    System.out.print("Message type: agent res");
+
                     out.writeInt(swarmID);
                     out.writeBoolean(callAgent);
                     out.writeInt(numAgents);
@@ -384,6 +394,8 @@ public class RDPSOAgent extends Agent {
                 {
                     out.writeByte(1); // 1 = info, 2 = map
                     out.writeByte(3); // 3 = new subgroup request
+
+                    System.out.print("Message type: sub req");
 
                     out.writeInt(swarmID); // will be 0 anyway
                     // so a response can be sent to them
@@ -396,6 +408,11 @@ public class RDPSOAgent extends Agent {
                 }
                 case 7: // subgroup response
                 {
+                    out.writeByte(1); // 1 = info, 2 = map
+                    out.writeByte(7); // 3 = subgroup response
+
+                    System.out.print("Message type: sub res");
+
                     out.writeInt(swarmID); // is in fact a requestedByID
                     out.writeBoolean(ackSubgroupRequest);
                     out.writeBoolean(createSwarm);
@@ -404,7 +421,9 @@ public class RDPSOAgent extends Agent {
                 case 4: // the need of Ni-1 agents to form subgroup
                 {
                     out.writeByte(1); // 1 = info, 2 = map
-                    out.writeByte(4); // 2 = need of Ni-1 agents to form subgroup
+                    out.writeByte(4); // 4 = need of Ni-1 agents to form subgroup
+
+                    System.out.print("Message type: need ni-1");
 
                     // probably need to count how many agents from swarmID=0 already responded..
 
@@ -425,7 +444,9 @@ public class RDPSOAgent extends Agent {
                 case 5: // exchange info with teammates about Ns (number of swarms)
                 {
                     out.writeByte(1); // 1 = info, 2 = map
-                    out.writeByte(5); // 2 = new agent request
+                    out.writeByte(5); // 5 = swarm num
+
+                    System.out.print("Message type: swarm num");
 
                     out.writeInt(numSwarms);
                     out.writeInt(timestep);
@@ -437,10 +458,8 @@ public class RDPSOAgent extends Agent {
             out.flush();
             send(to, buffer.toByteArray());
 
-
-            // agent communicated changed variables, so it can update with received
-            //if (dirtyData)
-            //    dirtyData = false;
+            System.out.print(" Done.");
+            System.out.println();
 
         } catch (IOException e) {
             debug("Error sending message to %d: %s", to, e);
@@ -472,12 +491,15 @@ public class RDPSOAgent extends Agent {
             int tempNewSwarmID = 0;
             int tempNumSwarms = 0;
 
+            System.out.print(getId() + ": received message. ");
 
             switch (type) {
                 case 1: { // info message
 
                     switch (dataType) {
                         case 1: {
+
+                            System.out.print("Message type: info");
                             Position origin = new Position(0, 0);
                             origin.setX(in.readInt());
                             origin.setY(in.readInt());
@@ -552,6 +574,9 @@ public class RDPSOAgent extends Agent {
                             break; // break dataType case 1 = basic info
                         }
                         case 2: {
+
+                            System.out.print("Message type: agent req");
+
                             tempCallAgent = in.readBoolean();
                             tempNumAgents = in.readInt();
                             tempRequestingSwarmID = in.readInt();
@@ -589,6 +614,9 @@ public class RDPSOAgent extends Agent {
                             break; // break dataType case 2 = agent request
                         }
                         case 3: {
+
+                            System.out.print("Message type: sub req");
+
                             recSwarmID = in.readInt();
                             tempCreateSwarm = in.readBoolean();
                             numSwarms = in.readInt();
@@ -603,16 +631,23 @@ public class RDPSOAgent extends Agent {
                             break;
                         }
                         case 4: {
+
                             recSwarmID = in.readInt();
                             break;
                         }
                         case 5: {
+
+                            System.out.print("Message type: num swarms");
+
                             numSwarms = in.readInt();
                             timestep = in.readInt();
 
                             break;
                         }
                         case 6: { // new agent response ack
+
+                            System.out.print("Message type: agent res");
+
                             recSwarmID = in.readInt();
                             tempCallAgent = in.readBoolean();
                             tempNumAgents = in.readInt();
@@ -631,6 +666,9 @@ public class RDPSOAgent extends Agent {
                             break;
                         }
                         case 7: { // new subgroup response ack
+
+                            System.out.print("Message type: sub res");
+
                             int tempSubgroupRequestedByID = in.readInt();
                             boolean tempAckSubgroupResponse = in.readBoolean();
 
@@ -650,6 +688,8 @@ public class RDPSOAgent extends Agent {
                 }
 
                 case 2: { // map message
+
+                    System.out.print("Message type: map.");
 
                     LocalMap.MapChunk chunk = new LocalMap.MapChunk();
                     boolean replan = false;
@@ -679,6 +719,8 @@ public class RDPSOAgent extends Agent {
         } catch (Exception e) {
             debug("Error parsing message from %d: %s", from, e);
         }
+
+        System.out.print(" Done.");
 
         return false;
     }
@@ -971,8 +1013,6 @@ public class RDPSOAgent extends Agent {
                                             // rather should receive their information first, then be able to send
                                             //System.out.println(getId() + " requesting 0 snapshot");
                                             requestSnapshot = true;
-
-
 
                                            //System.out.println(getId() + " EXCLUDED!" + " numAgents left after excluding self: " + numAgents);
 
@@ -1495,6 +1535,35 @@ public class RDPSOAgent extends Agent {
         return random;
     }
 
+    private double evaluateObjectiveFunction() {
+
+        int newT = timestep;
+        // time passed since previous evaluation, should give the time agent needed to explore a certain amount of area
+        int timeDifference = newT - previousT;
+        // update previousT
+        previousT = newT;
+
+        // How many nodes have been explored since last timestep
+        int newNodeCount = agentHistory.size();
+        int nodeDifference = newNodeCount - previousNodeCount;
+        previousNodeCount = newNodeCount;
+
+        double bonus = (4 * nodeDifference) - (1 - previousNodeDiff4) - (0.5 - (0.5 * previousNodeDiff3)) -
+                (0.25 - (0.25 * previousNodeDiff2)) - (0.12 - (0.12 * previousNodeDiff1));
+
+        previousNodeDiff1 = previousNodeDiff2;
+        previousNodeDiff2 = previousNodeDiff3;
+        previousNodeDiff3 = previousNodeDiff4;
+        previousNodeDiff4 = nodeDifference;
+
+        double result = previousResult + bonus;
+        previousResult = result;
+
+        System.out.println(String.valueOf(result));
+
+        return result;
+    }
+
     private double evaluateObjectiveFunctionAlpha() {
 
         int newT = timestep;
@@ -1534,35 +1603,6 @@ public class RDPSOAgent extends Agent {
         previousResult = result*10;
         //System.out.println(getId() + " Objective function result: " + result);
         //System.out.println(String.valueOf(result));
-
-        return result;
-    }
-
-    private double evaluateObjectiveFunction() {
-
-        int newT = timestep;
-        // time passed since previous evaluation, should give the time agent needed to explore a certain amount of area
-        int timeDifference = newT - previousT;
-        // update previousT
-        previousT = newT;
-
-        // How many nodes have been explored since last timestep
-        int newNodeCount = agentHistory.size();
-        int nodeDifference = newNodeCount - previousNodeCount;
-        previousNodeCount = newNodeCount;
-
-        double bonus = (4 * nodeDifference) - (1 - previousNodeDiff4) - (0.5 - (0.5 * previousNodeDiff3)) -
-                (0.25 - (0.25 * previousNodeDiff2)) - (0.12 - (0.12 * previousNodeDiff1));
-
-        previousNodeDiff1 = previousNodeDiff2;
-        previousNodeDiff2 = previousNodeDiff3;
-        previousNodeDiff3 = previousNodeDiff4;
-        previousNodeDiff4 = nodeDifference;
-
-        double result = previousResult + bonus;
-        previousResult = result;
-
-        System.out.println(String.valueOf(result));
 
         return result;
     }
