@@ -332,8 +332,8 @@ public class RDPSOAgent extends Agent {
                     out.writeInt(center.getX());
                     out.writeInt(center.getY());
 
-                    //out.writeObject(subswarmingArray);
-                    //System.out.println("Sent out subswarming array: ");
+                    out.writeObject(subswarmingArray);
+                    System.out.println("Sent out subswarming array: ");
 
                     out.writeInt(swarmID);
                     out.writeInt(swarmSolutionArray.size());
@@ -514,10 +514,10 @@ public class RDPSOAgent extends Agent {
                             center.setX(in.readInt());
                             center.setY(in.readInt());
 
-                            //ArrayList<Set<Integer>> tempsub = new ArrayList<Set<Integer>>();
-                            //tempsub = (ArrayList<Set<Integer>>)in.readObject();
-                            //System.out.println("Received temp subswarming array: ");
-                            //Subswarming.toString(tempsub);
+                            ArrayList<Set<Integer>> tempsub = new ArrayList<Set<Integer>>();
+                            tempsub = (ArrayList<Set<Integer>>)in.readObject();
+                            System.out.println("Received temp subswarming array: ");
+                            Subswarming.toString(tempsub);
 
 
                             ArrayList<AgentSolution> tempSolutionArray = new ArrayList<AgentSolution>();
