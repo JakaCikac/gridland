@@ -363,6 +363,7 @@ public class RDPSOAgent extends Agent {
 
                     out.writeObject(swarmSolutionArray);
 
+
                     out.writeDouble(bestSwarmSolution);
                     out.writeDouble(SC);
                     out.writeInt(numAgents);
