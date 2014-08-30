@@ -130,6 +130,17 @@ public class Main {
 			addMouseListener(this);
 		}
 
+        boolean print10 = true;
+        boolean print20 = true;
+        boolean print30 = true;
+        boolean print40 = true;
+        boolean print50 = true;
+        boolean print60 = true;
+        boolean print70 = true;
+        boolean print80 = true;
+        boolean print90 = true;
+        boolean print100 = true;
+
         @Override
         public void discoveredPoints() {
             int exploredPoints = history.getExploredCount();
@@ -142,6 +153,47 @@ public class Main {
                 double coverage = (float)exploredPoints / initialEmptyFields * 100.0f;
                 clientsPanel.getExploredPointsLabel().setText(String.format("%.2f", coverage) + "%");
                 // check if explred == all and stop simulation, call export data for analysis
+                if (Math.abs(coverage - 10.00) < 1e-2 && print10) {
+                    System.out.println("Explored 10 % in " + simulation.getStep());
+                    print10 = false;
+                }
+                else if (Math.abs(coverage - 20.00) < 1e-1 && print20) {
+                    System.out.println("Explored 20 % in " + simulation.getStep());
+                    print20 = false;
+                }
+                else if (Math.abs(coverage - 30.00) < 1e-1 && print30) {
+                    System.out.println("Explored 30 % in " + simulation.getStep());
+                    print30 = false;
+                }
+                else if (Math.abs(coverage - 40.00) < 1e-1 && print40) {
+                    System.out.println("Explored 40 % in " + simulation.getStep());
+                    print40 = false;
+                }
+                else if (Math.abs(coverage - 50.00) < 1e-1 && print50) {
+                    System.out.println("Explored 50 % in " + simulation.getStep());
+                    print50 = false;
+                }
+                else if (Math.abs(coverage - 60.00) < 1e-1 && print60) {
+                    System.out.println("Explored 60 % in " + simulation.getStep());
+                    print60 = false;
+                }
+                else if (Math.abs(coverage - 70.00) < 1e-1 && print70) {
+                    System.out.println("Explored 70 % in " + simulation.getStep());
+                    print70 = false;
+                }
+                else if (Math.abs(coverage - 80.00) < 1e-1 && print80) {
+                    System.out.println("Explored 80 % in " + simulation.getStep());
+                    print80 = false;
+                }
+                else if (Math.abs(coverage - 90.00) < 1e-1 && print90) {
+                    System.out.println("Explored 90 % in " + simulation.getStep());
+                    print90 = false;
+                }
+                else if (Math.abs(coverage - 100.00) < 1e-1 && print100) {
+                    System.out.println("Explored 100 % in " + simulation.getStep());
+                    print100 = false;
+                }
+
                 if (exploredPoints == initialEmptyFields && running) {
                     running = false;
                     playpause.setEnabled(false);
@@ -450,7 +502,7 @@ public class Main {
 						stepCount = 0;
 						stepTime = 0;
 
-						info("Simulation step: %d (step: %d fps, render: %d fps)", simulation.getStep(), stepFPS, renderFPS);
+						//info("Simulation step: %d (step: %d fps, render: %d fps)", simulation.getStep(), stepFPS, renderFPS);
 					}
 
 					if (simulation.getStep() % 10 == 0) {

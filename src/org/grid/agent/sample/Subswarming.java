@@ -37,6 +37,21 @@ public class Subswarming {
         return subswarmingArray;
     }
 
+    // upon receiveing agent exclusion message
+    public static ArrayList<Set<Integer>> excludeOtherAgentsFromSubswarming(ArrayList<Set<Integer>> subswarmingArray, int id, int swarmID) {
+        subswarmingArray = removeAgentFromSubswarming(subswarmingArray, id, swarmID);
+        subswarmingArray = addAgentToSubswarming(subswarmingArray, id, 0);
+        return  subswarmingArray;
+    }
+
+    // confirm array match
+    public static boolean confirmExclusionAssumption(ArrayList<Set<Integer>> subswarmingArray, int id, int swarmID) {
+        Subswarming.toString(subswarmingArray);
+        if (subswarmingArray.get(0).contains(id) && !subswarmingArray.get(swarmID).contains(id)) {
+            return true;
+        } else return false;
+    }
+
     // mark swarmID as deleted
     public static ArrayList<Set<Integer>> deleteSubgroupFromSubswarmingArray(ArrayList<Set<Integer>> subswarmingArray, int swarmID) {
         // check if the subgroup is really empty
