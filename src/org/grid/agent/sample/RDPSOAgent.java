@@ -91,7 +91,6 @@ public class RDPSOAgent extends Agent {
 
     private int swarmID = -1;            // which swarm does the agent belong to
     // swarmID = 0 = agent belongs to the socially excluded group
-    private static int swarm_counter = 1;
 
     private double SC = 0;                // stagnancy counter
     private boolean callAgent = false;    // need of calling a agent
@@ -158,7 +157,6 @@ public class RDPSOAgent extends Agent {
     // req/res/ack flags
     boolean pendingAgentRequest = false;
     boolean pendingSubgroupRequest = false;
-    boolean dirtyData = false;
     boolean ackAgentRequest = false;
     boolean ackSubgroupRequest = false;
     boolean newGroupCreation = false;
@@ -884,10 +882,7 @@ public class RDPSOAgent extends Agent {
         int sleeptime = 100;
         boolean replanMap;
         boolean explore = false;
-        int offsetX;
-        int offsetY;
         boolean offsetCurrent = true;
-        double power = 0.03;
 
         scan(0);
 
@@ -1373,23 +1368,6 @@ public class RDPSOAgent extends Agent {
                                     solutionArray[3] = agentPositionY;
                                 }
 
-                            /* // Send information to other agents
-                            movable = analyzeNeighborhood(state.neighborhood);
-                            // update agent's local map
-                            replanMap = map.update(state.neighborhood, position, timestep);
-                            registerMoveable(movable, state.neighborhood, 1); // 1 = send basic info
-
-                            // update information
-                            while (!inbox.isEmpty()) {
-                                Message m = inbox.poll();
-                                // receive and parse message from other agents, filter data from agent's swarm
-                                parse(m.from, m.message, state.neighborhood);
-                            }
-
-                            // update arena
-                            if (view != null)
-                                view.update(arena); */
-
                                 // add agentSolution to vector H(t) that includes solutions of all agents within the swarmID group
                                 SwarmSolution.mergeSolutionToArray(new AgentSolution(getId(), agentBestSolution), swarmSolutionArray);
                                 // wait till all agents put solutions in solution array...
@@ -1498,8 +1476,6 @@ public class RDPSOAgent extends Agent {
 
                                 Direction d = plan.poll();
                                 //debug("Next move: %s", d);
-
-                                //timestep++;
                                 if (d != org.grid.protocol.Message.Direction.NONE) {
                                     move(d);
                                 }
@@ -1703,44 +1679,6 @@ public class RDPSOAgent extends Agent {
 
         previousResult = result;
 
-        //System.out.println(String.valueOf(result));
-
-        return result;
-    }
-
-
-    private double evaluateObjectiveFunctionAlpha() {
-
-        // How many nodes have been explored since last timestep
-        int newNodeCount = agentHistory.size();
-        int nodeDifference = newNodeCount - previousNodeCount;
-        previousNodeCount = newNodeCount;
-
-        // how many timesteps did agent need to uncover a new node?
-        if (nodeDifference == 0) {
-            noNewNodesCounter++;
-        } else {
-            noNewNodesCounter = 0;
-            numOfImprovements += 1;
-        }
-
-        // alpha takes history in account
-        double alpha = 0.12;
-        // beta is the punishment for not uncovering nodes
-        double beta = 0.8;
-        // delta is the reward of agent's action through all timesteps
-        double delta = 0.4;
-
-        double result = (alpha * previousResult) + nodeDifference;
-        if (noNewNodesCounter > 0)
-            result += (1 / (beta * noNewNodesCounter));
-        else result += 1;
-        if (numOfImprovements > 0) {
-            result += numOfImprovements * delta;
-        }
-
-        previousResult = result*10;
-        //System.out.println(getId() + " Objective function result: " + result);
         //System.out.println(String.valueOf(result));
 
         return result;

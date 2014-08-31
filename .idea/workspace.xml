@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3f6e5c1-36d1-4bde-93db-26e0cc79e510" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/sample/ConstantsRDPSO.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/sample/ConstantsRDPSO.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/grid/agent/sample/Subswarming.java" afterPath="$PROJECT_DIR$/src/org/grid/agent/sample/Subswarming.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="gridland.iws" />
@@ -82,10 +80,10 @@
       <file leaf-file-name="RDPSOAgent.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.0508054" vertical-offset="16537" max-vertical-offset="31965">
-              <caret line="1171" column="0" selection-start-line="1171" selection-start-column="0" selection-end-line="1171" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.035935562" vertical-offset="11236" max-vertical-offset="31005">
+              <caret line="763" column="25" selection-start-line="763" selection-start-column="25" selection-end-line="763" selection-end-column="25" />
               <folding>
-                <element signature="e#0#90122#0" expanded="true" />
+                <element signature="e#0#87577#0" expanded="true" />
                 <element signature="imports" expanded="true" />
               </folding>
             </state>
@@ -97,6 +95,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1680">
               <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConstantsRDPSO.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/ConstantsRDPSO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="555">
+              <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -991,7 +999,7 @@
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="org.grid.agent.Agent" />
       <option name="VM_PARAMETERS" value="-Xms1024M -Xmx2048M" />
-      <option name="PROGRAM_PARAMETERS" value="localhost org.grid.agent.sample.RDPSOAgent 1 explorers" />
+      <option name="PROGRAM_PARAMETERS" value="localhost org.grid.agent.sample.RDPSOAgent 2 explorers" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
@@ -1113,7 +1121,7 @@
       <workItem from="1408712015640" duration="42171000" />
       <workItem from="1409136305474" duration="15216000" />
       <workItem from="1409237949408" duration="14905000" />
-      <workItem from="1409337112176" duration="39181000" />
+      <workItem from="1409337112176" duration="39891000" />
     </task>
     <task id="LOCAL-00001" summary="Test commit.">
       <created>1394200726993</created>
@@ -1563,11 +1571,19 @@
       <created>1409400862713</created>
       <updated>1409400862713</updated>
     </task>
-    <option name="localTasksCounter" value="113" />
+    <task id="LOCAL-00113" summary="Major changes to the objective function.">
+      <created>1409486757162</created>
+      <updated>1409486757162</updated>
+    </task>
+    <task id="LOCAL-00114" summary="Clean up unused code and comments.">
+      <created>1409487265588</created>
+      <updated>1409487265588</updated>
+    </task>
+    <option name="localTasksCounter" value="115" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="401311000" />
+    <option name="totallyTimeSpent" value="402021000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1608,11 +1624,11 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1544634" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5456369" sideWeight="0.4976105" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32497492" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25746715" sideWeight="0.49940547" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25746715" sideWeight="0.49940547" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32915172" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24850658" sideWeight="0.49940547" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24850658" sideWeight="0.49940547" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14944835" sideWeight="0.4976105" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32956383" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -1638,8 +1654,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="No idea what's going on..." />
-    <MESSAGE value="Having trouble with refreshing arena.." />
     <MESSAGE value="Working movement agent. I'll try to ruin it now, so this is a snapshot." />
     <MESSAGE value="Improved movement agent. Now able to explore the whole map and then use planning to navigate around." />
     <MESSAGE value="Merged MovementAgent into RDPSO agent movement. Working on detecting deadLocks." />
@@ -1663,7 +1677,9 @@
     <MESSAGE value="Changed the way swarmSolutionArray gets read and lifted pendingAgentRequest restriciton." />
     <MESSAGE value="Clean up..?" />
     <MESSAGE value="Working on sync.." />
-    <option name="LAST_COMMIT_MESSAGE" value="Working on sync.." />
+    <MESSAGE value="Major changes to the objective function." />
+    <MESSAGE value="Clean up unused code and comments." />
+    <option name="LAST_COMMIT_MESSAGE" value="Clean up unused code and comments." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2029,17 +2045,17 @@
     <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/ConstantsRDPSO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="555">
-          <caret line="26" column="32" selection-start-line="26" selection-start-column="32" selection-end-line="26" selection-end-column="32" />
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/grid/agent/sample/RDPSOAgent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0508054" vertical-offset="16537" max-vertical-offset="31965">
-          <caret line="1171" column="0" selection-start-line="1171" selection-start-column="0" selection-end-line="1171" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.035935562" vertical-offset="11236" max-vertical-offset="31005">
+          <caret line="763" column="25" selection-start-line="763" selection-start-column="25" selection-end-line="763" selection-end-column="25" />
           <folding>
-            <element signature="e#0#90122#0" expanded="true" />
+            <element signature="e#0#87577#0" expanded="true" />
             <element signature="imports" expanded="true" />
           </folding>
         </state>
