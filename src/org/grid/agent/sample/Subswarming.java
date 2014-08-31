@@ -46,11 +46,26 @@ public class Subswarming {
 
     // confirm array match
     public static boolean confirmExclusionAssumption(ArrayList<Set<Integer>> subswarmingArray, int id, int swarmID) {
-        Subswarming.toString(subswarmingArray);
         if (subswarmingArray.get(0).contains(id) && !subswarmingArray.get(swarmID).contains(id)) {
             return true;
         } else return false;
     }
+
+    // confirm array match
+    public static boolean confirmJoinAssumption(ArrayList<Set<Integer>> subswarmingArray, int id, int swarmID) {
+        Subswarming.toString(subswarmingArray);
+        if (!subswarmingArray.get(0).contains(id) && subswarmingArray.get(swarmID).contains(id)) {
+            return true;
+        } else return false;
+    }
+
+    // confirm array match
+    public static boolean confirmGroupDeletionAssumption(ArrayList<Set<Integer>> subswarmingArray, int id, int swarmID) {
+        if (subswarmingArray.get(0).contains(id) && !subswarmingArray.get(swarmID).contains(id) && subswarmingArray.get(swarmID).contains(-1)) {
+            return true;
+        } else return false;
+    }
+
 
     // mark swarmID as deleted
     public static ArrayList<Set<Integer>> deleteSubgroupFromSubswarmingArray(ArrayList<Set<Integer>> subswarmingArray, int swarmID) {
