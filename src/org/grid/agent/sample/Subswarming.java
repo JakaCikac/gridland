@@ -69,11 +69,8 @@ public class Subswarming {
 
     // mark swarmID as deleted
     public static ArrayList<Set<Integer>> deleteSubgroupFromSubswarmingArray(ArrayList<Set<Integer>> subswarmingArray, int swarmID) {
-        // check if the subgroup is really empty
-        if ( subswarmingArray.get(swarmID).size() == 0 ) {
             // put in the array a negative number
             subswarmingArray.get(swarmID).add(-1);
-        }
         return subswarmingArray;
     }
 
