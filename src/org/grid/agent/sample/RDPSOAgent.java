@@ -1241,8 +1241,6 @@ public class RDPSOAgent extends Agent {
                                     double tempAgentPositionY = agentPositionY + agentVelocityY + randomOffsetY;
                                     int roundedY = (int) Math.round(tempAgentPositionY);
 
-                                    System.out.println((agentPositionX + agentVelocityX) + " " + (agentPositionY + agentVelocityY));
-
                                     goalPosition.setX(roundedX);
                                     goalPosition.setY(roundedY);
 
@@ -1339,7 +1337,7 @@ public class RDPSOAgent extends Agent {
 
                                 plan.clear();
                                 Decision d = updateDecisions(state.neighborhood);
-                                //timestep++;
+
                                 if (d.direction != Direction.NONE) {
                                     move(d.direction);
                                 }
