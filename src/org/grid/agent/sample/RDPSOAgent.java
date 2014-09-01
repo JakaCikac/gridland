@@ -1349,27 +1349,14 @@ public class RDPSOAgent extends Agent {
                                     // agent is one of the best in the excluded group
                                     if (best_ni) {
                                         //System.out.println(getId() + " I am one of the best agents in excluded.");
-                                        // note: N_X is the number of agents in the excluded group
-                                        // check if number of excluded agents is bigger than number of initial agents
-                                        // required to form a sub-swarm then check probability for forming a new group
-                                        if (Subswarming.getNumerOfAgentsInSubSwarm(subswarmingArray, 0)
-                                                >= ConstantsRDPSO.INIT_AGENTS && spawnGroupProbabilityExcluded()) {
-
-                                            //System.out.println(getId() + "I should spawn a new group.");
-                                            //todo: how to assign new swarm.. I guess you will have to keep a number of swarms
-                                            //todo: broadcast a need for N_I-1 robots to form new swarm
-                                            movable = analyzeNeighborhood(state.neighborhood);
-                                            registerMoveable(movable, state.neighborhood, 1); // 1 = send info
-                                            //swarmID = newSwarmID + 1;
-                                        }
                                         // if the agent receives a request to join a swarm
-                                        else if (callAgent) {
-
+                                         if (callAgent) {
 
                                             // add agent to the new group
                                             // check if subgroup still exists
                                             boolean subgroupExists = Subswarming.checkIfSubgroupExistsInSubswamingArray(subswarmingArray, requestingSwarmID);
-                                            if (subgroupExists) {
+                                            boolean subgroupDeleted = Subswarming.checkIfSubgroupDeleted(subswarmingArray, requestingSwarmID);
+                                            if (subgroupExists && !subgroupDeleted) {
                                                 // remove agent from the socially excluded group
                                                 subswarmingArray = Subswarming.removeAgentFromSubswarming(subswarmingArray, getId(), 0);
                                                 // i belong to a new swarm
@@ -1392,10 +1379,11 @@ public class RDPSOAgent extends Agent {
 
                                                 movable = analyzeNeighborhood(state.neighborhood);
                                                 registerMoveable(movable, state.neighborhood, 6); // 6 - agent response
-                                            } else System.out.println(getId() + " Requesting subgroup no longer exists. :( ");
+                                            } else System.out.println(getId() + " Requesting subgroup no longer exists or deleted. :( ");
                                             // if there is a need for a new subgroup and there is enough agents in excluded
                                             // group to create one, then go for it
-                                        } else if (createSwarm && Subswarming.getNumerOfAgentsInSubSwarm(subswarmingArray, swarmID) >= ConstantsRDPSO.INIT_AGENTS) {
+                                        } else if (createSwarm && Subswarming.getNumerOfAgentsInSubSwarm(subswarmingArray, 0) >= ConstantsRDPSO.INIT_AGENTS
+                                                || spawnGroupProbabilityExcluded()) {
 
                                             // temp change swarmID to the group that requested it, so a message can be sent
                                             swarmID = subgroupRequestedByID;
@@ -1711,7 +1699,7 @@ public class RDPSOAgent extends Agent {
             functionResult += Position.distance(from, to);
         }
 
-        System.out.println(String.valueOf(functionResult/1000));
+        //System.out.println(String.valueOf(functionResult/1000));
         return functionResult/1000;
     }
 

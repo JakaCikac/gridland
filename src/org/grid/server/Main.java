@@ -159,6 +159,7 @@ public class Main {
                 }
                 else if (Math.abs(coverage - 20.00) < 1e-1 && print20) {
                     System.out.println("Explored 20 % in " + simulation.getStep());
+
                     print20 = false;
                 }
                 else if (Math.abs(coverage - 30.00) < 1e-1 && print30) {

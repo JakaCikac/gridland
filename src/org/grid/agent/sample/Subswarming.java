@@ -81,6 +81,13 @@ public class Subswarming {
         } else return false;
     }
 
+    // check if subgroup is deleted
+    public static boolean checkIfSubgroupDeleted(ArrayList<Set<Integer>> subswarmingArray, int swarmID) {
+        if (subswarmingArray.get(swarmID).contains(-1)) {
+            return true;
+        } return false;
+    }
+
     // restore swarmID
     public static ArrayList<Set<Integer>> restoreSubgroupInSubswarmingArray(ArrayList<Set<Integer>> subswarmingArray, int swarmID) {
         // check if the subswarm exists, check if it has one element in it (-1) and remove it
