@@ -179,8 +179,9 @@ public class History implements Serializable, SimulationListener {
 				size += ah.history.size();
 
 		}
+        System.out.println("Calc size: " + size);
 
-		return size;
+        return size;
 		
 	}
 	
@@ -193,9 +194,10 @@ public class History implements Serializable, SimulationListener {
 		
 		AgentHistory ah = th.agents.get(id);
 
+
 		if (ah == null)
 			return null;
-		
+
 		return ah.history;
 	}
 
@@ -210,14 +212,42 @@ public class History implements Serializable, SimulationListener {
         for (AgentHistory pah : th.agents.values()) {
             teamPoints = mergeVectors(teamPoints, pah.history);
         }
+
+        //System.out.println();
+        //System.out.println();
+        System.out.println("HISTORY SIZE: " + teamPoints.size());
+        //System.out.println();
+        int counter = 0;
+        //System.out.println("-----------------------------------");
+        //for (HistoryPosition p : teamPoints) {
+            //System.out.println(p.getX() + " " + p.getY());
+        //    counter++;
+        //}
+        //System.out.println("COUNTER: " + counter);
+        //System.out.println("-----------------------------------");
+
+        //System.out.println();
         return teamPoints;
     }
+
 
     static Vector<HistoryPosition> mergeVectors(Vector<HistoryPosition> Va, Vector<HistoryPosition> Vb) {
         Vector<HistoryPosition> merge = new Vector<HistoryPosition>();
         merge.addAll(Va);
         merge.addAll(Vb);
+        //System.out.println();
+        //System.out.println("BREAK");
+        //System.out.println();
+
+        //for (HistoryPosition p : merge) {
+        //    System.out.println(p.getX() + " " + p.getY());
+        //}
+
         return merge;
+    }
+
+    public void getTeamHistorySize(Team team) {
+         getTeamHistory(team);
     }
 
     public int getExploredCount() {

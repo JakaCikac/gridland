@@ -620,7 +620,7 @@ public class RDPSOAgent extends Agent {
                                 subswarmingArray = Subswarming.addAgentToSubswarming(subswarmingArray, recId, 0);
                                 subswarmingArray = Subswarming.deleteSubgroupFromSubswarmingArray(subswarmingArray, recSwarmId);
                                 //System.out.println(getId() + " Agent deleted subgroup, my updated array: ");
-                                Subswarming.toString(subswarmingArray);
+                                //Subswarming.toString(subswarmingArray);
                             }
 
                             break;
@@ -650,7 +650,7 @@ public class RDPSOAgent extends Agent {
                                 subswarmingArray = Subswarming.removeAgentFromSubswarming(subswarmingArray, recId, 0);
                                 subswarmingArray = Subswarming.addAgentToSubswarming(subswarmingArray, recId, swarmID);
                                 //System.out.println(getId() + " Agent joined group, my updated array: ");
-                                Subswarming.toString(subswarmingArray);
+                                //Subswarming.toString(subswarmingArray);
                             }
 
                             break;
@@ -683,7 +683,7 @@ public class RDPSOAgent extends Agent {
                             if (assumption) {
                                 subswarmingArray = Subswarming.excludeOtherAgentsFromSubswarming(subswarmingArray, agentId, swarmId);
                                 //System.out.println(getId() + " Updated my subswarming array: ");
-                                Subswarming.toString(subswarmingArray);
+                                //Subswarming.toString(subswarmingArray);
                             }
 
                             break;
@@ -775,7 +775,7 @@ public class RDPSOAgent extends Agent {
     public void initializeRDPSO() {
         // initialize cognitive, social and obstacle as agent's own position
         swarmID = assignToSwarm();
-        //System.out.println(getId() + ": Swarm ID: " + swarmID);
+        System.out.println(getId() + ": Swarm ID: " + swarmID);
         callAgent = false;
         createSwarm = false;
 
@@ -1069,7 +1069,7 @@ public class RDPSOAgent extends Agent {
                                                 requestSnapshot = true;
 
                                                 //System.out.println(getId() + " EXCLUDED!" );
-                                                Subswarming.toString(subswarmingArray);
+                                                //Subswarming.toString(subswarmingArray);
 
                                             }
                                             // delete the entire subgroup
@@ -1086,7 +1086,7 @@ public class RDPSOAgent extends Agent {
 
                                             //System.out.println(getId() + " subgroup " + swarmID + " deleted. EXCLUDING self.");
                                             //System.out.print(getId() + " deleted subgroup " + swarmID);
-                                            Subswarming.toString(subswarmingArray);
+                                            //Subswarming.toString(subswarmingArray);
 
                                             subswarmingArray = Subswarming.addAgentToSubswarming(subswarmingArray, getId(), 0);
 
@@ -1364,7 +1364,7 @@ public class RDPSOAgent extends Agent {
 
                                                 subswarmingArray = Subswarming.addAgentToSubswarming(subswarmingArray, getId(), swarmID);
                                                 //System.out.println(getId() + " joined new swarm group " + swarmID);
-                                                Subswarming.toString(subswarmingArray);
+                                                //Subswarming.toString(subswarmingArray);
 
                                                 // i accepted the request
                                                 callAgent = false;

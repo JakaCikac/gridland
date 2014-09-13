@@ -141,57 +141,70 @@ public class Main {
         boolean print90 = true;
         boolean print100 = true;
 
+        double coverage = 0.0;
+
         @Override
         public void discoveredPoints() {
             int exploredPoints = history.getExploredCount();
+
 
             if (clientsPanel != null && initialEmptyFields > -1) {
                 // refresh counter of explored points
                 //clientsPanel.getExploredPointsLabel().setText(String.valueOf(exploredPoints) + "/" + initialEmptyFields);
                 // percent of coverage
 
-                double coverage = (float)exploredPoints / initialEmptyFields * 100.0f;
+                coverage = (float)exploredPoints / initialEmptyFields * 100.0f;
                 clientsPanel.getExploredPointsLabel().setText(String.format("%.2f", coverage) + "%");
                 // check if explred == all and stop simulation, call export data for analysis
                 if (Math.abs(coverage - 10.00) < 1e-2 && print10) {
-                    System.out.println("Explored 10 % in " + simulation.getStep());
+                    System.out.print("Explored 10 % in " + simulation.getStep() + " ");
+                    history.getTeamHistorySize(simulation.getTeams().get(0));
+
                     print10 = false;
                 }
                 else if (Math.abs(coverage - 20.00) < 1e-1 && print20) {
-                    System.out.println("Explored 20 % in " + simulation.getStep());
-
+                    System.out.print("Explored 20 % in " + simulation.getStep() + " ");
+                    history.getTeamHistorySize(simulation.getTeams().get(0));
                     print20 = false;
                 }
                 else if (Math.abs(coverage - 30.00) < 1e-1 && print30) {
-                    System.out.println("Explored 30 % in " + simulation.getStep());
+                    System.out.print("Explored 30 % in " + simulation.getStep() + " ");
+                    history.getTeamHistorySize(simulation.getTeams().get(0));
                     print30 = false;
                 }
                 else if (Math.abs(coverage - 40.00) < 1e-1 && print40) {
-                    System.out.println("Explored 40 % in " + simulation.getStep());
+                    System.out.print("Explored 40 % in " + simulation.getStep() + " ");
+                    history.getTeamHistorySize(simulation.getTeams().get(0));
                     print40 = false;
                 }
                 else if (Math.abs(coverage - 50.00) < 1e-1 && print50) {
-                    System.out.println("Explored 50 % in " + simulation.getStep());
+                    System.out.print("Explored 50 % in " + simulation.getStep() + " ");
+                    history.getTeamHistorySize(simulation.getTeams().get(0));
                     print50 = false;
                 }
                 else if (Math.abs(coverage - 60.00) < 1e-1 && print60) {
-                    System.out.println("Explored 60 % in " + simulation.getStep());
+                    System.out.print("Explored 60 % in " + simulation.getStep() + " ");
+                    history.getTeamHistorySize(simulation.getTeams().get(0));
                     print60 = false;
                 }
                 else if (Math.abs(coverage - 70.00) < 1e-1 && print70) {
-                    System.out.println("Explored 70 % in " + simulation.getStep());
+                    System.out.print("Explored 70 % in " + simulation.getStep() + " ");
+                    history.getTeamHistorySize(simulation.getTeams().get(0));
                     print70 = false;
                 }
                 else if (Math.abs(coverage - 80.00) < 1e-1 && print80) {
-                    System.out.println("Explored 80 % in " + simulation.getStep());
+                    System.out.print("Explored 80 % in " + simulation.getStep() + " ");
+                    history.getTeamHistorySize(simulation.getTeams().get(0));
                     print80 = false;
                 }
                 else if (Math.abs(coverage - 90.00) < 1e-1 && print90) {
-                    System.out.println("Explored 90 % in " + simulation.getStep());
+                    System.out.print("Explored 90 % in " + simulation.getStep() + " ");
+                    history.getTeamHistorySize(simulation.getTeams().get(0));
                     print90 = false;
                 }
                 else if (Math.abs(coverage - 100.00) < 1e-1 && print100) {
-                    System.out.println("Explored 100 % in " + simulation.getStep());
+                    System.out.print("Explored 100 % in " + simulation.getStep() + " ");
+                    history.getTeamHistorySize(simulation.getTeams().get(0));
                     print100 = false;
                 }
 
@@ -503,9 +516,19 @@ public class Main {
 						stepCount = 0;
 						stepTime = 0;
 
+
+
+
 						//info("Simulation step: %d (step: %d fps, render: %d fps)", simulation.getStep(), stepFPS, renderFPS);
 					}
 
+                    /* if (simulation.getStep() == 25000 ) {
+                        System.out.println("AT 25000!!!!!");
+                        int exploredP = history.getExploredCount();
+                        double coverage = (float)exploredP / initialEmptyFields * 100.0f;
+                        System.out.println("Explored: " + coverage);
+                        history.getTeamHistorySize(simulation.getTeams().get(0));
+                    } */
 					if (simulation.getStep() % 10 == 0) {
 						simulationStepDisplay.setText(String.format("Step: %d", simulation.getStep()));
 					}
